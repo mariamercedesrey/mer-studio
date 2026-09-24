@@ -117,6 +117,12 @@ const copies = [false, true];
   }
   .marquee__scroll:hover { background: var(--accent-bright); }
 
+  @media (max-width: 767px) {
+    .marquee { height: auto; gap: var(--sp-32); padding: var(--sp-48) 0 var(--sp-24); }
+    /* Logos keep their Figma proportions at 80 %. */
+    .marquee__set { gap: 44px; padding-left: 44px; zoom: 0.8; }
+  }
+
   @keyframes marquee-right {
     from { transform: translateX(-50%); }
     to { transform: translateX(0); }

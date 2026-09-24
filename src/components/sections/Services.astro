@@ -143,4 +143,30 @@ const addons = [
     padding: 22px var(--sp-20) 0;
     border-left: 1px dashed var(--divider-dashed);
   }
+
+  /* Tablet: card and list stay side by side; rows grow with their copy. */
+  @media (max-width: 1199px) {
+    .services { gap: var(--sp-40); padding-bottom: var(--sp-80); }
+    .services__card { flex-basis: 280px; }
+    .services__row { height: auto; }
+    .services__row-main { flex-wrap: wrap; row-gap: 4px; padding-left: var(--sp-24); padding-right: var(--sp-40); }
+    .services__index { top: 23px; bottom: auto; }
+    .services__list { gap: var(--sp-20); }
+    .services__list::after { margin-top: 0; }
+    .services__addons { height: auto; flex-direction: column; gap: var(--sp-24); }
+    .services__addons-lead { flex: none; text-align: left; }
+    .services__addons-list { width: 100%; }
+    .services__addon { height: auto; padding-bottom: var(--sp-4); }
+  }
+  /* Mobile: everything stacks; the "Always included" label reads horizontally above the card. */
+  @media (max-width: 767px) {
+    .services__main { flex-direction: column; align-items: stretch; gap: var(--sp-32); }
+    .services__always { flex: none; font-size: 32px; }
+    .services__always span { position: static; transform: none; }
+    .services__card { flex: none; margin-top: calc(-1 * var(--sp-20)); }
+    .services__row-main { padding-left: 0; }
+    .services__item-title { font-size: 22px; }
+    .services__addons-list { flex-direction: column; gap: var(--sp-16); }
+    .services__addons-lead { font-size: var(--fs-meta); }
+  }
 </style>

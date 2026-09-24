@@ -78,6 +78,7 @@ const visible = projects.filter((p) => !p.hidden);
     flex-direction: column;
     gap: 83px;
     margin: 54px 0 0;
+    padding: 0;
   }
   /* Figma 149:5753 — 1px rule 54px under the last project (black on ink, barely visible by design). */
   .work::after {
@@ -145,4 +146,18 @@ const visible = projects.filter((p) => !p.hidden);
   .work-item--openable .work-item__inner:focus-visible { outline-offset: 6px; }
   .work-item--openable[data-active] .work-item__title { transition: color var(--dur-fast) var(--ease-precise); }
   .work-item--openable[data-active] .work-item__inner:hover .work-item__title { color: var(--accent-primary); }
+
+  @media (max-width: 1199px) {
+    .work { padding-top: var(--sp-80); padding-bottom: var(--sp-80); }
+    .work__list { gap: var(--sp-64); margin-top: var(--sp-48); }
+    /* Tablet: keep the editorial offset, but every item is at least 80 % of the column. */
+    .work-item__inner { width: max(80%, calc(var(--media-w) / 1344 * 100%)); }
+    .work::after { margin-right: 0; }
+  }
+  @media (max-width: 767px) {
+    .work__list { gap: var(--sp-48); }
+    .work-item__inner { width: 100%; }
+    .work-item__title { font-size: 22px; }
+    .work-item__meta { font-size: var(--fs-caption); min-height: 0; }
+  }
 </style>

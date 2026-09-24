@@ -6,7 +6,7 @@ import SignatureDot from '../primitives/SignatureDot.astro';
 <section class="cta" aria-labelledby="cta-title">
   <div class="cta__copy">
     <p class="cta__eyebrow">That's all for now.</p>
-    <h2 id="cta-title" class="cta__title">Got a project in mind?<br />Let’s talk<SignatureDot class="cta__dot" /></h2>
+    <h2 id="cta-title" class="cta__title">Got a project in mind?<br />Let’s talk&#8288;<SignatureDot class="cta__dot" /></h2>
   </div>
   <div class="cta__action">
     <Button href="#contact" width={172} height={56}>lets talk</Button>
@@ -33,4 +33,10 @@ import SignatureDot from '../primitives/SignatureDot.astro';
   }
   .cta__title :global(.cta__dot) { margin-left: 0.25em; vertical-align: -0.04em; }
   .cta__action { display: flex; justify-content: flex-end; }
+
+  @media (max-width: 767px) {
+    .cta { padding-top: var(--sp-64); padding-bottom: var(--sp-64); gap: var(--sp-40); }
+    .cta__copy { min-height: 0; }
+    .cta__action { justify-content: flex-start; }
+  }
 </style>

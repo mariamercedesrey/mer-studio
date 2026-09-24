@@ -21,6 +21,9 @@
     letter-spacing: 0.02em;
   }
   .site-footer__where { display: flex; align-items: center; gap: 10px; }
+  @media (max-width: 767px) {
+    .site-footer { flex-direction: column; align-items: flex-start; gap: var(--sp-8); padding-top: var(--sp-16); padding-bottom: var(--sp-16); }
+  }
   .site-footer__tag {
     display: inline-flex;
     align-items: center;

@@ -71,4 +71,19 @@ const steps = [
   .hiw__num { font-family: var(--font-technical); font-size: var(--fs-eyebrow); line-height: 1.5; letter-spacing: 0.02em; }
   .hiw__step-title { font-weight: 400; font-size: var(--fs-body); line-height: 1.5; }
   .hiw__step-body { font-size: var(--fs-meta); line-height: 1.5; }
+
+  /* Below desktop the dashed path no longer reads as a route through four columns: it is hidden,
+     the ASCII panel joins the flow, and the steps go 2 × 2 (tablet) or 1 column (mobile). */
+  @media (max-width: 1199px) {
+    .hiw { gap: var(--sp-48); padding-top: var(--sp-80); padding-bottom: var(--sp-80); }
+    .hiw__path { display: none; }
+    .hiw__ascii { position: static; order: 2; width: 100%; max-width: 517px; height: auto; aspect-ratio: 517 / 259; }
+    .hiw__intro { order: 1; }
+    .hiw__steps { order: 3; display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .hiw__step { padding-left: 0; padding-right: var(--sp-24); border-top: 1px dashed var(--fills-primary); }
+  }
+  @media (max-width: 767px) {
+    .hiw__steps { grid-template-columns: 1fr; }
+    .hiw__step { padding: var(--sp-20) 0; gap: var(--sp-8); }
+  }
 </style>

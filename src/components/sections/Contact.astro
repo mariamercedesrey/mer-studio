@@ -30,7 +30,7 @@ const links = [
     display: flex;
     flex-direction: column;
     gap: var(--sp-48);
-    padding: var(--sp-48);
+    padding: var(--sp-48) var(--page-gutter);
     background: var(--surface-inverse);
     color: var(--text-inverse);
     border-top: 0.6px solid var(--border-default);
@@ -52,6 +52,13 @@ const links = [
   }
   .contact__channels a:hover, .contact__nav a:hover { color: var(--accent-primary); }
   .contact__nav { display: flex; flex-direction: column; gap: 14px; }
+  @media (max-width: 767px) {
+    .contact { gap: var(--sp-40); padding: var(--sp-48) var(--page-gutter); }
+    .contact__top { flex-direction: column; gap: var(--sp-32); }
+    .contact__logo img { width: 220px; }
+    .contact__channels { flex-direction: column; gap: var(--sp-12); }
+    .contact__channels a { font-size: 22px; }
+  }
   .contact__nav a {
     font-size: var(--fs-body);
     line-height: 1.5;

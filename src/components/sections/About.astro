@@ -87,4 +87,20 @@ const stats = [
   .about__stat:last-child { border-right: 0.4px dashed var(--fg-on-ink); }
   .about__value { font-weight: 500; font-size: clamp(34px, 3.333vw, 48px); line-height: 1.1; letter-spacing: -0.02em; color: var(--accent-primary); }
   .about__label { margin: 0; font-size: var(--fs-meta); line-height: 1.5; }
+
+  @media (max-width: 1199px) {
+    .about { padding-top: var(--sp-80); padding-bottom: var(--sp-80); gap: var(--sp-48); }
+    .about__intro { gap: var(--sp-32); }
+    .about__portrait { flex-basis: 280px; height: 249px; }
+    .about__stats { display: grid; grid-template-columns: 1fr 1fr; border-right: 0.4px dashed var(--fg-on-ink); }
+    .about__stat { border-top: 0.4px dashed var(--fg-on-ink); padding: var(--sp-24); }
+    .about__stat:last-child { border-right: 0; }
+  }
+  @media (max-width: 767px) {
+    .about__intro { flex-direction: column; align-items: stretch; gap: 0; }
+    .about__portrait { flex: none; width: 100%; height: auto; aspect-ratio: 334 / 297; }
+    .about__copy { padding: var(--sp-24) var(--sp-20) var(--sp-32); }
+    .about__stat { padding: var(--sp-20) var(--sp-16); gap: var(--sp-8); }
+    .about__label { font-size: var(--fs-caption); }
+  }
 </style>

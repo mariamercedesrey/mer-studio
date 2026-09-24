@@ -72,8 +72,14 @@ const nav = [
   .site-nav a::after { content: ''; position: absolute; inset: -16px -9px; }
   .site-nav a:hover { color: var(--accent-dark); }
 
-  @media (max-width: 767px) {
-    .site-header { flex-wrap: wrap; }
+  @media (max-width: 1199px) {
     .site-header__tagline { display: none; }
+  }
+  @media (max-width: 767px) {
+    .site-header { flex-direction: column; align-items: flex-start; gap: var(--sp-20); }
+    .site-header__logo img { width: 150px; }
+    .site-nav { max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+    .site-nav__list { gap: 16px; padding: 0 6px; }
+    .site-nav a::after { inset: -16px -6px; }
   }
 </style>
