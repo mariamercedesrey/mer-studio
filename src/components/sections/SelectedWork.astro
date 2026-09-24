@@ -77,6 +77,15 @@ const visible = projects.filter((p) => !p.hidden);
     gap: 83px;
     margin: 54px 0 0;
   }
+  /* Figma 149:5753 — 1px rule 54px under the last project (black on ink, barely visible by design). */
+  .work::after {
+    content: '';
+    display: block;
+    height: 1px;
+    margin-top: 54px;
+    margin-right: 59px;
+    background: rgb(0, 0, 0);
+  }
 </style>
 
 <style is:global>
@@ -119,6 +128,7 @@ const visible = projects.filter((p) => !p.hidden);
     line-height: 1.2;
   }
   .work-item__meta {
+    min-height: 27px;
     font-family: var(--font-technical);
     font-size: var(--fs-meta);
     line-height: 1.4;
