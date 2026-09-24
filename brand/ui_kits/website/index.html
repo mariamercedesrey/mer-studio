@@ -1,0 +1,44 @@
+<!-- @dsCard group="Website" viewport="1440x900" name="mer.studio — Website" subtitle="Scroll-driven home + immersive Project Detail" -->
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>mer.studio — Website UI kit</title>
+<link rel="icon" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../styles.css">
+<style>html,body{margin:0;background:#fff}body{-webkit-font-smoothing:antialiased}#root{width:1440px;margin:0 auto;overflow-x:hidden}a{color:inherit}a:hover{color:var(--accent-dark)}button:focus-visible,a:focus-visible{outline:2px solid var(--accent-primary);outline-offset:3px}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head><body><div id="root"></div>
+<script type="text/babel" src="Hero.jsx"></script>
+<script type="text/babel" src="ClientMarquee.jsx"></script>
+<script type="text/babel" src="SelectedWork.jsx"></script>
+<script type="text/babel" src="Services.jsx"></script>
+<script type="text/babel" src="Process.jsx"></script>
+<script type="text/babel" src="Closing.jsx"></script>
+<script type="text/babel">
+function fitZoom(){const z=Math.min(1,window.innerWidth/1440);document.documentElement.style.zoom=z;}
+fitZoom();window.addEventListener('resize',fitZoom);
+
+function App(){
+  const { ProjectDetail } = window.DesignSystem_e0175b;
+  const [project,setProject]=React.useState(null);
+  const onNav=(id)=>{const el=document.getElementById(id);if(el){window.scrollTo({top:el.offsetTop,behavior:'smooth'});}};
+  React.useEffect(()=>{document.body.style.overflow=project?'hidden':'';},[project]);
+  const d = project && (project.detail || {
+    client: project.client || '', linkLabel: null, title: project.title.trim(),
+    heroImage: project.heroImage ? window.WORK_ASSET_BASE + project.heroImage : undefined,
+  });
+  return (<>
+    <Hero onNav={onNav}/>
+    <ClientMarquee/>
+    <SelectedWork onOpen={setProject}/>
+    <Services/>
+    <HowItWorks/>
+    <About onNav={onNav}/>
+    <Closing onNav={onNav}/>
+    {project && <ProjectDetail overlay open onClose={()=>setProject(null)} {...d} meta={project.meta.trim()} roles={project.roles}/>}
+  </>);
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script></body></html>

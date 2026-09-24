@@ -1,0 +1,16 @@
+/* Signature dot + marquee keyframes (2s loops). Consumers opt in via the classes below. */
+@keyframes mer-dot-bounce{
+  0%{transform:translate(0,0) rotate(0deg) scale(1,1)}
+  18%{transform:translate(0,-60%) rotate(-8deg) scale(.92,1.08)}
+  36%{transform:translate(0,-90%) rotate(4deg) scale(1,1)}
+  54%{transform:translate(0,-40%) rotate(8deg) scale(.95,1.05)}
+  70%{transform:translate(0,0) rotate(0deg) scale(1.22,.78)}
+  82%{transform:translate(0,-12%) rotate(-2deg) scale(.97,1.03)}
+  100%{transform:translate(0,0) rotate(0deg) scale(1,1)}
+}
+@keyframes mer-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.mer-dot-anim{animation:mer-dot-bounce var(--motion-loop) var(--ease-precise) infinite;transform-origin:50% 100%}
+.mer-marquee-track{animation:mer-marquee 40s linear infinite}
+@media (prefers-reduced-motion:reduce){
+  .mer-dot-anim,.mer-marquee-track{animation:none}
+}

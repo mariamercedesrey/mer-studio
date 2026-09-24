@@ -1,0 +1,20 @@
+<!-- @dsCard group="Components" viewport="700x400" name="Work — ProjectDetail, TagComponent, MockupScreen" subtitle="Case-study pattern (scaled), bracket tags, mockup screen" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;background:#fff;font-family:var(--font-technical);overflow:hidden}.l{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:rgb(119,119,119)}.top{display:flex;gap:20px;padding:14px 20px;align-items:center;border-bottom:1px solid rgba(120,120,120,.2)}.strip{display:inline-flex;gap:7.16px;align-items:center;background:rgb(244,240,232);box-shadow:inset 0 0 0 1.193px rgba(0,0,0,.11);padding:9.545px 16.704px}.pd{width:1440px;height:1300px;transform:scale(.3);transform-origin:0 0;pointer-events:none}.wrap{position:relative;height:320px;overflow:hidden;display:flex}.pdw{width:432px;height:320px;overflow:hidden;flex-shrink:0}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script></head><body><div id="root"></div>
+<script type="text/babel">
+const { ProjectDetail, TagComponent, MockupScreen } = window.DesignSystem_e0175b;
+const A='../../assets/work/';
+function Card(){return (<div>
+<div className="top"><span className="l">TagComponent</span>
+<span className="strip"><span style={{fontFamily:'Aspekta, var(--font-display)',fontWeight:700,fontSize:12.528,letterSpacing:'.02em',textTransform:'uppercase'}}>Project</span><TagComponent label="Design" size={12.528}/><TagComponent label="Development" size={12.528}/><span style={{fontWeight:700,fontSize:12.528,color:'rgba(20,20,20,.6)'}}>/</span><TagComponent label="Custom Project" size={12.528}/></span></div>
+<div className="wrap"><div className="pdw"><div className="pd"><ProjectDetail onClose={()=>{}} heroImage={A+'asociart-system.png'}
+blocks={[{heading:'Starting point',body:'Asociart brought Neoris in to replace a monolithic legacy system running claims, legal, medical and financial operations across ten-plus departments. There was no UX practice on the product and no shared visual system.'},{heading:'What we did',body:'Research with internal users and stakeholders, service blueprints for thirteen interconnected modules, and the Core Design System underneath all of them.'},{heading:'Outcome',body:'One shared foundation across thirteen modules and multiple teams, serving 500+ internal users.'}]}
+gallery={[{src:A+'asociart-mobile.png',width:153.785,height:357.999,overlay:true},{src:A+'asociart-desktop.png',width:621.349,height:369.374,shadow:true},{src:A+'asociart-detail.png',width:525,height:321,radius:8}]}/></div></div>
+<div style={{padding:'16px 20px',display:'flex',flexDirection:'column',gap:10}}><span className="l">ProjectDetail · 30% scale</span><span className="l">MockupScreen</span><MockupScreen style={{width:230,height:138.5}}/></div></div>
+</div>);}
+ReactDOM.createRoot(document.getElementById('root')).render(<Card/>);
+</script></body></html>

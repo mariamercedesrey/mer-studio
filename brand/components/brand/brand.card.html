@@ -1,0 +1,20 @@
+<!-- @dsCard group="Components" viewport="700x230" name="Brand — SignatureDot, Icon, Logotypo" subtitle="Signature dot (static + 2s loop) and the client Icon / Logotypo set" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;background:#fff;font-family:var(--font-technical)}.r{display:grid;grid-template-columns:1fr 1fr;gap:0}.c{padding:22px 24px;display:flex;flex-direction:column;gap:14px}.l{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:rgb(119,119,119)}.row{display:flex;gap:18px;align-items:flex-end}.dk{background:rgb(20,20,20)}.dk .l{color:rgb(177,177,177)}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script></head><body><div id="root"></div>
+<script type="text/babel">
+const { SignatureDot, Icon, Logotypo } = window.DesignSystem_e0175b;
+function Card(){return (<div className="r">
+<div className="c"><span className="l">SignatureDot · 6.6 dark / 10 / 24 / 45.954 animated</span>
+<div className="row" style={{height:110,alignItems:'flex-end'}}><SignatureDot size={6.6} tone="dark"/><SignatureDot size={10}/><SignatureDot size={24}/><SignatureDot size={45.954} animate/><SignatureDot size={24} tone="muted"/></div>
+<div style={{fontFamily:'var(--font-display)',fontWeight:500,fontSize:34,letterSpacing:'-0.02em',position:'relative',width:'fit-content'}}>What we've built<SignatureDot size={12} style={{position:'absolute',right:-18,bottom:8}}/></div></div>
+<div className="c dk"><span className="l">Icon · positive / negative / alternative</span>
+<div className="row"><div style={{background:'#fff',padding:6}}><Icon type="positive" style={{width:40,height:40}}/></div><Icon type="negative" style={{width:40,height:40}}/><div style={{background:'#fff',padding:6}}><Icon type="alternative" style={{width:40,height:40}}/></div></div>
+<span className="l">Logotypo · horizontal / vertical</span>
+<div className="row" style={{background:'rgb(249,247,242)',padding:12,width:'fit-content',alignItems:'center'}}><Logotypo type="horizontal"/><Logotypo type="vertical"/></div></div>
+</div>);}
+ReactDOM.createRoot(document.getElementById('root')).render(<Card/>);
+</script></body></html>

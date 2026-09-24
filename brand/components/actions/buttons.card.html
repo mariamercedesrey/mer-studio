@@ -1,0 +1,17 @@
+<!-- @dsCard group="Components" viewport="700x260" name="Actions — Button" subtitle="Primary / Secondary / Ghost × Default / Disabled" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;background:#fff;font-family:var(--font-technical)}.g{display:grid;grid-template-columns:90px repeat(3,1fr);gap:14px 16px;padding:22px 24px;align-items:center}.l{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:rgb(119,119,119)}.dk{background:rgb(20,20,20);padding:12px;display:flex;justify-content:center}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script></head><body><div id="root"></div>
+<script type="text/babel">
+const { Button } = window.DesignSystem_e0175b;
+function Card(){return (<div className="g">
+<span></span><span className="l">primary</span><span className="l">secondary</span><span className="l">ghost</span>
+<span className="l">default</span><Button label="book a call"/><Button variant="secondary" label="discover more"/><Button variant="ghost" label="see all work"/>
+<span className="l">disabled</span><Button label="book a call" state="disabled"/><Button variant="secondary" label="discover more" state="disabled"/><Button variant="ghost" label="see all work" state="disabled"/>
+<span className="l">on ink · 56</span><div className="dk"><Button label="lets talk" style={{height:56}}/></div><div className="dk"><Button variant="ghost" label="services" style={{color:'#fff'}}/></div><span className="l" style={{textTransform:'none'}}>hover → accent-bright · press → 0.97</span>
+</div>);}
+ReactDOM.createRoot(document.getElementById('root')).render(<Card/>);
+</script></body></html>

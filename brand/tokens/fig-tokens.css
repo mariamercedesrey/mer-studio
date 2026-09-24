@@ -1,0 +1,116 @@
+/* Generated from Figma Variables. First mode = :root default.
+   FLOAT tokens are unitless — multiply by 1px in calc() where a length is needed. */
+
+:root {
+  --accent-bright: var(--color-brand-yellow-bright); /* @kind color */
+  --accent-dark: var(--color-brand-yellow-dark); /* @kind color */
+  --accent-primary: var(--color-brand-yellow); /* @kind color */
+  --action-disabled-background: var(--color-neutral-300); /* @kind color */
+  --action-disabled-text: var(--color-neutral-500); /* @kind color */
+  --action-ghost-text: var(--color-neutral-900); /* @kind color */
+  --action-primary-background: var(--color-brand-yellow); /* @kind color */
+  --action-primary-text: var(--color-neutral-900); /* @kind color */
+  --action-secondary-background: var(--color-neutral-900); /* @kind color */
+  --action-secondary-text: var(--color-neutral-0); /* @kind color */
+  --border-default: var(--color-neutral-300); /* @kind color */
+  --border-subtle: var(--color-neutral-400); /* @kind color */
+  --color-base-white: rgb(255,255,255); /* @kind color */
+  --color-brand-dark: rgb(14,34,41); /* @kind color */
+  --color-brand-yellow-bright: rgb(252,200,20); /* @kind color */
+  --color-brand-yellow-dark: rgb(214,169,12); /* @kind color */
+  --color-brand-yellow: rgb(238,187,10); /* @kind color */
+  --color-feedback-info-default: var(--color-secondary-500); /* @kind color */
+  --color-feedback-info-text: var(--color-secondary-700-2); /* @kind color */
+  --color-neutral-0: rgb(255,255,255); /* @kind color */
+  --color-neutral-25: rgb(245,243,243); /* @kind color */
+  --color-neutral-300: rgb(200,200,200); /* @kind color */
+  --color-neutral-400: rgb(177,177,177); /* @kind color */
+  --color-neutral-500: rgb(131,131,131); /* @kind color */
+  --color-neutral-50: rgb(246,246,246); /* @kind color */
+  --color-neutral-600: rgb(97,97,97); /* @kind color */
+  --color-neutral-700: rgb(63,63,63); /* @kind color */
+  --color-neutral-800: rgb(52,52,52); /* @kind color */
+  --color-neutral-900: rgb(20,20,20); /* @kind color */
+  --color-primary-400: rgb(196,188,172); /* @kind color */
+  --color-secondary-500: rgb(11,52,84); /* @kind color */
+  --color-secondary-700-2: rgb(7,32,51); /* @kind color */
+  --color-secondary-700: rgb(7,32,51); /* @kind color */
+  --color-text-inverse: var(--color-base-white); /* @kind color */
+  --color-text-primary: var(--color-secondary-700); /* @kind color */
+  --color-text-secondary: var(--color-neutral-600); /* @kind color */
+  --dark: rgb(34,34,34); /* @kind color */
+  --fills-primary: rgba(120,120,120,0.2); /* @kind color */
+  --font-family-brand-2: "Bricolage Grotesque";
+  --font-family-brand: "Outfit";
+  --font-family-display: "Outfit";
+  --font-family-editorial: "Instrument Serif";
+  --font-family-technical: "JetBrains Mono";
+  --font-family-ui: "Plus Jakarta Sans";
+  --font-line-height-100: 100;
+  --font-line-height-120: 120;
+  --font-line-height-150: 150;
+  --font-line-height-500: 28;
+  --font-line-height-600: 32;
+  --font-line-height-700: 40;
+  --font-size-1000: 32;
+  --font-size-12: 12;
+  --font-size-13: 13;
+  --font-size-14: 14;
+  --font-size-15: 15;
+  --font-size-16: 16;
+  --font-size-22: 22;
+  --font-size-25: 25;
+  --font-size-45: 45;
+  --font-size-700: 20;
+  --font-size-80: 80;
+  --font-size-900: 26;
+  --font-size-90: 90;
+  --font-weight-300: 300;
+  --font-weight-400: 400;
+  --font-weight-500: 500;
+  --font-weight-600: 600;
+  --font-weight-800: 800;
+  --primary-color: rgb(45,45,45); /* @kind color */
+  --radius-0: 0;
+  --radius-12: 12;
+  --radius-16: 16;
+  --radius-24: 24;
+  --radius-4: 4;
+  --radius-8: 8;
+  --radius-999: 999;
+  --space-120: 120;
+  --space-12: 12;
+  --space-16: 16;
+  --space-20: 20;
+  --space-24: 24;
+  --space-32: 32;
+  --space-40: 40;
+  --space-48: 48;
+  --space-4: 4;
+  --space-64: 64;
+  --space-80: 80;
+  --space-8: 8;
+  --space-96: 96;
+  --surface-base: var(--color-neutral-0); /* @kind color */
+  --surface-canvas: var(--color-neutral-50); /* @kind color */
+  --surface-charcoal: var(--color-neutral-800); /* @kind color */
+  --surface-dark: var(--color-brand-dark); /* @kind color */
+  --surface-inverse: var(--color-neutral-900); /* @kind color */
+  --surface-raised-dark: var(--color-neutral-700); /* @kind color */
+  --surface-soft: var(--color-neutral-25); /* @kind color */
+  --tertiary-color: rgb(249,247,242); /* @kind color */
+  --text-inverse: var(--color-neutral-0); /* @kind color */
+  --text-muted: var(--color-neutral-500); /* @kind color */
+  --text-primary: var(--color-neutral-900); /* @kind color */
+  --text-tertiary: rgba(0,0,0,0.6); /* @kind color */
+}
+
+:root[data-theme="dark"], .dark {
+  --fills-primary: rgba(120,120,128,0.36); /* @kind color */
+  --fills-primary: rgba(120,120,128,0.44); /* @kind color */
+  --text-tertiary: rgba(255,255,255,0.6); /* @kind color */
+}
+
+:root[data-theme="light"], .light {
+  --fills-primary: rgba(120,120,120,0.28); /* @kind color */
+}
