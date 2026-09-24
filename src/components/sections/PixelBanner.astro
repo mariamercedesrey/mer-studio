@@ -1,0 +1,35 @@
+---
+// Figma 2045:2485 — monochrome pixel mosaic between Selected Work and Services.
+// CROP transform [[0.9982,0,0.0009],[0,0.6278,0.0655]] → image drawn at 100.18% × 159.3%, offset −0.09% / −10.43%.
+import { getImage } from 'astro:assets';
+import banner from '../../../brand/assets/img/pixel-banner-mono.png';
+const [avif, webp] = await Promise.all(
+  (['avif', 'webp'] as const).map((format) => getImage({ src: banner, widths: [720, 1440, 2160, 2880], format })),
+);
+---
+<div class="pixel-banner" aria-hidden="true">
+  <picture>
+    <source type="image/avif" srcset={avif.srcSet.attribute} sizes="100vw" />
+    <source type="image/webp" srcset={webp.srcSet.attribute} sizes="100vw" />
+    <img src={webp.src} alt="" width={banner.width} height={banner.height} loading="lazy" decoding="async" />
+  </picture>
+</div>
+
+<style>
+  .pixel-banner {
+    position: relative;
+    width: calc(100% - 4px);
+    margin: 0 auto;
+    aspect-ratio: 1436 / 255;
+    overflow: hidden;
+    background: var(--surface-soft);
+  }
+  .pixel-banner img {
+    position: absolute;
+    left: -0.09%;
+    top: -10.43%;
+    width: 100.18%;
+    height: 159.3%;
+    max-width: none;
+  }
+</style>

@@ -1,0 +1,146 @@
+---
+// Figma 149:5756 Services.
+import SectionHeading from '../primitives/SectionHeading.astro';
+const included = [
+  { title: 'Strategy', body: 'Every project starts with the business decision, not the screen.' },
+  { title: 'Design & build, end to end', body: 'The same hands design it and ship it. No handoff, nothing lost in translation.' },
+  { title: 'You own it', body: 'Files and accounts handed over in your name.' },
+];
+const services = [
+  { name: 'Branding', body: 'Identity, and the system to keep it consistent.' },
+  { name: 'Websites', body: 'A landing, a full site, or an online store.' },
+  { name: 'Digital Product', body: "An app or a platform that doesn't exist yet." },
+  { name: 'AI VISIBILITY · GEO / AEO', body: 'So people find you when they ask an AI, not just Google.', id: 'ai-visibility' },
+];
+const addons = [
+  { title: 'Design System', body: 'Exported tokens, a documented component library, and a usage guide — so your team, or an AI agent, can keep building on it without breaking the system.' },
+  { title: 'Maintenance', body: 'Optional, after handover. Changes, updates, backups and priority response.' },
+];
+---
+<section id="services" class="services" aria-labelledby="services-title">
+  <SectionHeading eyebrow="services" id="services-title">Strategy, Design &amp; Build, end to end</SectionHeading>
+
+  <div class="services__main">
+    <p class="services__always" aria-hidden="true"><span>Always included</span></p>
+    <div class="services__card">
+      <h3 class="visually-hidden">Always included</h3>
+      <ul role="list" class="services__included">
+        {included.map((i) => (
+          <li><p class="services__item-title">{i.title}</p><p class="services__note">{i.body}</p></li>
+        ))}
+      </ul>
+    </div>
+    <ol role="list" class="services__list">
+      {services.map((s, i) => (
+        <li class="services__row" id={s.id}>
+          <div class="services__row-main">
+            <h3 class="services__item-title">{s.name}</h3>
+            <p class="services__note">{s.body}</p>
+          </div>
+          <span class="services__index">[{i + 1}]</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+
+  <div class="services__addons">
+    <p class="services__addons-lead">Added to any project — or contracted on their own.</p>
+    <div class="services__addons-list">
+      {addons.map((a) => (
+        <article class="services__addon">
+          <h3 class="services__item-title">{a.title}</h3>
+          <p class="services__note">{a.body}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .services {
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+    padding: 3px var(--page-gutter) 100px;
+    background: var(--surface-soft);
+  }
+  .services :global(.section-heading) { width: min(822px, 100%); }
+
+  .services__main { display: flex; align-items: center; }
+  /* Vertical "Always included" label, Figma 2013:737: 40/500 accent-dark, rotated −90°. */
+  .services__always {
+    align-self: stretch;
+    flex: 0 0 30px;
+    position: relative;
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: var(--accent-dark);
+    white-space: nowrap;
+  }
+  .services__always span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(-90deg);
+  }
+  .services__card {
+    align-self: stretch;
+    flex: 0 0 354px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 23px var(--sp-24);
+    border-radius: 2.25px;
+    background: var(--surface-raised-dark);
+    color: var(--text-inverse);
+  }
+  .services__included { display: flex; flex-direction: column; gap: var(--sp-12); }
+  .services__included li { display: flex; flex-direction: column; gap: 5px; }
+  .services__item-title { font-weight: 500; font-size: var(--fs-lead); line-height: 1.2; }
+  .services__note { font-family: var(--font-editorial); font-style: italic; font-size: var(--fs-meta); line-height: 1.4; }
+
+  .services__list { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 26px; }
+  .services__list::after { content: ''; flex-shrink: 0; height: 1px; background: var(--fills-primary); }
+  .services__row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-20);
+    height: 45px; /* Figma fixes the row at 45px; content overflows it by design */
+  }
+  .services__row::before { content: ''; flex-shrink: 0; height: 1px; background: var(--fills-primary); }
+  .services__row-main { flex-shrink: 0; }
+  .services__row { position: relative; }
+  .services__row-main { display: flex; align-items: center; gap: 22px; padding-left: 55px; padding-right: 40px; }
+  .services__index {
+    position: absolute;
+    right: 2px;
+    bottom: 3px;
+    font-weight: 500;
+    font-size: var(--fs-meta);
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+  }
+
+  .services__addons { display: flex; justify-content: center; align-items: flex-start; gap: 54px; height: 48px; } /* Figma: 48px row, article copy overflows below the dashed rule */
+  .services__addons-lead {
+    flex: 0 0 332px;
+    font-family: var(--font-technical);
+    font-size: var(--fs-eyebrow);
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+    text-align: right;
+  }
+  .services__addons-list { flex: 1 1 0; min-width: 0; align-self: stretch; display: flex; gap: 2px; }
+  .services__addon {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5.8px;
+    height: 48px;
+    padding: 22px var(--sp-20) 0;
+    border-left: 1px dashed var(--divider-dashed);
+  }
+</style>
