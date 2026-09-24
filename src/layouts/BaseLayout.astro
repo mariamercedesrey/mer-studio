@@ -9,6 +9,7 @@ interface Props {
   image?: string;
   path?: string;
   noindex?: boolean;
+  schema?: object; // JSON-LD, see data/schema.ts
 }
 
 const SITE_NAME = 'MER Studio';
@@ -22,6 +23,7 @@ const {
   image = '/og.png',
   path = Astro.url.pathname,
   noindex = false,
+  schema,
 } = Astro.props;
 
 const canonical = new URL(path, Astro.site);
@@ -35,8 +37,7 @@ const ogImage = new URL(image, Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex" />}
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
 
     <link rel="preload" href={outfitLatin} as="font" type="font/woff2" crossorigin />
 
@@ -59,6 +60,7 @@ const ogImage = new URL(image, Astro.site);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
+    {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
     <slot name="head" />
   </head>
   <body>
