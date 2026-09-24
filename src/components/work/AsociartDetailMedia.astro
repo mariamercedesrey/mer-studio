@@ -1,0 +1,39 @@
+---
+// Asociart Project Detail imagery — Figma 2033:1922 (hero) and 2035:2204 (gallery).
+import WorkImage from './WorkImage.astro';
+import system from '../../../brand/assets/work/asociart-system.png';
+import mobile from '../../../brand/assets/work/asociart-mobile.png';
+import desktop from '../../../brand/assets/work/asociart-desktop.png';
+import salad from '../../../brand/assets/work/asociart-morning-salad.png';
+import detail from '../../../brand/assets/work/asociart-detail.png';
+interface Props { part: 'hero' | 'gallery' }
+const { part } = Astro.props;
+---
+{part === 'hero' ? (
+  <WorkImage src={system} width={725} alt="Asociart Core Design System: colour and typography foundations" class="pdm-hero" />
+) : (
+  <>
+    <WorkImage src={mobile} width={154} alt="Asociart mobile app: medical visits dashboard" class="pdm-mobile" />
+    <div class="pdm-laptop">
+      <WorkImage src={desktop} width={621} alt="" class="pdm-laptop__frame" />
+      <div class="pdm-laptop__screen">
+        <WorkImage src={salad} width={490} alt="Asociart claims management screen on a laptop" class="pdm-laptop__salad" />
+      </div>
+    </div>
+    <div class="pdm-detail">
+      <WorkImage src={detail} width={567} alt="Asociart sign-in screen" class="pdm-detail__img" />
+    </div>
+  </>
+)}
+
+<style is:global>
+  .pdm-hero, .pdm-hero img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .pdm-mobile { flex-shrink: 0; width: 153.785px; height: 358px; }
+  .pdm-mobile img, .pdm-laptop__frame img, .pdm-laptop__salad img, .pdm-detail__img img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .pdm-laptop { position: relative; flex-shrink: 0; width: 621.349px; height: 369.374px; }
+  .pdm-laptop__frame { position: absolute; inset: 0; box-shadow: 0 4.711px 4.711px rgba(0, 0, 0, 0.25); }
+  .pdm-laptop__screen { position: absolute; left: 66.92px; top: 20.18px; width: 489.652px; height: 305.899px; overflow: hidden; }
+  .pdm-laptop__salad { position: absolute; left: -0.09%; top: -0.21%; width: 100%; height: 110.51%; }
+  .pdm-detail { position: relative; flex-shrink: 0; width: 525px; height: 321px; border-radius: var(--r-8); overflow: hidden; background: var(--surface-base); }
+  .pdm-detail__img { position: absolute; left: -4%; top: 5.52%; width: 108%; height: 88.97%; }
+</style>

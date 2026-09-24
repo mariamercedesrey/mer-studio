@@ -1,0 +1,36 @@
+---
+// Full-screen overlay hosting ProjectDetail on the home page. Native <dialog> gives focus
+// containment, Esc and inert background; scripts/project-overlay.ts adds the URL sync and fade (R2-D, R2-E).
+import ProjectDetail from './ProjectDetail.astro';
+import AsociartDetailMedia from './AsociartDetailMedia.astro';
+import { projectDetails } from '../../data/project-details';
+const p = projectDetails.asociart;
+---
+<dialog class="project-overlay" data-project-dialog={p.id} aria-labelledby={`pd-title-${p.id}`}>
+  <ProjectDetail project={p}>
+    <AsociartDetailMedia slot="hero" part="hero" />
+    <AsociartDetailMedia slot="gallery" part="gallery" />
+  </ProjectDetail>
+</dialog>
+
+<script>
+  import { initProjectOverlay } from '../../scripts/project-overlay';
+  initProjectOverlay();
+</script>
+
+<style is:global>
+  .project-overlay {
+    position: fixed; inset: 0;
+    width: 100%; height: 100%; max-width: none; max-height: none;
+    margin: 0; padding: 0; border: 0;
+    background: var(--surface-soft);
+    overflow-y: auto; overscroll-behavior: contain;
+    opacity: 0;
+    transition: opacity var(--dur-base) var(--ease-precise), display var(--dur-base) allow-discrete, overlay var(--dur-base) allow-discrete;
+  }
+  .project-overlay[open] { opacity: 1; }
+  @starting-style { .project-overlay[open] { opacity: 0; } }
+  .project-overlay::backdrop { background: transparent; }
+  html:has(.project-overlay[open]) { overflow: hidden; }
+  @media (prefers-reduced-motion: reduce) { .project-overlay { transition: none; } }
+</style>
