@@ -70,7 +70,9 @@ const nav = [
   }
   /* Extend the hit area to 44px without changing the drawn capsule. */
   .site-nav a::after { content: ''; position: absolute; inset: -16px -9px; }
-  .site-nav a:hover { color: var(--accent-dark); }
+  /* Ink text on light grounds; yellow only as the accent (underline). */
+  .site-nav a { text-decoration: underline 2px transparent; text-underline-offset: 4px; transition: text-decoration-color var(--dur-fast) var(--ease-precise); }
+  .site-nav a:hover { text-decoration-color: var(--accent-dark); }
 
   @media (max-width: 1199px) {
     .site-header__tagline { display: none; }

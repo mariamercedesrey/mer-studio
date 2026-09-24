@@ -67,7 +67,9 @@ const addons = [
   .services :global(.section-heading) { width: min(822px, 100%); }
 
   .services__main { display: flex; align-items: center; }
-  /* Vertical "Always included" label, Figma 2013:737: 40/500 accent-dark, rotated −90°. */
+  /* Vertical "Always included" label, Figma 2013:737: 40/500, rotated −90°.
+     Figma draws it in accent-dark; yellow text is only allowed on dark grounds, so on this light
+     ground it uses ink (Mer, round 3). */
   .services__always {
     align-self: stretch;
     flex: 0 0 30px;
@@ -76,7 +78,7 @@ const addons = [
     font-size: 40px;
     line-height: 1.12;
     letter-spacing: -0.02em;
-    color: var(--accent-dark);
+    color: var(--text-primary);
     white-space: nowrap;
   }
   .services__always span {

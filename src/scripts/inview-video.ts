@@ -17,6 +17,12 @@ export function initInviewVideos() {
     }
   }, { rootMargin: '200px 0px' });
 
-  videos.forEach((v) => { v.muted = true; io.observe(v); });
+  videos.forEach((v) => {
+    v.muted = true;
+    if (v.hasAttribute('data-reveal-on-play')) {
+      v.addEventListener('playing', () => v.setAttribute('data-playing', ''), { once: true });
+    }
+    io.observe(v);
+  });
   reduce.addEventListener('change', () => { if (reduce.matches) videos.forEach((v) => v.pause()); });
 }

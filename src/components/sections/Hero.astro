@@ -41,6 +41,7 @@ const BOOK_A_CALL = 'mailto:hello@mer.studio?subject=Book%20a%20call';
         <video
           class="hero__video"
           src="/video/hero.mp4"
+          poster={poster.src}
           width="1218"
           height="684"
           muted
@@ -49,6 +50,7 @@ const BOOK_A_CALL = 'mailto:hello@mer.studio?subject=Book%20a%20call';
           preload="metadata"
           aria-hidden="true"
           data-inview-video
+          data-reveal-on-play
         ></video>
       </div>
       <div class="hero__worked">
@@ -120,7 +122,20 @@ const BOOK_A_CALL = 'mailto:hello@mer.studio?subject=Book%20a%20call';
     gap: var(--sp-24);
   }
   .hero__media { position: relative; aspect-ratio: 929 / 507; overflow: hidden; background: var(--surface-canvas); }
+  /* The dot passes behind the hero image on its way in (Mer, round 3). */
+  .hero__media { z-index: 2; }
+  .hero__aside { position: relative; z-index: 1; }
+  /* Hide the dot until its driver starts, so it doesn't flash at rest first. Safety net: it
+     reveals itself after 4 s if the script never runs. Reduced motion: always visible. */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .hero__mark :global(.hero__dot:not([data-motion-state])) { animation: hero-dot-reveal 0s 4s both; }
+  }
+  @keyframes hero-dot-reveal { from { visibility: hidden; } to { visibility: visible; } }
   .hero__poster, .hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  /* The video only shows once it is actually playing; until then (or if autoplay is refused,
+     or under reduced motion) the Figma frame — the poster image underneath — stays visible. */
+  .hero__video { opacity: 0; transition: opacity var(--dur-base) var(--ease-precise); }
+  .hero__video[data-playing] { opacity: 1; }
   .hero__worked {
     display: flex;
     flex-direction: column;
@@ -171,6 +186,8 @@ const BOOK_A_CALL = 'mailto:hello@mer.studio?subject=Book%20a%20call';
   }
   .hero__mark :global(.hero__dot) {
     grid-area: 1 / 1;
+    position: relative;
+    will-change: translate, rotate, scale;
     width: 0.161em;
     height: 0.161em;
     margin: 0.4921em 0 0 0.6667em;
@@ -215,3 +232,8 @@ const BOOK_A_CALL = 'mailto:hello@mer.studio?subject=Book%20a%20call';
     .hero__worked-title { font-size: var(--fs-meta); }
   }
 </style>
+
+<script>
+  import { initDotMotion } from '../../scripts/dot-motion';
+  initDotMotion();
+</script>
