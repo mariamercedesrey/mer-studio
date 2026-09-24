@@ -1,6 +1,6 @@
 # MER.studio — Pre-implementation audit
 
-Status: **decisions round 1 applied** (below). Open questions are in §7. No implementation code has been written.
+Status: **decisions rounds 1 and 2 applied** (below). Open questions are in §7. No implementation code has been written.
 Date: 2026-09-24 · Branch: `claude/sharp-ptolemy-jo36c2` · Base: `main` @ `7f854b0`
 
 ## Decisions (Mer, round 1)
@@ -11,17 +11,32 @@ These override anything that contradicts them further down this document.
 |---|---|---|
 | D1 | Hero dot | Play the Figma trajectory (149:5173, about 3.1 s) **once on load**. No loop. |
 | D2 | Marquee direction | **Moves right**, as in Figma. |
-| D3 | Contact | **No form in V1.** Email + a "book a call" link. The actual values for both are still pending: see §7, Q-A. |
+| D3 | Contact | **No form in V1.** Email + a "book a call" link (see R2-A). |
 | D4 | Mobile / tablet | Build with the `/brand` breakpoints and collapse rules (<768 / 768–1199 / ≥1200). No approval is needed before building. Mer reviews **screenshots afterwards**. |
 | D5 | Project Detail | **All 8 projects are shown** in Selected Work. **Only Asociart opens** in V1. The other projects get no pointer cursor and no clickable hover state. Scroll activation (opacity) still applies to all 8, because it's editorial, not an affordance. |
 | D6 | Testimonials | Out of V1. |
 | D7 | Text colour token | Never use `--color-text-primary` (navy) for text; use `--text-primary`. This rule has been added to `CLAUDE.md` §12. |
 | D8 | ui_kit drift | **Figma wins** (roles, copy, media). |
 | D9 | Missing assets | Show each project with the assets that exist, without placeholders or substitutions. List any project that would look broken (§3). |
-| D10 | Figma network access | Mer is adding `www.figma.com` to the environment's network access so I can export assets from Figma. Not checked yet in this session. |
+| D10 | Figma network access | Mer is adding `www.figma.com` to the environment's network access so I can export assets from Figma (see R2-I). |
 | D11 | Marquee motion | A **seamless continuous loop** at the Figma speed, about **127 px/s** (3052 px / 24 s). The 8 s hold is a timeline artifact and is ignored. |
 
 Sources read: `CLAUDE.md`, `brand/readme.md`, `brand/SKILL.md`, `brand/tokens/*`, `brand/components/**`, `brand/ui_kits/website/*`, `brand/guidelines/brand-motion.html`, `/brand/assets`, `/public`. Figma file `Ao0jR1GIkNvogoZrINbanb`, page `05 — Product Screens` (149:5102), read with the Figma MCP (`get_metadata`, `get_screenshot`, `get_motion_context`, and read-only `use_figma` Plugin API scripts).
+
+
+## Decisions (Mer, round 2)
+
+| # | Topic | Decision |
+|---|---|---|
+| R2-A | Contact | "book a call" opens `mailto:` with the subject "Book a call" for now. **The email address and whether to keep the phone number are still unfilled** in the reply (the placeholders "[hello@mer.studio / otro]" and "[keep / remove]" came through as-is): see §7, Q-A. |
+| R2-B | Coupon (#4) | **Hidden from Selected Work in V1**, so 7 projects are shown. It comes back when the MP4 arrives. |
+| R2-C | APS (#7) | Keeps the current court video (852 px). |
+| R2-D | Project Detail transition | **280 ms opacity fade** in and out (`--dur-base`), no morph. Instant under reduced motion. |
+| R2-E | Deep link | **`/work/asociart`**: a prerendered static page, and the overlay updates the URL. |
+| R2-F | Language | **English only.** The "EN" chip is **removed** from the header; there's no fake selector. This is a deliberate change from Figma (149:5104 › 2003:126). |
+| R2-G | OG image, apple-touch-icon, Aspekta | Approved as proposed. **I send the OG image to Mer for approval before shipping it** (implementation step 1). |
+| R2-H | Headline dots, tokens / fluid type / fonts, services modal name, macbook video | Approved as proposed (Q-G, Q-H, Q-I, Q-J). Mer reviews the fluid-type minimums in the mobile screenshots. |
+| R2-I | Figma network access | Mer added `www.figma.com` to network access. **In this session it is still blocked**; see §0 and §3. |
 
 ---
 
@@ -30,7 +45,7 @@ Sources read: `CLAUDE.md`, `brand/readme.md`, `brand/SKILL.md`, `brand/tokens/*`
 | Tool | Status | Notes |
 |---|---|---|
 | **Figma MCP** | ✅ Works | Authenticated as Mercedes Rey (Pro, "M.M RDC's team"). I could read metadata, screenshots (returned inline), motion timelines and node trees through the Plugin API. |
-| Figma asset downloads (`www.figma.com/api/mcp/asset/*`) | ❌ Blocked | This environment's network policy blocks `www.figma.com`. Screenshots only arrive inline at reduced resolution, and **I can't download raw images, video fills or SVGs from Figma**. Mer is adding `www.figma.com` to network access (D10). I'll check it works at the start of the next session. |
+| Figma asset downloads (`www.figma.com/api/mcp/asset/*`) | ❌ **Still blocked** (re-tested after R2-I) | `curl https://www.figma.com/` → the egress proxy refuses the CONNECT with **403** (policy denial). Either the allow-list change didn't reach this container, or it needs a fresh session. The download URLs may also redirect to an asset CDN host that needs allowing too (not verified). **Workaround tried:** returning original image bytes as base64 through `use_figma`. It works, but tool output is **cut off at about 20 KB**, so it can't move real files (Morning Salad is 171 KB; the APS layers are up to 4.5 MB each). |
 | `get_design_context` on 149:5103 | ⚠️ Too large | Returns sparse output. It needs to be called per section (Hero 149:5104, Marquee 149:5176, Selected Work 149:5412, Services 149:5756, How It Works 149:5990, About 149:6015, Final CTA 149:6074, Contact 149:6087, Footer 149:6099). I'll do that in Phase 1, one section at a time. |
 | **21st.dev MCP** | ✅ Works | Free tier: search is unlimited, **2 code retrievals a day**, AI generation is **disabled**. I didn't retrieve any code during the audit, so the dependency lists in §6 come from registry metadata and still need checking. |
 
@@ -156,25 +171,25 @@ Principles:
 |---|---|---|---|---|
 | 1 | Asociart | system 748×711 · desktop 585×348 · "165 Morning Salad" 461×288 · mobile 211×490 | `asociart-system`, `asociart-desktop`, `asociart-mobile`, `asociart-detail` | ⚠️ **"165 Morning Salad" is missing.** It's also used in Project Detail (2033:1931), probably the laptop frame. |
 | 2 | Orchardmile | `#008 2` 886×651 · phone 328×618 | `orchardmile-bg`, `orchardmile-phone` | ✅ |
-| 3 | 250 brands | **3 different** images (`0920_SWF_KK 1/2/3`) + desktop | `storefront-bg.jpg` only (the kit repeats it 3 times) | ⚠️ **KK 2 and KK 3 are missing.** |
-| 4 | Coupon | **Video** 654×654 "Showcase _ Phone Grid" | — | ❌ **No MP4.** |
+| 3 | 250 brands | `0920_SWF_KK 1/2/3` + desktop | `storefront-bg.jpg`, `asociart-desktop.png` | ✅ **Correction:** KK 1, 2 and 3 are the **same image** (hash `b4608f…`, 810×4096 JPEG). It matches `storefront-bg.jpg` (810×4096, same size to within 0.4%), used 3 times with **different crops**. Crops per column, from Figma `imageTransform` (scale x, scale y, offset x, offset y): KK1 (411×778) 0.716 / 0.268 / 0.142 / 0; KK2 (383×933) 0.667 / 0.321 / 0.155 / 0.328; KK3 (383×935) 0.667 / 0.322 / 0.198 / 0.679. Nothing is missing. |
+| 4 | Coupon | **Video** 654×654 "Showcase _ Phone Grid" | — | ❌ **No MP4.** **Hidden in V1 (R2-B).** |
 | 5 | Industrial | ocean 1064×729 + screen 626×513 | `industrial-ocean.jpg`, `industrial-screen.png` | ✅ |
 | 6 | Safety net | logo, long, group, phone | `safety-*` (4) | ✅ |
-| 7 | APS | **Video** background 1154×705 + "Rubber Laptop Mockup" (about 14 image layers: masks, shadow, highlight, reflection, 4 screens) | `public/video/selected-work-court-bg.mp4` (852×480, 15 s) · `aps-site.png` | ⚠️ The video is **low resolution** for a 1154 px slot (about 2.7× upscale on retina). **The laptop mockup layers are missing.** The kit's `MockupScreen` stands in for them and doesn't match Figma. |
+| 7 | APS | **Video** background 1154×705 + "Rubber Laptop Mockup" 2024:1682 | `public/video/selected-work-court-bg.mp4` (852×480, 15 s, kept per R2-C) · screens `49ceebe…png` (1728×1117) and `68110c5f…png` = `aps-site.png` (842×521) | ⚠️ **The mockup layers are missing.** They are 9 × 4000×3000 PNGs: base image, rope mask, shadow (**multiply**), highlight (**screen**, 15%), 3 reflection masks, a layer mask, plus a hidden highlight. The 4 screen instances use **linear-dodge** (`plus-lighter`). Several layers **blend against the video**, so a flattened transparent PNG would lose the multiply/screen/dodge effect. The faithful approach is to export each layer and composite it in CSS (`mask-image` + `mix-blend-mode`) over the `<video>`. |
 | 8 | Six business units | **Video** 1081×654 (scaleMode CROP) | `public/video/selected-work-macbook.mp4` (2256×1268, 4.2 s) + poster | ✅ The watermark is temporary and ignored as agreed. The CROP transform values still need reading in Phase 1. |
 
 **Projects that would look broken with only the existing assets (D9).** I don't substitute or repeat assets, so these gaps would show:
 
 | # | Project | Result with existing assets | Severity |
 |---|---|---|---|
-| 4 | **Coupon** | **No media at all.** The 654×654 frame would be empty; only the chips, title and meta would render. | 🔴 Broken |
-| 7 | **APS** | The court video plays, but the laptop mockup (the focal point) is missing, so it looks like an empty dark-blue field. | 🔴 Broken |
-| 3 | **250 brands** | Only 1 of the 3 background columns (KK 1) + the desktop screenshot. Two empty columns on white. | 🟠 Looks unfinished |
-| 1 | Asociart | Missing only the 461×288 "Morning Salad" layer on the card, and the laptop frame in the Project Detail gallery. The rest is complete. | 🟡 Minor |
+| 4 | Coupon | Hidden in V1 (R2-B). | — |
+| 7 | **APS** | The court video plays, but the laptop mockup (the focal point) is missing, so it looks like an empty dark-blue field. | 🔴 **Broken until the mockup layers arrive** |
+| 3 | 250 brands | **Complete**: one source image, 3 crops (see above). | ✅ |
+| 1 | Asociart | Missing only the 461×288 "Morning Salad" layer (original 1920×1325 PNG, 171 KB) on the card, and the laptop frame in the Project Detail gallery. | 🟡 Minor |
 | 8 | Six business units | Complete (temporary watermark, noted). | ✅ |
 | 2, 5, 6 | Orchardmile, Industrial, Safety | Complete. | ✅ |
 
-Once `www.figma.com` is reachable (D10), `download_assets` can export the images for #1, #3 and #7, the APS mockup as one flattened transparent layer. **It doesn't return video fills**, so the Coupon MP4 (#4) still has to come from Mer.
+**Export status (R2-I):** not done, because `www.figma.com` is still blocked (see §0). Still needed: **#1** Morning Salad (1 image) and **#7** APS mockup (9 layer images + the positions and blend data I've already read). #3 needs nothing. When access works, I'll get the originals by image hash (`download_assets` / `getBytesAsync`). The alternative is for Mer to export them from Figma by hand: select the layer → Export → PNG 1×, original. Video fills can't be exported either way.
 
 Duplicates to clean up: `brand/components/work/assets/68110c5f….png` is byte-identical to `brand/assets/work/aps-site.png`.
 
@@ -220,22 +235,15 @@ Account: free tier, 2 code retrievals a day, AI generation off. 21st.dev compone
 
 Libraries: **GSAP isn't needed for V1.** WAAPI and CSS cover M1–M4. Revisit it for post-launch scroll choreography if scroll-driven CSS isn't enough.
 
-## 7. Open questions (after decisions round 1)
+## 7. Open questions (after decisions round 2)
 
-Answered by D1–D11: the old questions on the hero dot, marquee direction, contact form, mobile, which projects open, live URLs (Asociart's is `asociart.com` in Figma), testimonials, and the Figma network access. What's still open is below, each with the default I'll use if there's no answer.
+Resolved in round 2: Q-B (Coupon hidden, APS keeps its video), Q-C (280 ms fade), Q-D (`/work/asociart`), Q-E (EN only, chip removed), Q-F (the OG image comes for approval), Q-G, Q-H, Q-I and Q-J (approved).
 
 | ID | Question | Recommended default |
 |---|---|---|
-| **Q-A** | **Contact values (D3).** The decision had placeholders: the **email** was "[tu email]", and the **"book a call" URL** was "[URL o 'none yet']". | Email: `hello@mer.studio`, as in Figma. "book a call": **none yet**, so every "book a call" CTA links to `mailto:hello@mer.studio` with the subject "Book a call" until a scheduling URL exists. The phone number in Figma (`+54 9 11 41742309`) stays unless you say otherwise. |
-| Q-B | Coupon video (item 4) and a higher-resolution APS court video (at least 1600 px wide). Neither can be exported from Figma. | Ship Coupon without media (flagged as 🔴 in §3) until the MP4 arrives. Ship APS with the current 852 px video. |
-| Q-C | Project Detail open and close transition in V1 (Asociart). | **Short opacity fade** (`--dur-base`, 280 ms) in and out; instant under reduced motion. No morph until a motion spec exists. |
-| Q-D | Deep link `/work/asociart` + prerendered static page. | **Yes, for Asociart only.** The overlay updates the URL (`pushState`), and the static page covers direct links, SEO and no-JS. |
-| Q-E | SEO: title, meta description and OG copy. EN only, or also ES (the "EN" chip)? | Title "MER Studio — Strategy, design and build, end to end". Description taken from the hero paragraph. **EN only.** The "EN" chip is shown as a static label (not a control) until an ES version exists. |
-| Q-F | OG image (1200×630), apple-touch-icon, Aspekta font file. | I build the OG image from the existing hero composition (logo + headline + dot on `--surface-soft`) and send it for approval. apple-touch-icon is rasterised from `favicon.svg`. Outfit stands in for Aspekta. |
-| Q-G | Section headline dots (24 px): static, or the 2 s placeholder bounce? | **Static** in V1. The placeholder isn't a Figma motion, and only the hero dot has a defined path. |
-| Q-H | Proposed token extensions (§2.4), fluid-type minimums (§2.5), self-hosted fonts (§2.6). | I apply them as described and list every proposed token in the implementation PR for review. Fluid minimums are about 45% of the desktop size for display type (for example, hero 95 → 42 px). |
-| Q-I | What does `example-fullscreen-modal-services` imply? Is a full-screen modal intended for Services items too? | **No** for V1. I treat the name as historical: 2033:1913 is the Project Detail. |
-| Q-J | Final watermark-free `selected-work-macbook.mp4`. | Already pending on your side. I ship with the current file and swap it in when you send the new one. |
+| **Q-A** | **Contact email and phone.** The reply still had placeholders: "[hello@mer.studio / otro]" and "[keep / remove]". | Email `hello@mer.studio` (as in Figma), used for both the contact link and the "book a call" `mailto:`. **Keep** the phone number `+54 9 11 41742309`, since it's in Figma. |
+| **Q-K** | Figma asset access: `www.figma.com` is still refused by the proxy in this session (403). | Check the environment's allowed domains include `www.figma.com`, then start a **new session** so the container picks up the policy. If that still fails, export the Morning Salad image and the 9 APS mockup layers by hand and commit them to `brand/assets/work/`. |
+| Q-L | APS in V1 if the mockup layers aren't available by launch. | **Hide APS as well**, the same way as Coupon (R2-B). A court video with no laptop reads as broken, and substituting the kit's `MockupScreen` would contradict Figma. |
 
 ---
 
@@ -246,12 +254,12 @@ Each step is one small PR or commit series on a branch. Nothing merges to `main`
 | Step | Deliverable | V1 scope item |
 |---|---|---|
 | 0 | This audit + answers to §7 | — |
-| 1 | Astro scaffold, `netlify.toml`, `global.css` wired to `/brand/tokens`, self-hosted fonts, `BaseLayout` with SEO/OG/favicon, empty 404 | SEO/meta/favicon/OG · 404 |
+| 1 | Astro scaffold, `netlify.toml`, `global.css` wired to `/brand/tokens`, self-hosted fonts, `BaseLayout` with SEO/OG/favicon, empty 404. **OG image sent to Mer for approval** (R2-G) | SEO/meta/favicon/OG · 404 |
 | 2 | Primitives: Button, SignatureDot (static + `data-motion` API), RoleChip, Tag, Eyebrow, Media, ExternalLinkPill | Phase 1 |
-| 3 | Header + Hero (video, "m" + dot static) | Phase 1 |
+| 3 | Header (no "EN" chip, R2-F) + Hero (video, "m" + dot static) | Phase 1 |
 | 4 | Client marquee (CSS loop, reduced-motion static) | Phase 1 + reduced motion |
-| 5 | Selected Work: `projects` collection, 8 items at Figma fidelity, activation script | Phase 1 (structural interaction kept from the start, CLAUDE.md §14) |
-| 6 | **ProjectDetail island**: overlay, focus trap, Esc, scroll lock; **Asociart only** (D5); deep link per Q-D | ProjectDetail working |
+| 5 | Selected Work: `projects` collection, **7 items** (Coupon hidden, R2-B) at Figma fidelity, activation script | Phase 1 (structural interaction kept from the start, CLAUDE.md §14) |
+| 6 | **ProjectDetail island**: overlay, focus trap, Esc, scroll lock, 280 ms fade (R2-D); **Asociart only** (D5); `/work/asociart` prerender (R2-E) | ProjectDetail working |
 | 7 | Pixel banner + Services | Phase 1 |
 | 8 | How it works + About | Phase 1 |
 | 9 | Final CTA + Contact (email + "book a call" link, **no form**, D3) + Footer | Contact |
