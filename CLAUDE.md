@@ -123,6 +123,7 @@ Figma defines the experience. The MER Design System defines the rules. Code make
 - Figma file: [https://www.figma.com/design/Ao0jR1GIkNvogoZrINbanb/mer-studio-v.0.0.1?node-id=149-5103&t=sLF5T9wesPtZRUg1-1] — page "05 — Product Screens", frame "Website / Desktop" (149:5103), Project Detail (2033:1913), example-fullscreen-modal-services.
 - Design System: /brand (exported from Claude Design). Read /brand/readme.md and /brand/SKILL.md first. /brand/tokens are the exact Figma variables and win over any hardcoded value.
 - /brand/ui_kits/website is a reference recreation, not production code.
+- Logos: /brand/assets is the official identity (yellow dot). Use only /brand/assets logos (logo.svg, logo-negative.svg, favicon.svg). The orange "Mer. STUDIO" logos are the old identity — never use them.
 - "Existing website" in this brief means the site designed in Figma, NOT the site currently live on mer.studio.
 - Repo: GitHub mer-studio → Netlify auto-deploy from main (mer.studio).
 
