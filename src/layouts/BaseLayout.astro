@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+// Preload the one font every screen needs first (Outfit, latin subset); the rest load on demand.
+import outfitLatin from '@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2?url';
 
 interface Props {
   title?: string;
@@ -35,6 +37,8 @@ const ogImage = new URL(image, Astro.site);
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex" />}
+
+    <link rel="preload" href={outfitLatin} as="font" type="font/woff2" crossorigin />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
