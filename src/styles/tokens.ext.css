@@ -6,6 +6,7 @@
   --opacity-marquee-logo: 0.55;                   /* client logos */
   --blur-nav: 3.611px;                            /* nav capsule backdrop blur (Figma 149:5116) */
   --radius-nav: 30.333px;                         /* nav capsule radius (Figma 149:5116) */
+  --dot-muted: rgb(126, 126, 126);             /* grey dot on the How it works path (Figma 2003:39; DS SignatureDot tone="muted") */
   --shadow-mockup-sm: 0 3.78px 3.78px rgba(0, 0, 0, 0.25);
   --shadow-mockup-lg: 22.431px 44.863px 12.462px rgba(0, 0, 0, 0.12);
 }

@@ -3,7 +3,7 @@
 // so behaviour can evolve without touching the surrounding markup (CLAUDE.md §7).
 interface Props {
   size?: number;
-  tone?: 'accent' | 'dark';
+  tone?: 'accent' | 'dark' | 'muted';
   motion?: string;
   class?: string;
   [key: string]: unknown;
@@ -28,4 +28,5 @@ const { size = 24, tone = 'accent', motion = 'none', class: className, ...rest }
     background: var(--accent-primary);
   }
   .mer-dot--dark { background: var(--accent-dark); }
+  .mer-dot--muted { background: var(--dot-muted); }
 </style>

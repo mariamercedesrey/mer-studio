@@ -1,0 +1,72 @@
+---
+// Figma 149:5990 How It Works — charcoal band, four steps over a dashed path.
+import SectionHeading from '../primitives/SectionHeading.astro';
+import SignatureDot from '../primitives/SignatureDot.astro';
+import { getImage } from 'astro:assets';
+import ascii from '../../../brand/assets/img/how-it-works.png';
+const [avif, webp] = await Promise.all(
+  (['avif', 'webp'] as const).map((format) => getImage({ src: ascii, widths: [517, 1034], format })),
+);
+const steps = [
+  { n: '01', title: 'Call', body: 'Twenty minutes. You tell us what you need, by when, and what budget you have.' },
+  { n: '02', title: 'Proposal', body: 'Within 48 hours you get scope, final price, delivery date and what is out of scope. If it does not work for you, we stop there.' },
+  { n: '03', title: 'Design and build', body: 'We work in blocks and show you progress along the way. Two rounds of revisions included.' },
+  { n: '04', title: 'Handover', body: 'Launch, files and accounts in your name. Thirty days of support in case anything breaks.' },
+];
+---
+<section id="how-it-works" class="hiw" aria-labelledby="hiw-title">
+  <div class="hiw__path" aria-hidden="true">
+    <img src="/img/process-line.svg" alt="" width="1472" height="148" loading="lazy" />
+    <SignatureDot tone="muted" class="hiw__path-dot" />
+  </div>
+  <picture class="hiw__ascii">
+    <source type="image/avif" srcset={avif.srcSet.attribute} sizes="517px" />
+    <source type="image/webp" srcset={webp.srcSet.attribute} sizes="517px" />
+    <img src={webp.src} alt="" width={ascii.width} height={ascii.height} loading="lazy" decoding="async" />
+  </picture>
+
+  <div class="hiw__intro">
+    <SectionHeading eyebrow="How it works" id="hiw-title" tone="dark">Four steps, no surprises</SectionHeading>
+    <p class="hiw__lead">Every project starts with a 20-minute call. You get back a proposal with a fixed scope, a final price and a delivery date.</p>
+  </div>
+
+  <ol role="list" class="hiw__steps">
+    {steps.map((s) => (
+      <li class="hiw__step">
+        <span class="hiw__num">{s.n}</span>
+        <h3 class="hiw__step-title">{s.title}</h3>
+        <p class="hiw__step-body">{s.body}</p>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .hiw {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 81px;
+    padding: 95.25px var(--page-gutter) var(--sp-96);
+    background: var(--surface-charcoal);
+    color: var(--fg-on-ink);
+    overflow: hidden;
+  }
+  .hiw :global(.section-heading) { color: var(--fg-on-ink); }
+  .hiw__intro { position: relative; display: flex; flex-direction: column; gap: 22px; max-width: 810px; }
+  .hiw__lead { max-width: 739px; font-size: var(--fs-body); line-height: 1.5; }
+
+  /* Figma 2003:38 — path flipped vertically, bleeding 16px past both edges. */
+  .hiw__path { position: absolute; left: -16px; top: 397.26px; width: calc(100% + 32px); height: 148px; }
+  .hiw__path img { width: 100%; height: 100%; transform: scaleY(-1); }
+  .hiw__path :global(.hiw__path-dot) { position: absolute; left: calc(1183 / 1472 * 100%); top: 34px; }
+
+  .hiw__ascii { position: absolute; right: 0; top: 125.46px; width: 517px; height: 259px; }
+  .hiw__ascii img { width: 100%; height: 100%; object-fit: cover; }
+
+  .hiw__steps { position: relative; display: flex; gap: 0.75px; }
+  .hiw__step { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 14px; padding: 22px var(--sp-12); }
+  .hiw__num { font-family: var(--font-technical); font-size: var(--fs-eyebrow); line-height: 1.5; letter-spacing: 0.02em; }
+  .hiw__step-title { font-weight: 400; font-size: var(--fs-body); line-height: 1.5; }
+  .hiw__step-body { font-size: var(--fs-meta); line-height: 1.5; }
+</style>
