@@ -1,0 +1,36 @@
+---
+// Figma 149:6074 Final CTA.
+import Button from '../primitives/Button.astro';
+import SignatureDot from '../primitives/SignatureDot.astro';
+---
+<section class="cta" aria-labelledby="cta-title">
+  <div class="cta__copy">
+    <p class="cta__eyebrow">That's all for now.</p>
+    <h2 id="cta-title" class="cta__title">Got a project in mind?<br />Let’s talk<SignatureDot class="cta__dot" /></h2>
+  </div>
+  <div class="cta__action">
+    <Button href="#contact" width={172} height={56}>lets talk</Button>
+  </div>
+</section>
+
+<style>
+  .cta {
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+    padding: 66px var(--page-gutter);
+    background: var(--surface-inverse);
+    color: var(--text-inverse);
+    border-top: 0.6px solid var(--border-default);
+  }
+  .cta__copy { display: flex; flex-direction: column; gap: 4px; min-height: 214px; }
+  .cta__eyebrow { font-family: var(--font-technical); font-size: var(--fs-eyebrow); line-height: 1.5; letter-spacing: 0.02em; }
+  .cta__title {
+    font-weight: 400;
+    font-size: clamp(44px, 5.556vw, 80px);
+    line-height: 1.16;
+    letter-spacing: -0.02em;
+  }
+  .cta__title :global(.cta__dot) { margin-left: 0.25em; vertical-align: -0.04em; }
+  .cta__action { display: flex; justify-content: flex-end; }
+</style>
