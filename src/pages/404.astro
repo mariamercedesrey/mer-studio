@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Page not found — MER Studio" noindex>
+  <main id="main" class="not-found">
+    <a class="not-found__logo" href="/" aria-label="MER Studio, home">
+      <img src="/logo.svg" width="182" height="29" alt="" />
+    </a>
+    <div class="not-found__body">
+      <p class="not-found__eyebrow">Error 404</p>
+      <h1 class="not-found__title">This page doesn't exist<span class="not-found__dot" aria-hidden="true"></span></h1>
+      <a class="not-found__cta" href="/">back to home</a>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .not-found {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--sp-64);
+    padding: 28px var(--page-gutter) var(--sp-96);
+    background: var(--surface-soft);
+  }
+  .not-found__logo { display: inline-flex; align-self: flex-start; }
+  .not-found__body { display: flex; flex-direction: column; align-items: flex-start; gap: var(--sp-24); }
+  .not-found__eyebrow {
+    font-family: var(--font-technical);
+    font-size: var(--fs-eyebrow);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .not-found__title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 1.01;
+    letter-spacing: -0.03em;
+    max-width: 14ch;
+  }
+  .not-found__dot {
+    display: inline-block;
+    width: 0.2em; height: 0.2em;
+    margin-left: 0.04em;
+    border-radius: 50%;
+    background: var(--signature-dot-on-light);
+  }
+  .not-found__cta {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: var(--hit-min);
+    padding: 14px var(--sp-20);
+    border-radius: var(--r-pill);
+    background: var(--action-primary-background);
+    color: var(--action-primary-text);
+    text-decoration: none;
+    transition: background-color var(--dur-fast) var(--ease-precise), transform var(--dur-fast) var(--ease-precise);
+  }
+  .not-found__cta:hover { background: var(--accent-bright); }
+  .not-found__cta:active { transform: scale(0.97); }
+</style>

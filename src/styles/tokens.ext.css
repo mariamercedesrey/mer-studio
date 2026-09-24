@@ -1,0 +1,11 @@
+/* PROPOSED token extensions — values that appear in Figma but have no variable in /brand/tokens.
+   Each one is flagged for Mer's approval in the PR. Nothing here competes with an existing token. */
+:root {
+  --text-tagline: var(--fg-3);                    /* rgb(119,119,119) header tagline (already aliased in base.css) */
+  --opacity-work-inactive: 0.3;                   /* Selected Work subdued item (Figma items 2–8) */
+  --opacity-marquee-logo: 0.55;                   /* client logos */
+  --blur-nav: 3.611px;                            /* nav capsule backdrop blur (Figma 149:5116) */
+  --radius-nav: 30.333px;                         /* nav capsule radius (Figma 149:5116) */
+  --shadow-mockup-sm: 0 3.78px 3.78px rgba(0, 0, 0, 0.25);
+  --shadow-mockup-lg: 22.431px 44.863px 12.462px rgba(0, 0, 0, 0.12);
+}
