@@ -1,0 +1,24 @@
+{
+  "name": "mer-studio",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@fontsource-variable/bricolage-grotesque": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@fontsource-variable/outfit": "^5.3.0",
+    "@fontsource/instrument-serif": "^5.3.0",
+    "astro": "^7.3.5"
+  },
+  "devDependencies": {
+    "playwright": "^1.63.0",
+    "sharp": "^0.35.4",
+    "typescript": "^7.0.2"
+  }
+}

@@ -1,0 +1,239 @@
+---
+// Figma 149:5104 Hero — header band (soft) + video row with the "m" mark and the hero dot.
+import SiteHeader from './SiteHeader.astro';
+import Button from '../primitives/Button.astro';
+import SignatureDot from '../primitives/SignatureDot.astro';
+import { getImage } from 'astro:assets';
+import heroPoster from '../../assets/hero-poster.webp';
+
+// Responsive poster under the video: it is the LCP element, so mobile gets a small file.
+const poster = await getImage({ src: heroPoster, widths: [480, 800, 1218], format: 'webp', quality: 72 });
+
+const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Finance', 'Foreign Trade', 'startups', 'Enterprise', 'Healthcare'];
+const BOOK_A_CALL = 'mailto:hello@mer.studio?subject=Book%20a%20call';
+---
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__band">
+    <SiteHeader />
+    <div class="hero__intro">
+      <div class="hero__copy">
+        <p class="hero__lead">From the first decision to the last detail.</p>
+        <h1 id="hero-title" class="hero__title">Strategy, design and build, end to end.</h1>
+      </div>
+      <Button href={BOOK_A_CALL} width={183}>book a call</Button>
+    </div>
+  </div>
+
+  <div class="hero__row">
+    <div class="hero__media-col">
+      <div class="hero__media">
+        <img
+          class="hero__poster"
+          src={poster.src}
+          srcset={poster.srcSet.attribute}
+          sizes="(min-width: 1200px) 65vw, 100vw"
+          width="1218"
+          height="684"
+          alt=""
+          fetchpriority="high"
+          decoding="async"
+        />
+        <video
+          class="hero__video"
+          src="/video/hero.mp4"
+          poster={poster.src}
+          width="1218"
+          height="684"
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          aria-hidden="true"
+          data-inview-video
+          data-reveal-on-play
+        ></video>
+      </div>
+      <div class="hero__worked">
+        <h2 class="hero__worked-title">wHERE WE'VE WORKED</h2>
+        <ul role="list" class="hero__industries">
+          {industries.map((name) => <li>[{name}]</li>)}
+        </ul>
+      </div>
+    </div>
+
+    <div class="hero__aside">
+      <div class="hero__mark" aria-hidden="true">
+        <span class="hero__m">m</span>
+        <SignatureDot class="hero__dot" tone="dark" motion="hero-path" />
+      </div>
+      <p class="hero__summary">Strategy, design and code, handled end to end by one team. Twenty-five years across enterprise products and US startups, applied at any size — a brand, a website, an online store, a full platform.</p>
+      <Button href="#contact" width={185}>start a project</Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero { position: relative; }
+
+  /* Header band — Figma 149:5105: soft ground, 28/48/100 padding, overlapped 65px by the row below. */
+  .hero__band {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 116px;
+    padding: 28px var(--page-gutter) 100px;
+    margin-bottom: -65px;
+    background: var(--surface-soft);
+  }
+  .hero__intro {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    gap: 23.75px;
+    min-height: 502px;
+  }
+  .hero__copy { max-width: 880px; }
+  .hero__lead {
+    font-weight: 500;
+    font-size: var(--fs-lead);
+    line-height: 1.2;
+  }
+  .hero__title {
+    font-weight: 400;
+    font-size: clamp(48px, 6.667vw, 96px);
+    line-height: 1.01;
+    letter-spacing: -0.03em;
+  }
+
+  /* Row — Figma 149:5139 / 2003:480 */
+  .hero__row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--sp-48);
+    padding: 0 var(--page-gutter) 70px 0;
+  }
+  .hero__media-col {
+    flex: 0 0 auto;
+    width: calc(929 / 1392 * 100%); /* row content box = 1440 − 48 right padding */
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-24);
+  }
+  .hero__media { position: relative; aspect-ratio: 929 / 507; overflow: hidden; background: var(--surface-canvas); }
+  /* The dot passes behind the hero image on its way in (Mer, round 3). */
+  .hero__media { z-index: 2; }
+  .hero__aside { position: relative; z-index: 1; }
+  /* Hide the dot until its driver starts, so it doesn't flash at rest first. Safety net: it
+     reveals itself after 4 s if the script never runs. Reduced motion: always visible. */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .hero__mark :global(.hero__dot:not([data-motion-state])) { animation: hero-dot-reveal 0s 4s both; }
+  }
+  @keyframes hero-dot-reveal { from { visibility: hidden; } to { visibility: visible; } }
+  .hero__poster, .hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  /* The video only shows once it is actually playing; until then (or if autoplay is refused,
+     or under reduced motion) the Figma frame — the poster image underneath — stays visible. */
+  .hero__video { opacity: 0; transition: opacity var(--dur-base) var(--ease-precise); }
+  .hero__video[data-playing] { opacity: 1; }
+  .hero__worked {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-20);
+    padding: 22px 0 0 var(--page-gutter);
+  }
+  .hero__worked-title {
+    font-family: var(--font-technical);
+    font-weight: 400;
+    font-size: var(--fs-eyebrow);
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+  }
+  .hero__industries {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-family: var(--font-technical);
+    font-size: var(--fs-caption);
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+  }
+
+  .hero__aside {
+    flex: 1 1 0;
+    min-width: 0;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--sp-24);
+    padding: 25px 0;
+  }
+  /* The "m" + dot, Figma 149:5143. Positions are expressed in em of the glyph so they scale together. */
+  .hero__mark {
+    display: inline-grid;
+    font-size: clamp(160px, 19.82vw, 285.422px);
+  }
+  .hero__m {
+    grid-area: 1 / 1;
+    font-family: var(--font-brand);
+    font-weight: 800;
+    font-variation-settings: 'opsz' 14, 'wdth' 100;
+    font-size: 1em;
+    line-height: normal;
+    letter-spacing: -0.07em;
+    text-box: trim-both cap alphabetic;
+  }
+  .hero__mark :global(.hero__dot) {
+    grid-area: 1 / 1;
+    position: relative;
+    will-change: translate, rotate, scale;
+    width: 0.161em;
+    height: 0.161em;
+    margin: 0.4921em 0 0 0.6667em;
+  }
+  .hero__summary {
+    font-weight: 500;
+    font-size: var(--fs-lead);
+    line-height: 1.2;
+  }
+
+  /* Tablet + mobile: the band no longer overlaps the row; the row stacks as
+     video → m + summary → where we've worked. */
+  @media (max-width: 1199px) {
+    .hero__band { gap: 72px; padding-bottom: 64px; margin-bottom: 0; }
+    .hero__intro { min-height: 0; }
+    .hero__title { font-size: clamp(56px, 8.5vw, 96px); }
+    .hero__row { display: flex; flex-direction: column; align-items: stretch; gap: 0; padding: 0 0 64px; }
+    .hero__media-col { display: contents; }
+    .hero__media { order: 1; }
+    .hero__aside {
+      order: 2;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto auto;
+      column-gap: var(--sp-48);
+      row-gap: var(--sp-24);
+      align-items: end;
+      padding: var(--sp-48) var(--page-gutter) 0;
+    }
+    .hero__mark { grid-row: 1 / span 2; align-self: start; font-size: clamp(120px, 22vw, 220px); }
+    .hero__aside :global(.btn) { justify-self: start; }
+    .hero__worked { order: 3; padding: var(--sp-48) var(--page-gutter) 0; }
+  }
+  @media (max-width: 767px) {
+    .hero__band { gap: 56px; padding-top: 20px; padding-bottom: 48px; }
+    .hero__lead { font-size: 20px; }
+    .hero__title { font-size: clamp(40px, 11.5vw, 56px); }
+    .hero__aside { display: flex; flex-direction: column; align-items: flex-start; padding-top: var(--sp-40); }
+    .hero__mark { font-size: 132px; }
+    .hero__summary { font-size: 20px; }
+    .hero__worked { padding-top: var(--sp-40); }
+    .hero__worked-title { font-size: var(--fs-meta); }
+  }
+</style>
+
+<script>
+  import { initDotMotion } from '../../scripts/dot-motion';
+  initDotMotion();
+</script>

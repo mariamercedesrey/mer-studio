@@ -1,7 +1,122 @@
-# MER.studio — Pre-implementation audit
+# MER.studio — Pre-implementation audit and V1 record
 
-Status: **decisions rounds 1–3 applied** (below). Only Q-K (Figma access) is open (§7). No implementation code has been written.
-Date: 2026-09-24 · Branch: `claude/sharp-ptolemy-jo36c2` · Base: `main` @ `7f854b0`
+Status: **V1 built** on PR [#4](https://github.com/mariamercedesrey/mer-studio/pull/4) (branch `claude/pensive-keller-lahj90`), waiting for Mer's merge. The final V1 state is below. The original audit follows it, unchanged, as the history of decisions rounds 1–3. Where the two disagree, **the V1 state and today's decisions (rounds 4–7) win.**
+Audit date: 2026-09-24 (branch `claude/sharp-ptolemy-jo36c2`, base `main` @ `7f854b0`) · V1 build: 2026-09-24.
+
+Pending work lives in [`docs/backlog.md`](./backlog.md).
+
+---
+
+## V1 state (what ships)
+
+**Stack.** Astro 7, static output. There is **no React**: Project Detail uses a native `<dialog>` with a small vanilla script, so `@astrojs/react` was removed. The CSS is plain and imports `/brand/tokens` directly; `src/styles/tokens.ext.css` holds the approved extensions. It deploys to Netlify through `netlify.toml`.
+
+**Pages**
+- `/`: the full home page, in Figma order.
+- `/work/asociart`: a prerendered Project Detail (the deep link).
+- `/404`
+
+**Sections** (Figma `149:5103`), each built from `get_design_context` for its section:
+
+| Section | Notes |
+|---|---|
+| Header + Hero | The "EN" chip is removed (R2-F). The hero video plays only while in view, and a responsive poster (the bricks frame, which is also the LCP image) stays until it plays. The hero dot animates (see Motion). |
+| Client marquee | 17 logos. The Figma layers were rebuilt; composites that use client fonts are pre-rendered to WebP at 2×. Blend modes are kept against ink. It loops **right** at about 127 px/s, pauses on hover/focus and is static under reduced motion. The duplicate raster L'Oréal was removed (R4-E). |
+| Selected Work | **7 projects**: Asociart, Orchardmile, 250 brands, Industrial, Safety net, **APS (restored)** and Six business units. Coupon is hidden. Media is drawn at Figma size and scaled to the column. Items **alternate left/right over the visible projects** (R4-C). Scroll activation dims **only the imagery** of inactive items, and captions stay at full opacity (R6-A). Only Asociart opens (D5). |
+| APS mockup | Rebuilt layer by layer from the Figma originals (`brand/assets/work/aps-mockup/`, see its README) over the court video: rope mask with multiply shadow and screen highlight, three reflections at linear-dodge 60%, the screen through its layer mask, and the rope lines (SVG). |
+| Project Detail | Figma `2033:1913`. Overlay with a 280 ms fade (R2-D). The URL mirrors `/work/<slug>` and Back closes it. It has focus containment, Esc and scroll lock, and focus returns to the opener. Content comes from `src/data/project-details.ts`. |
+| Pixel banner | Uses the **monochrome** Figma fill (`brand/assets/img/pixel-banner-mono.png`, new) with the Figma crop. |
+| Services | The AI Visibility row is the `#ai-visibility` anchor. "Always included" is **ink** (R7-A), where Figma draws it in accent-dark. |
+| How it works | The dashed path and grey path dot are desktop only. The ASCII panel is aligned to the eyebrow at 92% so "04" is visible (R4-D). |
+| About, Final CTA | Built as in Figma. |
+| Contact, Footer | `hello@mer.studio`, `+54 9 11 41742309` and a `mailto:` "book a call" (subject "Book a call"). No form (D3, R3-A). |
+
+**Colour rule (R7-A).** Yellow **text** is allowed only on dark grounds, using `--accent-primary`. On light grounds text is ink (`--text-primary`) and yellow is only an accent: dots and underlines use `--accent-dark`. There are three yellow tokens and no new ones. Components use only the semantic `--text-*`, `--surface-*` and `--action-*` tokens, never `--color-text-primary`.
+
+**Motion (V1)**
+- **Hero dot:** the Figma `149:5173` trajectory plays **once on load** in about 3.1 s (`src/scripts/dot-motion.ts`, driver `hero-path`). It enters from the left **behind the hero image**, arcs up, rotates about −40°, squashes and lands **on the "m" at the static Figma position** (R5-B, R7-B). The tracks are normalised to end at identity, and lengths are in em of the glyph so the path scales. It stays static under reduced motion, without WAAPI individual-transform support, or if the page opens already scrolled past the hero.
+- **Marquee:** continuous rightward loop.
+- **Selected Work:** opacity activation over 500 ms.
+- **Project Detail:** 280 ms fade.
+- **Buttons and links:** hover and press follow the DS rules.
+- **Videos:** play only while in view, and never under reduced motion.
+
+**Responsive (D4).** Breakpoints are <768, 768–1199 and ≥1200 px. Gutters go 48 → 32 → 20.
+- Hero stacks below desktop.
+- Selected Work keeps its offset on tablet and goes full width on mobile.
+- Services stacks on mobile.
+- How it works: steps go 2×2 on tablet and 1 column on mobile.
+- About: stats go 2×2.
+- Project Detail: the gallery scrolls sideways with snap.
+- No horizontal overflow at 390 or 820 px.
+- Screenshots: `docs/qa/phase1` (desktop vs Figma) and `docs/qa/phase2/{mobile,tablet}`.
+
+**Performance and accessibility**
+- Fonts are latin-only and limited to the families and styles used (Outfit, Bricolage opsz, JetBrains Mono, Instrument Serif Italic). Outfit is preloaded.
+- All CSS is inlined.
+- Images are AVIF/WebP via `astro:assets`, and logos are WebP.
+- Lighthouse mobile on the local production build:
+
+| Page | Performance | Accessibility | Best practices | SEO |
+|---|---|---|---|---|
+| `/` | 93–100 | 96 | 100 | 100 |
+| `/work/asociart` | 100 | 98 | 100 | 100 |
+
+The last accessibility item on `/` ("Always included" contrast) was fixed in R7-A; it hasn't been re-measured on Netlify.
+
+**SEO.** Canonical, OG/Twitter meta, the **OG image `public/og.png` (approved, R6-C)**, favicon SVG plus PNG fallbacks and the apple-touch icon.
+
+## Decisions (Mer, round 4: first Phase 1 review)
+
+| # | Topic | Decision |
+|---|---|---|
+| R4-A | Figma access | `www.figma.com` worked in this session. Morning Salad and the APS mockup layers were exported by image hash. **APS is restored in Selected Work** (overrides R3-B). Closes Q-K. |
+| R4-B | Hero dot rest | The final position is **on the "m", as in the static Figma frame**, not the timeline end (+75 px). |
+| R4-C | Selected Work alignment | **Re-alternate left/right** over the visible projects after hiding Coupon. |
+| R4-D | How it works | The ASCII panel **must not cover "04"**. It is now aligned to the eyebrow at 92% of its Figma size. |
+| R4-E | Hero / marquee | **Remove** the canvas circle at the hero's left edge (Figma `149:5138`) and the **duplicate L'Oréal**. `[Fashion]` styled like the other industries is fine. |
+| R4-F | Tokens | `src/styles/tokens.ext.css` is **approved**: `--opacity-work-inactive`, `--opacity-marquee-logo`, `--blur-nav`, `--radius-nav`, `--shadow-mockup-sm/lg`, `--dot-muted`, `--text-tagline`. |
+| R4-G | Scope | Responsive plus perf/a11y/Lighthouse (steps 11–13) go in the same PR. The hero dot animation is deferred (later reversed, R7-B). |
+
+## Decisions (Mer, round 5)
+
+| # | Topic | Decision |
+|---|---|---|
+| R5-A | OG image | Waiting for approval (resolved in R6-C). |
+| R5-B | Hero dot | Stays static on the "m" for this round (superseded by R7-B). |
+
+## Decisions (Mer, round 6)
+
+| # | Topic | Decision |
+|---|---|---|
+| R6-A | Selected Work contrast | Inactive items **dim only the images**; captions stay at full opacity. |
+| R6-B | Yellow on light | Use the dark yellow token for yellow on light grounds (refined by R7-A). |
+| R6-C | OG image | **Approved.** |
+
+## Decisions (Mer, round 7)
+
+| # | Topic | Decision |
+|---|---|---|
+| R7-A | Yellow text rule | Yellow **text** only on dark grounds (bright yellow). On light grounds text is **ink**, with yellow only as an accent. Keep the three existing yellow tokens; no new ones. |
+| R7-B | Hero dot animation | **In V1.** The Figma trajectory plays once on load, passes behind the hero image and lands on the "m" at about 3.1 s. It stays static under reduced motion. |
+| R7-C | Hero video | `hero.mp4` **stays as is**. Frame 0 is the bricks frame and matches Figma. The white "mer.studio" end card (19.9–22 s) is **kept, not trimmed**. The video fades in only once it's playing, so the Figma frame shows whenever it isn't. |
+| R7-D | Merge | Mer merges PR #4 herself. |
+
+## Deviations from Figma in V1 (deliberate)
+
+- EN chip removed (R2-F).
+- Hero edge circle and the duplicate L'Oréal removed (R4-E).
+- Selected Work alternation recomputed over visible items (R4-C).
+- ASCII panel moved and scaled (R4-D).
+- Inactive items dim images only (R6-A).
+- "Always included" and nav hover are ink (R7-A); headings' dots use `--accent-dark` on light grounds.
+- Heading dots share one inline spacing (±a few px from each Figma position).
+- Text on dark uses `--fg-on-ink` (neutral-50) where How it works uses `surface-soft` in Figma (1–3 RGB levels).
+- Not rendered:
+  - The Selected Work tag strip ("Project [Design]…"), which is clipped inside its Figma frame.
+  - Testimonials (hidden in Figma, D6).
+
+---
 
 ## Decisions (Mer, round 1)
 

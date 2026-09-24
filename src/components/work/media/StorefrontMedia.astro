@@ -1,0 +1,28 @@
+---
+// Figma 149:5418 — one source image, three rotated crops (KK1–3) + laptop.
+import WorkImage from '../WorkImage.astro';
+import store from '../../../../brand/assets/work/storefront-bg.jpg';
+import desktop from '../../../../brand/assets/work/asociart-desktop.png';
+const strips = [
+  { box: [691.27, -92.02, 661.533, 873.043], inner: [410.992, 777.549], img: [139.76, 373.56, -19.88, 0] },
+  { box: [245.01, -189.63, 690.949, 1008.174], inner: [383.109, 932.875], img: [149.93, 311.36, -23.26, -102.03] },
+  { box: [-134.54, -93.45, 691.803, 1010.407], inner: [383.109, 935.265], img: [149.93, 310.57, -29.74, -210.74] },
+];
+---
+<div class="work-media" style="background:var(--surface-base)">
+  {strips.map((s) => (
+    <div class="ms__box" style={`left:${s.box[0]}px;top:${s.box[1]}px;width:${s.box[2]}px;height:${s.box[3]}px`}>
+      <div class="ms__strip" style={`width:${s.inner[0]}px;height:${s.inner[1]}px`}>
+        <WorkImage src={store} width={s.inner[0] * s.img[0] / 100} class="fill-pic"
+          style={`width:${s.img[0]}%;height:${s.img[1]}%;left:${s.img[2]}%;top:${s.img[3]}%`} />
+      </div>
+    </div>
+  ))}
+  <WorkImage src={desktop} width={585} class="ms__desktop fill-pic" />
+</div>
+
+<style is:global>
+  .ms__box { position: absolute; display: flex; align-items: center; justify-content: center; }
+  .ms__strip { position: relative; flex: none; overflow: hidden; opacity: 0.7; transform: rotate(-20.92deg); }
+  .ms__desktop { left: 233px; top: 153px; width: 584.992px; height: 347.76px; box-shadow: var(--shadow-mockup-sm); }
+</style>

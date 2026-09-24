@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/sections/Hero.astro';
+import ClientMarquee from '../components/sections/ClientMarquee.astro';
+import SelectedWork from '../components/sections/SelectedWork.astro';
+import PixelBanner from '../components/sections/PixelBanner.astro';
+import Services from '../components/sections/Services.astro';
+import HowItWorks from '../components/sections/HowItWorks.astro';
+import About from '../components/sections/About.astro';
+import FinalCTA from '../components/sections/FinalCTA.astro';
+import Contact from '../components/sections/Contact.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import ProjectOverlay from '../components/work/ProjectOverlay.astro';
+---
+<BaseLayout>
+  <main id="main">
+    <Hero />
+    <ClientMarquee />
+    <SelectedWork />
+    <PixelBanner />
+    <Services />
+    <HowItWorks />
+    <About />
+    <FinalCTA />
+    <Contact />
+  </main>
+  <SiteFooter />
+  <ProjectOverlay />
+</BaseLayout>
+
+<script>
+  import { initInviewVideos } from '../scripts/inview-video';
+  initInviewVideos();
+</script>

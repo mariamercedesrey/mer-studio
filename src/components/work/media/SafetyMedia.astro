@@ -1,0 +1,23 @@
+---
+// Figma 2024:1631
+import WorkImage from '../WorkImage.astro';
+import logo from '../../../../brand/assets/work/safety-logo.png';
+import long from '../../../../brand/assets/work/safety-long.png';
+import group from '../../../../brand/assets/work/safety-group.png';
+import phone from '../../../../brand/assets/work/safety-phone.png';
+---
+<div class="work-media" style="background:#e5e5e5">
+  <WorkImage src={logo} width={227} class="fill-pic" style="left:342.66px;top:26.44px;width:227.137px;height:108.161px" />
+  <div class="mf__long"><WorkImage src={long} width={274} class="fill-pic" style="left:-5.56%;top:0;width:111.17%;height:99.97%" /></div>
+  <WorkImage src={group} width={422} class="fill-pic" style="left:292.85px;top:170.4px;width:421.826px;height:456.978px;opacity:.55" />
+  <div class="mf__phone-box">
+    <WorkImage src={phone} width={256} class="mf__phone" />
+  </div>
+</div>
+
+<style is:global>
+  .mf__long { position: absolute; left: 27.54px; top: 27.03px; width: 246.616px; height: 970.19px; overflow: hidden; }
+  .mf__phone-box { position: absolute; right: 0.16px; bottom: 0.5px; width: 330.447px; height: 522.505px; display: flex; align-items: center; justify-content: center; }
+  .mf__phone-box .mf__phone { display: block; flex: none; width: 256.102px; height: 487.988px; transform: rotate(9.15deg); }
+  .mf__phone-box .mf__phone img { width: 100%; height: 100%; object-fit: cover; }
+</style>

@@ -1,0 +1,35 @@
+---
+// Optimised <picture> for Selected Work layers: AVIF/WebP at 1× and 2× of the Figma display width.
+// Layout (position, crop, blend) is supplied by the caller through class/style.
+import type { ImageMetadata } from 'astro';
+import { getImage } from 'astro:assets';
+
+interface Props {
+  src: ImageMetadata;
+  width: number;          // rendered CSS width in px at 1440
+  alt?: string;
+  class?: string;
+  style?: string;
+  eager?: boolean;
+}
+const { src, width, alt = '', class: className, style, eager = false } = Astro.props;
+const w1 = Math.min(Math.round(width), src.width);
+const w2 = Math.min(Math.round(width * 2), src.width);
+const widths = [...new Set([w1, w2])];
+const [avif, webp] = await Promise.all(
+  ['avif', 'webp'].map((format) => getImage({ src, widths, format: format as 'avif' | 'webp' })),
+);
+const fallback = await getImage({ src, width: w2, format: 'webp' });
+---
+<picture class={className} style={style}>
+  <source type="image/avif" srcset={avif.srcSet.attribute} sizes={`${Math.round(width)}px`} />
+  <source type="image/webp" srcset={webp.srcSet.attribute} sizes={`${Math.round(width)}px`} />
+  <img
+    src={fallback.src}
+    alt={alt}
+    width={src.width}
+    height={src.height}
+    loading={eager ? 'eager' : 'lazy'}
+    decoding="async"
+  />
+</picture>

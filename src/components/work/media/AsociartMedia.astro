@@ -1,0 +1,28 @@
+---
+// Figma 2024:1464 — design system board, laptop with Morning Salad screen, mobile.
+import WorkImage from '../WorkImage.astro';
+import system from '../../../../brand/assets/work/asociart-system.png';
+import desktop from '../../../../brand/assets/work/asociart-desktop.png';
+import salad from '../../../../brand/assets/work/asociart-morning-salad.png';
+import mobile from '../../../../brand/assets/work/asociart-mobile.png';
+---
+<div class="work-media" style="background:#ebebeb">
+  <div class="ma__wc">
+    <div class="ma__system">
+      <WorkImage src={system} width={748} class="fill" />
+    </div>
+    <WorkImage src={desktop} width={585} class="ma__desktop fill-pic" />
+    <div class="ma__salad"><WorkImage src={salad} width={461} class="ma__salad-img fill-pic" /></div>
+  </div>
+  <WorkImage src={mobile} width={211} class="ma__mobile fill-pic" />
+</div>
+
+<style is:global>
+  .ma__wc { position: absolute; right: 0; top: -28.87px; width: 1049px; height: 711.741px; overflow: hidden; background: #efefef; }
+  .ma__system { position: absolute; left: 0; top: 0; width: 748px; height: 711px; background: rgba(239, 239, 239, 0.22); }
+  .ma__system::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(239, 239, 239, 0) 64.886%, #efefef); }
+  .ma__desktop { left: 232px; top: 181.97px; width: 584.992px; height: 347.76px; box-shadow: var(--shadow-mockup-sm); }
+  .ma__salad { position: absolute; left: 295px; top: 200.97px; width: 461px; height: 288px; overflow: hidden; }
+  .ma__salad-img { left: -0.09%; top: -0.21%; width: 100%; height: 110.51%; }
+  .ma__mobile { left: 802.19px; top: 94.13px; width: 210.638px; height: 490.35px; }
+</style>

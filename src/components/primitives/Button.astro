@@ -1,0 +1,53 @@
+---
+// Figma 2007:229 Button — Style: Primary / Secondary / Ghost. Hover/press/focus are DS code-side rules.
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'ghost';
+  type?: 'button' | 'submit';
+  width?: number;   // Figma fixes some CTAs to a width (e.g. 183px)
+  height?: number;  // and a few to 56px tall
+  class?: string;
+  [key: string]: unknown;
+}
+const { href, variant = 'primary', type = 'button', width, height, class: className, ...rest } = Astro.props;
+const size = [width && `width:${width}px`, height && `min-height:${height}px`].filter(Boolean).join(';') || undefined;
+const Tag = href ? 'a' : 'button';
+---
+<Tag
+  class:list={['btn', `btn--${variant}`, className]}
+  href={href}
+  type={href ? undefined : type}
+  style={size}
+  {...rest}
+><slot /></Tag>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-8);
+    min-height: var(--hit-min);
+    max-width: 100%;
+    padding: 14px var(--sp-20);
+    border: 0;
+    border-radius: var(--r-pill);
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: var(--fs-body);
+    line-height: 1.5;
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      background-color var(--dur-fast) var(--ease-precise),
+      transform var(--dur-fast) var(--ease-precise);
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn--primary { background: var(--action-primary-background); color: var(--action-primary-text); }
+  .btn--primary:hover { background: var(--accent-bright); }
+  .btn--secondary { background: var(--action-secondary-background); color: var(--action-secondary-text); }
+  .btn--secondary:hover { background: var(--surface-charcoal); }
+  .btn--ghost { background: transparent; color: var(--action-ghost-text); }
+  .btn--ghost:hover { background: var(--fills-primary); }
+</style>

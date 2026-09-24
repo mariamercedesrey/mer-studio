@@ -1,0 +1,32 @@
+---
+// MER signature dot. Motion is attached by drivers via data-motion ("none" by default),
+// so behaviour can evolve without touching the surrounding markup (CLAUDE.md §7).
+interface Props {
+  size?: number;
+  tone?: 'accent' | 'dark' | 'muted';
+  motion?: string;
+  class?: string;
+  [key: string]: unknown;
+}
+const { size = 24, tone = 'accent', motion = 'none', class: className, ...rest } = Astro.props;
+---
+<span
+  class:list={['mer-dot', `mer-dot--${tone}`, className]}
+  style={`--dot-size:${size}px`}
+  data-motion={motion}
+  aria-hidden="true"
+  {...rest}
+></span>
+
+<style>
+  .mer-dot {
+    display: inline-block;
+    flex-shrink: 0;
+    width: var(--dot-size);
+    height: var(--dot-size);
+    border-radius: 50%;
+    background: var(--accent-primary);
+  }
+  .mer-dot--dark { background: var(--accent-dark); }
+  .mer-dot--muted { background: var(--dot-muted); }
+</style>

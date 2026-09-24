@@ -1,0 +1,106 @@
+---
+// Figma 149:6015 About.
+import Button from '../primitives/Button.astro';
+import { getImage } from 'astro:assets';
+import portrait from '../../../brand/assets/img/mer-portrait.png';
+const [avif, webp] = await Promise.all(
+  (['avif', 'webp'] as const).map((format) => getImage({ src: portrait, widths: [334, 668], format })),
+);
+const stats = [
+  { value: '25+', label: 'years of experience designing products, brands and websites' },
+  { value: '35+', label: 'websites and digital products delivered directly to clients' },
+  { value: '1:1', label: 'Direct access to the senior designer, from first call to final files' },
+  { value: '7', label: 'years designing for US startups, working alongside founders' },
+];
+---
+<section id="about" class="about" aria-labelledby="about-title">
+  <div class="about__panel">
+    <div class="about__intro">
+      <picture class="about__portrait">
+        <source type="image/avif" srcset={avif.srcSet.attribute} sizes="334px" />
+        <source type="image/webp" srcset={webp.srcSet.attribute} sizes="334px" />
+        <img src={webp.src} alt="Mer (Mercedes Rey), founder of MER Studio" width={portrait.width} height={portrait.height} loading="lazy" decoding="async" />
+      </picture>
+      <div class="about__copy">
+        <div class="about__heading">
+          <p class="about__eyebrow">about us</p>
+          <h2 id="about-title" class="about__title">I'm Mer.&nbsp; I've been designing digital products for more than 25 years.</h2>
+        </div>
+        <p class="about__body">Eight of those years went into complex enterprise products, and seven into working with US startups, often directly with founders and CEOs. That is what I bring to a small project: the judgement to decide quickly and well, and the ability to build what I design.</p>
+      </div>
+    </div>
+    <dl class="about__stats">
+      {stats.map((s) => (
+        <div class="about__stat">
+          <dt class="about__value">{s.value}</dt>
+          <dd class="about__label">{s.label}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+  <Button href="mailto:hello@mer.studio?subject=Book%20a%20call" width={201} height={56}>book a call</Button>
+</section>
+
+<style>
+  .about {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 58px;
+    padding: 100px var(--page-gutter);
+    background: var(--surface-inverse);
+    color: var(--fg-on-ink);
+  }
+  .about__panel { width: 100%; display: flex; flex-direction: column; }
+  .about__intro {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    border: 0.75px dashed var(--fg-on-ink);
+  }
+  /* Portrait: mirrored, luminosity-blended against ink (greyscale), hairline dashed frame. */
+  .about__portrait {
+    flex: 0 0 334px;
+    height: 297px;
+    border: 0.311px dashed var(--fg-on-ink);
+  }
+  /* Transform + blend on the image itself, so nothing isolates it from the ink ground. */
+  .about__portrait img { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); mix-blend-mode: luminosity; }
+  .about__copy { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: var(--sp-24); padding-right: var(--sp-24); }
+  .about__heading { display: flex; flex-direction: column; gap: var(--sp-24); padding-top: 3.95px; }
+  .about__eyebrow { font-family: var(--font-technical); font-size: var(--fs-eyebrow); line-height: 1.5; letter-spacing: 0.02em; }
+  .about__title { font-weight: 500; font-size: clamp(34px, 3.333vw, 48px); line-height: 1.1; letter-spacing: -0.02em; }
+  .about__body { font-size: var(--fs-body); line-height: 1.5; }
+
+  .about__stats { display: flex; margin: 0; border-bottom: 0.45px solid var(--fg-on-ink); }
+  .about__stat {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--sp-12);
+    padding: 25px var(--sp-40);
+    border-left: 0.4px dashed var(--fg-on-ink);
+  }
+  .about__stat:first-child { border-top: 0.4px dashed var(--fg-on-ink); }
+  .about__stat:last-child { border-right: 0.4px dashed var(--fg-on-ink); }
+  .about__value { font-weight: 500; font-size: clamp(34px, 3.333vw, 48px); line-height: 1.1; letter-spacing: -0.02em; color: var(--accent-primary); }
+  .about__label { margin: 0; font-size: var(--fs-meta); line-height: 1.5; }
+
+  @media (max-width: 1199px) {
+    .about { padding-top: var(--sp-80); padding-bottom: var(--sp-80); gap: var(--sp-48); }
+    .about__intro { gap: var(--sp-32); }
+    .about__portrait { flex-basis: 280px; height: 249px; }
+    .about__stats { display: grid; grid-template-columns: 1fr 1fr; border-right: 0.4px dashed var(--fg-on-ink); }
+    .about__stat { border-top: 0.4px dashed var(--fg-on-ink); padding: var(--sp-24); }
+    .about__stat:last-child { border-right: 0; }
+  }
+  @media (max-width: 767px) {
+    .about__intro { flex-direction: column; align-items: stretch; gap: 0; }
+    .about__portrait { flex: none; width: 100%; height: auto; aspect-ratio: 334 / 297; }
+    .about__copy { padding: var(--sp-24) var(--sp-20) var(--sp-32); }
+    .about__stat { padding: var(--sp-20) var(--sp-16); gap: var(--sp-8); }
+    .about__label { font-size: var(--fs-caption); }
+  }
+</style>
