@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1154.3" height="654" viewBox="0 0 1154.3 654" fill="none">
+  <!-- Figma 2024:1708 "Rectangle 42000" + 2024:1709 "Rectangle", in Rubber Laptop Mockup frame coordinates -->
+  <defs>
+    <linearGradient id="a" x1="151.814" y1="325.897" x2="149.624" y2="327.76" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ED5601"/><stop offset=".225962" stop-color="#933500"/><stop offset=".586538" stop-color="#ED5601"/>
+    </linearGradient>
+    <linearGradient id="b" x1="884.86" y1="326.333" x2="884.86" y2="326.342" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#AA4207"/><stop offset=".225962" stop-color="#873101"/><stop offset=".586538" stop-color="#AA4207"/>
+    </linearGradient>
+  </defs>
+  <path d="M-12.5801 131.929L357.292 570.618L354.768 572.765L-15.1047 134.076L-12.5801 131.929Z" fill="url(#a)"/>
+  <path d="M309.663 -169.31L472.602 380.876L469.428 381.831L306.489 -168.355L309.663 -169.31Z" fill="url(#a)"/>
+  <path d="M912.476 -7.68529L462.613 308.795L460.105 307.541L910.546 -10.165L912.476 -7.68529Z" fill="url(#a)"/>
+  <rect x="490.964" y="323.743" width="849.456" height="2.60738" transform="rotate(-27.0086 490.964 323.743)" fill="url(#b)"/>
+</svg>

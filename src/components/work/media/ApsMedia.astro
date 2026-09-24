@@ -1,0 +1,84 @@
+---
+// Figma 2024:1682 "Rubber Laptop Mockup" — layered composite over the court video.
+// Every layer is positioned in frame coordinates (1154.3 × 654). Masks, blend modes and
+// opacities follow Figma; see brand/assets/work/aps-mockup/README.md for the layer map.
+const L = '/work/aps';
+// Figma relativeTransform [[a,c,e],[b,d,f]] → CSS matrix(a,b,c,d,e,f); sizes are the instance sizes.
+const screens = {
+  refl3: { m: [-0.8233059, -0.5675980, -0.5675980, 0.8233059, 647.8556, 442.3355], w: 285.4887, h: 171.9871 },
+  refl2: { m: [0.8182578, 0.5748515, 0.5748515, -0.8182578, -53.5213, 484.9285], w: 404.5616, h: 243.7203 },
+  refl1: { m: [0.8182578, 0.5748515, 0.5748515, -0.8182578, 61.8702, 487.1440], w: 301.7762, h: 181.7992 },
+  main: { m: [0.8180414, 0.5751592, -0.5751592, 0.8180414, 282.3523, 187.2316], w: 265.8526, h: 160.1577 },
+};
+const screenStyle = (s: { m: number[]; w: number; h: number }) =>
+  `width:${s.w}px;height:${s.h}px;transform:matrix(${s.m.join(',')})`;
+---
+<div class="work-media mp">
+  <video
+    class="mp__video"
+    src="/video/selected-work-court-bg.mp4"
+    poster="/video/selected-work-court-bg.webp"
+    muted loop playsinline preload="none"
+    aria-hidden="true"
+    data-inview-video
+  ></video>
+
+  <!-- Base Images, clipped by Vector 33 -->
+  <div class="mp__base-clip">
+    <img class="mp__base" src={`${L}/base-images.webp`} alt="" loading="lazy" decoding="async" />
+  </div>
+
+  <!-- Rubber Color: rope colour + multiply shadow + screen highlight, inside the rope mask -->
+  <div class="mp__layer mp__rope" style={`--mask:url(${L}/rope-mask.webp)`}>
+    <img class="mp__rope-shadow" src={`${L}/rope-shadow.webp`} alt="" loading="lazy" decoding="async" />
+    <img class="mp__rope-highlight" src={`${L}/rope-highlight.webp`} alt="" loading="lazy" decoding="async" />
+  </div>
+
+  <!-- Design reflections: masked screens, linear dodge at 60 % -->
+  {[['refl3', 'reflection-mask-3'], ['refl2', 'reflection-mask-2'], ['refl1', 'reflection-mask-1']].map(([key, mask]) => (
+    <div class="mp__layer mp__reflection" style={`--mask:url(${L}/${mask}.webp)`}>
+      <div class="mp__screen" style={screenStyle(screens[key as keyof typeof screens])}>
+        <img src={`${L}/screen-base.webp`} alt="" class="mp__screen-base" loading="lazy" decoding="async" />
+        <img src={`${L}/screen-site.webp`} alt="" class="mp__screen-site" loading="lazy" decoding="async" />
+      </div>
+    </div>
+  ))}
+
+  <!-- Screen Design: main screen through the layer mask -->
+  <div class="mp__layer mp__screen-layer" style={`--mask:url(${L}/screen-layer-mask.webp)`}>
+    <div class="mp__screen" style={screenStyle(screens.main)}>
+      <img src={`${L}/screen-base.webp`} alt="" class="mp__screen-base" loading="lazy" decoding="async" />
+      <img src={`${L}/screen-site.webp`} alt="" class="mp__screen-site" loading="lazy" decoding="async" />
+    </div>
+  </div>
+
+  <img class="mp__lines" src={`${L}/rope-lines.svg`} alt="" loading="lazy" decoding="async" />
+</div>
+
+<style is:global>
+  .mp__video { position: absolute; left: 0.49px; top: -0.21px; width: 1154.3px; height: 704.88px; max-width: none; object-fit: cover; }
+
+  .mp__base-clip {
+    position: absolute; left: -17.84px; top: 2.82px; width: 569.49px; height: 631.35px;
+    clip-path: path('M 19.8993 525.4304 L 300.5004 603.806 L 336.2397 628.2592 C 339.6901 628.8939 341.5634 628.9923 344.3908 627.0052 L 355.0499 606.9411 L 439.0686 631.3495 L 569.4857 310.9946 L 50.9523 0 L 0 525.4304 L 19.8993 525.4304 Z');
+  }
+  .mp__base { position: absolute; left: -29.93px; top: 146.72px; width: 697.23px; height: 522.92px; max-width: none; }
+
+  /* Full-frame layers carrying a mask placed at the shared 697 × 523 layer box (-47.77, 149.54). */
+  .mp__layer {
+    position: absolute; inset: 0;
+    -webkit-mask: var(--mask) -47.77px 149.54px / 697.23px 522.92px no-repeat;
+    mask: var(--mask) -47.77px 149.54px / 697.23px 522.92px no-repeat;
+  }
+  .mp__rope { background: linear-gradient(rgb(255, 92, 0), rgb(255, 92, 0)) -47.77px 149.54px / 697.23px 522.92px no-repeat; }
+  .mp__rope-shadow { position: absolute; left: 60.35px; top: 149.54px; width: 697.23px; height: 522.92px; max-width: none; mix-blend-mode: multiply; }
+  .mp__rope-highlight { position: absolute; left: 60.35px; top: 149.54px; width: 679.67px; height: 522.92px; max-width: none; mix-blend-mode: screen; opacity: 0.15; }
+
+  .mp__reflection { mix-blend-mode: plus-lighter; opacity: 0.6; }
+
+  .mp__screen { position: absolute; left: 0; top: 0; overflow: hidden; transform-origin: 0 0; }
+  .mp__screen-base { position: absolute; left: 0; top: 0; width: 100%; height: 107.3%; max-width: none; object-fit: cover; }
+  .mp__screen-site { position: absolute; left: 0; top: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; }
+
+  .mp__lines { position: absolute; left: 0; top: 0; width: 1154.3px; height: 654px; max-width: none; pointer-events: none; }
+</style>

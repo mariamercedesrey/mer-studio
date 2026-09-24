@@ -1,0 +1,26 @@
+---
+// Figma 2024:1544
+import WorkImage from '../WorkImage.astro';
+import ocean from '../../../../brand/assets/work/industrial-ocean.jpg';
+import screen from '../../../../brand/assets/work/industrial-screen.png';
+const swatches = ['#237045', '#29515f', '#b7dce1', '#d2de7e', '#6c8e8a'];
+---
+<div class="work-media" style="background:#ebebeb">
+  <div class="mi__wc">
+    <div class="mi__ocean">
+      <WorkImage src={ocean} width={1064} class="fill-pic" style="inset:0;width:100%;height:100%" />
+      <div class="mi__fade"></div>
+      <div class="mi__swatches">{swatches.map((c) => <span style={`background:${c}`}></span>)}</div>
+    </div>
+    <div class="mi__screen"><WorkImage src={screen} width={629} class="fill-pic" style="left:-0.43%;top:10.28%;width:100.41%;height:100%" /></div>
+  </div>
+</div>
+
+<style is:global>
+  .mi__wc { position: absolute; right: 0; top: -28.87px; width: 1049px; height: 711.741px; overflow: hidden; background: var(--surface-base); }
+  .mi__ocean { position: absolute; left: 0; top: -17.03px; width: 1063.946px; height: 729px; overflow: hidden; }
+  .mi__fade { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(2, 18, 36, 0) 65.426%, #021224); }
+  .mi__swatches { position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 67px; overflow: hidden; display: flex; flex-direction: column; }
+  .mi__swatches span { flex: none; width: 98.21px; height: 82.2px; }
+  .mi__screen { position: absolute; left: 211px; top: 99.97px; width: 626px; height: 513px; overflow: hidden; }
+</style>

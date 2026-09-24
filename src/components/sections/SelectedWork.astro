@@ -1,0 +1,155 @@
+---
+// Figma 149:5412 Selected Work — editorial list on ink. Items rest subdued and activate as they
+// reach the viewport centre (scripts/work-activation.ts). Only openable projects are interactive (D5).
+import { projects } from '../../data/projects';
+import SignatureDot from '../primitives/SignatureDot.astro';
+import RoleChip from '../primitives/RoleChip.astro';
+import AsociartMedia from '../work/media/AsociartMedia.astro';
+import OrchardmileMedia from '../work/media/OrchardmileMedia.astro';
+import StorefrontMedia from '../work/media/StorefrontMedia.astro';
+import IndustrialMedia from '../work/media/IndustrialMedia.astro';
+import SafetyMedia from '../work/media/SafetyMedia.astro';
+import ApsMedia from '../work/media/ApsMedia.astro';
+import UnitsMedia from '../work/media/UnitsMedia.astro';
+
+const media = {
+  asociart: AsociartMedia,
+  orchardmile: OrchardmileMedia,
+  storefront: StorefrontMedia,
+  industrial: IndustrialMedia,
+  safety: SafetyMedia,
+  aps: ApsMedia,
+  units: UnitsMedia,
+} as const;
+
+const visible = projects.filter((p) => !p.hidden);
+---
+<section id="work" class="work" aria-labelledby="work-title">
+  <header class="work__head">
+    <p class="work__eyebrow">selected work</p>
+    <h2 id="work-title" class="work__title">What we've built<SignatureDot class="work__dot" /></h2>
+  </header>
+
+  <ol role="list" class="work__list" data-work-list>
+    {visible.map((p, i) => {
+      const Media = media[p.id as keyof typeof media];
+      const Tag = p.openable ? 'a' : 'div';
+      return (
+        <li
+          class:list={['work-item', `work-item--${p.align}`, p.openable && 'work-item--openable']}
+          style={`--media-w:${p.width};--media-h:${p.height}`}
+          data-work-item={p.id}
+          data-active={i === 0 ? '' : undefined}
+        >
+          <Tag
+            class="work-item__inner"
+            href={p.openable ? `/work/${p.id}` : undefined}
+            data-project-open={p.openable ? p.id : undefined}
+          >
+            <div class="work-item__media">
+              <div class="work-item__canvas">{Media && <Media />}</div>
+            </div>
+            <div class="work-item__caption">
+              <ul role="list" class="work-item__roles">
+                {p.roles.map((r) => <RoleChip>{r}</RoleChip>)}
+              </ul>
+              <h3 class="work-item__title">{p.title}</h3>
+              <p class="work-item__meta">{p.meta}</p>
+            </div>
+          </Tag>
+        </li>
+      );
+    })}
+  </ol>
+</section>
+
+<script>
+  import { initWorkActivation } from '../../scripts/work-activation';
+  initWorkActivation();
+</script>
+
+<style>
+  .work {
+    background: var(--surface-inverse);
+    color: var(--text-inverse);
+    padding: 100px var(--page-gutter);
+  }
+  .work__head { display: flex; flex-direction: column; align-items: flex-start; gap: 22px; }
+  .work__eyebrow {
+    font-family: var(--font-technical);
+    font-size: var(--fs-eyebrow);
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+  }
+  .work__title {
+    position: relative;
+    font-weight: 500;
+    font-size: clamp(34px, 3.333vw, 48px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .work__title :global(.work__dot) { position: absolute; right: -32px; bottom: 6px; }
+
+  .work__list {
+    display: flex;
+    flex-direction: column;
+    gap: 83px;
+    margin: 54px 0 0;
+  }
+</style>
+
+<style is:global>
+  .work-item { display: flex; }
+  .work-item--end { justify-content: flex-end; }
+  .work-item__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-12);
+    width: calc(var(--media-w) / 1344 * 100%);
+    color: inherit;
+    text-decoration: none;
+  }
+  /* Media keeps Figma's composition by drawing at 1440 size and scaling to the column width. */
+  .work-item__media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: var(--media-w) / var(--media-h);
+    overflow: hidden;
+  }
+  .work-item__canvas {
+    position: absolute;
+    left: 0; top: 0;
+    width: calc(var(--media-w) * 1px);
+    height: calc(var(--media-h) * 1px);
+    transform-origin: 0 0;
+    transform: scale(var(--media-scale, 1)); /* set by work-activation.ts */
+  }
+  .work-media { position: absolute; inset: 0; overflow: hidden; }
+  .work-media .fill-pic { position: absolute; display: block; }
+  .work-media .fill-pic img, .work-media .fill img { display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; }
+  .work-media .fill { position: absolute; inset: 0; display: block; }
+  .work-media video { display: block; }
+
+  .work-item__caption { display: flex; flex-direction: column; align-items: flex-start; gap: var(--sp-8); }
+  .work-item__roles { display: flex; flex-wrap: wrap; gap: var(--sp-4); }
+  .work-item__title {
+    font-weight: 400;
+    font-size: clamp(24px, 2.222vw, 32px);
+    line-height: 1.2;
+  }
+  .work-item__meta {
+    font-family: var(--font-technical);
+    font-size: var(--fs-meta);
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+  }
+
+  /* Scroll activation (JS adds .js on <html>). Without JS every item stays fully visible. */
+  .js .work-item { opacity: var(--opacity-work-inactive); transition: opacity 500ms var(--ease-precise); }
+  .js .work-item[data-active] { opacity: 1; }
+  .work-item--openable .work-item__inner { cursor: default; }
+  .work-item--openable[data-active] .work-item__inner { cursor: pointer; }
+  .work-item--openable .work-item__inner:focus-visible { outline-offset: 6px; }
+  .work-item--openable[data-active] .work-item__title { transition: color var(--dur-fast) var(--ease-precise); }
+  .work-item--openable[data-active] .work-item__inner:hover .work-item__title { color: var(--accent-primary); }
+</style>
