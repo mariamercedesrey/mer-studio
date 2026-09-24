@@ -139,8 +139,9 @@ const visible = projects.filter((p) => !p.hidden);
   }
 
   /* Scroll activation (JS adds .js on <html>). Without JS every item stays fully visible. */
-  .js .work-item { opacity: var(--opacity-work-inactive); transition: opacity 500ms var(--ease-precise); }
-  .js .work-item[data-active] { opacity: 1; }
+  /* Only the imagery is subdued; captions stay at full opacity so they keep their contrast (Mer, round 2). */
+  .js .work-item__media { opacity: var(--opacity-work-inactive); transition: opacity 500ms var(--ease-precise); }
+  .js .work-item[data-active] .work-item__media { opacity: 1; }
   .work-item--openable .work-item__inner { cursor: default; }
   .work-item--openable[data-active] .work-item__inner { cursor: pointer; }
   .work-item--openable .work-item__inner:focus-visible { outline-offset: 6px; }

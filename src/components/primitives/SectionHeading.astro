@@ -6,7 +6,7 @@ const { eyebrow, id, tone = 'light', class: className } = Astro.props;
 ---
 <header class:list={['section-heading', `section-heading--${tone}`, className]}>
   <p class="section-heading__eyebrow">{eyebrow}</p>
-  <h2 id={id} class="section-heading__title"><slot />&#8288;<SignatureDot class="section-heading__dot" /></h2>
+  <h2 id={id} class="section-heading__title"><slot />&#8288;<SignatureDot class="section-heading__dot" tone={tone === 'light' ? 'dark' : 'accent'} /></h2>
 </header>
 
 <style>
