@@ -20,8 +20,8 @@ const steps = [
     <SignatureDot tone="muted" class="hiw__path-dot" />
   </div>
   <picture class="hiw__ascii">
-    <source type="image/avif" srcset={avif.srcSet.attribute} sizes="517px" />
-    <source type="image/webp" srcset={webp.srcSet.attribute} sizes="517px" />
+    <source type="image/avif" srcset={avif.srcSet.attribute} sizes="476px" />
+    <source type="image/webp" srcset={webp.srcSet.attribute} sizes="476px" />
     <img src={webp.src} alt="" width={ascii.width} height={ascii.height} loading="lazy" decoding="async" />
   </picture>
 
@@ -61,7 +61,9 @@ const steps = [
   .hiw__path img { width: 100%; height: 100%; transform: scaleY(-1); }
   .hiw__path :global(.hiw__path-dot) { position: absolute; left: calc(1183 / 1472 * 100%); top: 34px; }
 
-  .hiw__ascii { position: absolute; right: 0; top: 125.46px; width: 517px; height: 259px; }
+  /* Figma draws the panel at 517×259 from y 125, over the "04" label. Per Mer (review round 1) it must not
+     cover it: aligned to the eyebrow and scaled to 92 % (same crop), ending 12px above the steps row. */
+  .hiw__ascii { position: absolute; right: 0; top: 95.25px; width: 476px; height: 238px; }
   .hiw__ascii img { width: 100%; height: 100%; object-fit: cover; }
 
   .hiw__steps { position: relative; display: flex; gap: 0.75px; }

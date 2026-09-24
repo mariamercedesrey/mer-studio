@@ -4,7 +4,7 @@ export type Project = {
   title: string;
   meta: string;
   roles: string[];
-  align: 'start' | 'end';
+  align: 'start' | 'end'; // Figma alignment (reference); rendering alternates over visible items
   width: number;   // media width at 1440 (Figma)
   height: number;  // media height at 1440 (Figma)
   hidden?: boolean;   // kept in data, not rendered in V1

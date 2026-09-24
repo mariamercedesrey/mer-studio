@@ -31,9 +31,11 @@ const visible = projects.filter((p) => !p.hidden);
     {visible.map((p, i) => {
       const Media = media[p.id as keyof typeof media];
       const Tag = p.openable ? 'a' : 'div';
+      // Alternate left/right over the *visible* projects, so hiding one keeps the rhythm (Mer, review round 1).
+      const align = i % 2 ? 'end' : 'start';
       return (
         <li
-          class:list={['work-item', `work-item--${p.align}`, p.openable && 'work-item--openable']}
+          class:list={['work-item', `work-item--${align}`, p.openable && 'work-item--openable']}
           style={`--media-w:${p.width};--media-h:${p.height}`}
           data-work-item={p.id}
           data-active={i === 0 ? '' : undefined}

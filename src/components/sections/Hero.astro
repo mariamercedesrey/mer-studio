@@ -17,7 +17,6 @@ const BOOK_A_CALL = 'mailto:hello@mer.studio?subject=Book%20a%20call';
       </div>
       <Button href={BOOK_A_CALL} width={183}>book a call</Button>
     </div>
-    <span class="hero__edge-dot" aria-hidden="true"></span>
   </div>
 
   <div class="hero__row">
@@ -89,16 +88,6 @@ const BOOK_A_CALL = 'mailto:hello@mer.studio?subject=Book%20a%20call';
     font-size: clamp(48px, 6.667vw, 96px);
     line-height: 1.01;
     letter-spacing: -0.03em;
-  }
-  /* Figma 149:5138 — canvas-coloured circle bleeding off the left edge. */
-  .hero__edge-dot {
-    position: absolute;
-    left: -18px;
-    top: 548px;
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    background: var(--surface-canvas);
   }
 
   /* Row — Figma 149:5139 / 2003:480 */
