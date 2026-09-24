@@ -1,0 +1,128 @@
+---
+// Figma 149:5176 Client Marquee — logos on ink at 55 %, looping to the right at ~127 px/s (D2, D11).
+// Order, sizes, crops and blend modes follow Figma 149:5180. L'Oréal appears twice in Figma (vector + raster); kept as designed.
+type Logo = {
+  name: string; src: string; w: number; h: number;
+  blend?: 'luminosity' | 'color-dodge';
+  crop?: { w: number; h: number; left: number; top: number }; // % of box, Figma image transform
+};
+const logos: Logo[] = [
+  { name: 'DASA Digital', src: 'dasa.png', w: 117.403, h: 37.543 },
+  { name: 'The Mile Fashion', src: 'the-mile-fashion.png', w: 132.841, h: 30.996 },
+  { name: "L'Oréal", src: 'loreal.svg', w: 112.269, h: 30.076 },
+  { name: 'Asociación de Cooperativas Argentinas', src: 'aca.png', w: 126.7, h: 54.014 },
+  { name: 'Black Duck', src: 'black-duck.svg', w: 66.921, h: 54.014 },
+  { name: 'American Padel Systems', src: 'american-padel-systems.png', w: 113.2, h: 38.63 },
+  { name: 'SNI', src: 'sni.png', w: 92.465, h: 36.62 },
+  { name: 'HiFiHUB', src: 'hifihub.png', w: 124.37, h: 26.59 },
+  { name: 'Orchard Mile', src: 'orchard-mile.svg', w: 90.135, h: 29.748 },
+  { name: 'Quilmes', src: 'quilmes.svg', w: 92.465, h: 46.69 },
+  { name: 'Valor Ganadero', src: 'valor-ganadero.png', w: 74.48, h: 59.248, blend: 'luminosity' },
+  { name: "L'Oréal Paris", src: 'loreal-paris.png', w: 115.454, h: 64.943, blend: 'luminosity' },
+  { name: 'CICSA Worldwide', src: 'cicsa.png', w: 114.988, h: 38.573, blend: 'luminosity' },
+  { name: 'UMSA', src: 'umsa.png', w: 141.901, h: 38.451, blend: 'color-dodge', crop: { w: 113.95, h: 142.7, left: -4.22, top: -21.43 } },
+  { name: "Kuwait Concours d'Elegance", src: 'kcde.png', w: 138.047, h: 49.179, blend: 'luminosity', crop: { w: 100, h: 280.7, left: 0, top: -11.4 } },
+  { name: 'Carbon Optimum', src: 'carbon-optimum.png', w: 107.1, h: 33.7 },
+  { name: 'Agente Mamá AI', src: 'agente-mama-ai.png', w: 185.45, h: 39.68 },
+  { name: 'Optimarine', src: 'optimarine.svg', w: 169.105, h: 33.873 },
+];
+const copies = [false, true];
+---
+<section class="marquee" aria-label="Clients we've worked with">
+  <div class="marquee__viewport" data-marquee>
+    <div class="marquee__track">
+      {copies.map((hidden) => (
+        <ul role="list" class="marquee__set" aria-hidden={hidden ? 'true' : undefined}>
+          {logos.map((l) => (
+            <li class:list={['marquee__logo', l.crop && 'marquee__logo--crop']} style={`width:${l.w}px;height:${l.h}px`}>
+              <img
+                src={`/clients/${l.src}`}
+                alt={hidden ? '' : l.name}
+                decoding="async"
+                style={[
+                  l.blend && `mix-blend-mode:${l.blend}`,
+                  l.crop && `width:${l.crop.w}%;height:${l.crop.h}%;left:${l.crop.left}%;top:${l.crop.top}%`,
+                ].filter(Boolean).join(';') || undefined}
+              />
+            </li>
+          ))}
+        </ul>
+      ))}
+    </div>
+  </div>
+  <a class="marquee__scroll" href="#work" aria-label="Scroll to selected work"></a>
+</section>
+
+<script>
+  // Keep the speed at ~127 px/s whatever the track width (Figma: 3052 px / 24 s).
+  const PX_PER_S = 3052 / 24;
+  document.querySelectorAll<HTMLElement>('[data-marquee]').forEach((el) => {
+    const set = el.querySelector<HTMLElement>('.marquee__set');
+    if (!set) return;
+    const apply = () => el.style.setProperty('--marquee-duration', `${set.offsetWidth / PX_PER_S}s`);
+    apply();
+    new ResizeObserver(apply).observe(set);
+  });
+</script>
+
+<style>
+  .marquee {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-32);
+    height: 250px;
+    padding-top: var(--sp-80);
+    background: var(--surface-inverse);
+    overflow: hidden;
+  }
+  .marquee__viewport { width: 100%; overflow: hidden; }
+  .marquee__track {
+    display: flex;
+    width: max-content;
+    /* The moving track is its own compositing group: give it the ink ground so the
+       luminosity / color-dodge logos blend against ink, as in Figma. */
+    background: var(--surface-inverse);
+    animation: marquee-right var(--marquee-duration, 24s) linear infinite;
+  }
+  .marquee__viewport:hover .marquee__track,
+  .marquee__viewport:focus-within .marquee__track { animation-play-state: paused; }
+  .marquee__set {
+    display: flex;
+    align-items: center;
+    gap: 55px;
+    padding: 0 0 0 55px;
+    margin: 0;
+  }
+  .marquee__logo {
+    position: relative;
+    flex-shrink: 0;
+  }
+  /* Opacity sits on the image itself (not the <li>) so blend modes still reach the ink ground. */
+  .marquee__logo img { width: 100%; height: 100%; object-fit: cover; opacity: var(--opacity-marquee-logo); }
+  .marquee__logo--crop { overflow: hidden; }
+  .marquee__logo--crop img { position: absolute; max-width: none; object-fit: fill; }
+
+  .marquee__scroll {
+    position: relative;
+    display: block;
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    background: var(--accent-primary);
+    -webkit-mask: url(/icons/scroll-arrow.svg) center / contain no-repeat;
+    mask: url(/icons/scroll-arrow.svg) center / contain no-repeat;
+    transform: rotate(180deg);
+    transition: background-color var(--dur-fast) var(--ease-precise);
+  }
+  .marquee__scroll:hover { background: var(--accent-bright); }
+
+  @keyframes marquee-right {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track { animation: none; transform: translateX(-25%); }
+  }
+</style>
