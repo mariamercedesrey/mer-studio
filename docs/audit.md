@@ -1,6 +1,6 @@
 # MER.studio — Pre-implementation audit
 
-Status: **decisions rounds 1 and 2 applied** (below). Open questions are in §7. No implementation code has been written.
+Status: **decisions rounds 1–3 applied** (below). Only Q-K (Figma access) is open (§7). No implementation code has been written.
 Date: 2026-09-24 · Branch: `claude/sharp-ptolemy-jo36c2` · Base: `main` @ `7f854b0`
 
 ## Decisions (Mer, round 1)
@@ -37,6 +37,15 @@ Sources read: `CLAUDE.md`, `brand/readme.md`, `brand/SKILL.md`, `brand/tokens/*`
 | R2-G | OG image, apple-touch-icon, Aspekta | Approved as proposed. **I send the OG image to Mer for approval before shipping it** (implementation step 1). |
 | R2-H | Headline dots, tokens / fluid type / fonts, services modal name, macbook video | Approved as proposed (Q-G, Q-H, Q-I, Q-J). Mer reviews the fluid-type minimums in the mobile screenshots. |
 | R2-I | Figma network access | Mer added `www.figma.com` to network access. **In this session it is still blocked**; see §0 and §3. |
+
+
+## Decisions (Mer, round 3)
+
+| # | Topic | Decision |
+|---|---|---|
+| R3-A | Contact | **`hello@mer.studio`** is the contact email and the "book a call" `mailto:` (subject "Book a call"). **Keep the phone number** from Figma (`+54 9 11 41742309`). Closes Q-A and R2-A. |
+| R3-B | APS (#7) | **Hidden in V1**, the same way as Coupon. It comes back when the mockup layers are available. Selected Work shows **6 projects** in V1: Asociart, Orchardmile, 250 brands, Industrial, Safety net, Six business units. Closes Q-L. |
+| R3-C | Figma access | Mer will retry `www.figma.com` in a new session (Q-K stays open until then). |
 
 ---
 
@@ -183,7 +192,7 @@ Principles:
 | # | Project | Result with existing assets | Severity |
 |---|---|---|---|
 | 4 | Coupon | Hidden in V1 (R2-B). | — |
-| 7 | **APS** | The court video plays, but the laptop mockup (the focal point) is missing, so it looks like an empty dark-blue field. | 🔴 **Broken until the mockup layers arrive** |
+| 7 | APS | Hidden in V1 (R3-B) until the mockup layers are available. | — |
 | 3 | 250 brands | **Complete**: one source image, 3 crops (see above). | ✅ |
 | 1 | Asociart | Missing only the 461×288 "Morning Salad" layer (original 1920×1325 PNG, 171 KB) on the card, and the laptop frame in the Project Detail gallery. | 🟡 Minor |
 | 8 | Six business units | Complete (temporary watermark, noted). | ✅ |
@@ -235,15 +244,15 @@ Account: free tier, 2 code retrievals a day, AI generation off. 21st.dev compone
 
 Libraries: **GSAP isn't needed for V1.** WAAPI and CSS cover M1–M4. Revisit it for post-launch scroll choreography if scroll-driven CSS isn't enough.
 
-## 7. Open questions (after decisions round 2)
+## 7. Open questions (after decisions round 3)
 
-Resolved in round 2: Q-B (Coupon hidden, APS keeps its video), Q-C (280 ms fade), Q-D (`/work/asociart`), Q-E (EN only, chip removed), Q-F (the OG image comes for approval), Q-G, Q-H, Q-I and Q-J (approved).
+Resolved: Q-A (R3-A), Q-L (R3-B), and everything from rounds 1–2.
 
 | ID | Question | Recommended default |
 |---|---|---|
-| **Q-A** | **Contact email and phone.** The reply still had placeholders: "[hello@mer.studio / otro]" and "[keep / remove]". | Email `hello@mer.studio` (as in Figma), used for both the contact link and the "book a call" `mailto:`. **Keep** the phone number `+54 9 11 41742309`, since it's in Figma. |
-| **Q-K** | Figma asset access: `www.figma.com` is still refused by the proxy in this session (403). | Check the environment's allowed domains include `www.figma.com`, then start a **new session** so the container picks up the policy. If that still fails, export the Morning Salad image and the 9 APS mockup layers by hand and commit them to `brand/assets/work/`. |
-| Q-L | APS in V1 if the mockup layers aren't available by launch. | **Hide APS as well**, the same way as Coupon (R2-B). A court video with no laptop reads as broken, and substituting the kit's `MockupScreen` would contradict Figma. |
+| **Q-K** | Figma asset access: `www.figma.com` was refused by the proxy (403) in the previous session. Mer is retrying in a new session (R3-C). | Next session starts with `curl https://www.figma.com/`. If it works, export Morning Salad (#1) and the 9 APS mockup layers (#7) by image hash into `brand/assets/work/`, then bring APS back. If it's still blocked, Mer exports them from Figma by hand. |
+
+Not blocking V1: restoring Coupon (#4, needs the MP4) and APS (#7, needs the layers) once their assets are available.
 
 ---
 
@@ -258,11 +267,11 @@ Each step is one small PR or commit series on a branch. Nothing merges to `main`
 | 2 | Primitives: Button, SignatureDot (static + `data-motion` API), RoleChip, Tag, Eyebrow, Media, ExternalLinkPill | Phase 1 |
 | 3 | Header (no "EN" chip, R2-F) + Hero (video, "m" + dot static) | Phase 1 |
 | 4 | Client marquee (CSS loop, reduced-motion static) | Phase 1 + reduced motion |
-| 5 | Selected Work: `projects` collection, **7 items** (Coupon hidden, R2-B) at Figma fidelity, activation script | Phase 1 (structural interaction kept from the start, CLAUDE.md §14) |
+| 5 | Selected Work: `projects` collection, **6 items** (Coupon and APS hidden, R2-B / R3-B; both kept in the collection with a `hidden` flag) at Figma fidelity, activation script | Phase 1 (structural interaction kept from the start, CLAUDE.md §14) |
 | 6 | **ProjectDetail island**: overlay, focus trap, Esc, scroll lock, 280 ms fade (R2-D); **Asociart only** (D5); `/work/asociart` prerender (R2-E) | ProjectDetail working |
 | 7 | Pixel banner + Services | Phase 1 |
 | 8 | How it works + About | Phase 1 |
-| 9 | Final CTA + Contact (email + "book a call" link, **no form**, D3) + Footer | Contact |
+| 9 | Final CTA + Contact (`hello@mer.studio`, phone from Figma, "book a call" = `mailto:` with subject "Book a call"; **no form**, D3 / R3-A) + Footer | Contact |
 | 10 | Visual QA against Figma, section by section (screenshots side by side) | Phase 1 done |
 | 11 | Responsive pass (tablet, mobile) with `/brand` rules (D4), then screenshots to Mer | Basic responsive |
 | 12 | Hero dot Figma path, once on load (D1) + marquee rightward at about 127 px/s (D2, D11) + reduced-motion audit | Motion that's already defined |
