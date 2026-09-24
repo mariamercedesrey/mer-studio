@@ -95,6 +95,8 @@ Desktop Figma is the primary visual reference. Translate the system intelligentl
 
 Before creating a new value or pattern, check whether an existing token, variable, text style, component, layout primitive or interaction pattern already solves the problem. Do not introduce arbitrary colors, spacing, typography or radii. If something genuinely missing is required, treat it as a proposed extension of the system rather than silently creating a competing rule.
 
+Text colour: never use `--color-text-primary` for text. It resolves to navy (`--color-secondary-700`), not ink. Always use `--text-primary`, and in general only the semantic `--text-*`, `--surface-*` and `--action-*` tokens in components.
+
 ## 13. ACCESSIBILITY
 
 Maintain semantic HTML, keyboard accessibility, visible focus states, appropriate target sizes, sufficient contrast, reduced-motion behavior and meaningful image alternatives. Motion must never be required to understand or navigate the site.
