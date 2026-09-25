@@ -1,6 +1,7 @@
 /* PROPOSED token extensions — values that appear in Figma but have no variable in /brand/tokens.
    Each one is flagged for Mer's approval in the PR. Nothing here competes with an existing token. */
 :root {
+  --text-secondary: var(--color-text-secondary); /* semantic alias of the Figma variable (neutral-600) — nav labels, ≥4.5:1 on the capsule */
   --text-tagline: var(--fg-3);                    /* rgb(119,119,119) header tagline (already aliased in base.css) */
   --opacity-work-inactive: 0.3;                   /* Selected Work subdued item (Figma items 2–8) */
   --opacity-marquee-logo: 0.55;                   /* client logos */
