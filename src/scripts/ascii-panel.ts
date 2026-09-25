@@ -6,7 +6,7 @@
 // · Split-flap (Mer, PR #7 review): like an airport departures board, glyphs roll through other
 //   characters while they fly in, then short runs along a row keep flipping for as long as it is on screen.
 // · prefers-reduced-motion / no canvas: never initialised, the static <picture> stays (CSS handles it).
-// The loop only runs while the panel is on screen.
+// The loop runs only while the panel is on screen and the tab is visible; otherwise it is cancelled.
 import { ASCII_ROWS, ASCII_GEOMETRY as G } from '../data/how-it-works-ascii';
 import { easePrecise, clamp01 } from './easing';
 
@@ -222,12 +222,14 @@ export function initAsciiPanel() {
     return moving;
   }
 
+  const running = () => visible && !document.hidden;
   function tick(now: number) {
     frame = 0;
-    if (draw(now) && visible) frame = requestAnimationFrame(tick);
+    if (draw(now) && running()) frame = requestAnimationFrame(tick);
     else last = 0;
   }
-  const schedule = () => { if (!frame && visible) frame = requestAnimationFrame(tick); };
+  const schedule = () => { if (!frame && running()) frame = requestAnimationFrame(tick); };
+  const pause = () => { cancelAnimationFrame(frame); frame = 0; last = 0; };
 
   // Visibility: loop only while on screen; the first time the panel is well into view, reveal it.
   const io = new IntersectionObserver(([entry]) => {
@@ -236,8 +238,10 @@ export function initAsciiPanel() {
       revealAt = performance.now();
       root.dataset.ascii = 'on';
     }
-    if (visible) { readScroll(); schedule(); }
+    if (visible) { readScroll(); schedule(); } else pause();
   }, { threshold: [0, 0.35] });
+
+  document.addEventListener('visibilitychange', () => { if (document.hidden) pause(); else schedule(); });
 
   window.addEventListener('scroll', () => { if (visible) { readScroll(); schedule(); } }, { passive: true });
   new ResizeObserver(resize).observe(root);
