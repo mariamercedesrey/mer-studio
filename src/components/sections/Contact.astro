@@ -1,5 +1,6 @@
 ---
-// Figma 149:6087 Contact — no form in V1 (D3): email + phone (R3-A).
+// Figma 149:6087 Contact — no form in V1 (D3): email + WhatsApp Business.
+import { EMAIL, WHATSAPP } from '../../data/contact';
 const links = [
   { label: 'Selected Works', href: '#work' },
   { label: 'Services', href: '#services' },
@@ -14,8 +15,8 @@ const links = [
       <img src="/logo-negative.svg" width="182" height="29" alt="" />
     </a>
     <address class="contact__channels">
-      <a href="mailto:hello@mer.studio">hello@mer.studio</a>
-      <a href="tel:+5491141742309">+54 9 11 41742309</a>
+      <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+      <a href={WHATSAPP.href} target="_blank" rel="noopener">WhatsApp {WHATSAPP.label}<span class="visually-hidden"> (opens in a new tab)</span></a>
     </address>
   </div>
   <nav aria-label="Footer">

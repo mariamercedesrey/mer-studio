@@ -1,6 +1,7 @@
 // JSON-LD (schema.org) for search and AI answer engines. Facts only from the site's own copy:
 // Services (149:5756), About (149:6015), Contact (149:6087), Footer (149:6099), project-details.ts.
 import type { ProjectDetailData } from './project-details';
+import { EMAIL, WHATSAPP } from './contact';
 
 const SITE = 'https://mer.studio';
 const ORG_ID = `${SITE}/#studio`;
@@ -28,10 +29,11 @@ export function homeSchema() {
         image: `${SITE}/og.png`,
         description: 'Strategy, design and code, handled end to end by one team. Twenty-five years across enterprise products and US startups, applied at any size — a brand, a website, an online store, a full platform.',
         slogan: 'Strategy, design and build, end to end.',
-        email: 'hello@mer.studio',
-        telephone: '+54 9 11 41742309',
+        email: EMAIL,
+        telephone: WHATSAPP.tel,
         address: { '@type': 'PostalAddress', addressCountry: 'AR' },
         areaServed: 'Worldwide',
+        contactPoint: { '@type': 'ContactPoint', contactType: 'sales', email: EMAIL, telephone: WHATSAPP.tel, url: WHATSAPP.href },
         founder: { '@id': MER_ID },
         hasOfferCatalog: {
           '@type': 'OfferCatalog',
