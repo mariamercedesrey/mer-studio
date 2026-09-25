@@ -1,0 +1,62 @@
+# MER Studio
+
+> Independent design-and-build studio. Strategy, design and code, handled end to end by one team — a brand, a website, an online store, a full platform. Working worldwide from Argentina.
+
+From the first decision to the last detail. Twenty-five years across enterprise products and US startups, applied at any size.
+
+## Who
+
+MER Studio was founded by Mer (Mercedes Rey). In Mer's words: "I've been designing digital products for more than 25 years. Eight of those years went into complex enterprise products, and seven into working with US startups, often directly with founders and CEOs. That is what I bring to a small project: the judgement to decide quickly and well, and the ability to build what I design."
+
+- 25+ years of experience designing products, brands and websites
+- 35+ websites and digital products delivered directly to clients
+- 1:1 direct access to the senior designer, from first call to final files
+- 7 years designing for US startups, working alongside founders
+
+Industries: Ecommerce, Agribusiness, Fashion, Insurance, Finance, Foreign Trade, Startups, Enterprise, Healthcare.
+
+## Services
+
+Strategy, design & build, end to end.
+
+- Branding: Identity, and the system to keep it consistent.
+- Websites: A landing, a full site, or an online store.
+- Digital Product: An app or a platform that doesn't exist yet.
+- AI Visibility · GEO / AEO: So people find you when they ask an AI, not just Google.
+
+Always included:
+
+- Strategy: Every project starts with the business decision, not the screen.
+- Design & build, end to end: The same hands design it and ship it. No handoff, nothing lost in translation.
+- You own it: Files and accounts handed over in your name.
+
+Added to any project — or contracted on their own:
+
+- Design System: Exported tokens, a documented component library, and a usage guide — so your team, or an AI agent, can keep building on it without breaking the system.
+- Maintenance: Optional, after handover. Changes, updates, backups and priority response.
+
+## How we work
+
+Four steps, no surprises. Every project starts with a 20-minute call. You get back a proposal with a fixed scope, a final price and a delivery date.
+
+1. Call: Twenty minutes. You tell us what you need, by when, and what budget you have.
+2. Proposal: Within 48 hours you get scope, final price, delivery date and what is out of scope. If it does not work for you, we stop there.
+3. Design and build: We work in blocks and show you progress along the way. Two rounds of revisions included.
+4. Handover: Launch, files and accounts in your name. Thirty days of support in case anything breaks.
+
+## Selected work
+
+- [Asociart — Reengineering a 13-module legacy platform](https://mer.studio/work/asociart/): Insurance & Finance, at Neoris. UX research, service blueprints for thirteen interconnected modules and a Core Design System of 71+ components, documented in Storybook. One shared foundation serving 500+ internal users; five years on the account, 130+ sprints, a 98% successful build rate across active modules.
+- Turning creators into storefronts (Ecommerce & Fashion, at Orchard Mile)
+- 250 brands, one storefront (Ecommerce & Fashion)
+- Making an industrial process legible (Agrobusiness, Enterprise)
+- A safety net, not a productivity app (Startups)
+- A site that answers "does it pay for itself?" (Enterprise)
+- Six business units, one product (Startups, Ecommerce)
+
+## Contact
+
+- Email: hello@mer.studio
+- WhatsApp: +54 9 11 3926-7150 (https://wa.me/5491139267150)
+- Book a 20-minute call: https://calendly.com/mer-studio/20-minutes-meeting
+- Website: https://mer.studio/

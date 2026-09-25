@@ -11,8 +11,9 @@ import FinalCTA from '../components/sections/FinalCTA.astro';
 import Contact from '../components/sections/Contact.astro';
 import SiteFooter from '../components/sections/SiteFooter.astro';
 import ProjectOverlay from '../components/work/ProjectOverlay.astro';
+import { homeSchema } from '../data/schema';
 ---
-<BaseLayout>
+<BaseLayout schema={homeSchema()}>
   <main id="main">
     <Hero />
     <ClientMarquee />

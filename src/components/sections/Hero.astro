@@ -5,12 +5,12 @@ import Button from '../primitives/Button.astro';
 import SignatureDot from '../primitives/SignatureDot.astro';
 import { getImage } from 'astro:assets';
 import heroPoster from '../../assets/hero-poster.webp';
+import { BOOKING_URL } from '../../data/contact';
 
 // Responsive poster under the video: it is the LCP element, so mobile gets a small file.
 const poster = await getImage({ src: heroPoster, widths: [480, 800, 1218], format: 'webp', quality: 72 });
 
 const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Finance', 'Foreign Trade', 'startups', 'Enterprise', 'Healthcare'];
-const BOOK_A_CALL = 'mailto:hello@mer.studio?subject=Book%20a%20call';
 ---
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero__band">
@@ -20,7 +20,7 @@ const BOOK_A_CALL = 'mailto:hello@mer.studio?subject=Book%20a%20call';
         <p class="hero__lead">From the first decision to the last detail.</p>
         <h1 id="hero-title" class="hero__title">Strategy, design and build, end to end.</h1>
       </div>
-      <Button href={BOOK_A_CALL} width={183}>book a call</Button>
+      <Button href={BOOKING_URL} width={183} target="_blank" rel="noopener">book a call<span class="visually-hidden"> (opens in a new tab)</span></Button>
     </div>
   </div>
 
