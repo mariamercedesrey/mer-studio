@@ -115,8 +115,15 @@ const copies = [false, true];
     mask: url(/icons/scroll-arrow.svg) center / contain no-repeat;
     transform: rotate(180deg);
     transition: background-color var(--dur-fast) var(--ease-precise);
+    /* Every 3 s a 3px nudge down and back, inviting the scroll (Mer, review round 9).
+       Uses `translate`, not `transform`, so it composes with the rotation above. */
+    animation: scroll-nudge 3s var(--ease-precise) infinite;
   }
   .marquee__scroll:hover { background: var(--accent-bright); }
+  @keyframes scroll-nudge {
+    0%, 80%, 100% { translate: 0 0; }
+    88% { translate: 0 3px; }
+  }
 
   @media (max-width: 767px) {
     .marquee { height: auto; gap: var(--sp-32); padding: var(--sp-48) 0 var(--sp-24); }
@@ -130,5 +137,6 @@ const copies = [false, true];
   }
   @media (prefers-reduced-motion: reduce) {
     .marquee__track { animation: none; transform: translateX(-25%); }
+    .marquee__scroll { animation: none; }
   }
 </style>
