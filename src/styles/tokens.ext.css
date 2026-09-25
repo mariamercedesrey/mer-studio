@@ -4,6 +4,7 @@
   --text-tagline: var(--fg-3);                    /* rgb(119,119,119) header tagline (already aliased in base.css) */
   --opacity-work-inactive: 0.3;                   /* Selected Work subdued item (Figma items 2–8) */
   --opacity-marquee-logo: 0.55;                   /* client logos */
+  --fills-quaternary: rgba(116, 116, 128, 0.08); /* Figma variable fills/quaternary — nav capsule (149:5116); missing from /brand/tokens */
   --blur-nav: 3.611px;                            /* nav capsule backdrop blur (Figma 149:5116) */
   --radius-nav: 30.333px;                         /* nav capsule radius (Figma 149:5116) */
   --dot-muted: rgb(126, 126, 126);             /* grey dot on the How it works path (Figma 2003:39; DS SignatureDot tone="muted") */
