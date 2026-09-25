@@ -15,7 +15,7 @@ export function initProjectOverlay() {
     if (!dialog || dialog.open) return;
     dialog.scrollTop = 0;
     dialog.showModal();
-    if (push) history.pushState({ project: id }, '', `/work/${id}`);
+    if (push) history.pushState({ project: id }, '', `/work/${id}/`);
   };
 
   const close = (dialog: HTMLDialogElement, fromHistory: boolean) => {

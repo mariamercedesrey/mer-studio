@@ -42,7 +42,7 @@ const visible = projects.filter((p) => !p.hidden);
         >
           <Tag
             class="work-item__inner"
-            href={p.openable ? `/work/${p.id}` : undefined}
+            href={p.openable ? `/work/${p.id}/` : undefined}
             data-project-open={p.openable ? p.id : undefined}
           >
             <div class="work-item__media">
