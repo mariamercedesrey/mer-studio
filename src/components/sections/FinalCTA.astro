@@ -2,6 +2,7 @@
 // Figma 149:6074 Final CTA.
 import Button from '../primitives/Button.astro';
 import SignatureDot from '../primitives/SignatureDot.astro';
+import { WHATSAPP } from '../../data/contact';
 ---
 <section class="cta" aria-labelledby="cta-title">
   <div class="cta__copy">
@@ -9,7 +10,7 @@ import SignatureDot from '../primitives/SignatureDot.astro';
     <h2 id="cta-title" class="cta__title">Got a project in mind?<br />Let’s talk&#8288;<SignatureDot class="cta__dot" /></h2>
   </div>
   <div class="cta__action">
-    <Button href="#contact" width={172} height={56}>lets talk</Button>
+    <Button href={WHATSAPP.href} width={172} height={56} target="_blank" rel="noopener">lets talk<span class="visually-hidden"> on WhatsApp (opens in a new tab)</span></Button>
   </div>
 </section>
 
