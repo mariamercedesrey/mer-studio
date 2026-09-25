@@ -1,7 +1,6 @@
 ---
 // Figma 149:5990 How It Works — charcoal band, four steps over a dashed path.
 import SectionHeading from '../primitives/SectionHeading.astro';
-import SignatureDot from '../primitives/SignatureDot.astro';
 import { getImage } from 'astro:assets';
 import ascii from '../../../brand/assets/img/how-it-works.png';
 const [avif, webp] = await Promise.all(
@@ -20,7 +19,6 @@ const steps = [
     <svg viewBox="0 0 1472.79 148.843" preserveAspectRatio="none" fill="none">
       <path d="M0.425151 49.7426C10.0624 65.3129 57.6502 97.596 170.904 102.166C312.471 107.879 353.346 13.7854 418.148 36.6367C482.95 59.488 621.028 216.087 700.784 114.264C780.54 12.4413 872.758 -1.67278 941.05 8.07264C1009.34 17.8181 1118.51 116.952 1253.1 103.51C1360.77 92.7568 1444.18 30.2517 1472.43 0.343313" stroke="#706F6F" stroke-dasharray="3.25 3.25" />
     </svg>
-    <SignatureDot class="hiw__path-dot" motion="scroll-path" />
   </div>
   <!-- Canvas re-draws the same asset as live glyphs (scripts/ascii-panel.ts); the picture is the
        no-JS / reduced-motion rendering and is never fetched when the canvas takes over. -->
@@ -34,7 +32,7 @@ const steps = [
   </div>
 
   <div class="hiw__intro">
-    <SectionHeading eyebrow="How it works" id="hiw-title" tone="dark">Four steps, no surprises</SectionHeading>
+    <SectionHeading eyebrow="How it works" id="hiw-title" tone="dark" dotMotion="scroll-path">Four steps, no surprises</SectionHeading>
     <p class="hiw__lead">Every project starts with a 20-minute call. You get back a proposal with a fixed scope, a final price and a delivery date.</p>
   </div>
 
@@ -67,10 +65,9 @@ const steps = [
   /* Figma 2003:38 — path flipped vertically, bleeding 16px past both edges. */
   .hiw__path { position: absolute; left: -16px; top: 397.26px; width: calc(100% + 32px); height: 148px; }
   .hiw__path svg { display: block; width: 100%; height: 100%; overflow: visible; transform: scaleY(-1); }
-  /* Rest position (no JS, reduced motion) = the Figma dot, 2003:39. With the timeline on, the dot is
-     placed by transform from the path's origin. */
-  .hiw__path :global(.hiw__path-dot) { position: absolute; left: calc(1183 / 1472 * 100%); top: 34px; }
-  .hiw[data-timeline] .hiw__path :global(.hiw__path-dot) { left: 0; top: 0; will-change: transform; }
+  /* The headline's dot is the traveller (scripts/hiw-timeline.ts): it stays on the title at rest
+     (no JS, reduced motion, below desktop) and is moved by transform only. */
+  .hiw[data-timeline] :global(.section-heading__dot) { will-change: transform; }
   .hiw[data-timeline] .hiw__step { opacity: var(--opacity-step-pending); transition: opacity 500ms var(--ease-precise); }
   .hiw[data-timeline] .hiw__step[data-reached] { opacity: 1; }
 
