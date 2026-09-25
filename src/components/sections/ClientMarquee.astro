@@ -73,6 +73,7 @@ const copies = [false, true];
     gap: var(--sp-32);
     height: 250px;
     padding-top: var(--sp-80);
+    padding-bottom: var(--sp-8); /* room for the scroll arrow's 3px nudge */
     background: var(--surface-inverse);
     overflow: hidden;
   }
@@ -106,17 +107,15 @@ const copies = [false, true];
   .marquee__scroll {
     position: relative;
     display: block;
-    /* 52px box: the ring's outer edge is r=26 around the 50px artwork, so it needs 1px of room per side. */
-    width: 52px;
-    height: 52px;
+    /* Icon: brand/assets/icons/circle-arrow-down.svg (24 box, ring r=10). 60px box → 50px ring, as in Figma. */
+    width: 60px;
+    height: 60px;
     flex-shrink: 0;
     background: var(--accent-primary);
-    -webkit-mask: url(/icons/scroll-arrow.svg) center / contain no-repeat;
-    mask: url(/icons/scroll-arrow.svg) center / contain no-repeat;
-    transform: rotate(180deg);
+    -webkit-mask: url(/icons/circle-arrow-down.svg) center / contain no-repeat;
+    mask: url(/icons/circle-arrow-down.svg) center / contain no-repeat;
     transition: background-color var(--dur-fast) var(--ease-precise);
-    /* Every 3 s a 3px nudge down and back, inviting the scroll (Mer, review round 9).
-       Uses `translate`, not `transform`, so it composes with the rotation above. */
+    /* Every 3 s a 3px nudge down and back, inviting the scroll (Mer, review round 9). */
     animation: scroll-nudge 3s var(--ease-precise) infinite;
   }
   .marquee__scroll:hover { background: var(--accent-bright); }
