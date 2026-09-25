@@ -14,7 +14,7 @@ The one product surface is the **mer.studio website** — an interactive, scroll
 - `guidelines/` — 18 foundation cards (Colors, Type, Spacing, Brand).
 - `components/actions/` Button · `components/brand/` SignatureDot, Icon, Logotypo · `components/work/` ProjectDetail, TagComponent, MockupScreen — each with `.jsx`, `.d.ts`, `.prompt.md` and one card.
 - `ui_kits/website/` — interactive home page recreation + Project Detail overlay (`index.html`, `Hero.jsx`, `ClientMarquee.jsx`, `SelectedWork.jsx`, `Services.jsx`, `Process.jsx`, `Closing.jsx`).
-- `assets/` — `logo.svg`, `logo-negative.svg`, `favicon.svg`; `img/` (pixel banner, process line, how-it-works image, Mer portrait); `work/` (case-study imagery); `clients/` (marquee logos); `icons/scroll-arrow.svg`.
+- `assets/` — `logo.svg`, `logo-negative.svg`, `favicon.svg`; `img/` (pixel banner, process line, how-it-works image, Mer portrait); `work/` (case-study imagery); `clients/` (marquee logos); `icons/circle-arrow-down.svg` (scroll arrow, in use), `icons/scroll-arrow.svg` (previous, retired).
 - `SKILL.md` — Agent Skill entry. `thumbnail.html` — project tile.
 
 ## Components
@@ -55,7 +55,7 @@ Note: `Icon` and `Logotypo` are a *client's* mark (Agente Mamá AI) used in the 
 - **Motion:** core, not decoration. Signature dot: 2s loop — bounce, translation, subtle rotation, squash/deformation (`.mer-dot-anim`, placeholder keyframes). Marquee: continuous loop. Selected Work: items subdued at 30% become active as they reach the viewport centre (provisional 500ms opacity). Project Detail opens as a full-screen overlay — **transitions not yet specified; don't invent them**. Priority: section-specific instructions → motion prototypes → Figma motion examples → these principles. Always honour `prefers-reduced-motion` (dot + marquee go static).
 
 ## ICONOGRAPHY
-- MER has **no icon system** in the Figma file. The few glyphs are drawn inline at 1.25px stroke, ink: close ✕ (12px cross in 24 box) and an up-right arrow in the live-site pill (Project Detail), plus the circled scroll arrow under the marquee (`assets/icons/scroll-arrow.svg`, painted yellow via CSS mask).
+- MER has **no icon system** in the Figma file. The few glyphs are drawn inline at 1.25px stroke, ink: close ✕ (12px cross in 24 box) and an up-right arrow in the live-site pill (Project Detail), plus the circled scroll arrow under the marquee (`assets/icons/circle-arrow-down.svg`, painted yellow via CSS mask).
 - Text does iconographic work: brackets `[ ]`, `·`, `—`, `™`, numbered `[1]`–`[4]`, and the yellow dot.
 - No emoji, no icon font. If more UI icons are needed, use a thin (1.25–1.5px) outline set such as Lucide at 24px and flag it — that would be a substitution.
 - `Icon` / `Logotypo` components are a client logo, not UI icons. Client marquee logos live in `assets/clients/` (PNGs + SVGs; SVGs are `currentColor`, render via mask).

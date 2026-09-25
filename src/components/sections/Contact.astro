@@ -16,7 +16,7 @@ const links = [
     </a>
     <address class="contact__channels">
       <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-      <a href={WHATSAPP.href} target="_blank" rel="noopener">WhatsApp {WHATSAPP.label}<span class="visually-hidden"> (opens in a new tab)</span></a>
+      <a href={WHATSAPP.href} target="_blank" rel="noopener"><span class="visually-hidden">WhatsApp </span>{WHATSAPP.label}<span class="visually-hidden"> (opens in a new tab)</span></a>
     </address>
   </div>
   <nav aria-label="Footer">
@@ -41,10 +41,10 @@ const links = [
   .contact__logo { display: inline-flex; margin-top: 2px; }
   .contact__logo img { width: 312.7px; height: auto; }
   .contact__channels { display: flex; gap: 22px; font-style: normal; }
+  /* Same size as the footer nav links (Mer, review round 10). */
   .contact__channels a {
-    font-weight: 500;
-    font-size: var(--fs-lead);
-    line-height: 1.2;
+    font-size: var(--fs-body);
+    line-height: 1.5;
     text-decoration: underline;
     text-decoration-thickness: from-font;
     text-underline-position: from-font;
@@ -58,7 +58,6 @@ const links = [
     .contact__top { flex-direction: column; gap: var(--sp-32); }
     .contact__logo img { width: 220px; }
     .contact__channels { flex-direction: column; gap: var(--sp-12); }
-    .contact__channels a { font-size: 22px; }
   }
   .contact__nav a {
     font-size: var(--fs-body);

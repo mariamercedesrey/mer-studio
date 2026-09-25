@@ -1,5 +1,5 @@
 ---
-// Figma 149:5176 Client Marquee — logos on ink at 55 %, looping to the right at ~127 px/s (D2, D11).
+// Figma 149:5176 Client Marquee — logos on ink at 55 %, looping to the right at ~64 px/s (D2, D11).
 // Order, sizes, crops and blend modes follow Figma 149:5180. The duplicate raster L'Oréal was removed (Mer, review round 1).
 type Logo = {
   name: string; src: string; w: number; h: number;
@@ -53,8 +53,8 @@ const copies = [false, true];
 </section>
 
 <script>
-  // Keep the speed at ~127 px/s whatever the track width (Figma: 3052 px / 24 s).
-  const PX_PER_S = 3052 / 24;
+  // Keep the speed at ~64 px/s whatever the track width (Figma: 3052 px / 24 s, halved).
+  const PX_PER_S = 3052 / 48; // half the Figma speed (Mer, review round 8)
   document.querySelectorAll<HTMLElement>('[data-marquee]').forEach((el) => {
     const set = el.querySelector<HTMLElement>('.marquee__set');
     if (!set) return;
@@ -73,6 +73,7 @@ const copies = [false, true];
     gap: var(--sp-32);
     height: 250px;
     padding-top: var(--sp-80);
+    padding-bottom: var(--sp-8); /* room for the scroll arrow's 3px nudge */
     background: var(--surface-inverse);
     overflow: hidden;
   }
@@ -83,7 +84,7 @@ const copies = [false, true];
     /* The moving track is its own compositing group: give it the ink ground so the
        luminosity / color-dodge logos blend against ink, as in Figma. */
     background: var(--surface-inverse);
-    animation: marquee-right var(--marquee-duration, 24s) linear infinite;
+    animation: marquee-right var(--marquee-duration, 48s) linear infinite;
   }
   .marquee__viewport:hover .marquee__track,
   .marquee__viewport:focus-within .marquee__track { animation-play-state: paused; }
@@ -106,16 +107,23 @@ const copies = [false, true];
   .marquee__scroll {
     position: relative;
     display: block;
-    width: 50px;
-    height: 50px;
+    /* Icon: brand/assets/icons/circle-arrow-down.svg (24 box, ring r=10). 60px box → 50px ring, as in Figma.
+       The public copy uses stroke 0.8 → 2px drawn, matching the previous arrow (Mer, review round 10). */
+    width: 60px;
+    height: 60px;
     flex-shrink: 0;
     background: var(--accent-primary);
-    -webkit-mask: url(/icons/scroll-arrow.svg) center / contain no-repeat;
-    mask: url(/icons/scroll-arrow.svg) center / contain no-repeat;
-    transform: rotate(180deg);
+    -webkit-mask: url(/icons/circle-arrow-down.svg) center / contain no-repeat;
+    mask: url(/icons/circle-arrow-down.svg) center / contain no-repeat;
     transition: background-color var(--dur-fast) var(--ease-precise);
+    /* Every 3 s a 3px nudge down and back, inviting the scroll (Mer, review round 9). */
+    animation: scroll-nudge 3s var(--ease-precise) infinite;
   }
   .marquee__scroll:hover { background: var(--accent-bright); }
+  @keyframes scroll-nudge {
+    0%, 80%, 100% { translate: 0 0; }
+    88% { translate: 0 3px; }
+  }
 
   @media (max-width: 767px) {
     .marquee { height: auto; gap: var(--sp-32); padding: var(--sp-48) 0 var(--sp-24); }
@@ -129,5 +137,6 @@ const copies = [false, true];
   }
   @media (prefers-reduced-motion: reduce) {
     .marquee__track { animation: none; transform: translateX(-25%); }
+    .marquee__scroll { animation: none; }
   }
 </style>
