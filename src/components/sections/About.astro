@@ -1,6 +1,7 @@
 ---
 // Figma 149:6015 About.
 import Button from '../primitives/Button.astro';
+import { BOOKING_URL } from '../../data/contact';
 import { getImage } from 'astro:assets';
 import portrait from '../../../brand/assets/img/mer-portrait.png';
 const [avif, webp] = await Promise.all(
@@ -38,7 +39,7 @@ const stats = [
       ))}
     </dl>
   </div>
-  <Button href="mailto:hello@mer.studio?subject=Book%20a%20call" width={201} height={56}>book a call</Button>
+  <Button href={BOOKING_URL} width={201} height={56} target="_blank" rel="noopener">book a call<span class="visually-hidden"> (opens in a new tab)</span></Button>
 </section>
 
 <style>
