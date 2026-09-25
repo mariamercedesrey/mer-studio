@@ -7,6 +7,9 @@
   --blur-nav: 3.611px;                            /* nav capsule backdrop blur (Figma 149:5116) */
   --radius-nav: 30.333px;                         /* nav capsule radius (Figma 149:5116) */
   --dot-muted: rgb(126, 126, 126);             /* grey dot on the How it works path (Figma 2003:39; DS SignatureDot tone="muted") */
+  --opacity-step-pending: 0.6;                    /* How it works step not yet reached by the dot — same 60 % as --text-tertiary (dark), keeps AA on charcoal */
+  --ascii-bg: rgb(16, 16, 25);                    /* How it works ASCII panel ground, sampled from brand/assets/img/how-it-works.png */
+  --ascii-ink: rgb(202, 203, 209);                /* How it works ASCII glyphs, sampled from the same asset */
   --shadow-mockup-sm: 0 3.78px 3.78px rgba(0, 0, 0, 0.25);
   --shadow-mockup-lg: 22.431px 44.863px 12.462px rgba(0, 0, 0, 0.12);
 }
