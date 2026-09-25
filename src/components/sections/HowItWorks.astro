@@ -1,9 +1,9 @@
 ---
 // Figma 149:5990 How It Works — charcoal band, four steps over a dashed path.
 import SectionHeading from '../primitives/SectionHeading.astro';
-import SignatureDot from '../primitives/SignatureDot.astro';
 import { getImage } from 'astro:assets';
-import ascii from '../../../brand/assets/img/how-it-works.png';
+// brand/assets/img/how-it-works.png with the copy icon painted out (Mer, PR #7 review).
+import ascii from '../../assets/how-it-works-ascii.png';
 const [avif, webp] = await Promise.all(
   (['avif', 'webp'] as const).map((format) => getImage({ src: ascii, widths: [517, 1034], format })),
 );
@@ -14,19 +14,26 @@ const steps = [
   { n: '04', title: 'Handover', body: 'Launch, files and accounts in your name. Thirty days of support in case anything breaks.' },
 ];
 ---
-<section id="how-it-works" class="hiw" aria-labelledby="hiw-title">
+<section id="how-it-works" class="hiw" aria-labelledby="hiw-title" data-hiw-timeline>
   <div class="hiw__path" aria-hidden="true">
-    <img src="/img/process-line.svg" alt="" width="1472" height="148" loading="lazy" />
-    <SignatureDot tone="muted" class="hiw__path-dot" />
+    <!-- Inline (was /img/process-line.svg) so the dot can sample the path geometry. -->
+    <svg viewBox="0 0 1472.79 148.843" preserveAspectRatio="none" fill="none">
+      <path d="M0.425151 49.7426C10.0624 65.3129 57.6502 97.596 170.904 102.166C312.471 107.879 353.346 13.7854 418.148 36.6367C482.95 59.488 621.028 216.087 700.784 114.264C780.54 12.4413 872.758 -1.67278 941.05 8.07264C1009.34 17.8181 1118.51 116.952 1253.1 103.51C1360.77 92.7568 1444.18 30.2517 1472.43 0.343313" stroke="#706F6F" stroke-dasharray="3.25 3.25" />
+    </svg>
   </div>
-  <picture class="hiw__ascii">
-    <source type="image/avif" srcset={avif.srcSet.attribute} sizes="476px" />
-    <source type="image/webp" srcset={webp.srcSet.attribute} sizes="476px" />
-    <img src={webp.src} alt="" width={ascii.width} height={ascii.height} loading="lazy" decoding="async" />
-  </picture>
+  <!-- Canvas re-draws the same asset as live glyphs (scripts/ascii-panel.ts); the picture is the
+       no-JS / reduced-motion rendering and is never fetched when the canvas takes over. -->
+  <div class="hiw__ascii" data-ascii-panel>
+    <picture>
+      <source type="image/avif" srcset={avif.srcSet.attribute} sizes="476px" />
+      <source type="image/webp" srcset={webp.srcSet.attribute} sizes="476px" />
+      <img src={webp.src} alt="" width={ascii.width} height={ascii.height} loading="lazy" decoding="async" />
+    </picture>
+    <canvas aria-hidden="true"></canvas>
+  </div>
 
   <div class="hiw__intro">
-    <SectionHeading eyebrow="How it works" id="hiw-title" tone="dark">Four steps, no surprises</SectionHeading>
+    <SectionHeading eyebrow="How it works" id="hiw-title" tone="dark" dotMotion="scroll-path">Four steps, no surprises</SectionHeading>
     <p class="hiw__lead">Every project starts with a 20-minute call. You get back a proposal with a fixed scope, a final price and a delivery date.</p>
   </div>
 
@@ -58,13 +65,25 @@ const steps = [
 
   /* Figma 2003:38 — path flipped vertically, bleeding 16px past both edges. */
   .hiw__path { position: absolute; left: -16px; top: 397.26px; width: calc(100% + 32px); height: 148px; }
-  .hiw__path img { width: 100%; height: 100%; transform: scaleY(-1); }
-  .hiw__path :global(.hiw__path-dot) { position: absolute; left: calc(1183 / 1472 * 100%); top: 34px; }
+  .hiw__path svg { display: block; width: 100%; height: 100%; overflow: visible; transform: scaleY(-1); }
+  /* The headline's dot is the traveller (scripts/hiw-timeline.ts): it stays on the title at rest
+     (no JS, reduced motion, below desktop) and is moved by transform only. */
+  .hiw[data-timeline] :global(.section-heading__dot) { will-change: transform; }
+  .hiw[data-timeline] .hiw__step { opacity: var(--opacity-step-pending); transition: opacity 500ms var(--ease-precise); }
+  .hiw[data-timeline] .hiw__step[data-reached] { opacity: 1; }
 
   /* Figma draws the panel at 517×259 from y 125, over the "04" label. Per Mer (review round 1) it must not
      cover it: aligned to the eyebrow and scaled to 92 % (same crop), ending 12px above the steps row. */
   .hiw__ascii { position: absolute; right: 0; top: 95.25px; width: 476px; height: 238px; }
+  .hiw__ascii picture { display: block; width: 100%; height: 100%; }
   .hiw__ascii img { width: 100%; height: 100%; object-fit: cover; }
+  .hiw__ascii canvas { display: none; position: absolute; inset: 0; width: 100%; height: 100%; }
+  /* Live panel: hidden until it enters the viewport, then shown at once (no fade) while glyphs assemble. */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .hiw__ascii:not([data-ascii='fallback']) picture { display: none; }
+    :global(.js) .hiw__ascii:not([data-ascii='fallback']) canvas { display: block; visibility: hidden; background: var(--ascii-bg); }
+    :global(.js) .hiw__ascii[data-ascii='on'] canvas { visibility: visible; }
+  }
 
   .hiw__steps { position: relative; display: flex; gap: 0.75px; }
   .hiw__step { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 14px; padding: 22px var(--sp-12); }
@@ -77,8 +96,8 @@ const steps = [
   @media (max-width: 1199px) {
     .hiw { gap: var(--sp-48); padding-top: var(--sp-80); padding-bottom: var(--sp-80); }
     .hiw__path { display: none; }
-    .hiw__ascii { position: static; order: 2; width: 100%; max-width: 517px; height: auto; aspect-ratio: 517 / 259; }
-    .hiw__intro { order: 1; }
+    .hiw__ascii { position: relative; top: auto; right: auto; order: 2; width: 100%; max-width: 517px; height: auto; aspect-ratio: 517 / 259; }
+      .hiw__intro { order: 1; }
     .hiw__steps { order: 3; display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
     .hiw__step { padding-left: 0; padding-right: var(--sp-24); border-top: 1px dashed var(--fills-primary); }
   }
@@ -87,3 +106,10 @@ const steps = [
     .hiw__step { padding: var(--sp-20) 0; gap: var(--sp-8); }
   }
 </style>
+
+<script>
+  import { initAsciiPanel } from '../../scripts/ascii-panel';
+  import { initHiwTimeline } from '../../scripts/hiw-timeline';
+  initAsciiPanel();
+  initHiwTimeline();
+</script>

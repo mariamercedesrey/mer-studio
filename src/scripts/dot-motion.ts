@@ -4,6 +4,8 @@
 // the static frame on the "m", so every track is normalised to end at identity (no transform) there.
 // Lengths are converted to em of the "m" glyph (285.422 px in Figma) so the path scales with the mark.
 
+import { bezier } from './easing';
+
 const FIG_M = 285.422;
 const END = 9.757; // % of the 32 s Figma timeline
 const DURATION = (END / 100) * 32000;
@@ -29,21 +31,6 @@ const R_END = -0.057;
 const HEIGHT: [number, number][] = [[0, 40.573], [1.517, 35.116], [2.957, 45.036], [END, 40.62]];
 const H_END = 40.62;
 
-function bezier(x1: number, y1: number, x2: number, y2: number) {
-  const cx = 3 * x1, bx = 3 * (x2 - x1) - cx, ax = 1 - cx - bx;
-  const cy = 3 * y1, by = 3 * (y2 - y1) - cy, ay = 1 - cy - by;
-  const sx = (t: number) => ((ax * t + bx) * t + cx) * t;
-  const sy = (t: number) => ((ay * t + by) * t + cy) * t;
-  return (x: number) => {
-    let t = x;
-    for (let i = 0; i < 8; i++) {
-      const d = (3 * ax * t + 2 * bx) * t + cx;
-      if (Math.abs(d) < 1e-6) break;
-      t -= (sx(t) - x) / d;
-    }
-    return sy(Math.min(1, Math.max(0, t)));
-  };
-}
 const ease = bezier(0.5, 0, 0.5, 1);
 
 function lerpTrack(track: [number, number][], pct: number) {

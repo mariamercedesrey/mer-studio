@@ -1,12 +1,12 @@
 ---
 // Section heading: mono eyebrow + Outfit 48/500 title + signature dot (Figma "Heading 2" pattern).
 import SignatureDot from './SignatureDot.astro';
-interface Props { eyebrow: string; id: string; tone?: 'light' | 'dark'; class?: string }
-const { eyebrow, id, tone = 'light', class: className } = Astro.props;
+interface Props { eyebrow: string; id: string; tone?: 'light' | 'dark'; dotMotion?: string; class?: string }
+const { eyebrow, id, tone = 'light', dotMotion = 'none', class: className } = Astro.props;
 ---
 <header class:list={['section-heading', `section-heading--${tone}`, className]}>
   <p class="section-heading__eyebrow">{eyebrow}</p>
-  <h2 id={id} class="section-heading__title"><slot />&#8288;<SignatureDot class="section-heading__dot" tone={tone === 'light' ? 'dark' : 'accent'} /></h2>
+  <h2 id={id} class="section-heading__title"><slot />&#8288;<SignatureDot class="section-heading__dot" tone={tone === 'light' ? 'dark' : 'accent'} motion={dotMotion} /></h2>
 </header>
 
 <style>
