@@ -3,8 +3,10 @@
 // · Scroll: the further the panel travels up, the more glyphs fall out of it; scrolling back re-forms them.
 //   Fall is a pure function of scroll position, so it is exactly reversible.
 // · Fine pointer only: glyphs near the cursor are pushed away and spring back.
+// · Split-flap (Mer, PR #7 review): like an airport departures board, glyphs roll through other
+//   characters while they fly in, then short runs along a row keep flipping for as long as it is on screen.
 // · prefers-reduced-motion / no canvas: never initialised, the static <picture> stays (CSS handles it).
-// The loop only runs while something is moving and the panel is on screen.
+// The loop only runs while the panel is on screen.
 import { ASCII_ROWS, ASCII_GEOMETRY as G } from '../data/how-it-works-ascii';
 import { easePrecise, clamp01 } from './easing';
 
@@ -15,6 +17,9 @@ const POINTER_RADIUS = 150; // asset px (≈ 50 CSS px on desktop)
 const POINTER_FORCE = 14000;
 const SPRING = 140;
 const DAMPING = 16;
+const FLAP_MS = 65; // one character change
+const FLAP_STAGGER_MS = 35; // left-to-right delay inside a run
+const RUN_EVERY_MS = 280; // a new run starts this often
 
 interface Glyph {
   ch: string;
@@ -25,6 +30,9 @@ interface Glyph {
   t: number; // scroll progress at which it starts to fall
   drop: number; drift: number; spin: number;
   ox: number; oy: number; vx: number; vy: number; // pointer displacement
+  shown: string; // character on the flap right now
+  step: number; // last flap step drawn
+  flipAt: number; flips: number; // current run: start time (ms) and number of flaps before landing
 }
 
 // Deterministic PRNG so the scatter is identical on every visit.
@@ -56,6 +64,7 @@ function buildGlyphs(): Glyph[] {
         drift: (rand() - 0.5) * 160,
         spin: (rand() - 0.5) * 1.6,
         ox: 0, oy: 0, vx: 0, vy: 0,
+        shown: ch, step: -1, flipAt: 0, flips: 0,
       });
     });
   });
@@ -72,7 +81,6 @@ export function initAsciiPanel() {
 
   const styles = getComputedStyle(root);
   const ink = styles.getPropertyValue('--ascii-ink').trim() || '#cacbd1';
-  const bg = styles.getPropertyValue('--ascii-bg').trim() || '#101019';
   const family = styles.getPropertyValue('--font-technical').trim() || 'monospace';
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
 
@@ -86,6 +94,7 @@ export function initAsciiPanel() {
   let frame = 0;
   let last = 0;
   let fontReady = false;
+  let nextRun = 0;
 
   // Glyph atlas: each distinct character pre-rendered once per size, then blitted.
   const chars = [...new Set(glyphs.map((g) => g.ch))];
@@ -93,6 +102,31 @@ export function initAsciiPanel() {
   const actx = atlas.getContext('2d')!;
   let cellW = 0, cellH = 0, ascent = 0;
   const slot = new Map(chars.map((c, i) => [c, i]));
+  const randomChar = () => chars[(Math.random() * chars.length) | 0];
+
+  // A run: a few neighbouring glyphs on one row (glyphs are stored row by row) flip left to right.
+  function startRun(now: number) {
+    const len = 3 + ((Math.random() * 8) | 0);
+    const from = (Math.random() * glyphs.length) | 0;
+    const row = glyphs[from].row;
+    for (let j = 0; j < len; j++) {
+      const g = glyphs[from + j];
+      if (!g || g.row !== row) break;
+      g.flipAt = now + j * FLAP_STAGGER_MS;
+      g.flips = 4 + ((Math.random() * 6) | 0);
+      g.step = -1;
+    }
+  }
+
+  // Updates g.shown and returns the flap's vertical scale (1 = flat, at rest).
+  function flap(g: Glyph, now: number, assembling: boolean) {
+    const t = assembling ? now - revealAt + g.delay * 3 : now - g.flipAt;
+    if (!assembling && (g.flips === 0 || t < 0)) return 1;
+    const step = Math.floor(t / FLAP_MS);
+    if (!assembling && step >= g.flips) { g.flips = 0; g.shown = g.ch; return 1; }
+    if (step !== g.step) { g.step = step; g.shown = randomChar(); }
+    return 0.2 + 0.8 * easePrecise((t % FLAP_MS) / FLAP_MS);
+  }
 
   function buildAtlas() {
     const px = G.fontSize * scale * dpr;
@@ -131,18 +165,6 @@ export function initAsciiPanel() {
     fall = clamp01((start - centre) / (start + r.height / 2));
   }
 
-  function drawIcon() {
-    const s = scale * dpr;
-    ctx!.setTransform(s, 0, 0, s, offX * dpr, offY * dpr);
-    ctx!.lineWidth = G.icon.stroke;
-    ctx!.strokeStyle = ink;
-    ctx!.fillStyle = bg;
-    const [bx, by, bw, bh] = G.icon.back;
-    const [fx, fy, fw, fh] = G.icon.front;
-    ctx!.beginPath(); ctx!.roundRect(bx, by, bw, bh, G.icon.radius); ctx!.stroke();
-    ctx!.beginPath(); ctx!.roundRect(fx, fy, fw, fh, G.icon.radius); ctx!.fill(); ctx!.stroke();
-  }
-
   // Returns true while anything is still in motion.
   function draw(now: number) {
     const w = canvas!.width, h = canvas!.height;
@@ -152,14 +174,17 @@ export function initAsciiPanel() {
 
     const dt = last ? Math.min((now - last) / 1000, 1 / 30) : 0;
     last = now;
-    let moving = false;
+    // Ambient flaps keep the board alive for as long as it is on screen.
+    const moving = true;
     const elapsed = now - revealAt;
     const px = pointer && finePointer.matches ? pointer : null;
+    if (elapsed > ASSEMBLE_MS + STAGGER_MS && now >= nextRun) { startRun(now); nextRun = now + RUN_EVERY_MS; }
+    const mid = G.fontSize * 0.36 * scale * dpr; // flap hinge: middle of the x-height
 
     for (const g of glyphs) {
       // Assembly: start → home.
       const a = easePrecise(clamp01((elapsed - g.delay) / ASSEMBLE_MS));
-      if (a < 1) moving = true;
+      if (a >= 1 && g.flips === 0) g.shown = g.ch;
       // Scroll fall, accelerating like gravity.
       const k = clamp01((fall - g.t) / FALL_WINDOW);
       const fx = g.hx + g.drift * k;
@@ -177,25 +202,23 @@ export function initAsciiPanel() {
       }
       g.vx += ax * dt; g.vy += ay * dt;
       g.ox += g.vx * dt; g.oy += g.vy * dt;
-      // Settled = no velocity, and back home unless the cursor is holding it away.
-      if (Math.abs(g.vx) + Math.abs(g.vy) > 0.5 || (!px && Math.abs(g.ox) + Math.abs(g.oy) > 0.05)) moving = true;
-      else if (!px) { g.ox = g.oy = g.vx = g.vy = 0; }
+      // Settled = no velocity and back home: snap to rest (unless the cursor is holding it away).
+      if (!px && Math.abs(g.vx) + Math.abs(g.vy) < 0.5 && Math.abs(g.ox) + Math.abs(g.oy) < 0.05) {
+        g.ox = g.oy = g.vx = g.vy = 0;
+      }
 
       const x = g.sx + (fx + g.ox - g.sx) * a;
       const y = g.sy + (fy + g.oy - g.sy) * a;
       if (y - G.fontSize > G.height + G.fontSize) continue; // fallen out of the panel
-      const i = slot.get(g.ch)!;
+      const sy = flap(g, now, a < 1);
+      const i = slot.get(g.shown)!;
+      // Rotation (fall) × vertical squash (flap) about the glyph's hinge line.
       const rot = g.spin * k;
-      if (rot) {
-        const c = Math.cos(rot), sn = Math.sin(rot);
-        const cx = (offX + x * scale) * dpr, cy = (offY + y * scale) * dpr;
-        ctx!.setTransform(c, sn, -sn, c, cx, cy);
-      } else {
-        ctx!.setTransform(1, 0, 0, 1, (offX + x * scale) * dpr, (offY + y * scale) * dpr);
-      }
-      ctx!.drawImage(atlas, i * cellW, 0, cellW, cellH, -2, -ascent, cellW, cellH);
+      const c = Math.cos(rot), sn = Math.sin(rot);
+      const bx = (offX + x * scale) * dpr, by = (offY + y * scale) * dpr;
+      ctx!.setTransform(c, sn, -sn * sy, c * sy, bx + sn * mid, by - c * mid);
+      ctx!.drawImage(atlas, i * cellW, 0, cellW, cellH, -2, mid - ascent, cellW, cellH);
     }
-    drawIcon();
     return moving;
   }
 

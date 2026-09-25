@@ -2,7 +2,8 @@
 // Figma 149:5990 How It Works — charcoal band, four steps over a dashed path.
 import SectionHeading from '../primitives/SectionHeading.astro';
 import { getImage } from 'astro:assets';
-import ascii from '../../../brand/assets/img/how-it-works.png';
+// brand/assets/img/how-it-works.png with the copy icon painted out (Mer, PR #7 review).
+import ascii from '../../assets/how-it-works-ascii.png';
 const [avif, webp] = await Promise.all(
   (['avif', 'webp'] as const).map((format) => getImage({ src: ascii, widths: [517, 1034], format })),
 );

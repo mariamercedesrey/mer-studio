@@ -1,4 +1,4 @@
-// Character grid of brand/assets/img/how-it-works.png, transcribed cell by cell (template-matched
+// Character grid of brand/assets/img/how-it-works.png (copy icon left out), transcribed cell by cell (template-matched
 // against JetBrains Mono) so the panel can be drawn as live glyphs. Geometry is in the asset's own
 // pixels (1422 × 712); the canvas scales it exactly like the <img> with object-fit: cover.
 export const ASCII_ROWS = [
@@ -29,6 +29,4 @@ export const ASCII_GEOMETRY = {
   baseline0: 73.5, // baseline of row 0
   lineHeight: 38.69,
   fontSize: 38.67,
-  // Copy icon in the top-right corner of the asset: two 2px outlined squares, front one filled.
-  icon: { back: [1373.5, 29.5, 17.5, 17], front: [1381.5, 37.5, 17.5, 17.5], radius: 1.5, stroke: 2 },
 } as const;
