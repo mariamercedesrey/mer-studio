@@ -1,5 +1,5 @@
 ---
-// Figma 149:5176 Client Marquee — logos on ink at 55 %, looping to the right at ~127 px/s (D2, D11).
+// Figma 149:5176 Client Marquee — logos on ink at 55 %, looping to the right at ~64 px/s (D2, D11).
 // Order, sizes, crops and blend modes follow Figma 149:5180. The duplicate raster L'Oréal was removed (Mer, review round 1).
 type Logo = {
   name: string; src: string; w: number; h: number;
@@ -53,8 +53,8 @@ const copies = [false, true];
 </section>
 
 <script>
-  // Keep the speed at ~127 px/s whatever the track width (Figma: 3052 px / 24 s).
-  const PX_PER_S = 3052 / 24;
+  // Keep the speed at ~64 px/s whatever the track width (Figma: 3052 px / 24 s, halved).
+  const PX_PER_S = 3052 / 48; // half the Figma speed (Mer, review round 8)
   document.querySelectorAll<HTMLElement>('[data-marquee]').forEach((el) => {
     const set = el.querySelector<HTMLElement>('.marquee__set');
     if (!set) return;
@@ -83,7 +83,7 @@ const copies = [false, true];
     /* The moving track is its own compositing group: give it the ink ground so the
        luminosity / color-dodge logos blend against ink, as in Figma. */
     background: var(--surface-inverse);
-    animation: marquee-right var(--marquee-duration, 24s) linear infinite;
+    animation: marquee-right var(--marquee-duration, 48s) linear infinite;
   }
   .marquee__viewport:hover .marquee__track,
   .marquee__viewport:focus-within .marquee__track { animation-play-state: paused; }
@@ -106,8 +106,9 @@ const copies = [false, true];
   .marquee__scroll {
     position: relative;
     display: block;
-    width: 50px;
-    height: 50px;
+    /* 52px box: the ring's outer edge is r=26 around the 50px artwork, so it needs 1px of room per side. */
+    width: 52px;
+    height: 52px;
     flex-shrink: 0;
     background: var(--accent-primary);
     -webkit-mask: url(/icons/scroll-arrow.svg) center / contain no-repeat;
