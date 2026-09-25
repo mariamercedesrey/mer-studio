@@ -1,5 +1,8 @@
 ---
 // Figma 149:5105 › 149:5107 — logo + tagline + nav capsule. "EN" chip removed (R2-F).
+// Mobile (≤767, JS on): classic hamburger opening a full-screen menu (Mer, review round 10).
+// Native <dialog>: focus containment, Esc and inert page for free. Without JS the capsule stays.
+import { EMAIL, WHATSAPP } from '../../data/contact';
 const nav = [
   { label: 'selected work', href: '#work' },
   { label: 'Services', href: '#services' },
@@ -19,7 +22,46 @@ const nav = [
       {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
     </ul>
   </nav>
+  <button class="site-header__toggle" type="button" aria-haspopup="dialog" aria-controls="mobile-menu" data-menu-open>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 6H21M3 12H21M3 18H21" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/></svg>
+    <span class="visually-hidden">Open menu</span>
+  </button>
 </header>
+
+<dialog id="mobile-menu" class="mobile-menu" aria-label="Menu" data-menu>
+  <div class="mobile-menu__bar">
+    <a class="mobile-menu__logo" href="/" aria-label="MER Studio, home">
+      <img src="/logo-negative.svg" width="150" height="24" alt="" />
+    </a>
+    <button class="mobile-menu__close" type="button" data-menu-close autofocus>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="visually-hidden">Close menu</span>
+    </button>
+  </div>
+  <nav aria-label="Primary">
+    <ul role="list" class="mobile-menu__list">
+      {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+    </ul>
+  </nav>
+  <address class="mobile-menu__contact">
+    <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+    <a href={WHATSAPP.href} target="_blank" rel="noopener"><span class="visually-hidden">WhatsApp </span>{WHATSAPP.label}<span class="visually-hidden"> (opens in a new tab)</span></a>
+  </address>
+</dialog>
+
+<script>
+  const menu = document.querySelector<HTMLDialogElement>('[data-menu]');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-open]');
+  if (menu && toggle) {
+    toggle.addEventListener('click', () => menu.showModal());
+    menu.querySelector('[data-menu-close]')?.addEventListener('click', () => menu.close());
+    // In-page links: close first, then let the anchor scroll the page.
+    menu.querySelectorAll<HTMLAnchorElement>('nav a').forEach((a) => a.addEventListener('click', () => menu.close()));
+    menu.addEventListener('close', () => toggle.focus({ preventScroll: true }));
+    // Leaving the mobile layout with the menu open (rotation, resize) closes it.
+    matchMedia('(min-width: 768px)').addEventListener('change', (e) => { if (e.matches) menu.close(); });
+  }
+</script>
 
 <style>
   .site-header {
@@ -78,11 +120,74 @@ const nav = [
   @media (max-width: 1199px) {
     .site-header__tagline { display: none; }
   }
+  .site-header__toggle { display: none; }
+
   @media (max-width: 767px) {
     .site-header { flex-direction: column; align-items: flex-start; gap: var(--sp-20); }
+    /* JS on: logo + hamburger in one row; the capsule moves into the full-screen menu. */
+    :global(.js) .site-header { flex-direction: row; align-items: center; }
+    :global(.js) .site-nav { display: none; }
+    :global(.js) .site-header__toggle {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: var(--hit-min); height: var(--hit-min); margin-right: -12px; padding: 0;
+      border: 0; background: none; color: var(--text-primary); cursor: pointer;
+      border-radius: var(--r-pill);
+    }
     .site-header__logo img { width: 150px; }
     .site-nav { max-width: 100%; overflow-x: auto; scrollbar-width: none; }
     .site-nav__list { gap: 16px; padding: 0 6px; }
     .site-nav a::after { inset: -16px -6px; }
   }
+
+  /* Full-screen menu — on ink, like the Contact block. */
+  .mobile-menu {
+    position: fixed; inset: 0;
+    width: 100%; height: 100%; max-width: none; max-height: none;
+    margin: 0; padding: 20px var(--page-gutter) var(--sp-40);
+    border: 0;
+    display: none;
+    flex-direction: column;
+    gap: var(--sp-64);
+    background: var(--surface-inverse);
+    color: var(--text-inverse);
+    overflow-y: auto; overscroll-behavior: contain;
+    opacity: 0;
+    transition: opacity var(--dur-base) var(--ease-precise), display var(--dur-base) allow-discrete, overlay var(--dur-base) allow-discrete;
+  }
+  .mobile-menu[open] { display: flex; opacity: 1; }
+  @starting-style { .mobile-menu[open] { opacity: 0; } }
+  .mobile-menu::backdrop { background: transparent; }
+  :global(html:has(.mobile-menu[open])) { overflow: hidden; }
+
+  .mobile-menu__bar { display: flex; align-items: center; justify-content: space-between; }
+  .mobile-menu__logo { display: inline-flex; }
+  .mobile-menu__logo img { width: 150px; height: auto; }
+  .mobile-menu__close {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: var(--hit-min); height: var(--hit-min); margin-right: -12px; padding: 0;
+    border: 0; background: none; color: var(--text-inverse); cursor: pointer;
+    border-radius: var(--r-pill);
+  }
+  .mobile-menu__list { display: flex; flex-direction: column; gap: var(--sp-24); margin: 0; }
+  .mobile-menu__list a {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--fs-work-title);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease-precise);
+  }
+  .mobile-menu__contact { display: flex; flex-direction: column; gap: var(--sp-12); margin-top: auto; font-style: normal; }
+  .mobile-menu__contact a {
+    font-size: var(--fs-body);
+    line-height: 1.5;
+    text-decoration: underline;
+    text-decoration-thickness: from-font;
+    text-underline-position: from-font;
+  }
+  .mobile-menu__list a:hover, .mobile-menu__contact a:hover { color: var(--accent-primary); }
+
+  @media (prefers-reduced-motion: reduce) { .mobile-menu { transition: none; } }
 </style>
