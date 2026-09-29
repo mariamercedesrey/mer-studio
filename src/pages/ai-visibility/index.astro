@@ -9,6 +9,8 @@ import FinalCTA from '../../components/sections/FinalCTA.astro';
 import SiteFooter from '../../components/sections/SiteFooter.astro';
 import Button from '../../components/primitives/Button.astro';
 import { aiVisibilitySchema } from '../../data/schema';
+import { llmsSnippet } from '../../data/llms-snippet';
+import llms from '../../../public/llms.txt?raw';
 
 const method = [
   { t: 'Readable', d: 'Crawlers can reach and parse your site: fast pages, clean HTML, an llms.txt, and a robots.txt that lets AI search bots in instead of blocking them.' },
@@ -21,16 +23,8 @@ const proof = [
   { t: 'Structured data', d: 'JSON-LD tells machines our name, services and location — no guessing.' },
   { t: 'Open to AI crawlers', d: 'Our robots.txt welcomes GPTBot, ClaudeBot, PerplexityBot and Google-Extended instead of blocking them.' },
 ];
-// Excerpt of public/llms.txt (its first block, minus the tagline paragraph): keep in sync when those lines change.
-const snippet = `# MER Studio
-
-> Independent design-and-build studio. Strategy, design and code, handled end to end by one team — a brand, a website, an online store, a full platform. Working worldwide from Argentina.
-
-## Services
-- Branding: Identity, and the system to keep it consistent.
-- Websites: A landing, a full site, or an online store.
-- Digital Product: An app or a platform that doesn't exist yet.
-- AI Visibility · GEO / AEO: So people find you when they ask an AI, not just Google.`;
+// Snippet card: generated at build from public/llms.txt (no manual sync): title, quote, "## Services" heading and its first list.
+const snippet = llmsSnippet(llms);
 ---
 <BaseLayout
   title="AI Visibility (GEO / AEO) — MER Studio"
