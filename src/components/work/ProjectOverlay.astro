@@ -1,17 +1,15 @@
 ---
-// Full-screen overlay hosting ProjectDetail on the home page. Native <dialog> gives focus
-// containment, Esc and inert background; scripts/project-overlay.ts adds the URL sync and fade (R2-D, R2-E).
+// Full-screen overlays hosting ProjectDetail on the home page, one <dialog> per project. Native <dialog>
+// gives focus containment, Esc and inert background; scripts/project-overlay.ts adds the URL sync and fade
+// (R2-D, R2-E). Images inside a closed dialog are lazy, so they only load when the project opens.
 import ProjectDetail from './ProjectDetail.astro';
-import AsociartDetailMedia from './AsociartDetailMedia.astro';
 import { projectDetails } from '../../data/project-details';
-const p = projectDetails.asociart;
 ---
-<dialog class="project-overlay" data-project-dialog={p.id} aria-labelledby={`pd-title-${p.id}`}>
-  <ProjectDetail project={p}>
-    <AsociartDetailMedia slot="hero" part="hero" />
-    <AsociartDetailMedia slot="gallery" part="gallery" />
-  </ProjectDetail>
-</dialog>
+{Object.values(projectDetails).map((p) => (
+  <dialog class="project-overlay" data-project-dialog={p.id} aria-labelledby={`pd-title-${p.id}`}>
+    <ProjectDetail project={p} />
+  </dialog>
+))}
 
 <script>
   import { initProjectOverlay } from '../../scripts/project-overlay';
@@ -23,7 +21,7 @@ const p = projectDetails.asociart;
     position: fixed; inset: 0;
     width: 100%; height: 100%; max-width: none; max-height: none;
     margin: 0; padding: 0; border: 0;
-    background: var(--surface-soft);
+    background: var(--surface-base);
     overflow-y: auto; overscroll-behavior: contain;
     opacity: 0;
     transition: opacity var(--dur-base) var(--ease-precise), display var(--dur-base) allow-discrete, overlay var(--dur-base) allow-discrete;

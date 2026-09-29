@@ -1,9 +1,8 @@
 ---
-// Prerendered Project Detail pages (R2-E). Only projects with detail content are generated.
+// Prerendered Project Detail pages (R2-E): one per entry in data/project-details.ts → /work/<slug>/.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectDetail from '../../components/work/ProjectDetail.astro';
-import AsociartDetailMedia from '../../components/work/AsociartDetailMedia.astro';
-import { projectDetails } from '../../data/project-details';
+import { projectDetails, detailBlocks } from '../../data/project-details';
 import { projectSchema } from '../../data/schema';
 
 export function getStaticPaths() {
@@ -11,16 +10,14 @@ export function getStaticPaths() {
 }
 const { slug } = Astro.params;
 const p = projectDetails[slug as keyof typeof projectDetails];
+const url = new URL(Astro.url.pathname, Astro.site).href;
 ---
 <BaseLayout
   title={`${p.client} — ${p.title} | MER Studio`}
-  description={p.blocks[0].body}
-  schema={projectSchema(p, new URL(Astro.url.pathname, Astro.site).href)}
+  description={detailBlocks(p)[0].body}
+  schema={projectSchema(p, url)}
 >
   <main id="main">
-    <ProjectDetail project={p} headingLevel="h1" closeHref="/#work">
-      <AsociartDetailMedia slot="hero" part="hero" />
-      <AsociartDetailMedia slot="gallery" part="gallery" />
-    </ProjectDetail>
+    <ProjectDetail project={p} headingLevel="h1" closeHref="/#work" />
   </main>
 </BaseLayout>
