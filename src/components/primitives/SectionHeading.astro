@@ -2,12 +2,12 @@
 // Section heading: mono eyebrow + Outfit 48/500 title + signature dot (Figma "Heading 2" pattern). The title decodes in (DecodeTitle); the dot stays out of it.
 import SignatureDot from './SignatureDot.astro';
 import DecodeTitle from './DecodeTitle.astro';
-interface Props { eyebrow: string; title: string; id: string; tone?: 'light' | 'dark'; dotMotion?: string; class?: string }
-const { eyebrow, title, id, tone = 'light', dotMotion = 'none', class: className } = Astro.props;
+interface Props { eyebrow: string; title: string; id: string; tone?: 'light' | 'dark'; dotMotion?: string; class?: string; dot?: boolean }
+const { eyebrow, title, id, tone = 'light', dotMotion = 'none', class: className, dot = true } = Astro.props;
 ---
 <header class:list={['section-heading', `section-heading--${tone}`, className]}>
   <p class="section-heading__eyebrow">{eyebrow}</p>
-  <DecodeTitle as="h2" id={id} class="section-heading__title" text={title}><SignatureDot class="section-heading__dot" tone={tone === 'light' ? 'dark' : 'accent'} motion={dotMotion} /></DecodeTitle>
+  <DecodeTitle as="h2" id={id} class="section-heading__title" text={title}>{dot && <SignatureDot class="section-heading__dot" tone={tone === 'light' ? 'dark' : 'accent'} motion={dotMotion} />}</DecodeTitle>
 </header>
 
 <style>

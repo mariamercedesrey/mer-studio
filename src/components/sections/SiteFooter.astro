@@ -1,12 +1,42 @@
 ---
-// Figma 149:6099 Footer — on the page (white) ground.
+// Figma 149:6099 Footer — on the page (white) ground. tone="ink": the /start-a-project/ footer (Figma 2084:370), on ink.
+interface Props { tone?: 'base' | 'ink' }
+const { tone = 'base' } = Astro.props;
 ---
-<footer class="site-footer">
-  <p>©2026 mer.studio™ All Rights Reserved</p>
-  <p class="site-footer__where">Working Worldwide from <span class="site-footer__tag">argentina</span></p>
-</footer>
+{tone === 'ink' ? (
+  <footer class="site-footer-ink">
+    <div class="site-footer-ink__brand">
+      <p class="site-footer-ink__name">mer.studio™</p>
+      <p class="site-footer-ink__meta">©2026 mer.studio™ All Rights Reserved</p>
+    </div>
+    <div class="site-footer-ink__where">
+      <p class="site-footer-ink__meta">WORKING WORLDWIDE FROM</p>
+      <p>Buenos Aires</p>
+    </div>
+  </footer>
+) : (
+  <footer class="site-footer">
+    <p>©2026 mer.studio™ All Rights Reserved</p>
+    <p class="site-footer__where">Working Worldwide from <span class="site-footer__tag">argentina</span></p>
+  </footer>
+)}
 
 <style>
+  .site-footer-ink {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--sp-24);
+    flex-wrap: wrap;
+    padding: var(--sp-32) var(--page-gutter);
+    background: var(--surface-inverse);
+    color: var(--text-inverse);
+  }
+  .site-footer-ink__brand { display: flex; flex-direction: column; gap: var(--sp-12); }
+  .site-footer-ink__name { font-weight: 600; font-size: var(--fs-lead); line-height: 1; letter-spacing: -0.04em; }
+  .site-footer-ink__where { display: flex; flex-direction: column; gap: var(--sp-8); align-items: flex-end; }
+  .site-footer-ink__meta { font-family: var(--font-technical); font-size: var(--fs-caption); line-height: 1.4; letter-spacing: 0.02em; opacity: 0.52; }
+  @media (max-width: 767px) { .site-footer-ink__where { align-items: flex-start; } }
   .site-footer {
     display: flex;
     align-items: center;
