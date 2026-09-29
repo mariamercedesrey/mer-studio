@@ -91,11 +91,25 @@ function start(host: HTMLElement) {
   document.fonts?.ready.then(go, go) ?? go();
 }
 
+/** Home h1: with the intro, it decodes as the curtain starts to rise (its real text stays painted meanwhile); without it, on load. */
+function initHero(el: HTMLElement) {
+  const intro = document.querySelector<HTMLElement>('[data-home-intro]');
+  if (!document.documentElement.hasAttribute('data-intro') || !intro) { start(el); return; }
+  el.dataset.decodeState = 'pending';
+  const onStart = (e: AnimationEvent) => {
+    if (e.target !== intro || e.animationName !== 'home-intro-lift') return;
+    intro.removeEventListener('animationstart', onStart);
+    start(el);
+  };
+  intro.addEventListener('animationstart', onStart);
+}
+
 /** Titles on the page decode once, when they enter the viewport (and never under the home intro curtain). */
 export function initDecodeTitles() {
   const reduced = prefersReducedMotion();
   document.querySelectorAll<HTMLElement>('[data-decode]').forEach((el) => {
     if (reduced) { el.dataset.decodeState = 'done'; return; }
+    if (el.dataset.decode === 'hero') { initHero(el); return; }
     el.dataset.decodeState = 'pending';
     if (el.closest('dialog')) return; // Project Detail overlay: replayed on open (replayDecode)
     watchOnce(el, { kind: 'decode', run: () => start(el), skip: () => { el.dataset.decodeState = 'done'; } });
