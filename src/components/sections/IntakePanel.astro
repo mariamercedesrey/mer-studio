@@ -1,0 +1,35 @@
+---
+// Dark section (Figma 2084:217 › Project intake; 2230:657 on /ai-visibility/): left context column + a default slot for the right column
+// (the inquiry form, or the four-part method).
+import SectionHeading from '../primitives/SectionHeading.astro';
+import { EMAIL } from '../../data/contact';
+interface Props { eyebrow: string; title: string; lede: string; id: string }
+const { eyebrow, title, lede, id } = Astro.props;
+---
+<section class="intake" aria-labelledby={id}>
+  <div class="intake__context">
+    <SectionHeading eyebrow={eyebrow} title={title} id={id} tone="dark" dot={false} class="intake__heading" />
+    <p class="intake__lede" data-reveal="rise">{lede}</p>
+    <div class="intake__fallback" data-reveal="rise">
+      <p class="intake__fallback-label">PREFER EMAIL?</p>
+      <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+    </div>
+  </div>
+  <slot />
+</section>
+
+<style>
+  .intake { display: flex; gap: 96px; padding: 72px var(--page-gutter) 88px; background: var(--surface-inverse); color: var(--text-inverse); }
+  .intake__context { flex: 0 0 300px; display: flex; flex-direction: column; gap: var(--sp-32); }
+  .intake__context :global(.intake__heading) { gap: var(--sp-32); }
+  .intake__lede { opacity: 0.62; }
+  .intake__fallback { display: flex; flex-direction: column; gap: var(--sp-8); padding-top: var(--sp-32); border-top: 0.6px solid var(--border-subtle); }
+  .intake__fallback-label { font-family: var(--font-technical); font-size: var(--fs-caption); line-height: 1.4; letter-spacing: 0.02em; opacity: 0.6; }
+  .intake__fallback a { width: fit-content; text-decoration: none; }
+  .intake__fallback a:hover { color: var(--accent-primary); text-decoration: underline; }
+  @media (max-width: 1199px) {
+    .intake { flex-direction: column; gap: var(--sp-64); }
+    .intake__context { flex: none; max-width: 520px; }
+  }
+  @media (max-width: 767px) { .intake { padding-top: var(--sp-64); padding-bottom: var(--sp-64); } }
+</style>
