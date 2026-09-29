@@ -107,7 +107,7 @@ const link = (href: string) => (home ? href : `/${href}`);
   .site-header::after {
     content: '';
     position: absolute;
-    inset: 0;
+    inset: 0 0 calc(var(--sp-8) * -1); /* a little air under the logo; overhangs the header, no layout shift */
     background: var(--surface-nav-light);
     -webkit-backdrop-filter: blur(var(--blur-nav));
     backdrop-filter: blur(var(--blur-nav));
