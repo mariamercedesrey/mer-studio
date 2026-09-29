@@ -1,6 +1,6 @@
 ---
 // Figma 2084:251 Inquiry form — Netlify Forms (name="project-inquiry"), honeypot, native validation with inline messages,
-// AJAX submit with a fallback to /start-a-project/thanks/. Script at the bottom.
+// AJAX submit with a fallback to /start-a-project/thanks/. ?service=<slug> preselects a service chip. Script at the bottom.
 import Button from '../primitives/Button.astro';
 const services = ['Branding', 'Website', 'Digital product', 'AI visibility', 'Design system', 'Something else'];
 const timing = ['As soon as possible', 'Within 1–3 months', '3–6 months', 'Just exploring'];
@@ -98,6 +98,12 @@ const timing = ['As soon as possible', 'Within 1–3 months', '3–6 months', 'J
     const status = form.querySelector<HTMLElement>('[data-status]')!;
     const btn = form.querySelector<HTMLButtonElement>('[data-submit]')!;
     const done = root.querySelector<HTMLElement>('[data-done]')!;
+    // Deep link: /start-a-project/?service=ai-visibility preselects that service chip (matched by slug of the chip's value).
+    const wanted = new URLSearchParams(location.search).get('service')?.toLowerCase();
+    if (wanted) {
+      const slug = (v: string) => v.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      form.querySelectorAll<HTMLInputElement>('input[name="services"]').forEach((c) => { if (slug(c.value) === wanted) c.checked = true; });
+    }
     form.noValidate = true; // JS owns the messages; without JS the browser's native validation runs
 
     const message = (el: HTMLInputElement | HTMLTextAreaElement) => {

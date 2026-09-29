@@ -11,13 +11,14 @@ import { EMAIL, WHATSAPP } from '../../data/contact';
 const nav = [
   { label: 'selected work', href: '#work' },
   { label: 'Services', href: '#services' },
-  { label: 'AI Visibility', href: '#ai-visibility' },
+  { label: 'AI Visibility', href: '/ai-visibility/' },
   { label: 'About us', href: '#about' },
 ];
 const home = Astro.url.pathname === '/';
-// Light at the top, then scrolled once [data-nav-sentinel] leaves the viewport: the home and /start-a-project/. Everywhere else (/work/<slug>/) the bar is always on.
-const lightAtTop = home || Astro.url.pathname.startsWith('/start-a-project');
-const link = (href: string) => (home ? href : `/${href}`);
+// Light at the top, then scrolled once [data-nav-sentinel] leaves the viewport: the home, /start-a-project/ and /ai-visibility/. Everywhere else (/work/<slug>/) the bar is always on.
+const lightAtTop = home || Astro.url.pathname.startsWith('/start-a-project') || Astro.url.pathname.startsWith('/ai-visibility');
+const link = (href: string) => (href.startsWith('/') || home ? href : `/${href}`);
+const current = (href: string) => (href.startsWith('/') && Astro.url.pathname.startsWith(href) ? 'page' : undefined);
 ---
 <header class="site-header" data-site-header data-scrolled={lightAtTop ? undefined : ''}>
   <div class="site-header__row">
@@ -30,7 +31,7 @@ const link = (href: string) => (home ? href : `/${href}`);
     </div>
     <nav class="site-nav" aria-label="Primary">
       <ul role="list" class="site-nav__list">
-        {nav.map((item) => <li><a href={link(item.href)}>{item.label}</a></li>)}
+        {nav.map((item) => <li><a href={link(item.href)} aria-current={current(item.href)}>{item.label}</a></li>)}
       </ul>
     </nav>
     <button class="site-header__toggle" type="button" aria-haspopup="dialog" aria-controls="mobile-menu" data-menu-open>
@@ -52,7 +53,7 @@ const link = (href: string) => (home ? href : `/${href}`);
   </div>
   <nav aria-label="Primary">
     <ul role="list" class="mobile-menu__list">
-      {nav.map((item) => <li><a href={link(item.href)}>{item.label}</a></li>)}
+      {nav.map((item) => <li><a href={link(item.href)} aria-current={current(item.href)}>{item.label}</a></li>)}
     </ul>
   </nav>
   <address class="mobile-menu__contact">
@@ -182,8 +183,9 @@ const link = (href: string) => (home ? href : `/${href}`);
     transform: scale(0.4);
     transition: opacity var(--dur-fast) var(--ease-precise), transform var(--dur-fast) var(--ease-bounce);
   }
-  .site-nav a:hover, .site-nav a:focus-visible { color: var(--text-primary); }
-  .site-nav a:hover::before, .site-nav a:focus-visible::before { opacity: 1; transform: none; }
+  .site-nav a:hover, .site-nav a:focus-visible, .site-nav a[aria-current='page'] { color: var(--text-primary); }
+  /* Current page: ink label + the signature dot, same as hover (Figma 2230:639). */
+  .site-nav a:hover::before, .site-nav a:focus-visible::before, .site-nav a[aria-current='page']::before { opacity: 1; transform: none; }
 
   /* ── Scrolled state (needs JS: without it the header keeps its top look on a soft ground) ── */
   :global(html.js) .site-header[data-scrolled]::before { opacity: 1; }
@@ -194,6 +196,7 @@ const link = (href: string) => (home ? href : `/${href}`);
   :global(html.js) .site-header[data-scrolled] .site-header__logo-neg { opacity: 1; }
   :global(html.js) .site-header[data-scrolled] .site-header__tagline { color: var(--fg-on-ink); transform: translateX(-32px); /* 182 → 150 px logo */ }
   :global(html.js) .site-header[data-scrolled] .site-nav a,
+  :global(html.js) .site-header[data-scrolled] .site-nav a[aria-current='page'],
   :global(html.js) .site-header[data-scrolled] .site-nav a:hover,
   :global(html.js) .site-header[data-scrolled] .site-nav a:focus-visible { color: var(--text-inverse); }
   :global(html.js) .site-header[data-scrolled] .site-header__toggle { color: var(--text-inverse); }
