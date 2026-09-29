@@ -3,11 +3,12 @@
 // the viewport (position-driven, never time-driven, never scroll-jacking). The copy stays plain inline text —
 // selectable, copyable, read in order by assistive tech. Native CSS scroll-driven animations (animation-timeline:
 // view()) where supported; scripts/word-reveal.ts drives the same curve elsewhere. Reduced motion / no JS: 100 %.
+// Not used for section titles (those decode, see DecodeTitle): only the About title and the banner statement.
 interface Props { text: string; as?: 'h2' | 'p'; id?: string; class?: string; [attr: `data-${string}`]: unknown }
 const { text, as: Tag = 'p', id, class: className, ...rest } = Astro.props;
 const words = text.trim().split(/\s+/);
 ---
-<Tag id={id} class:list={['wr', className]} style={`--n:${words.length}`} data-word-reveal {...rest}>
+<Tag id={id} class:list={['wr', className]} style={`--n:${Math.max(words.length - 1, 1)}`} data-word-reveal {...rest}>
   {words.map((w, i) => (<><span class="wr__w" style={`--i:${i}`}>{w}</span>{i < words.length - 1 ? ' ' : ''}</>))}
 </Tag>
 
@@ -19,23 +20,27 @@ const words = text.trim().split(/\s+/);
 <style>
   .wr { view-timeline: --wr block; }
 
+  /* Range: the first word starts when the block's top edge is at 85 % of the viewport (15vh into the block's "cover"
+     pass) and the last one completes when the block's centre meets the viewport centre — that is exactly 50 % of the
+     cover range ((vh + h) / 2). Word i of the (--n + 1) runs over a window of 20 % of that span, staggered across the rest. */
   @media (prefers-reduced-motion: no-preference) {
     @supports (animation-timeline: view()) {
       .wr__w {
+        --wr-s: 15vh;
+        --wr-a: calc(var(--wr-s) + (50% - var(--wr-s)) * 0.8 * var(--i) / var(--n));
         opacity: var(--word-reveal-min);
         /* Longhands on purpose: the minifier would fold animation-timeline into the shorthand, which older browsers reject. */
         animation-name: wr-in;
         animation-timing-function: linear;
         animation-fill-mode: both;
         animation-timeline: --wr;
-        /* Words staggered across 6 % → 46 % of the block's pass through the viewport: fully read by mid-screen. */
-        animation-range:
-          cover calc(6% + var(--i) * 28% / var(--n))
-          cover calc(18% + var(--i) * 28% / var(--n));
+        animation-range: cover var(--wr-a) cover calc(var(--wr-a) + (50% - var(--wr-s)) * 0.2);
       }
     }
     /* JS fallback (browsers without scroll-driven animations) sets --wr-o per word. */
     .wr--js .wr__w { opacity: var(--wr-o, var(--word-reveal-min)); }
+    /* Home intro curtain up: hold every word at its resting opacity — nothing plays underneath it. */
+    :global(html[data-intro]) .wr__w { animation: none; opacity: var(--word-reveal-min); }
   }
   @keyframes wr-in { to { opacity: 1; } }
 </style>
