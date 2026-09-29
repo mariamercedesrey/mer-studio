@@ -1,7 +1,7 @@
 ---
 // Section / page title with the "decode" entrance (scripts/decode-title.ts). The real text is in the HTML from the
 // server and stays in the flow; aria-label carries the final text; the scramble overlay is JS-only and aria-hidden.
-// mode="hero": the home h1 — starts when the intro curtain lifts, or on load when there is no intro (see decode-title.ts).
+// mode="hero": the home h1 — decodes only after the intro curtain starts to rise; without an intro it stays static (see decode-title.ts).
 // "\n" in `text` is a line break. The slot (e.g. the SignatureDot) sits after the text and is never scrambled.
 interface Props { text: string; as?: 'h1' | 'h2'; id?: string; class?: string; mode?: 'hero' }
 const { text, as: Tag = 'h2', id, class: className, mode } = Astro.props;
@@ -22,10 +22,9 @@ const label = lines.join(' ');
   @media (prefers-reduced-motion: no-preference) {
     .js .decode:not([data-decode='hero'], [data-decode-state='done']) .decode__t { opacity: 0; }
     .js .decode:not([data-decode='hero'], [data-decode-state]) .decode__t { animation: decode-failsafe 0s 2.5s both; }
-    /* Hero h1 (first screen, LCP-sensitive): the real text stays painted — under the intro curtain, or until the decode
-       starts. With no intro, the head script in pages/index.astro sets html[data-hero-decode] so it is never painted before it decodes. */
+    /* Hero h1 (first screen, LCP-sensitive): the real text is never hidden before the decode starts — it is painted under
+       the intro curtain, and without an intro it stays static. It is transparent only while it decodes. */
     .js .decode[data-decode='hero'][data-decode-state='running'] .decode__t { opacity: 0; }
-    html[data-hero-decode] .decode[data-decode='hero']:not([data-decode-state]) .decode__t { opacity: 0; animation: decode-failsafe 0s 2.5s both; }
   }
   @keyframes decode-failsafe { to { opacity: 1; } }
 </style>

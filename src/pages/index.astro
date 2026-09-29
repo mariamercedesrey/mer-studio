@@ -21,9 +21,6 @@ import { homeSchema } from '../data/schema';
       if (!matchMedia('(prefers-reduced-motion: reduce)').matches && !sessionStorage.getItem('mer-intro')) {
         document.documentElement.setAttribute('data-intro', '');
         sessionStorage.setItem('mer-intro', '1');
-      } else if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        // No intro: the hero h1 decodes on load, so it must not be painted before it does.
-        document.documentElement.setAttribute('data-hero-decode', '');
       }
     } catch (e) {}
   </script>

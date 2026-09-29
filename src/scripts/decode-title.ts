@@ -91,15 +91,18 @@ function start(host: HTMLElement) {
   document.fonts?.ready.then(go, go) ?? go();
 }
 
-/** Home h1: with the intro, it decodes as the curtain starts to rise (its real text stays painted meanwhile); without it, on load. */
+const HERO_DELAY = 450; // ms after the curtain starts to rise: it hides the h1 for its first ~half, so the decode plays in view
+
+/** Home h1: decodes once, HERO_DELAY after the intro curtain starts to rise (its real text stays painted under it, so LCP is
+ *  untouched). No intro (reload, session already seen) or reduced motion: static — a later first paint would become the LCP. */
 function initHero(el: HTMLElement) {
   const intro = document.querySelector<HTMLElement>('[data-home-intro]');
-  if (!document.documentElement.hasAttribute('data-intro') || !intro) { start(el); return; }
+  if (!document.documentElement.hasAttribute('data-intro') || !intro) { el.dataset.decodeState = 'done'; return; }
   el.dataset.decodeState = 'pending';
   const onStart = (e: AnimationEvent) => {
     if (e.target !== intro || e.animationName !== 'home-intro-lift') return;
     intro.removeEventListener('animationstart', onStart);
-    start(el);
+    setTimeout(() => start(el), HERO_DELAY);
   };
   intro.addEventListener('animationstart', onStart);
 }
