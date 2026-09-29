@@ -1,0 +1,107 @@
+---
+// Figma 2230:625 AI Visibility — page. Same building blocks as /start-a-project/ (intro, dark panel, steps, ink footer) + the home's FinalCTA.
+// Hidden Figma layers (form fields, choices) are ignored. One Primary per section: "check my brand" (dark method panel); the final CTA is Outline Primary + Negative.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageIntro from '../../components/sections/PageIntro.astro';
+import IntakePanel from '../../components/sections/IntakePanel.astro';
+import NextSteps from '../../components/sections/NextSteps.astro';
+import FinalCTA from '../../components/sections/FinalCTA.astro';
+import SiteFooter from '../../components/sections/SiteFooter.astro';
+import Button from '../../components/primitives/Button.astro';
+import { aiVisibilitySchema } from '../../data/schema';
+
+const method = [
+  { t: 'Readable', d: 'Crawlers can reach and parse your site: fast pages, clean HTML, an llms.txt, and a robots.txt that lets AI search bots in instead of blocking them.' },
+  { t: 'Understood', d: 'Structured data (JSON-LD) and consistent entity details, so a model knows who you are, what you sell, where you work and who you work for — without guessing.' },
+  { t: 'Quotable', d: 'Pages that answer the real questions your clients ask, in a format a model can lift and cite: clear FAQs, comparisons, scope and pricing ranges.' },
+  { t: 'Present', d: 'Being named in the places models use to double-check you: Google Business Profile, directories, reviews, press and partner sites.' },
+];
+const proof = [
+  { t: 'An llms.txt', d: 'A plain-language summary of who we are and what we do, written for AI crawlers.' },
+  { t: 'Structured data', d: 'JSON-LD tells machines our name, services and location — no guessing.' },
+  { t: 'Open to AI crawlers', d: 'Our robots.txt welcomes GPTBot, ClaudeBot, PerplexityBot and Google-Extended instead of blocking them.' },
+];
+// Excerpt of public/llms.txt (its first block, minus the tagline paragraph): keep in sync when those lines change.
+const snippet = `# MER Studio
+
+> Independent design-and-build studio. Strategy, design and code, handled end to end by one team — a brand, a website, an online store, a full platform. Working worldwide from Argentina.
+
+## Services
+- Branding: Identity, and the system to keep it consistent.
+- Websites: A landing, a full site, or an online store.
+- Digital Product: An app or a platform that doesn't exist yet.
+- AI Visibility · GEO / AEO: So people find you when they ask an AI, not just Google.`;
+---
+<BaseLayout
+  title="AI Visibility (GEO / AEO) — MER Studio"
+  description="Search is moving from a list of links to a single answer. We make your brand readable, understood and quotable by ChatGPT, Perplexity, Gemini and Google’s AI Overviews."
+  schema={aiVisibilitySchema()}
+>
+  <main id="main">
+    <PageIntro
+      id="aiv-title"
+      eyebrow="ai visibility · geo / aeo"
+      title="When people ask an AI, does it name you?"
+      note="Search is moving from a list of links to a single answer. We make your brand readable, understood and quotable by ChatGPT, Perplexity, Gemini and Google’s AI Overviews."
+    />
+    <IntakePanel id="method-title" eyebrow="the method" title="Four things an AI needs before it recommends you." lede="Ranking still matters. But an AI only names what it can read, understand and verify somewhere else.">
+      <div class="method">
+        <ol class="method__list" role="list">
+          {method.map((m, i) => (
+            <li class="mrow" data-reveal="rise">
+              <div class="mrow__head"><p class="mrow__num">{String(i + 1).padStart(2, '0')}</p><h3 class="mrow__title">{m.t}</h3></div>
+              <p class="mrow__desc">{m.d}</p>
+            </li>
+          ))}
+        </ol>
+        <div class="method__submit" data-reveal="rise">
+          <p class="method__note"><i class="method__status" aria-hidden="true"></i><span>No one can guarantee an AI will name you. We make sure it can — and we measure which questions mention you, before and after.</span></p>
+          <Button class="method__btn" href="/start-a-project/?service=ai-visibility" size="lg" onDark>check my brand</Button>
+        </div>
+      </div>
+    </IntakePanel>
+    <NextSteps id="proof-title" eyebrow="proof, not promises" title="This site is built the same way." steps={proof}>
+      <figure class="snippet" data-reveal="rise">
+        <figcaption class="snippet__label">mer.studio/llms.txt</figcaption>
+        <pre class="snippet__code"><code>{snippet}</code></pre>
+      </figure>
+    </NextSteps>
+    <FinalCTA eyebrow="One question to start." title={"What does AI say\nabout your brand?"} />
+  </main>
+  <SiteFooter tone="ink" />
+</BaseLayout>
+
+<style>
+  :global(body) { background: var(--surface-soft); }
+  main { background: var(--surface-soft); }
+  main :global(.intro__title) { text-wrap: wrap; } /* Figma 2230:651 breaks after "AI," (not balanced) */
+
+  .method { flex: 1 1 0; min-width: 0; }
+  .method__list { margin: 0; }
+  .mrow { display: flex; gap: var(--sp-32); padding: 44px 0; border-top: 0.6px solid var(--border-subtle); }
+  .mrow__head { display: flex; flex-direction: column; gap: var(--sp-12); flex: 0 0 196px; }
+  .mrow__num { font-family: var(--font-technical); font-size: var(--fs-caption); line-height: 1.4; letter-spacing: 0.02em; color: var(--accent-primary); }
+  .mrow__title { font-weight: 500; font-size: var(--fs-block-title); line-height: 1.12; letter-spacing: -0.02em; }
+  .mrow__desc { flex: 1 1 0; min-width: 0; opacity: 0.62; }
+
+  .method__submit { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-32); padding-top: var(--sp-40); }
+  .method__note { display: flex; gap: var(--sp-12); align-items: flex-start; max-width: 470px; font-family: var(--font-technical); font-size: var(--fs-caption); line-height: 1.4; letter-spacing: 0.02em; opacity: 0.72; }
+  .method__status { flex: none; width: 9px; height: 9px; margin-top: 3px; border-radius: 50%; background: var(--accent-primary); }
+  .method__submit :global(.method__btn) { flex: none; width: 188px; }
+
+  /* Real, selectable text — mono 14/1.6 on ink, Figma 2230:1376. */
+  .snippet { margin: 0; display: flex; flex-direction: column; gap: var(--sp-12); padding: 28px var(--sp-32); border-radius: 16px; background: var(--surface-inverse); font-family: var(--font-technical); font-size: var(--fs-meta); line-height: 1.6; }
+  .snippet__label { color: rgba(255, 255, 255, 0.5); }
+  .snippet__code { margin: 0; color: rgba(255, 255, 255, 0.9); white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; }
+  .snippet__code code { font: inherit; }
+
+  @media (max-width: 1199px) {
+    .mrow { flex-direction: column; gap: var(--sp-24); }
+    .mrow__head { flex: none; flex-direction: row; align-items: baseline; gap: var(--sp-16); }
+  }
+  @media (max-width: 767px) {
+    .method__submit { flex-direction: column; align-items: stretch; }
+    .method__submit :global(.method__btn) { width: 100%; }
+    .snippet { padding: var(--sp-24) var(--sp-20); }
+  }
+</style>

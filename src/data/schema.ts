@@ -58,6 +58,31 @@ export function homeSchema() {
   };
 }
 
+export function aiVisibilitySchema() {
+  const url = `${SITE}/ai-visibility/`;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    '@id': `${url}#service`,
+    name: 'AI Visibility (GEO / AEO)',
+    serviceType: 'Generative engine optimization (GEO) and answer engine optimization (AEO)',
+    url,
+    description: 'We make your brand readable, understood and quotable by ChatGPT, Perplexity, Gemini and Google’s AI Overviews: crawlable pages, structured data, citable answers and a presence in the places models use to verify you.',
+    provider: { '@id': ORG_ID },
+    areaServed: 'Worldwide',
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Four things an AI needs before it recommends you',
+      itemListElement: [
+        { name: 'Readable', description: 'Crawlers can reach and parse your site: fast pages, clean HTML, an llms.txt, and a robots.txt that lets AI search bots in instead of blocking them.' },
+        { name: 'Understood', description: 'Structured data (JSON-LD) and consistent entity details, so a model knows who you are, what you sell, where you work and who you work for — without guessing.' },
+        { name: 'Quotable', description: 'Pages that answer the real questions your clients ask, in a format a model can lift and cite: clear FAQs, comparisons, scope and pricing ranges.' },
+        { name: 'Present', description: 'Being named in the places models use to double-check you: Google Business Profile, directories, reviews, press and partner sites.' },
+      ].map((d) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', ...d } })),
+    },
+  };
+}
+
 export function projectSchema(p: ProjectDetailData, url: string) {
   const blocks = detailBlocks(p);
   const neoris = /neoris/i.test(p.credit);
