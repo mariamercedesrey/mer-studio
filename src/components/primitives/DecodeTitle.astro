@@ -1,0 +1,26 @@
+---
+// Section / page title with the "decode" entrance (scripts/decode-title.ts). The real text is in the HTML from the
+// server and stays in the flow; aria-label carries the final text; the scramble overlay is JS-only and aria-hidden.
+// "\n" in `text` is a line break. The slot (e.g. the SignatureDot) sits after the text and is never scrambled.
+interface Props { text: string; as?: 'h1' | 'h2'; id?: string; class?: string }
+const { text, as: Tag = 'h2', id, class: className } = Astro.props;
+const lines = text.split('\n');
+const label = lines.join(' ');
+---
+<Tag id={id} class:list={['decode', className]} aria-label={label} data-decode><span class="decode__t">{lines.map((l, i) => (<>{i > 0 && <br />}{l}</>))}</span>{Astro.slots.has('default') && '⁠'}<slot /></Tag>
+
+<style is:global>
+  .decode { position: relative; }
+  .decode__fx { position: absolute; inset: 0; pointer-events: none; }
+  /* Scramble glyphs are centred in their letter's slot; the resolved letter goes back to the text's own alignment. */
+  .decode__c { position: absolute; white-space: pre; text-align: center; }
+  .decode__c.is-final { text-align: left; }
+
+  /* The real text is only transparent while it waits/decodes. Reduced motion and no JS never hide it;
+     if the script never runs, a 2.5 s failsafe shows it. */
+  @media (prefers-reduced-motion: no-preference) {
+    .js .decode:not([data-decode-state='done']) .decode__t { opacity: 0; }
+    .js .decode:not([data-decode-state]) .decode__t { animation: decode-failsafe 0s 2.5s both; }
+  }
+  @keyframes decode-failsafe { to { opacity: 1; } }
+</style>

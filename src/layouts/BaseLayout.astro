@@ -66,5 +66,12 @@ const ogImage = new URL(image, Astro.site);
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <slot />
+    <script>
+      // Entrance motion (CLAUDE.md §22): decode titles + [data-reveal], one shared IntersectionObserver.
+      import { initReveals } from '../scripts/reveal';
+      import { initDecodeTitles } from '../scripts/decode-title';
+      initDecodeTitles();
+      initReveals();
+    </script>
   </body>
 </html>

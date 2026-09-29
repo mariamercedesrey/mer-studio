@@ -26,7 +26,7 @@ const [avif, webp] = await Promise.all(
 const fallback = await getImage({ src: meta, width: w2, format: 'webp' });
 const sizes = `(max-width: 1199px) 100vw, ${Math.round(width)}px`;
 ---
-<figure class="pd-img" style={style}>
+<figure class="pd-img" style={style} data-reveal="rise">
   <picture>
     <source type="image/avif" srcset={avif.srcSet.attribute} sizes={sizes} />
     <source type="image/webp" srcset={webp.srcSet.attribute} sizes={sizes} />
