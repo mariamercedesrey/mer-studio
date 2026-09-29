@@ -157,4 +157,6 @@ Rules for every animation on the site (the concrete motion of each section still
 7. One protagonist per screen; everything else stays subtle.
 8. `prefers-reduced-motion`: show the final state with no animation (final numbers, text at 100 %, static banner). Animate only `transform` / `opacity` (canvas draws count as opacity/transform-only). Lighthouse Performance ≥ 90 on mobile.
 
+Exception — Intro de la home: supera los 3 s por decisión de la dueña; siempre salteable con click/scroll.
+
 Tokens live in `src/styles/tokens.ext.css` (proposed extensions of `/brand/tokens/base.css`): `--dur-section`, `--dur-count`, `--dur-signature-max`, `--ease-enter`, `--enter-shift`, `--word-reveal-min`. Reusable pieces: `WordReveal`, `CountUp` (`src/components/primitives`), `scripts/reveal.ts` (`[data-reveal]` entrances, `tween`).
