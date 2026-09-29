@@ -10,7 +10,7 @@ import { BOOKING_URL } from '../../data/contact';
 // Responsive poster under the video: it is the LCP element, so mobile gets a small file.
 const poster = await getImage({ src: heroPoster, widths: [480, 800, 1218], format: 'webp', quality: 72 });
 
-const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Finance', 'Foreign Trade', 'startups', 'Enterprise', 'Healthcare'];
+const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Finance', 'Foreign Trade', 'Startups', 'Enterprise', 'Healthcare'];
 ---
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero__band">
@@ -54,7 +54,7 @@ const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Financ
       </div>
       <div class="hero__worked">
         <h2 class="hero__worked-title">WHERE WE'VE WORKED</h2>
-        <ul role="list" class="hero__industries">
+        <ul role="list" class="hero__industries" data-typewriter>
           {industries.map((name) => <li>[{name}]</li>)}
         </ul>
       </div>
@@ -66,7 +66,7 @@ const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Financ
         <SignatureDot class="hero__dot" tone="dark" motion="hero-path" />
       </div>
       <p class="hero__summary">Strategy, design and code, handled end to end by one team. Twenty-five years across enterprise products and US startups, applied at any size — a brand, a website, an online store, a full platform.</p>
-      <Button href="#contact" width={185}>start a project</Button>
+      <Button href="/start-a-project/" variant="secondary" width={185}>start a project</Button>
     </div>
   </div>
 </section>
@@ -153,6 +153,18 @@ const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Financ
     line-height: 1.5;
     letter-spacing: 0.02em;
   }
+  /* Typewriter (scripts/typewriter.ts): the full text is always laid out; only its opacity is driven. */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .hero__industries[data-typewriter]:not([data-tw-state]) { animation: tw-failsafe 0s 4s both; opacity: 0; }
+  }
+  @keyframes tw-failsafe { to { opacity: 1; } }
+  .hero__industries :global(.tw__cur) { position: relative; display: inline-block; width: 0; height: 0; }
+  .hero__industries :global(.tw__cur)::after {
+    content: ''; position: absolute; left: 1px; bottom: -0.3em; width: 1px; height: 1.1em; background: currentColor;
+    animation: tw-blink 1s steps(1) infinite;
+  }
+  .hero__industries :global(.tw__cur.is-closing)::after { animation: tw-blink 0.8s steps(1) 3; }
+  @keyframes tw-blink { 50% { opacity: 0; } }
   .hero__industries {
     display: flex;
     flex-wrap: wrap;
@@ -241,5 +253,7 @@ const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Financ
 
 <script>
   import { initDotMotion } from '../../scripts/dot-motion';
+  import { initTypewriter } from '../../scripts/typewriter';
   initDotMotion();
+  initTypewriter();
 </script>

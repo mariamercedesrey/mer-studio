@@ -7,6 +7,9 @@
   --opacity-marquee-logo: 0.55;                   /* client logos */
   --action-negative-background: var(--surface-base); /* Figma variable action/negative/background (white) — buttons on ink; missing from /brand/tokens */
   --action-negative-text: var(--text-primary);       /* Figma variable action/negative/text (ink) */
+  --btn-h-sm: 40px;                               /* Button Small (Figma 2007:229; 14px label) */
+  --btn-h-md: 48px;                               /* Button Medium (16px label) = --hit-min */
+  --btn-h-lg: 56px;                               /* Button Large (18px label) */
   --blur-nav: 3.611px;                            /* header light-ground backdrop blur (Figma 149:5116 / 2126:243) */
   --dot-muted: rgb(126, 126, 126);             /* grey dot on the How it works path (Figma 2003:39; DS SignatureDot tone="muted") */
   --opacity-step-pending: 0.6;                    /* How it works step not yet reached by the dot — same 60 % as --text-tertiary (dark), keeps AA on charcoal */

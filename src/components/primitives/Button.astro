@@ -1,57 +1,102 @@
 ---
-// Figma 2007:229 Button — Style: Primary / Secondary / Ghost + Outline Primary / Negative (on ink; Figma 149:6079). Hover/press/focus are DS code-side rules.
+// Figma 2007:229 Button — 6 styles × 2 states (Default / Disabled) × 3 sizes (Small 40 / Medium 48 / Large 56), pill.
+// Hover / active / focus-visible are DS code-side rules (documented in the PR).
+// One Primary per screen/section (CLAUDE.md §12b). Outline Primary + Negative are for dark grounds only.
 interface Props {
   href?: string;
-  variant?: 'primary' | 'secondary' | 'ghost' | 'outline' | 'negative';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'outline-primary' | 'outline-secondary' | 'negative';
+  size?: 'sm' | 'md' | 'lg';
+  onDark?: boolean; // Primary/Secondary/Ghost/Outline Secondary sitting on an ink ground: focus ring turns yellow
+  disabled?: boolean; // always renders a <button disabled>: a link cannot be disabled
   type?: 'button' | 'submit';
   width?: number;   // Figma fixes some CTAs to a width (e.g. 183px)
-  height?: number;  // and a few to 56px tall
   class?: string;
   [key: string]: unknown;
 }
-const { href, variant = 'primary', type = 'button', width, height, class: className, ...rest } = Astro.props;
-const size = [width && `width:${width}px`, height && `min-height:${height}px`].filter(Boolean).join(';') || undefined;
-const Tag = href ? 'a' : 'button';
+const { href, variant = 'primary', size = 'md', onDark = false, disabled = false, type = 'button', width, class: className, ...rest } = Astro.props;
+const style = width ? `width:${width}px` : undefined;
+const Tag = href && !disabled ? 'a' : 'button';
 ---
 <Tag
-  class:list={['btn', `btn--${variant}`, className]}
-  href={href}
-  type={href ? undefined : type}
-  style={size}
+  class:list={['btn', `btn--${variant}`, `btn--${size}`, { 'btn--on-dark': onDark }, className]}
+  href={Tag === 'a' ? href : undefined}
+  type={Tag === 'button' ? type : undefined}
+  disabled={Tag === 'button' && disabled ? true : undefined}
+  style={style}
   {...rest}
 ><slot /></Tag>
 
 <style>
   .btn {
+    --btn-bg: transparent;
+    --btn-fg: var(--text-primary);
+    --btn-ring: currentColor;
+    --btn-focus: var(--action-secondary-background); /* ring on light grounds; dark-ground variants override to yellow */
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: var(--sp-8);
-    min-height: var(--hit-min);
     max-width: 100%;
-    padding: 14px var(--sp-20);
     border: 0;
     border-radius: var(--r-pill);
+    background: var(--btn-bg);
+    color: var(--btn-fg);
+    box-shadow: inset 0 0 0 1px var(--btn-ring);
     font-family: var(--font-display);
-    font-weight: 400;
-    font-size: var(--fs-body);
-    line-height: 1.5;
+    font-weight: 500;
     white-space: nowrap;
     text-decoration: none;
     cursor: pointer;
     transition:
       background-color var(--dur-fast) var(--ease-precise),
+      color var(--dur-fast) var(--ease-precise),
+      box-shadow var(--dur-fast) var(--ease-precise),
       transform var(--dur-fast) var(--ease-precise);
   }
-  .btn:active { transform: scale(0.97); }
-  .btn--primary { background: var(--action-primary-background); color: var(--action-primary-text); }
-  .btn--primary:hover { background: var(--accent-bright); }
-  .btn--secondary { background: var(--action-secondary-background); color: var(--action-secondary-text); }
-  .btn--secondary:hover { background: var(--surface-charcoal); }
-  .btn--outline { background: transparent; color: var(--action-primary-background); box-shadow: inset 0 0 0 1px var(--action-primary-background); }
-  .btn--outline:hover { background: var(--action-primary-background); color: var(--action-primary-text); }
-  .btn--negative { background: var(--action-negative-background); color: var(--action-negative-text); }
-  .btn--negative:hover { background: var(--accent-bright); }
-  .btn--ghost { background: transparent; color: var(--action-ghost-text); }
-  .btn--ghost:hover { background: var(--fills-primary); }
+
+  /* Sizes — Figma: S 40 / 14px, M 48 / 16px, L 56 / 18px. */
+  .btn--sm { min-height: var(--btn-h-sm); padding: 0 var(--sp-16); font-size: var(--fs-meta); line-height: 20px; }
+  .btn--md { min-height: var(--btn-h-md); padding: 0 var(--sp-20); font-size: var(--fs-body); line-height: 20px; }
+  .btn--lg { min-height: var(--btn-h-lg); padding: 0 var(--sp-24); font-size: var(--fs-body-lg); line-height: 24px; }
+
+  /* Only the filled/outline variants draw the 1px ring; the rest keep it transparent so all six share one box. */
+  .btn--primary, .btn--secondary, .btn--ghost, .btn--negative { --btn-ring: transparent; }
+
+  .btn--primary { --btn-bg: var(--action-primary-background); --btn-fg: var(--action-primary-text); }
+  .btn--secondary { --btn-bg: var(--action-secondary-background); --btn-fg: var(--action-secondary-text); }
+  .btn--ghost { --btn-fg: var(--action-ghost-text); }
+  .btn--outline-primary { --btn-fg: var(--action-primary-background); --btn-ring: var(--action-primary-background); --btn-focus: var(--accent-primary); }
+  .btn--outline-secondary { --btn-fg: var(--action-secondary-background); --btn-ring: var(--action-secondary-background); }
+  .btn--negative { --btn-bg: var(--action-negative-background); --btn-fg: var(--action-negative-text); --btn-focus: var(--accent-primary); }
+
+  .btn--on-dark { --btn-focus: var(--accent-primary); }
+
+  /* Hover — pointer devices only. Each style shifts one step within its own family. */
+  @media (hover: hover) {
+    .btn--primary:hover:not(:disabled) { --btn-bg: var(--accent-bright); }
+    .btn--secondary:hover:not(:disabled) { --btn-bg: var(--surface-charcoal); }
+    .btn--ghost:hover:not(:disabled) { --btn-bg: var(--fills-primary); }
+    .btn--outline-primary:hover:not(:disabled) { --btn-bg: var(--action-primary-background); --btn-fg: var(--action-primary-text); }
+    .btn--outline-secondary:hover:not(:disabled) { --btn-bg: var(--action-secondary-background); --btn-fg: var(--action-secondary-text); }
+    .btn--negative:hover:not(:disabled) { --btn-bg: var(--surface-soft); }
+  }
+
+  .btn:active:not(:disabled) { transform: scale(0.97); }
+
+  /* Focus — 2px ring, 3px offset. Ink on light grounds (yellow on white is ~1.7:1), yellow on dark grounds. */
+  .btn:focus-visible { outline: 2px solid var(--btn-focus); outline-offset: 3px; }
+
+  /* Disabled — Figma: grey fill + grey text; ghost has no fill; outlines keep a grey ring. */
+  .btn:disabled {
+    cursor: not-allowed;
+    --btn-bg: var(--action-disabled-background);
+    --btn-fg: var(--action-disabled-text);
+  }
+  .btn--ghost:disabled { --btn-bg: transparent; }
+  .btn--outline-primary:disabled, .btn--outline-secondary:disabled { --btn-bg: transparent; --btn-ring: var(--action-disabled-text); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn { transition: none; }
+    .btn:active:not(:disabled) { transform: none; }
+  }
 </style>

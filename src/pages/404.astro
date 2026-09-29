@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/primitives/Button.astro';
 ---
 <BaseLayout title="Page not found — MER Studio" noindex header={false}>
   <main id="main" class="not-found">
@@ -9,7 +10,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="not-found__body">
       <p class="not-found__eyebrow">Error 404</p>
       <h1 class="not-found__title">This page doesn't exist<span class="not-found__dot" aria-hidden="true"></span></h1>
-      <a class="not-found__cta" href="/">back to home</a>
+      <Button href="/">back to home</Button>
     </div>
   </main>
 </BaseLayout>
@@ -48,16 +49,4 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     border-radius: 50%;
     background: var(--signature-dot-on-light);
   }
-  .not-found__cta {
-    display: inline-flex; align-items: center; justify-content: center;
-    min-height: var(--hit-min);
-    padding: 14px var(--sp-20);
-    border-radius: var(--r-pill);
-    background: var(--action-primary-background);
-    color: var(--action-primary-text);
-    text-decoration: none;
-    transition: background-color var(--dur-fast) var(--ease-precise), transform var(--dur-fast) var(--ease-precise);
-  }
-  .not-found__cta:hover { background: var(--accent-bright); }
-  .not-found__cta:active { transform: scale(0.97); }
 </style>
