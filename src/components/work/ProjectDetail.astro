@@ -5,6 +5,7 @@
 // the body of the prerendered /work/<slug> page (R2-E).
 import type { ProjectDetailData, DetailItem, DetailSection } from '../../data/project-details';
 import DetailImage from './DetailImage.astro';
+import Button from '../primitives/Button.astro';
 import DecodeTitle from '../primitives/DecodeTitle.astro';
 
 interface Props {
@@ -21,11 +22,11 @@ const pct = (n: number, of: number) => `${(n / of) * 100}%`;
     <p class="pd__client">{p.client}<span class="pd__credit">{p.credit}</span></p>
     <div class="pd__actions">
       {p.link && (
-        <a class="pd__link" href={p.link.href} target="_blank" rel="noopener">
+        <Button class="pd__link" href={p.link.href} variant="outline-secondary" target="_blank" rel="noopener">
           {p.link.label}
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 3H21V9M10 14L21 3M18 13V19C18 19.53 17.79 20.04 17.41 20.41C17.04 20.79 16.53 21 16 21H5C4.47 21 3.96 20.79 3.59 20.41C3.21 20.04 3 19.53 3 19V8C3 7.47 3.21 6.96 3.59 6.59C3.96 6.21 4.47 6 5 6H11" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <span class="visually-hidden">(opens in a new tab)</span>
-        </a>
+        </Button>
       )}
       {closeHref ? (
         <a class="pd__close" href={closeHref} aria-label="Close project">
@@ -108,15 +109,6 @@ const pct = (n: number, of: number) => `${(n / of) * 100}%`;
     letter-spacing: 0.02em; text-transform: uppercase;
   }
   .pd__actions { display: flex; align-items: flex-start; gap: var(--sp-12); flex-shrink: 0; }
-  .pd__link {
-    display: inline-flex; align-items: center; justify-content: center; gap: 9px;
-    height: 48px; padding: 0 26px;
-    border: 1px solid var(--text-primary); border-radius: 55px;
-    font-weight: 500; font-size: var(--fs-body); letter-spacing: 0.03em; text-transform: uppercase;
-    text-decoration: none; white-space: nowrap;
-    transition: background-color var(--dur-fast) var(--ease-precise);
-  }
-  .pd__link:hover { background: var(--fills-primary); }
   .pd__close {
     display: inline-flex; align-items: center; justify-content: center;
     width: 44px; height: 44px; margin: -10px -10px 0 0; padding: 0;
@@ -183,7 +175,7 @@ const pct = (n: number, of: number) => `${(n / of) * 100}%`;
     .pd { padding-bottom: var(--sp-64); }
     .pd__client { flex-wrap: wrap; row-gap: 0; font-size: 28px; min-height: 0; }
     .pd__credit { line-height: 1.4; }
-    .pd__link { height: 44px; padding: 0 16px; font-size: var(--fs-meta); }
+    .pd__actions :global(.pd__link) { min-height: var(--btn-h-sm); padding: 0 var(--sp-16); font-size: var(--fs-meta); line-height: 20px; }
     .pd__actions { align-items: center; gap: var(--sp-4); }
     .pd__close { margin: 0 -10px 0 0; }
     .pd__block-body { font-size: var(--fs-body); line-height: 1.5; }

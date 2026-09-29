@@ -97,7 +97,7 @@ Before creating a new value or pattern, check whether an existing token, variabl
 
 Text colour: never use `--color-text-primary` for text. It resolves to navy (`--color-secondary-700`), not ink. Always use `--text-primary`, and in general only the semantic `--text-*`, `--surface-*` and `--action-*` tokens in components.
 
-Buttons: one Primary button per screen/section. The secondary action uses Secondary (light ground), Negative (dark ground) or Outline. Outline Primary and Negative are for dark grounds only (yellow text on light fails AA). Always use `components/primitives/Button` — never a hand-styled `<a>`/`<button>` CTA.
+Buttons: one Primary button per screen/section. The secondary action uses Secondary (light ground), Negative (dark ground) or Outline. Outline Primary and Negative are for dark grounds only (yellow text on light fails AA). Usage by ground — light: Primary, Secondary, Outline Secondary, Ghost. Dark: Primary, Negative, Outline Primary (pass `onDark` to Primary so its focus ring turns yellow). Always use `components/primitives/Button` — never a hand-styled `<a>`/`<button>` CTA.
 
 ## 13. ACCESSIBILITY
 
