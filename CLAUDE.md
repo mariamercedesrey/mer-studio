@@ -144,3 +144,17 @@ Advanced motion ships after launch. Lighthouse mobile ≥ 90.
 
 ## 21. GIT
 Small commits per section/component. Work on a branch and open a PR; never merge to main without Mer's OK.
+
+## 22. MOTION
+Rules for every animation on the site (the concrete motion of each section still comes from §3–§7 and Mer's direction).
+
+1. Motion only exists if it communicates something. Nothing decorative for its own sake.
+2. Durations: 150–250 ms for interactions (`--dur-fast`); 280–400 ms for UI (`--dur-base`); 600 ms–1.2 s for section entrances (`--dur-slow`, `--dur-section`, `--dur-count`); never more than 3 s, and only for signature moments (`--dur-signature-max`).
+3. One entrance easing site-wide: `--ease-enter` (alias of `--ease-precise`). `linear` only for continuous motion (marquee, scroll-linked, loops). Don't add curves.
+4. The yellow dot is the only "living character". Yellow in any other effect is a rare accent, never the protagonist.
+5. Scroll-linked motion only where it tells something (e.g. WordReveal). Never hijack the scroll.
+6. Signature moments play once. Ambient textures (e.g. the pixel-banner rain) may loop, and must sleep off-screen and in hidden tabs.
+7. One protagonist per screen; everything else stays subtle.
+8. `prefers-reduced-motion`: show the final state with no animation (final numbers, text at 100 %, static banner). Animate only `transform` / `opacity` (canvas draws count as opacity/transform-only). Lighthouse Performance ≥ 90 on mobile.
+
+Tokens live in `src/styles/tokens.ext.css` (proposed extensions of `/brand/tokens/base.css`): `--dur-section`, `--dur-count`, `--dur-signature-max`, `--ease-enter`, `--enter-shift`, `--word-reveal-min`. Reusable pieces: `WordReveal`, `CountUp` (`src/components/primitives`), `scripts/reveal.ts` (`[data-reveal]` entrances, `tween`).

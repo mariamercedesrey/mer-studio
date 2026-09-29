@@ -1,0 +1,37 @@
+---
+// Number that counts up when it scrolls into view (once). "25+", "+300%": prefix and suffix stay, only the number
+// counts. count={false} ("1:1") only fades in. Layout never shifts: an invisible copy of the final value sets the
+// width. The final value is always real text (visually hidden copy); the animated span is aria-hidden.
+interface Props { value: string; count?: boolean; class?: string }
+const { value, count = true, class: className } = Astro.props;
+const m = value.match(/^(\D*)(\d+(?:\.\d+)?)(\D*)$/);
+const canCount = count && !!m;
+---
+<span
+  class:list={['countup', className]}
+  data-countup={canCount ? 'count' : 'fade'}
+  data-to={canCount ? m![2] : undefined}
+  data-prefix={canCount ? m![1] : undefined}
+  data-suffix={canCount ? m![3] : undefined}
+>
+  <span class="visually-hidden">{value}</span>
+  <span class="countup__ghost" aria-hidden="true">{value}</span>
+  <span class="countup__vis" aria-hidden="true">{value}</span>
+</span>
+
+<script>
+  import { initCountUps } from '../../scripts/count-up';
+  initCountUps();
+</script>
+
+<style>
+  .countup { display: inline-grid; font-variant-numeric: tabular-nums; }
+  .countup__ghost, .countup__vis { grid-area: 1 / 1; white-space: nowrap; }
+  .countup__ghost { visibility: hidden; }
+
+  /* Only the "fade" flavour hides itself; a counting number is visible from the first frame (at 0). */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .countup[data-countup='fade'] { opacity: 0; transition: opacity var(--dur-section) var(--ease-enter); }
+    :global(.js) .countup[data-countup='fade'].is-in { opacity: 1; }
+  }
+</style>

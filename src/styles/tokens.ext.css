@@ -13,5 +13,16 @@
   --ascii-bg: rgb(16, 16, 25);                    /* How it works ASCII panel ground, sampled from brand/assets/img/how-it-works.png */
   --ascii-ink: rgb(202, 203, 209);                /* How it works ASCII glyphs, sampled from the same asset */
   --shadow-mockup-sm: 0 3.78px 3.78px rgba(0, 0, 0, 0.25);
+  --fs-body-xl: 20px;                             /* About body (Figma 2119:84) — no /brand size sits between body-lg 18 and lead-sm 22 */
+  --surface-overlay-ink: rgba(255, 255, 255, 0.05); /* About profile card on ink (Figma 2121:163) */
+
+  /* Motion (CLAUDE.md §22). Durations reuse --dur-fast 160 / --dur-base 280 / --dur-slow 600 from /brand;
+     these add the section-entrance range and the single entrance easing. */
+  --dur-section: 700ms;                           /* section entrances: 600 ms – 1.2 s */
+  --dur-count: 1200ms;                            /* number count-up */
+  --dur-signature-max: 3000ms;                    /* ceiling for a signature moment */
+  --ease-enter: var(--ease-precise);              /* THE entrance easing — one curve site-wide; linear only for continuous motion */
+  --enter-shift: 40px;                            /* slide distance of a from-the-side entrance */
+  --word-reveal-min: 0.15;                        /* resting opacity of a not-yet-read word */
   --shadow-mockup-lg: 22.431px 44.863px 12.462px rgba(0, 0, 0, 0.12);
 }

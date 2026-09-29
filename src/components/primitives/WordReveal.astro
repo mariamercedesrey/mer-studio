@@ -1,0 +1,41 @@
+---
+// Scroll-linked word reveal: each word rests at --word-reveal-min opacity and reaches 1 as the block scrolls through
+// the viewport (position-driven, never time-driven, never scroll-jacking). The copy stays plain inline text —
+// selectable, copyable, read in order by assistive tech. Native CSS scroll-driven animations (animation-timeline:
+// view()) where supported; scripts/word-reveal.ts drives the same curve elsewhere. Reduced motion / no JS: 100 %.
+interface Props { text: string; as?: 'h2' | 'p'; id?: string; class?: string; [attr: `data-${string}`]: unknown }
+const { text, as: Tag = 'p', id, class: className, ...rest } = Astro.props;
+const words = text.trim().split(/\s+/);
+---
+<Tag id={id} class:list={['wr', className]} style={`--n:${words.length}`} data-word-reveal {...rest}>
+  {words.map((w, i) => (<><span class="wr__w" style={`--i:${i}`}>{w}</span>{i < words.length - 1 ? ' ' : ''}</>))}
+</Tag>
+
+<script>
+  import { initWordReveal } from '../../scripts/word-reveal';
+  initWordReveal();
+</script>
+
+<style>
+  .wr { view-timeline: --wr block; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .wr__w {
+        opacity: var(--word-reveal-min);
+        /* Longhands on purpose: the minifier would fold animation-timeline into the shorthand, which older browsers reject. */
+        animation-name: wr-in;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: --wr;
+        /* Words staggered across 6 % → 46 % of the block's pass through the viewport: fully read by mid-screen. */
+        animation-range:
+          cover calc(6% + var(--i) * 28% / var(--n))
+          cover calc(18% + var(--i) * 28% / var(--n));
+      }
+    }
+    /* JS fallback (browsers without scroll-driven animations) sets --wr-o per word. */
+    .wr--js .wr__w { opacity: var(--wr-o, var(--word-reveal-min)); }
+  }
+  @keyframes wr-in { to { opacity: 1; } }
+</style>
