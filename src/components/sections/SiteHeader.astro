@@ -15,9 +15,11 @@ const nav = [
   { label: 'About us', href: '#about' },
 ];
 const home = Astro.url.pathname === '/';
+// Light at the top, then scrolled once [data-nav-sentinel] leaves the viewport: the home and /start-a-project/. Everywhere else (/work/<slug>/) the bar is always on.
+const lightAtTop = home || Astro.url.pathname.startsWith('/start-a-project');
 const link = (href: string) => (home ? href : `/${href}`);
 ---
-<header class="site-header" data-site-header data-scrolled={home ? undefined : ''}>
+<header class="site-header" data-site-header data-scrolled={lightAtTop ? undefined : ''}>
   <div class="site-header__row">
     <div class="site-header__brand">
       <a class="site-header__logo" href="/" aria-label="MER Studio, home">
@@ -60,7 +62,7 @@ const link = (href: string) => (home ? href : `/${href}`);
 </dialog>
 
 <script>
-  // Scrolled state on the home: the hero "book a call" button leaving through the top of the viewport.
+  // Scrolled state on the home and /start-a-project/: the sentinel (hero "book a call" button / the h1 block) leaving through the top of the viewport.
   const header = document.querySelector<HTMLElement>('[data-site-header]');
   const sentinel = document.querySelector<HTMLElement>('[data-nav-sentinel]');
   if (header && sentinel && 'IntersectionObserver' in window) {

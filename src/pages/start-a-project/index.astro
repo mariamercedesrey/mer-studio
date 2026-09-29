@@ -20,7 +20,7 @@ const steps = [
 >
   <main id="main">
     <section class="intro" aria-labelledby="inq-title">
-      <div class="intro__copy">
+      <div class="intro__copy" data-nav-sentinel>
         <p class="intro__eyebrow">start a project <SignatureDot size={10} /></p>
         <DecodeTitle as="h1" id="inq-title" class="intro__title" text={"Tell us what you’re ready to build."} />
       </div>
@@ -62,6 +62,7 @@ const steps = [
 </BaseLayout>
 
 <style>
+  :global(body) { background: var(--surface-soft); } /* the sticky header sits on the body: light ground behind the capsule (Figma) */
   main { background: var(--surface-soft); }
 
   .intro { display: flex; justify-content: space-between; gap: var(--sp-48); padding: 72px var(--page-gutter) 82px; }
