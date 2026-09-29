@@ -24,7 +24,7 @@ const [avif, webp] = await Promise.all(
 
 <script>
   import { initPixelRain } from '../../scripts/pixel-rain';
-  document.querySelectorAll<HTMLElement>('[data-pixel-rain]').forEach(initPixelRain);
+  document.querySelectorAll<HTMLElement>('[data-pixel-rain]').forEach((el) => initPixelRain(el, 'banner'));
 </script>
 
 <style>

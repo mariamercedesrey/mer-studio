@@ -27,12 +27,8 @@ Mer will send 21st.dev references and video examples.
 
 ### 1.4 Sync `tokens.ext.css` into the Claude Design system (avoid drift)
 Add these approved tokens (R4-F) to `/brand` and the Claude Design source, then import them from `/brand` and delete `src/styles/tokens.ext.css`:
-- `--opacity-work-inactive: 0.3`
 - `--opacity-marquee-logo: 0.55`
 - `--blur-nav: 3.611px`
-- `--radius-nav: 30.333px`
-- `--shadow-mockup-sm`
-- `--shadow-mockup-lg`
 - `--dot-muted: rgb(126,126,126)`
 - `--text-tagline` (alias of `--fg-3`)
 

@@ -88,6 +88,15 @@ export function initDotMotion() {
       el.dataset.motionState = 'static';
       return;
     }
-    document.fonts.ready.then(() => driver(el));
+    // Starts only once the "m" is properly on screen (scrolled into view, not merely peeking in), then plays once.
+    el.dataset.motionState = 'waiting'; // hidden by CSS until it starts (no flash at rest, no jump)
+    document.fonts.ready.then(() => {
+      const io = new IntersectionObserver((entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        io.disconnect();
+        driver(el);
+      }, { threshold: 1, rootMargin: '0px 0px -20% 0px' });
+      io.observe(el);
+    });
   });
 }

@@ -31,9 +31,6 @@ export function initProjectOverlay() {
   document.querySelectorAll<HTMLAnchorElement>('[data-project-open]').forEach((link) => {
     link.addEventListener('click', (e) => {
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
-      // Only the active (focused) item opens, matching the editorial activation model.
-      const item = link.closest('[data-work-item]');
-      if (item && !item.hasAttribute('data-active')) { e.preventDefault(); return; }
       e.preventDefault();
       opener = link;
       open(link.dataset.projectOpen!, true);

@@ -42,6 +42,7 @@ const pct = (n: number, of: number) => `${(n / of) * 100}%`;
   <div class="pd__intro">
     <DecodeTitle as={Title} id={`pd-title-${p.id}`} class="pd__title" text={p.title} />
     <p class="pd__meta">{p.meta}</p>
+    {p.note && <p class="pd__meta">{p.note}</p>}
     <ul role="list" class="pd__roles">{p.roles.map((r) => <li>{r}</li>)}</ul>
   </div>
 

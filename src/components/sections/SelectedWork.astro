@@ -1,68 +1,126 @@
 ---
-// Figma 149:5412 Selected Work — editorial list on ink. Items rest subdued and activate as they
-// reach the viewport centre (scripts/work-activation.ts). Every item opens its Project Detail.
+// Figma 149:5412 / 2220:3948 Selected Work — index + rain (left), project text (centre), project image (right).
+// Desktop (≥1024): the index and the image are sticky; the text scrolls; the image swaps with a pixelated
+// transition (scripts/work-scroll.ts + pixel-transition.ts). Below 1024: text and image stack per project
+// with the shared fade + rise, no sticky, no canvas, no rain.
+// Images are Figma's own 2× exports of each project block (src/assets/work-cover, AVIF/WebP via astro:assets).
+import { getImage } from 'astro:assets';
 import { projects } from '../../data/projects';
 import SectionHeading from '../primitives/SectionHeading.astro';
 import RoleChip from '../primitives/RoleChip.astro';
-import AsociartMedia from '../work/media/AsociartMedia.astro';
-import OrchardmileMedia from '../work/media/OrchardmileMedia.astro';
-import StorefrontMedia from '../work/media/StorefrontMedia.astro';
-import IndustrialMedia from '../work/media/IndustrialMedia.astro';
-import SafetyMedia from '../work/media/SafetyMedia.astro';
-import ApsMedia from '../work/media/ApsMedia.astro';
-import QuilmesMedia from '../work/media/QuilmesMedia.astro';
-import UnitsMedia from '../work/media/UnitsMedia.astro';
+import mosaic from '../../assets/work-index-mosaic.svg';
+import asociart from '../../assets/work-cover/asociart.png';
+import theMile from '../../assets/work-cover/the-mile.png';
+import orchardMile from '../../assets/work-cover/orchard-mile.png';
+import quilmes from '../../assets/work-cover/quilmes.png';
+import carbonOptimum from '../../assets/work-cover/carbon-optimum.png';
+import agenteMama from '../../assets/work-cover/agente-mama.png';
+import americanPadel from '../../assets/work-cover/american-padel-systems.png';
+import hifiHub from '../../assets/work-cover/hifi-hub.png';
 
-const media = {
-  asociart: AsociartMedia,
-  orchardmile: OrchardmileMedia,
-  storefront: StorefrontMedia,
-  coupon: QuilmesMedia,
-  industrial: IndustrialMedia,
-  safety: SafetyMedia,
-  aps: ApsMedia,
-  units: UnitsMedia,
-} as const;
+const covers: Record<string, ImageMetadata> = {
+  asociart, 'the-mile': theMile, 'orchard-mile': orchardMile, quilmes, 'carbon-optimum': carbonOptimum,
+  'agente-mama': agenteMama, 'american-padel-systems': americanPadel, 'hifi-hub': hifiHub,
+};
 
 const visible = projects.filter((p) => !p.hidden);
+const items = await Promise.all(visible.map(async (p) => {
+  const src = covers[p.slug];
+  const [avif, webp] = await Promise.all(
+    (['avif', 'webp'] as const).map((format) => getImage({ src, widths: [722, 1444], format })),
+  );
+  // Where the contain-fitted image starts inside the 722 × 600 frame (% of frame height): the text's top edge aligns to it.
+  const imgTop = Math.max(0, (1 - (722 * src.height) / (src.width * 600)) / 2) * 100;
+  return { ...p, w: src.width, h: src.height, imgTop: imgTop.toFixed(2), avif: avif.srcSet.attribute, webp: webp.srcSet.attribute, fallback: webp.src };
+}));
+
+const STAGE_SIZES = '(min-width: 1440px) 722px, 45vw';
+const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
 ---
-<section id="work" class="work" aria-labelledby="work-title">
+<section id="work" class="work" aria-labelledby="work-title" data-work-scroll style={`--work-n:${items.length}`}>
   <SectionHeading eyebrow="selected work" id="work-title" tone="dark" title="What we've built" />
 
-  <ol role="list" class="work__list" data-work-list>
-    {visible.map((p, i) => {
-      const Media = media[p.id as keyof typeof media];
-      // Alternate left/right over the *visible* projects, so hiding one keeps the rhythm (Mer, review round 1).
-      const align = i % 2 ? 'end' : 'start';
-      return (
-        <li
-          class:list={['work-item', `work-item--${align}`, 'work-item--openable']}
-          style={`--media-w:${p.width};--media-h:${p.height}`}
-          data-work-item={p.id}
-          data-reveal="rise"
-          data-active={i === 0 ? '' : undefined}
-        >
-          <a class="work-item__inner" href={`/work/${p.slug}/`} data-project-open={p.slug}>
-            <div class="work-item__media">
-              <div class="work-item__canvas">{Media && <Media />}</div>
-            </div>
-            <div class="work-item__caption">
-              <ul role="list" class="work-item__roles">
-                {p.roles.map((r) => <RoleChip>{r}</RoleChip>)}
-              </ul>
-              <h3 class="work-item__title">{p.title}</h3>
-              <p class="work-item__meta">{p.meta}</p>
-            </div>
-          </a>
-        </li>
-      );
-    })}
-  </ol>
+  <div class="work__track" data-work-track>
+   <span class="work__step" data-work-step aria-hidden="true"></span>
+   <div class="work__pin" data-work-pin>
+    <div class="work__grid">
+    <aside class="work__rail">
+      <nav aria-label="Selected projects">
+        <ol role="list" class="work-index">
+          {items.map((p, i) => (
+            <li>
+              <a class="work-index__link" href={`#work-${p.id}`} data-work-index-link data-active={i === 0 ? '' : undefined} aria-current={i === 0 ? 'true' : undefined}>{p.index}</a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+      <div class="work-rain" data-work-rain aria-hidden="true">
+        <img class="work-rain__static" src={mosaic.src} width="230" height="144.57" alt="" loading="lazy" decoding="async" />
+        <canvas class="work-rain__canvas"></canvas>
+        <span class="work-rain__dot"></span>
+      </div>
+    </aside>
+
+    <div class="work__pane">
+      <ol role="list" class="work__list" data-work-list>
+        {items.map((p, i) => (
+          <li class="work-item" id={`work-${p.id}`} data-work-item={p.id} data-pos={i === 0 ? 'current' : 'after'} data-active={i === 0 ? '' : undefined} style={`--img-top:${p.imgTop}%`}>
+            <a class="work-item__link" href={`/work/${p.slug}/`} data-project-open={p.slug} data-reveal="rise">
+              <div class="work-item__caption">
+                <h3 class="work-item__title">{p.title}</h3>
+                <p class="work-item__meta">{p.meta}</p>
+                <ul role="list" class="work-item__roles">
+                  {p.roles.map((r) => <RoleChip>{r}</RoleChip>)}
+                </ul>
+              </div>
+              <picture class="work-item__thumb" style={`aspect-ratio:${p.w}/${p.h}`}>
+                <source type="image/avif" srcset={p.avif} sizes={STACK_SIZES} />
+                <source type="image/webp" srcset={p.webp} sizes={STACK_SIZES} />
+                <img src={p.fallback} width={p.w} height={p.h} alt={`${p.title} — project preview`} loading="lazy" decoding="async" />
+              </picture>
+            </a>
+          </li>
+        ))}
+      </ol>
+
+      <div class="work__stage" data-work-stage>
+        <a class="work__stage-link" href={`/work/${items[0].slug}/`} data-project-open={items[0].slug} data-work-stage-link tabindex="-1" aria-hidden="true">
+          <div class="work__frame">
+            {items.map((p, i) => (
+              <picture class="stage-pic" data-stage-pic data-on={i === 0 ? '' : undefined}>
+                {i === 0 ? (
+                  <>
+                    <source type="image/avif" srcset={p.avif} sizes={STAGE_SIZES} />
+                    <source type="image/webp" srcset={p.webp} sizes={STAGE_SIZES} />
+                    <img src={p.fallback} width={p.w} height={p.h} alt="" loading="lazy" decoding="async" />
+                  </>
+                ) : (
+                  <>
+                    <source type="image/avif" data-srcset={p.avif} sizes={STAGE_SIZES} />
+                    <source type="image/webp" data-srcset={p.webp} sizes={STAGE_SIZES} />
+                    <img data-src={p.fallback} width={p.w} height={p.h} alt="" loading="lazy" decoding="async" />
+                  </>
+                )}
+              </picture>
+            ))}
+            <canvas class="work__canvas"></canvas>
+          </div>
+        </a>
+      </div>
+    </div>
+    </div>
+   </div>
+  </div>
 </section>
 
 <script>
-  import { initWorkActivation } from '../../scripts/work-activation';
-  initWorkActivation();
+  import { initWorkScroll } from '../../scripts/work-scroll';
+  import { initPixelRain } from '../../scripts/pixel-rain';
+  initWorkScroll();
+  // Desktop only (the rail is display:none below 1024, where the canvas would measure 0).
+  if (matchMedia('(min-width: 1024px)').matches) {
+    document.querySelectorAll<HTMLElement>('[data-work-rain]').forEach((el) => initPixelRain(el, 'index'));
+  }
 </script>
 
 <style>
@@ -70,13 +128,6 @@ const visible = projects.filter((p) => !p.hidden);
     background: var(--surface-inverse);
     color: var(--text-inverse);
     padding: 100px var(--page-gutter);
-  }
-  .work__list {
-    display: flex;
-    flex-direction: column;
-    gap: 83px;
-    margin: 54px 0 0;
-    padding: 0;
   }
   /* Figma 149:5753 — 1px rule 54px under the last project (black on ink, barely visible by design). */
   .work::after {
@@ -87,76 +138,142 @@ const visible = projects.filter((p) => !p.hidden);
     margin-right: 59px;
     background: rgb(0, 0, 0);
   }
-</style>
-
-<style is:global>
-  .work-item { display: flex; }
-  .work-item--end { justify-content: flex-end; }
-  .work-item__inner {
-    display: flex;
-    flex-direction: column;
-    gap: var(--sp-12);
-    width: calc(var(--media-w) / 1344 * 100%);
-    color: inherit;
-    text-decoration: none;
-  }
-  /* Media keeps Figma's composition by drawing at 1440 size and scaling to the column width. */
-  .work-item__media {
-    position: relative;
+  .work__track { margin-top: 64px; }
+  .work__grid {
+    display: grid;
+    grid-template-columns: 230px minmax(0, 1fr);
+    column-gap: 24px;
+    align-items: start;
     width: 100%;
-    aspect-ratio: var(--media-w) / var(--media-h);
-    overflow: hidden;
   }
-  .work-item__canvas {
-    position: absolute;
-    left: 0; top: 0;
-    width: calc(var(--media-w) * 1px);
-    height: calc(var(--media-h) * 1px);
-    transform-origin: 0 0;
-    transform: scale(var(--media-scale, 1)); /* set by work-activation.ts */
-  }
-  .work-media { position: absolute; inset: 0; overflow: hidden; }
-  .work-media .fill-pic { position: absolute; display: block; }
-  .work-media .fill-pic img, .work-media .fill img { display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; }
-  .work-media .fill { position: absolute; inset: 0; display: block; }
-  .work-media video { display: block; }
 
+  /* ── Left rail: index + rain ── */
+  .work__rail { display: flex; flex-direction: column; gap: var(--sp-32); }
+  .work-index { display: flex; flex-direction: column; gap: 9px; margin: 0; padding: 0; }
+  .work-index__link {
+    display: flex;
+    align-items: center;
+    min-height: 32px;
+    padding-left: var(--sp-12);
+    border-left: 1px solid transparent;
+    font-family: var(--font-technical);
+    font-size: var(--fs-caption);
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+    color: var(--text-inverse);
+    text-decoration: none;
+    transition: border-color var(--dur-fast) var(--ease-enter);
+  }
+  .work-index__link[data-active] { border-left-color: var(--accent-dark); }
+  .work-index__link:hover { color: var(--accent-primary); }
+  .work-index__link:focus-visible { outline-offset: 2px; }
+
+  /* Root = mosaic (230 × 144.6) + room under it for the squares to fall and fade. The canvas draws the mosaic when live. */
+  .work-rain { position: relative; width: 100%; aspect-ratio: 230 / 225; }
+  .work-rain__static { position: absolute; left: 0; top: 0; display: block; width: 100%; height: auto; aspect-ratio: 230 / 144.57; transition: opacity var(--dur-base) var(--ease-enter); }
+  .work-rain__canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .work-rain[data-rain-live] .work-rain__static { opacity: 0; } /* the live rain replaces the static mosaic */
+  .work-rain__dot { position: absolute; left: calc(8.49 / 230 * 100%); top: calc(176.57 / 225 * 100%); width: calc(8.49 / 230 * 100%); aspect-ratio: 1; background: var(--color-neutral-700); } /* Figma 2226:10329 */
+
+  /* ── Pane: text (left 356) + image (right 722) on one 1090 × 600 box ── */
+  .work__pane { position: relative; width: 100%; max-width: 1090px; aspect-ratio: 1090 / 600; }
+  .work__list { margin: 0; padding: 0; }
+  .work__stage { position: absolute; top: 0; right: 0; width: calc(722 / 1090 * 100%); height: 100%; }
+  .work__stage-link { display: block; width: 100%; height: 100%; color: inherit; cursor: pointer; }
+  .work__frame { position: relative; width: 100%; height: 100%; }
+  .stage-pic { position: absolute; inset: 0; display: block; opacity: 0; }
+  .stage-pic[data-on] { opacity: 1; }
+  .stage-pic :global(img) { display: block; width: 100%; height: 100%; object-fit: contain; }
+  .work__canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  /* While the canvas transition plays it owns the frame. */
+  .work__stage:global(.is-swapping) .stage-pic { opacity: 0; }
+
+  .work-item__link { display: flex; flex-direction: column; width: 100%; color: inherit; text-decoration: none; cursor: pointer; }
+  .work-item__link:focus-visible { outline-offset: 6px; }
+  .work-item__thumb { display: none; }
   .work-item__caption { display: flex; flex-direction: column; align-items: flex-start; gap: var(--sp-8); }
-  .work-item__roles { display: flex; flex-wrap: wrap; gap: var(--sp-4); }
+  .work-item__roles { display: flex; flex-wrap: wrap; gap: var(--sp-4); margin: 0; padding: 0; }
   .work-item__title {
     font-weight: 400;
     font-size: clamp(24px, 2.222vw, 32px);
     line-height: 1.2;
+    transition: color var(--dur-fast) var(--ease-enter);
   }
+  .work-item__link:hover .work-item__title { color: var(--accent-primary); }
   .work-item__meta {
-    min-height: 27px;
     font-family: var(--font-technical);
     font-size: var(--fs-meta);
     line-height: 1.4;
     letter-spacing: 0.02em;
   }
 
-  /* Scroll activation (JS adds .js on <html>). Without JS every item stays fully visible. */
-  /* Only the imagery is subdued; captions stay at full opacity so they keep their contrast (Mer, round 2). */
-  .js .work-item__media { opacity: var(--opacity-work-inactive); transition: opacity 500ms var(--ease-precise); }
-  .js .work-item[data-active] .work-item__media { opacity: 1; }
-  .work-item--openable .work-item__inner { cursor: default; }
-  .work-item--openable[data-active] .work-item__inner { cursor: pointer; }
-  .work-item--openable .work-item__inner:focus-visible { outline-offset: 6px; }
-  .work-item--openable[data-active] .work-item__title { transition: color var(--dur-fast) var(--ease-precise); }
-  .work-item--openable[data-active] .work-item__inner:hover .work-item__title { color: var(--accent-primary); }
+  /* ── Desktop: pinned, stepped scroll. Native scroll through a track of ; the pin holds
+        the section while scroll progress picks the project (scripts/work-scroll.ts). ── */
+  @media (min-width: 1024px) {
+    /* Pin (100svh) + one --work-step stretch per project, so the last project also gets a full stretch before unpinning. */
+    .work__track { position: relative; --work-step: 60vh; --work-step: 60svh; height: calc(100vh + var(--work-n) * var(--work-step)); height: calc(100svh + var(--work-n) * var(--work-step)); }
+    .work__step { position: absolute; left: 0; top: 0; width: 0; height: var(--work-step); visibility: hidden; pointer-events: none; } /* JS reads the step from here */
+    .work__pin {
+      position: sticky;
+      top: 0;
+      height: 100vh; height: 100svh;
+      box-sizing: border-box;
+      padding-top: var(--header-h);
+      display: flex;
+      align-items: center;
+    }
+    .work-item {
+      position: absolute;
+      left: 0;
+      top: var(--img-top, 0%);
+      width: calc(356 / 1090 * 100%);
+    }
+    /* One text block at a time: the current one leaves up (or down, scrolling back) and hides before the next one
+       comes in — the delay on `current` is the exit time, so two blocks are never visible together. */
+    .work-item[data-pos='before'], .work-item[data-pos='after'] {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 300ms var(--ease-enter), transform 300ms var(--ease-enter), visibility 0s linear 300ms;
+    }
+    .work-item[data-pos='before'] { transform: translateY(-32px); }
+    .work-item[data-pos='after'] { transform: translateY(48px); }
+    .work-item[data-pos='current'] {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      transition: opacity 260ms var(--ease-enter) 300ms, transform 260ms var(--ease-enter) 300ms, visibility 0s linear 300ms;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .work-item[data-pos='before'], .work-item[data-pos='after'] { transform: none; transition: opacity var(--dur-base) linear, visibility 0s linear var(--dur-base); }
+      .work-item[data-pos='current'] { transition: opacity var(--dur-base) linear, visibility 0s; }
+      .stage-pic { transition: opacity var(--dur-base) var(--ease-enter); } /* simple crossfade, no canvas */
+      .work__canvas, .work-rain__canvas { display: none; }
+      .work-rain__static { opacity: 1 !important; }
+    }
+  }
+  @media (min-width: 1024px) and (max-width: 1199px) {
+    .work__grid { grid-template-columns: 190px minmax(0, 1fr); column-gap: var(--sp-16); }
+  }
 
-  @media (max-width: 1199px) {
+  /* ── Mobile / tablet: stacked, no pin, no canvas, no rain ── */
+  @media (max-width: 1023px) {
     .work { padding-top: var(--sp-80); padding-bottom: var(--sp-80); }
-    .work__list { gap: var(--sp-64); margin-top: var(--sp-48); }
-    /* Tablet: keep the editorial offset, but every item is at least 80 % of the column. */
-    .work-item__inner { width: max(80%, calc(var(--media-w) / 1344 * 100%)); }
     .work::after { margin-right: 0; }
+    .work__track { margin-top: var(--sp-48); }
+    .work__step { display: none; }
+    .work__grid { display: block; }
+    .work__rail, .work__stage { display: none; }
+    .work__pane { aspect-ratio: auto; max-width: none; }
+    .work__list { display: flex; flex-direction: column; gap: var(--sp-64); }
+    .work-item__link { gap: var(--sp-24); }
+    .work-item__thumb { display: block; width: 100%; }
+    .work-item__thumb :global(img) { display: block; width: 100%; height: auto; }
+    .work-item__title { font-size: 24px; }
   }
   @media (max-width: 767px) {
     .work__list { gap: var(--sp-48); }
-    .work-item__inner { width: 100%; }
     .work-item__title { font-size: 22px; }
-    .work-item__meta { font-size: var(--fs-caption); min-height: 0; }
+    .work-item__meta { font-size: var(--fs-caption); }
   }
 </style>
