@@ -9,11 +9,22 @@ import HowItWorks from '../components/sections/HowItWorks.astro';
 import About from '../components/sections/About.astro';
 import FinalCTA from '../components/sections/FinalCTA.astro';
 import Contact from '../components/sections/Contact.astro';
+import HomeIntro from '../components/sections/HomeIntro.astro';
 import SiteFooter from '../components/sections/SiteFooter.astro';
 import ProjectOverlay from '../components/work/ProjectOverlay.astro';
 import { homeSchema } from '../data/schema';
 ---
 <BaseLayout schema={homeSchema()}>
+  <!-- Intro gate: first visit of the session, motion allowed. Runs before first paint; no attribute = no overlay (also without JS). -->
+  <script is:inline slot="head">
+    try {
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches && !sessionStorage.getItem('mer-intro')) {
+        document.documentElement.setAttribute('data-intro', '');
+        sessionStorage.setItem('mer-intro', '1');
+      }
+    } catch (e) {}
+  </script>
+  <HomeIntro />
   <main id="main">
     <Hero />
     <ClientMarquee />
