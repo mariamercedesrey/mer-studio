@@ -2,13 +2,15 @@
 // (wheel, touch, click, key) lifts it now instead: entrances still in progress complete at once and the curtain
 // starts at its normal speed. Listeners are passive and never preventDefault, so scrolling is never blocked;
 // the overlay is removed when the curtain finishes.
+import { INTRO_DONE_EVENT } from './intro-gate';
+
 export function initHomeIntro() {
   const el = document.querySelector<HTMLElement>('[data-home-intro]');
   if (!el) return;
   const root = document.documentElement;
   if (!root.hasAttribute('data-intro')) { el.remove(); return; }
 
-  const done = () => { root.removeAttribute('data-intro'); el.remove(); };
+  const done = () => { root.removeAttribute('data-intro'); el.remove(); dispatchEvent(new Event(INTRO_DONE_EVENT)); };
   const anims = el.getAnimations({ subtree: true });
   const curtain = anims.find((a) => (a as CSSAnimation).animationName === 'home-intro-lift');
   if (!curtain) { done(); return; }

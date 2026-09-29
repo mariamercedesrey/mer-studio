@@ -110,6 +110,10 @@ const steps = [
 <script>
   import { initAsciiPanel } from '../../scripts/ascii-panel';
   import { initHiwTimeline } from '../../scripts/hiw-timeline';
-  initAsciiPanel();
-  initHiwTimeline();
+  import { whenIdle, whenNear } from '../../scripts/reveal';
+  // Set up a viewport ahead of the section, as their own idle tasks — not during first paint.
+  const panel = document.querySelector('[data-ascii-panel]');
+  if (panel) whenNear(panel, () => whenIdle(initAsciiPanel));
+  const timeline = document.querySelector('[data-hiw-timeline]');
+  if (timeline) whenNear(timeline, () => whenIdle(initHiwTimeline));
 </script>

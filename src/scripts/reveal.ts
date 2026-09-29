@@ -20,6 +20,21 @@ export function onceInView(el: Element, cb: () => void, threshold = 0.35) {
   io.observe(el);
 }
 
+/** Runs `cb` once `el` is within `margin` of the viewport (default: one viewport ahead), so off-screen setup never competes with first paint. */
+export function whenNear(el: Element, cb: () => void, margin = '100% 0px') {
+  if (!('IntersectionObserver' in window)) { cb(); return; }
+  const io = new IntersectionObserver((entries) => {
+    if (entries.some((e) => e.isIntersecting)) { io.disconnect(); cb(); }
+  }, { rootMargin: margin });
+  io.observe(el);
+}
+
+/** Runs `cb` when the main thread is idle (falls back to a short timeout), so heavy setup is its own task. */
+export function whenIdle(cb: () => void, timeout = 600) {
+  if ('requestIdleCallback' in window) requestIdleCallback(() => cb(), { timeout });
+  else setTimeout(cb, 1);
+}
+
 /** [data-reveal] elements get `.is-in` once, when they enter the viewport. CSS owns the transition. */
 export function initEnterReveals() {
   document.querySelectorAll<HTMLElement>('[data-reveal]').forEach((el) => {

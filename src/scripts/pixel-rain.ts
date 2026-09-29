@@ -136,7 +136,8 @@ export function initPixelRain(root: HTMLElement) {
   };
 
   measure();
-  new ResizeObserver(() => { measure(); }).observe(root);
+  let firstResize = true; // the observer reports once on observe(); that would re-measure for nothing
+  new ResizeObserver(() => { if (firstResize) { firstResize = false; return; } measure(); }).observe(root);
   new IntersectionObserver((e) => { onScreen = e[0].isIntersecting; if (onScreen) wake(); else { cancelAnimationFrame(raf); raf = 0; } }).observe(root);
   document.addEventListener('visibilitychange', () => { if (document.hidden) { cancelAnimationFrame(raf); raf = 0; } else wake(); });
 }
