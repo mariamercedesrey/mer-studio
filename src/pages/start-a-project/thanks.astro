@@ -1,0 +1,20 @@
+---
+// No-JS fallback target of the inquiry form (its `action`). Out of search and the sitemap.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Button from '../../components/primitives/Button.astro';
+import SiteFooter from '../../components/sections/SiteFooter.astro';
+---
+<BaseLayout title="Thanks — MER Studio" noindex>
+  <main id="main" class="thanks">
+    <p class="thanks__eyebrow">inquiry sent</p>
+    <h1 class="thanks__title">Thanks — we'll reply within 2 business days.</h1>
+    <Button href="/">back to home</Button>
+  </main>
+  <SiteFooter tone="ink" />
+</BaseLayout>
+
+<style>
+  .thanks { display: flex; flex-direction: column; align-items: flex-start; gap: var(--sp-24); min-height: 70svh; padding: 96px var(--page-gutter); background: var(--surface-soft); }
+  .thanks__eyebrow { font-family: var(--font-technical); font-size: var(--fs-eyebrow); letter-spacing: 0.02em; }
+  .thanks__title { font-weight: 400; font-size: clamp(40px, 5vw, 72px); line-height: 1.03; letter-spacing: -0.03em; max-width: 16ch; }
+</style>

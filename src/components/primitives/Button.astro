@@ -1,8 +1,8 @@
 ---
-// Figma 2007:229 Button — Style: Primary / Secondary / Ghost. Hover/press/focus are DS code-side rules.
+// Figma 2007:229 Button — Style: Primary / Secondary / Ghost + Outline Primary / Negative (on ink; Figma 149:6079). Hover/press/focus are DS code-side rules.
 interface Props {
   href?: string;
-  variant?: 'primary' | 'secondary' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'outline' | 'negative';
   type?: 'button' | 'submit';
   width?: number;   // Figma fixes some CTAs to a width (e.g. 183px)
   height?: number;  // and a few to 56px tall
@@ -48,6 +48,10 @@ const Tag = href ? 'a' : 'button';
   .btn--primary:hover { background: var(--accent-bright); }
   .btn--secondary { background: var(--action-secondary-background); color: var(--action-secondary-text); }
   .btn--secondary:hover { background: var(--surface-charcoal); }
+  .btn--outline { background: transparent; color: var(--action-primary-background); box-shadow: inset 0 0 0 1px var(--action-primary-background); }
+  .btn--outline:hover { background: var(--action-primary-background); color: var(--action-primary-text); }
+  .btn--negative { background: var(--action-negative-background); color: var(--action-negative-text); }
+  .btn--negative:hover { background: var(--accent-bright); }
   .btn--ghost { background: transparent; color: var(--action-ghost-text); }
   .btn--ghost:hover { background: var(--fills-primary); }
 </style>

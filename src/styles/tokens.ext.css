@@ -6,6 +6,8 @@
   --opacity-work-inactive: 0.3;                   /* Selected Work subdued item (Figma items 2–8) */
   --opacity-service-inactive: 0.6;                /* Services inactive row. Figma spec 2204:616 uses 0.35 (2.2:1 on surface-soft, fails AA); 0.6 is the lowest step ≥ 4.5:1 (min 0.59) */
   --opacity-marquee-logo: 0.55;                   /* client logos */
+  --action-negative-background: var(--surface-base); /* Figma variable action/negative/background (white) — buttons on ink; missing from /brand/tokens */
+  --action-negative-text: var(--text-primary);       /* Figma variable action/negative/text (ink) */
   --fills-quaternary: rgba(116, 116, 128, 0.08); /* Figma variable fills/quaternary — nav capsule (149:5116); missing from /brand/tokens */
   --blur-nav: 3.611px;                            /* nav capsule backdrop blur (Figma 149:5116) */
   --radius-nav: 30.333px;                         /* nav capsule radius (Figma 149:5116) */

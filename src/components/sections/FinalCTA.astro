@@ -3,7 +3,7 @@
 import Button from '../primitives/Button.astro';
 import SignatureDot from '../primitives/SignatureDot.astro';
 import DecodeTitle from '../primitives/DecodeTitle.astro';
-import { WHATSAPP } from '../../data/contact';
+import { BOOKING_URL } from '../../data/contact';
 ---
 <section class="cta" aria-labelledby="cta-title">
   <div class="cta__copy">
@@ -11,7 +11,8 @@ import { WHATSAPP } from '../../data/contact';
     <DecodeTitle as="h2" id="cta-title" class="cta__title" text={"Got a project in mind?\nLet’s talk"}><SignatureDot class="cta__dot" /></DecodeTitle>
   </div>
   <div class="cta__action" data-reveal="rise">
-    <Button href={WHATSAPP.href} width={172} height={56} target="_blank" rel="noopener">lets talk<span class="visually-hidden"> on WhatsApp (opens in a new tab)</span></Button>
+    <Button href={BOOKING_URL} variant="outline" target="_blank" rel="noopener">let's talk<span class="visually-hidden"> (book a 20-minute call, opens in a new tab)</span></Button>
+    <Button href="/start-a-project/" variant="negative">start a project</Button>
   </div>
 </section>
 
@@ -35,7 +36,7 @@ import { WHATSAPP } from '../../data/contact';
     letter-spacing: -0.02em;
   }
   .cta :global(.cta__title .cta__dot) { margin-left: 0.25em; vertical-align: -0.04em; }
-  .cta__action { display: flex; justify-content: flex-end; }
+  .cta__action { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; }
 
   @media (max-width: 767px) {
     .cta { padding-top: var(--sp-64); padding-bottom: var(--sp-64); gap: var(--sp-40); }

@@ -1,0 +1,103 @@
+---
+// Figma 2084:217 Project inquiry. No home intro; fixed header (dark bar, like /work/<slug>/); footer = Figma's ink footer.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import DecodeTitle from '../../components/primitives/DecodeTitle.astro';
+import SectionHeading from '../../components/primitives/SectionHeading.astro';
+import SignatureDot from '../../components/primitives/SignatureDot.astro';
+import InquiryForm from '../../components/sections/InquiryForm.astro';
+import SiteFooter from '../../components/sections/SiteFooter.astro';
+import { EMAIL } from '../../data/contact';
+
+const steps = [
+  { t: 'We read every brief', d: 'A senior team member reviews your goals, fit, and timing.' },
+  { t: 'We meet for 20 minutes', d: 'No sales script — just context, questions, and useful next steps.' },
+  { t: 'You get a clear plan', d: 'If it’s a fit, we’ll outline scope, team, timing, and investment.' },
+];
+---
+<BaseLayout
+  title="Start a project — MER Studio"
+  description="Tell us what you’re ready to build. Share a few details about your project and we’ll reply within 2 business days with a focused next step."
+>
+  <main id="main">
+    <section class="intro" aria-labelledby="inq-title">
+      <div class="intro__copy" data-nav-sentinel>
+        <p class="intro__eyebrow">start a project <SignatureDot size={10} /></p>
+        <DecodeTitle as="h1" id="inq-title" class="intro__title" text={"Tell us what you’re ready to build."} />
+      </div>
+      <div class="intro__note" data-reveal="rise">
+        <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true"><path d="M9.9178 9.9178L24.0822 24.0822M9.9178 24.0822H24.0822V9.9178" stroke="var(--accent-primary)" stroke-width="2" stroke-linecap="round"/></svg>
+        <p>A few thoughtful details help us bring the right people to the first conversation. It takes about 4 minutes.</p>
+      </div>
+    </section>
+
+    <section class="intake" aria-labelledby="brief-title">
+      <div class="intake__context">
+        <SectionHeading eyebrow="the brief" title="Good work starts with a clear conversation." id="brief-title" tone="dark" dot={false} class="intake__heading" />
+        <p class="intake__lede" data-reveal="rise">Not every answer needs to be final. Share what you know and we’ll shape the rest together.</p>
+        <div class="intake__fallback" data-reveal="rise">
+          <p class="intake__fallback-label">PREFER EMAIL?</p>
+          <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+        </div>
+      </div>
+      <InquiryForm />
+    </section>
+
+    <section class="next" aria-labelledby="next-title">
+      <div class="next__head">
+        <SectionHeading eyebrow="what happens next" title="Simple, transparent, human." id="next-title" dot={false} />
+        <SignatureDot size={24} />
+      </div>
+      <ol class="next__steps" role="list">
+        {steps.map((s, i) => (
+          <li class="step" data-reveal="rise">
+            <p class="step__num">{String(i + 1).padStart(2, '0')}</p>
+            <h3 class="step__title">{s.t}</h3>
+            <p class="step__desc">{s.d}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+  </main>
+  <SiteFooter tone="ink" />
+</BaseLayout>
+
+<style>
+  :global(body) { background: var(--surface-soft); } /* the sticky header sits on the body: light ground behind the capsule (Figma) */
+  main { background: var(--surface-soft); }
+
+  .intro { display: flex; justify-content: space-between; gap: var(--sp-48); padding: 72px var(--page-gutter) 82px; }
+  .intro__copy { display: flex; flex-direction: column; gap: var(--sp-24); max-width: 840px; }
+  .intro__eyebrow { display: flex; align-items: center; gap: var(--sp-12); font-family: var(--font-technical); font-size: var(--fs-eyebrow); line-height: 1.5; letter-spacing: 0.02em; }
+  .intro :global(.intro__title) { font-weight: 400; font-size: clamp(44px, 5vw, 72px); line-height: 1.03; letter-spacing: -0.03em; text-wrap: balance; }
+  .intro__note { flex: 0 0 350px; display: flex; flex-direction: column; gap: var(--sp-20); padding-top: 52px; }
+
+  .intake { display: flex; gap: 96px; padding: 72px var(--page-gutter) 88px; background: var(--surface-inverse); color: var(--text-inverse); }
+  .intake__context { flex: 0 0 300px; display: flex; flex-direction: column; gap: var(--sp-32); }
+  .intake__context :global(.intake__heading) { gap: var(--sp-32); }
+  .intake__lede { opacity: 0.62; }
+  .intake__fallback { display: flex; flex-direction: column; gap: var(--sp-8); padding-top: var(--sp-32); border-top: 0.6px solid var(--border-subtle); }
+  .intake__fallback-label { font-family: var(--font-technical); font-size: var(--fs-caption); line-height: 1.4; letter-spacing: 0.02em; opacity: 0.6; }
+  .intake__fallback a { width: fit-content; text-decoration: none; }
+  .intake__fallback a:hover { color: var(--accent-primary); text-decoration: underline; }
+
+  .next { display: flex; flex-direction: column; gap: var(--sp-32); padding: var(--sp-64) var(--page-gutter) 72px; }
+  .next__head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--sp-24); }
+  .next__head :global(.section-heading) { gap: var(--sp-12); }
+  .next__steps { display: flex; gap: var(--sp-24); margin: 0; }
+  .step { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: var(--sp-8); padding: var(--sp-20) var(--sp-24) 0 0; border-top: 0.7px solid var(--border-default); }
+  .step__num { font-family: var(--font-technical); font-size: var(--fs-caption); line-height: 1.4; letter-spacing: 0.02em; color: var(--text-secondary); margin-bottom: var(--sp-12); }
+  .step__title { font-weight: 500; font-size: var(--fs-lead-sm); line-height: 1.2; }
+  .step__desc { color: var(--text-secondary); }
+
+  @media (max-width: 1199px) {
+    .intro { flex-direction: column; gap: var(--sp-32); padding-bottom: var(--sp-64); }
+    .intro__note { flex: none; max-width: 420px; padding-top: 0; }
+    .intake { flex-direction: column; gap: var(--sp-64); }
+    .intake__context { flex: none; max-width: 520px; }
+    .next__steps { flex-direction: column; gap: var(--sp-32); }
+  }
+  @media (max-width: 767px) {
+    .intro { padding-top: var(--sp-48); }
+    .intake { padding-top: var(--sp-64); padding-bottom: var(--sp-64); }
+  }
+</style>
