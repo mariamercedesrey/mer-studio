@@ -1,8 +1,9 @@
 ---
 // Home intro — Figma 2132:1353 (loading01) / 2132:2468 (loading02). Session-only overlay on "/": dark ground → the
 // logo (the nav's own SVG, /logo-negative.svg) fades in → ~1 s pause → each tagline line "ghosts" in (blur + opacity →
-// sharp) → 3 s hold → the curtain (rounded bottom corners, 24 px) lifts slowly to reveal the home and its top bar.
-// The whole timeline is CSS (it completes even if JS fails); scripts/home-intro.ts lifts the curtain early on input.
+// sharp) → 1 s hold → the curtain (rounded bottom corners, 24 px) lifts slowly to reveal the home and its top bar.
+// The whole timeline is CSS (it completes even if JS fails); scripts/home-intro.ts lifts the curtain on the first scroll gesture.
+// While html[data-intro] is set the page does not scroll (exception in CLAUDE.md §22).
 // The gate lives in the inline <head> script in pages/index.astro (sets html[data-intro]).
 ---
 <div class="home-intro" aria-hidden="true" data-home-intro>
@@ -23,13 +24,13 @@
 <style is:global>
   .home-intro { display: none; }
   html[data-intro] .home-intro {
-    /* Timeline (~7.2 s): logo 0–700 · pause 1 s · line 1 1700–2400 · line 2 2400–3100 · 3 s hold, everything visible ·
-       curtain 6100–7200 ms (--dur-curtain, --ease-in-out). Input lifts the curtain early (scripts/home-intro.ts). */
+    /* Timeline (~5.2 s): logo 0–700 · pause 1 s · line 1 1700–2400 · line 2 2400–3100 · 1 s hold, everything visible ·
+       curtain 4100–5200 ms (--dur-curtain, --ease-in-out). The first scroll gesture lifts the curtain early (scripts/home-intro.ts). */
     --intro-logo: 700ms;
     --intro-ghost: 700ms;
     --intro-line-1: 1700ms;
     --intro-line-2: 2400ms;
-    --intro-lift-delay: 6100ms;
+    --intro-lift-delay: 4100ms;
     position: fixed;
     inset: 0 0 calc(-1 * var(--r-24)); /* 24 px taller than the viewport: the rounded corners stay off-screen until the curtain rises */
     z-index: 200;
@@ -71,6 +72,13 @@
     from { transform: translateY(0); visibility: visible; }
     to { transform: translateY(-100%); visibility: hidden; }
   }
+
+  /* Scroll lock while the intro lasts. scrollbar-gutter keeps the width, so nothing shifts when it is released.
+     Failsafe: if the script never runs, the lock lifts itself once the curtain is long gone. */
+  @media (prefers-reduced-motion: no-preference) {
+    html[data-intro] { overflow: hidden; overscroll-behavior: none; scrollbar-gutter: stable; animation: home-intro-unlock 0s 6s both; }
+  }
+  @keyframes home-intro-unlock { to { overflow: visible; } }
 
   @media (prefers-reduced-motion: reduce) {
     html[data-intro] .home-intro { display: none; }

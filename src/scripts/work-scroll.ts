@@ -25,6 +25,8 @@ function setup(section: HTMLElement) {
   const stage = section.querySelector<HTMLElement>('[data-work-stage]');
   const stageLink = section.querySelector<HTMLAnchorElement>('[data-work-stage-link]');
   const canvas = stage?.querySelector<HTMLCanvasElement>('canvas');
+  const nextBtn = section.querySelector<HTMLAnchorElement>('[data-work-next]');
+  const nextLabel = section.querySelector<HTMLElement>('[data-work-next-label]');
   const pics = Array.from(section.querySelectorAll<HTMLElement>('[data-stage-pic]'));
   if (!items.length || !stage || !stageLink || pics.length !== items.length) return null;
 
@@ -73,6 +75,12 @@ function setup(section: HTMLElement) {
       a.toggleAttribute('data-active', j === i);
       if (j === i) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
     });
+    if (nextBtn && nextLabel) { // "next project" → the following project; on the last one "next section" → Services
+      const last = i === items.length - 1;
+      nextLabel.textContent = last ? 'next section' : 'next project';
+      nextBtn.href = last ? '#services' : `#${items[i + 1].id}`;
+      nextBtn.parentElement!.style.setProperty('--cur-img-top', items[i].style.getPropertyValue('--img-top'));
+    }
     const opener = items[i].querySelector<HTMLAnchorElement>('[data-project-open]');
     if (opener) { stageLink.href = opener.href; stageLink.dataset.projectOpen = opener.dataset.projectOpen ?? ''; }
   };
@@ -112,7 +120,21 @@ function setup(section: HTMLElement) {
     window.clearTimeout(lockTimer);
     lockTimer = window.setTimeout(release, reduced ? 50 : 1600); // safety net; scroll events below release earlier
   };
+  // ── "next project" arrow bob: starts once the section is in view and the scroll has settled, stops for good at the
+  //    next scroll. Never under reduced motion. ──
+  let inView = false, armed = false, bobDone = reduced, bobTimer = 0;
+  const syncBob = () => section.toggleAttribute('data-bob', !bobDone && armed && inView);
+  const settleBob = () => { window.clearTimeout(bobTimer); bobTimer = window.setTimeout(() => { if (inView) { armed = true; syncBob(); } }, 250); };
+  const bobScroll = () => {
+    if (bobDone) return;
+    if (armed) { bobDone = true; armed = false; syncBob(); return; }
+    settleBob();
+  };
+  const bobIo = new IntersectionObserver((entries) => { inView = entries[0].isIntersecting; if (!inView) { armed = false; } syncBob(); if (inView && !armed) settleBob(); }, { threshold: 0.6 });
+  bobIo.observe(pin);
+
   const onScroll = () => {
+    bobScroll();
     if (lock) {
       window.clearTimeout(lockTimer);
       lockTimer = window.setTimeout(release, 140); // scroll settled
@@ -124,6 +146,11 @@ function setup(section: HTMLElement) {
     el.addEventListener(type, fn, opts);
     cleanups.push(() => el.removeEventListener(type, fn, opts));
   };
+  if (nextBtn) on(nextBtn, 'click', (e: Event) => {
+    e.preventDefault();
+    if (current < items.length - 1) goTo(current + 1);
+    else document.getElementById('services')?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+  });
   links.forEach((a, i) => on(a, 'click', (e: Event) => { e.preventDefault(); goTo(i); }));
   on(window, 'scroll', onScroll, { passive: true });
   on(window, 'resize', schedule);
@@ -144,7 +171,8 @@ function setup(section: HTMLElement) {
 
   return () => {
     cleanups.forEach((f) => f());
-    preIo.disconnect();
+    preIo.disconnect(); bobIo.disconnect(); window.clearTimeout(bobTimer);
+    section.removeAttribute('data-bob');
     cancelAnimationFrame(frame); window.clearTimeout(lockTimer);
     pt?.stop();
     stage.classList.remove('is-swapping');
