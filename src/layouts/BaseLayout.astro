@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import SiteHeader from '../components/sections/SiteHeader.astro';
 // Preload the one font every screen needs first (Outfit, latin subset); the rest load on demand.
 import outfitLatin from '@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2?url';
 
@@ -10,6 +11,7 @@ interface Props {
   path?: string;
   noindex?: boolean;
   schema?: object; // JSON-LD, see data/schema.ts
+  header?: boolean; // fixed top bar (logo + nav); the 404 has its own
 }
 
 const SITE_NAME = 'MER Studio';
@@ -24,6 +26,7 @@ const {
   path = Astro.url.pathname,
   noindex = false,
   schema,
+  header = true,
 } = Astro.props;
 
 const canonical = new URL(path, Astro.site);
@@ -65,6 +68,14 @@ const ogImage = new URL(image, Astro.site);
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
+    {header && <SiteHeader />}
     <slot />
+    <script>
+      // Entrance motion (CLAUDE.md §22): decode titles + [data-reveal], one shared IntersectionObserver.
+      import { initReveals } from '../scripts/reveal';
+      import { initDecodeTitles } from '../scripts/decode-title';
+      initDecodeTitles();
+      initReveals();
+    </script>
   </body>
 </html>

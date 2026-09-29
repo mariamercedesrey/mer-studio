@@ -17,7 +17,7 @@
 /* Responsive gutters (/brand breakpoints: mobile <768, tablet 768–1199, desktop ≥1200).
    Every section pads with --page-gutter, so collapsing the grid starts here. */
 @media (max-width: 1199px) { :root { --page-gutter: 32px; } }
-@media (max-width: 767px) { :root { --page-gutter: 20px; } }
+@media (max-width: 767px) { :root { --page-gutter: 20px; --header-h: 68px; --header-pad-top: 20px; --header-content-h: 48px; } }
 
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
@@ -39,7 +39,8 @@ img, picture, video, svg { display: block; max-width: 100%; }
 a { color: inherit; }
 button { font: inherit; color: inherit; }
 
-[id] { scroll-margin-top: var(--sp-24); }
+/* The fixed top bar must never cover an anchor target. */
+[id] { scroll-margin-top: calc(var(--header-bar-h) + var(--sp-24)); }
 
 :focus-visible {
   outline: 2px solid var(--accent-primary);
@@ -69,5 +70,17 @@ button { font: inherit; color: inherit; }
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* Fade + rise entrance (CLAUDE.md §22, scripts/reveal.ts). JS marks below-the-fold elements data-rs="hidden" and flips
+   them to "in" once; the attribute is removed when the transition ends, so the element returns to plain CSS.
+   Nothing hides without JS, under reduced motion, or for elements already on screen at load. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal='rise'][data-rs='hidden'] { opacity: 0; transform: translateY(var(--rise-shift)); }
+  .js [data-reveal='rise'][data-rs='in'] {
+    opacity: 1;
+    transform: none;
+    transition: opacity var(--dur-slow) var(--ease-enter) var(--rd, 0ms), transform var(--dur-slow) var(--ease-enter) var(--rd, 0ms);
   }
 }

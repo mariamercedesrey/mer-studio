@@ -1,8 +1,8 @@
 ---
 // Figma 149:5104 Hero — header band (soft) + video row with the "m" mark and the hero dot.
-import SiteHeader from './SiteHeader.astro';
 import Button from '../primitives/Button.astro';
 import SignatureDot from '../primitives/SignatureDot.astro';
+import DecodeTitle from '../primitives/DecodeTitle.astro';
 import { getImage } from 'astro:assets';
 import heroPoster from '../../assets/hero-poster.webp';
 import { BOOKING_URL } from '../../data/contact';
@@ -14,13 +14,12 @@ const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Financ
 ---
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero__band">
-    <SiteHeader />
     <div class="hero__intro">
       <div class="hero__copy">
         <p class="hero__lead">From the first decision to the last detail.</p>
-        <h1 id="hero-title" class="hero__title">Strategy, design and build, end to end.</h1>
+        <DecodeTitle as="h1" mode="hero" id="hero-title" class="hero__title" text="Strategy, design and build, end to end." />
       </div>
-      <Button href={BOOKING_URL} width={183} target="_blank" rel="noopener">book a call<span class="visually-hidden"> (opens in a new tab)</span></Button>
+      <Button href={BOOKING_URL} width={183} target="_blank" rel="noopener" data-nav-sentinel>book a call<span class="visually-hidden"> (opens in a new tab)</span></Button>
     </div>
   </div>
 
@@ -75,13 +74,14 @@ const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Financ
 <style>
   .hero { position: relative; }
 
-  /* Header band — Figma 149:5105: soft ground, 28/48/100 padding, overlapped 65px by the row below. */
+  /* Header band — Figma 149:5105: soft ground, overlapped 65px by the row below. The logo + nav is the sticky SiteHeader,
+     which sits over the band's top (negative margin = its in-flow height): 28 + 32 header + 116 gap = main's exact layout. */
   .hero__band {
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 116px;
-    padding: 28px var(--page-gutter) 100px;
+    margin-top: calc(-1 * var(--header-h));
+    padding: 176px var(--page-gutter) 100px;
     margin-bottom: -65px;
     background: var(--surface-soft);
   }
@@ -99,7 +99,8 @@ const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Financ
     font-size: var(--fs-lead);
     line-height: 1.2;
   }
-  .hero__title {
+  /* :global — the h1 is rendered by DecodeTitle, so it never carries this component's scope attribute. */
+  .hero :global(.hero__title) {
     font-weight: 400;
     font-size: clamp(48px, 6.667vw, 96px);
     line-height: 1.01;
@@ -201,9 +202,9 @@ const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Financ
   /* Tablet + mobile: the band no longer overlaps the row; the row stacks as
      video → m + summary → where we've worked. */
   @media (max-width: 1199px) {
-    .hero__band { gap: 72px; padding-bottom: 64px; margin-bottom: 0; }
+    .hero__band { padding-top: 132px; padding-bottom: 64px; margin-bottom: 0; }
     .hero__intro { min-height: 0; }
-    .hero__title { font-size: clamp(56px, 8.5vw, 96px); }
+    .hero :global(.hero__title) { font-size: clamp(56px, 8.5vw, 96px); }
     .hero__row { display: flex; flex-direction: column; align-items: stretch; gap: 0; padding: 0 0 64px; }
     .hero__media-col { display: contents; }
     .hero__media { order: 1; }
@@ -222,9 +223,11 @@ const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Financ
     .hero__worked { order: 3; padding: var(--sp-48) var(--page-gutter) 0; }
   }
   @media (max-width: 767px) {
-    .hero__band { gap: 56px; padding-top: 20px; padding-bottom: 48px; }
+    .hero__band { padding-top: 124px; padding-bottom: 48px; }
+    /* No JS: the header stays a static column above the band. */
+    :global(html:not(.js)) .hero__band { margin-top: 0; padding-top: 56px; }
     .hero__lead { font-size: 20px; }
-    .hero__title { font-size: clamp(40px, 11.5vw, 56px); }
+    .hero :global(.hero__title) { font-size: clamp(40px, 11.5vw, 56px); }
     .hero__aside { display: flex; flex-direction: column; align-items: flex-start; padding-top: var(--sp-40); }
     .hero__mark { font-size: 132px; }
     .hero__summary { font-size: 20px; }

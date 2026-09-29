@@ -1,12 +1,13 @@
 ---
-// Section heading: mono eyebrow + Outfit 48/500 title + signature dot (Figma "Heading 2" pattern).
+// Section heading: mono eyebrow + Outfit 48/500 title + signature dot (Figma "Heading 2" pattern). The title decodes in (DecodeTitle); the dot stays out of it.
 import SignatureDot from './SignatureDot.astro';
-interface Props { eyebrow: string; id: string; tone?: 'light' | 'dark'; dotMotion?: string; class?: string }
-const { eyebrow, id, tone = 'light', dotMotion = 'none', class: className } = Astro.props;
+import DecodeTitle from './DecodeTitle.astro';
+interface Props { eyebrow: string; title: string; id: string; tone?: 'light' | 'dark'; dotMotion?: string; class?: string }
+const { eyebrow, title, id, tone = 'light', dotMotion = 'none', class: className } = Astro.props;
 ---
 <header class:list={['section-heading', `section-heading--${tone}`, className]}>
   <p class="section-heading__eyebrow">{eyebrow}</p>
-  <h2 id={id} class="section-heading__title"><slot />&#8288;<SignatureDot class="section-heading__dot" tone={tone === 'light' ? 'dark' : 'accent'} motion={dotMotion} /></h2>
+  <DecodeTitle as="h2" id={id} class="section-heading__title" text={title}><SignatureDot class="section-heading__dot" tone={tone === 'light' ? 'dark' : 'accent'} motion={dotMotion} /></DecodeTitle>
 </header>
 
 <style>
@@ -18,11 +19,12 @@ const { eyebrow, id, tone = 'light', dotMotion = 'none', class: className } = As
     line-height: 1.5;
     letter-spacing: 0.02em;
   }
-  .section-heading__title {
+  /* :global — the h2 is rendered by DecodeTitle, so it never carries this component's scope attribute. */
+  .section-heading :global(.section-heading__title) {
     font-weight: 500;
     font-size: clamp(34px, 3.333vw, 48px);
     line-height: 1.1;
     letter-spacing: -0.02em;
   }
-  .section-heading__title :global(.section-heading__dot) { margin-left: 0.25em; vertical-align: -0.02em; }
+  .section-heading :global(.section-heading__title .section-heading__dot) { margin-left: 0.25em; vertical-align: -0.02em; }
 </style>

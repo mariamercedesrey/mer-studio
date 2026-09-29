@@ -5,6 +5,7 @@
 // the body of the prerendered /work/<slug> page (R2-E).
 import type { ProjectDetailData, DetailItem, DetailSection } from '../../data/project-details';
 import DetailImage from './DetailImage.astro';
+import DecodeTitle from '../primitives/DecodeTitle.astro';
 
 interface Props {
   project: ProjectDetailData;
@@ -39,7 +40,7 @@ const pct = (n: number, of: number) => `${(n / of) * 100}%`;
   </header>
 
   <div class="pd__intro">
-    <Title id={`pd-title-${p.id}`} class="pd__title">{p.title}</Title>
+    <DecodeTitle as={Title} id={`pd-title-${p.id}`} class="pd__title" text={p.title} />
     <p class="pd__meta">{p.meta}</p>
     <ul role="list" class="pd__roles">{p.roles.map((r) => <li>{r}</li>)}</ul>
   </div>
@@ -50,7 +51,7 @@ const pct = (n: number, of: number) => `${(n / of) * 100}%`;
         {s.cols.map((c) => (
           <div class="pd-col" style={`--w:${c.w};--j:${{ start: 'flex-start', center: 'center', end: 'flex-end' }[c.justify ?? 'start']}`}>
             {c.items.map((i: DetailItem) => i.t === 'text' ? (
-              <section class:list={['pd__block', i.panel && 'pd__block--panel']}>
+              <section class:list={['pd__block', i.panel && 'pd__block--panel']} data-reveal="rise">
                 <h3 class="pd__block-title">{i.heading}</h3>
                 <p class="pd__block-body">{i.body}</p>
               </section>
@@ -65,7 +66,7 @@ const pct = (n: number, of: number) => `${(n / of) * 100}%`;
         {s.items.map((i) => {
           const pos = `z-index:${i.back ? 0 : 1};left:${pct(i.x, s.w)};top:${pct(i.y, s.h)};width:${pct(i.t === 'img' ? i.w : (i.tw ?? 470), s.w)}`;
           return i.t === 'text' ? (
-            <section class="pd-stage__item pd__block" style={pos}>
+            <section class="pd-stage__item pd__block" style={pos} data-reveal="rise">
               <h3 class="pd__block-title">{i.heading}</h3>
               <p class="pd__block-body">{i.body}</p>
             </section>
@@ -95,6 +96,8 @@ const pct = (n: number, of: number) => `${(n / of) * 100}%`;
     background: var(--surface-base);
     border-bottom: 0.5px solid rgb(141, 141, 141);
   }
+  /* Standalone /work/<slug>/ page: the fixed site bar already sticks, so the project bar scrolls with the page (in the overlay it stays sticky). */
+  main > .pd .pd__bar { position: static; }
   .pd__client {
     display: flex; align-items: center; gap: var(--sp-12);
     min-height: 58px; font-size: clamp(32px, 3.333vw, 48px); line-height: 1.2; letter-spacing: 0;

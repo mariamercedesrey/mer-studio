@@ -2,14 +2,15 @@
 // Figma 149:6074 Final CTA.
 import Button from '../primitives/Button.astro';
 import SignatureDot from '../primitives/SignatureDot.astro';
+import DecodeTitle from '../primitives/DecodeTitle.astro';
 import { WHATSAPP } from '../../data/contact';
 ---
 <section class="cta" aria-labelledby="cta-title">
   <div class="cta__copy">
     <p class="cta__eyebrow">That's all for now.</p>
-    <h2 id="cta-title" class="cta__title">Got a project in mind?<br />Let’s talk&#8288;<SignatureDot class="cta__dot" /></h2>
+    <DecodeTitle as="h2" id="cta-title" class="cta__title" text={"Got a project in mind?\nLet’s talk"}><SignatureDot class="cta__dot" /></DecodeTitle>
   </div>
-  <div class="cta__action">
+  <div class="cta__action" data-reveal="rise">
     <Button href={WHATSAPP.href} width={172} height={56} target="_blank" rel="noopener">lets talk<span class="visually-hidden"> on WhatsApp (opens in a new tab)</span></Button>
   </div>
 </section>
@@ -26,13 +27,14 @@ import { WHATSAPP } from '../../data/contact';
   }
   .cta__copy { display: flex; flex-direction: column; gap: 4px; min-height: 214px; }
   .cta__eyebrow { font-family: var(--font-technical); font-size: var(--fs-eyebrow); line-height: 1.5; letter-spacing: 0.02em; }
-  .cta__title {
+  /* :global — the h2 is rendered by DecodeTitle, so it never carries this component's scope attribute. */
+  .cta :global(.cta__title) {
     font-weight: 400;
     font-size: clamp(44px, 5.556vw, 80px);
     line-height: 1.16;
     letter-spacing: -0.02em;
   }
-  .cta__title :global(.cta__dot) { margin-left: 0.25em; vertical-align: -0.04em; }
+  .cta :global(.cta__title .cta__dot) { margin-left: 0.25em; vertical-align: -0.04em; }
   .cta__action { display: flex; justify-content: flex-end; }
 
   @media (max-width: 767px) {

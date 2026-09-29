@@ -27,7 +27,7 @@ const media = {
 const visible = projects.filter((p) => !p.hidden);
 ---
 <section id="work" class="work" aria-labelledby="work-title">
-  <SectionHeading eyebrow="selected work" id="work-title" tone="dark">What we've built</SectionHeading>
+  <SectionHeading eyebrow="selected work" id="work-title" tone="dark" title="What we've built" />
 
   <ol role="list" class="work__list" data-work-list>
     {visible.map((p, i) => {
@@ -39,6 +39,7 @@ const visible = projects.filter((p) => !p.hidden);
           class:list={['work-item', `work-item--${align}`, 'work-item--openable']}
           style={`--media-w:${p.width};--media-h:${p.height}`}
           data-work-item={p.id}
+          data-reveal="rise"
           data-active={i === 0 ? '' : undefined}
         >
           <a class="work-item__inner" href={`/work/${p.slug}/`} data-project-open={p.slug}>

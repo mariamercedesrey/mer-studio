@@ -23,7 +23,7 @@ const stats = [
       <p class="about__eyebrow">About us</p>
       <WordReveal as="h2" id="about-title" class="about__title" text="We partner with early-stage founders who treat design as a must, not a nice-to-have. From seed to Series A and beyond, we help them validate ideas, win over investors and build brands and products that last." />
     </div>
-    <p class="about__body">We treat every project as our own — founders deserve a partner, not a vendor. We've been in that room enough times to know what's at stake. We use AI to move faster, not to cut corners, so the time goes where it matters most: strategy and craft.</p>
+    <p class="about__body" data-reveal="rise">We treat every project as our own — founders deserve a partner, not a vendor. We've been in that room enough times to know what's at stake. We use AI to move faster, not to cut corners, so the time goes where it matters most: strategy and craft.</p>
   </div>
 
   <div class="about__card-row">
@@ -45,19 +45,14 @@ const stats = [
 
   <dl class="about__stats">
     {stats.map((s) => (
-      <div class="about__stat">
+      <div class="about__stat" data-reveal="rise">
         <dt class="about__value"><CountUp value={s.value} count={s.count} /></dt>
         <dd class="about__label">{s.label}</dd>
       </div>
     ))}
   </dl>
-  <Button href={BOOKING_URL} width={201} height={56} target="_blank" rel="noopener">book a call<span class="visually-hidden"> (opens in a new tab)</span></Button>
+  <div data-reveal="rise"><Button href={BOOKING_URL} width={201} height={56} target="_blank" rel="noopener">book a call<span class="visually-hidden"> (opens in a new tab)</span></Button></div>
 </section>
-
-<script>
-  import { initEnterReveals } from '../../scripts/reveal';
-  initEnterReveals();
-</script>
 
 <style>
   .about {

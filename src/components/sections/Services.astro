@@ -21,7 +21,7 @@ const addons = [
 <section id="services" class="services" aria-labelledby="services-title" data-services>
   <div class="services__top">
     <div class="services__intro">
-      <SectionHeading eyebrow="services" id="services-title">Strategy, Design &amp; Build, end to end</SectionHeading>
+      <SectionHeading eyebrow="services" id="services-title" title="Strategy, Design & Build, end to end" />
       <ol role="list" class="services__list" data-services-list>
         {services.map((s, i) => (
           <li class="services__row" id={s.id} data-services-row>
@@ -35,7 +35,7 @@ const addons = [
         ))}
       </ol>
     </div>
-    <div class="services__card">
+    <div class="services__card" data-reveal="rise">
       <h3 class="services__card-title">EVERY PROJECT INCLUDES</h3>
       <ul role="list" class="services__included">
         {included.map((t, i) => <li>[{i + 1}] —{t}</li>)}
@@ -44,10 +44,10 @@ const addons = [
   </div>
 
   <div class="services__addons">
-    <p class="services__addons-lead">Added to any project — or contracted on their own.</p>
+    <p class="services__addons-lead" data-reveal="rise">Added to any project — or contracted on their own.</p>
     <div class="services__addons-list">
       {addons.map((a) => (
-        <article class="services__addon">
+        <article class="services__addon" data-reveal="rise">
           <h3 class="services__addon-title">{a.title}</h3>
           <p class="services__addon-body">{a.body}</p>
         </article>

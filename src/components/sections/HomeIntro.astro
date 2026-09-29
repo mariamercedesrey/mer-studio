@@ -1,18 +1,13 @@
 ---
-// Home intro — Figma 2132:1353 (loading01). Session-only overlay on "/": dark ground → logo fades in →
-// the two tagline lines fade in staggered → short hold → the curtain lifts and reveals the home, which is
-// already rendered underneath. Text only (no images, no extra fonts).
+// Home intro — Figma 2132:1353 (loading01) / 2132:2468 (loading02). Session-only overlay on "/": dark ground → the
+// logo (the nav's own SVG, /logo-negative.svg) fades in → ~1 s pause → each tagline line "ghosts" in (blur + opacity →
+// sharp) → 3 s hold → the curtain (rounded bottom corners, 24 px) lifts slowly to reveal the home and its top bar.
 // The whole timeline is CSS (it completes even if JS fails); scripts/home-intro.ts lifts the curtain early on input.
 // The gate lives in the inline <head> script in pages/index.astro (sets html[data-intro]).
 ---
 <div class="home-intro" aria-hidden="true" data-home-intro>
   <div class="home-intro__stack">
-    <p class="home-intro__logo">
-      <span class="home-intro__mer">mer</span>
-      <span class="home-intro__studio">studio</span>
-      <span class="home-intro__tm">™</span>
-      <span class="home-intro__dot"></span>
-    </p>
+    <img class="home-intro__logo" src="/logo-negative.svg" width="306" height="48" alt="" />
     <p class="home-intro__quote">
       <span class="home-intro__line home-intro__line--1">“From the first decision to the last detail.</span>
       <span class="home-intro__line home-intro__line--2">Strategy, design &amp; build, end to end.”</span>
@@ -28,48 +23,29 @@
 <style is:global>
   .home-intro { display: none; }
   html[data-intro] .home-intro {
-    /* Timeline (~5.3 s): entrances are 600 ms × 1.25 — logo 0–750 · line 1 500–1250 · line 2 750–1500 ·
-       3 s hold with everything visible · curtain 4500–5300 ms. Input lifts the curtain early (scripts/home-intro.ts). */
-    --intro-fade: 750ms;
-    --intro-lift-delay: 4500ms;
-    --intro-lift: 800ms;
+    /* Timeline (~7.2 s): logo 0–700 · pause 1 s · line 1 1700–2400 · line 2 2400–3100 · 3 s hold, everything visible ·
+       curtain 6100–7200 ms (--dur-curtain, --ease-in-out). Input lifts the curtain early (scripts/home-intro.ts). */
+    --intro-logo: 700ms;
+    --intro-ghost: 700ms;
+    --intro-line-1: 1700ms;
+    --intro-line-2: 2400ms;
+    --intro-lift-delay: 6100ms;
     position: fixed;
-    inset: 0;
+    inset: 0 0 calc(-1 * var(--r-24)); /* 24 px taller than the viewport: the rounded corners stay off-screen until the curtain rises */
     z-index: 200;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--sp-32) var(--page-gutter);
+    padding: var(--sp-32) var(--page-gutter) calc(var(--sp-32) + var(--r-24));
     background: var(--surface-inverse);
     color: var(--text-inverse);
-    animation: home-intro-lift var(--intro-lift) var(--ease-enter) var(--intro-lift-delay) both;
+    border-radius: 0 0 var(--r-24) var(--r-24); /* Figma 2132:2256 */
+    animation: home-intro-lift var(--dur-curtain) var(--ease-in-out) var(--intro-lift-delay) both;
     will-change: transform;
   }
-  .home-intro__stack { display: flex; flex-direction: column; align-items: center; gap: 0.8em; font-size: clamp(36px, 4.07vw, 58.582px); }
-
-  /* Figma 2132:2249 — "mer" ExtraBold, "studio" Light offset 112.52 px, "™" and the yellow dot (offsets in em of 58.582 px). */
-  .home-intro__logo {
-    position: relative;
-    display: inline-grid;
-    place-items: start;
-    font-family: var(--font-brand);
-    font-size: 1em;
-    line-height: normal;
-    white-space: nowrap;
-    text-box: trim-both cap alphabetic;
-    animation: home-intro-fade var(--intro-fade) var(--ease-enter) both;
-  }
-  .home-intro__logo > * { grid-area: 1 / 1; }
-  .home-intro__mer { margin-top: 0.0577em; font-weight: 800; letter-spacing: -0.06em; }
-  .home-intro__studio { margin: 0.0577em 0 0 1.9208em; font-weight: 300; letter-spacing: -0.07em; }
-  .home-intro__tm { margin-left: 6.143em; /* 252.9 px, in em of its own 0.7027em size */ font-size: 0.7027em; font-weight: 300; letter-spacing: -0.07em; }
-  .home-intro__dot {
-    width: 0.1546em;
-    height: 0.1516em;
-    margin: 0.5729em 0 0 1.7008em;
-    border-radius: 50%;
-    background: var(--accent-primary);
-  }
+  /* Figma 2132:2469: logo 270.521 px wide, 28.703 px above the quote, at 58.582 px of "em" (1440). */
+  .home-intro__stack { display: flex; flex-direction: column; align-items: center; gap: 0.49em; font-size: clamp(36px, 4.07vw, 58.582px); }
+  .home-intro__logo { width: 4.618em; height: auto; animation: home-intro-fade var(--intro-logo) var(--ease-enter) both; }
 
   /* Figma 2132:2255 — Instrument Serif Italic 35.878 px / 1.01, centred, 766 px wide. */
   .home-intro__quote {
@@ -84,12 +60,13 @@
     text-align: center;
     text-wrap: balance;
   }
-  .home-intro__line { animation: home-intro-fade var(--intro-fade) var(--ease-enter) both; }
-  .home-intro__line--1 { animation-delay: 500ms; }
-  .home-intro__line--2 { animation-delay: 750ms; }
+  .home-intro__line { animation: home-intro-ghost var(--intro-ghost) var(--ease-enter) both; }
+  .home-intro__line--1 { animation-delay: var(--intro-line-1); }
+  .home-intro__line--2 { animation-delay: var(--intro-line-2); }
 
-  /* Opacity and transform only; the curtain hides itself at the end, so nothing is left to catch input. */
+  /* Logo: opacity. Lines: "ghost" = blur + opacity (Mer's brief). Curtain: transform; it hides itself at the end. */
   @keyframes home-intro-fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes home-intro-ghost { from { opacity: 0; filter: blur(12px); } to { opacity: 1; filter: blur(0); } }
   @keyframes home-intro-lift {
     from { transform: translateY(0); visibility: visible; }
     to { transform: translateY(-100%); visibility: hidden; }
