@@ -155,7 +155,7 @@ Rules for every animation on the site (the concrete motion of each section still
 5. Scroll-linked motion only where it tells something (e.g. WordReveal). Never hijack the scroll.
 6. Signature moments play once. Ambient textures (e.g. the pixel-banner rain) may loop, and must sleep off-screen and in hidden tabs.
 7. One protagonist per screen; everything else stays subtle.
-8. `prefers-reduced-motion`: show the final state with no animation (final numbers, text at 100 %, static banner). Animate only `transform` / `opacity` (canvas draws count as opacity/transform-only). Lighthouse Performance ≥ 90 on mobile.
+8. `prefers-reduced-motion`: show the final state with no animation (final numbers, text at 100 %, static banner). Animate only `transform` / `opacity` (canvas draws count as opacity/transform-only); exception: `filter: blur` is allowed only in the intro's "ghost" effect. Lighthouse Performance ≥ 90 on mobile.
 
 Exception — Intro de la home: supera los 3 s por decisión de la dueña; siempre salteable con click/scroll.
 
