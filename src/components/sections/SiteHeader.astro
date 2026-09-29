@@ -103,8 +103,20 @@ const link = (href: string) => (home ? href : `/${href}`);
     pointer-events: none;
     transition: opacity var(--dur-nav) var(--ease-enter);
   }
+  /* Light state (Figma 2126:243): full-width 50 % white ground so the logo never merges with the hero type. Fades out as the dark bar fades in. */
+  .site-header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--surface-nav-light);
+    -webkit-backdrop-filter: blur(var(--blur-nav));
+    backdrop-filter: blur(var(--blur-nav));
+    pointer-events: none;
+    transition: opacity var(--dur-nav) var(--ease-enter), visibility 0s linear;
+  }
   .site-header__row {
     position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -186,6 +198,7 @@ const link = (href: string) => (home ? href : `/${href}`);
 
   /* ── Scrolled state (needs JS: without it the header keeps its top look on a soft ground) ── */
   :global(html.js) .site-header[data-scrolled]::before { opacity: 1; }
+  :global(html.js) .site-header[data-scrolled]::after { opacity: 0; visibility: hidden; -webkit-backdrop-filter: none; backdrop-filter: none; transition: opacity var(--dur-nav) var(--ease-enter), visibility 0s linear var(--dur-nav); }
   /* The row is centred on y 44 (28 + 32/2; 20 + 48/2 on mobile); the bar's centre is 25.5 → −18.5 px. */
   :global(html.js) .site-header[data-scrolled] .site-header__row { transform: translateY(calc(var(--header-bar-h) / 2 - var(--header-pad-top) - var(--header-content-h) / 2)); }
   :global(html.js) .site-header[data-scrolled] .site-header__logo-pos { opacity: 0; }

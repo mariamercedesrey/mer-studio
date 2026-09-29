@@ -32,6 +32,7 @@
   --header-pad-top: 28px;                         /* header row's top offset (20 px on mobile) */
   --header-content-h: 32px;                       /* header row's height (capsule; 48 px hamburger on mobile) */
   --header-bar-h: 51px;                           /* scrolled state: the bar's visual height (Mer) */
+  --surface-nav-light: rgba(255, 255, 255, 0.5);  /* header ground at the top of the home and /start-a-project/ (Figma 2126:243) */
   --surface-nav-scrolled: #141414ab;              /* scrolled header ground (Mer) */
   --border-nav-scrolled: #b1b1b11e;               /* scrolled header rule, almost imperceptible (Mer) */
   --blur-nav-scrolled: 12px;                      /* scrolled header bar backdrop blur (Mer) */
