@@ -32,6 +32,7 @@
   --header-bar-h: 51px;                           /* scrolled state: the bar's visual height (Mer) */
   --surface-nav-scrolled: #141414ab;              /* scrolled header ground (Mer) */
   --border-nav-scrolled: #b1b1b11e;               /* scrolled header rule, almost imperceptible (Mer) */
+  --blur-nav-scrolled: 12px;                      /* scrolled header bar backdrop blur (Mer) */
   --dur-nav: 300ms;                               /* header state change (Mer), always with --ease-enter */
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); /* PROPOSED — the intro curtain's exit only (Mer: "ease-in-out"); entrances keep --ease-enter */
   --dur-curtain: 1100ms;                          /* intro curtain exit (Mer: 1000–1200 ms) */
