@@ -131,6 +131,9 @@ const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Financ
   @media (prefers-reduced-motion: no-preference) {
     :global(.js) .hero__mark :global(.hero__dot:not([data-motion-state])) { animation: hero-dot-reveal 0s 4s both; }
   }
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .hero__mark :global(.hero__dot[data-motion-state='waiting']) { visibility: hidden; } /* until the m is on screen */
+  }
   @keyframes hero-dot-reveal { from { visibility: hidden; } to { visibility: visible; } }
   .hero__poster, .hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   /* The video only shows once it is actually playing; until then (or if autoplay is refused,
