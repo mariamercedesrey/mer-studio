@@ -1,10 +1,13 @@
 ---
-// Figma 2007:229 Button — 6 styles × 2 states (Default / Disabled) × 3 sizes (Small 40 / Medium 48 / Large 56), pill.
+// Figma 2007:229 Button — 8 styles × 2 states (Default / Disabled) × 3 sizes (Small 40 / Medium 48 / Large 56), pill,
+// optional leading icon (Figma "Show icon" / "Icon": arrow-right, arrow-down; 16px, 20px on Large; currentColor).
 // Hover / active / focus-visible are DS code-side rules (documented in the PR).
 // One Primary per screen/section (CLAUDE.md §12b). Outline Primary + Negative are for dark grounds only.
 interface Props {
   href?: string;
-  variant?: 'primary' | 'secondary' | 'ghost' | 'outline-primary' | 'outline-secondary' | 'negative';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'outline-primary' | 'outline-secondary' | 'negative' | 'ghost-negative' | 'ghost-primary';
+  icon?: 'arrow-right' | 'arrow-down'; // leading icon (implies Show icon)
+  showIcon?: boolean; // Show icon without choosing one → arrow-right (Figma default)
   size?: 'sm' | 'md' | 'lg';
   onDark?: boolean; // Primary/Secondary/Ghost/Outline Secondary sitting on an ink ground: focus ring turns yellow
   disabled?: boolean; // always renders a <button disabled>: a link cannot be disabled
@@ -13,8 +16,9 @@ interface Props {
   class?: string;
   [key: string]: unknown;
 }
-const { href, variant = 'primary', size = 'md', onDark = false, disabled = false, type = 'button', width, class: className, ...rest } = Astro.props;
+const { href, variant = 'primary', icon, showIcon = false, size = 'md', onDark = false, disabled = false, type = 'button', width, class: className, ...rest } = Astro.props;
 const style = width ? `width:${width}px` : undefined;
+const iconName = icon ?? (showIcon ? 'arrow-right' : undefined);
 const Tag = href && !disabled ? 'a' : 'button';
 ---
 <Tag
@@ -24,7 +28,13 @@ const Tag = href && !disabled ? 'a' : 'button';
   disabled={Tag === 'button' && disabled ? true : undefined}
   style={style}
   {...rest}
-><slot /></Tag>
+>{iconName && (
+    <svg class="btn__icon" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false">
+      {iconName === 'arrow-right'
+        ? <path d="M3.33333 8H12.6667M8 3.33333L12.6667 8L8 12.6667" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+        : <path d="M8 3.33333V12.6667M3.33333 8L8 12.6667L12.6667 8" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />}
+    </svg>
+  )}<slot /></Tag>
 
 <style>
   .btn {
@@ -59,14 +69,20 @@ const Tag = href && !disabled ? 'a' : 'button';
   .btn--md { min-height: var(--btn-h-md); padding: 0 var(--sp-20); font-size: var(--fs-body); line-height: 20px; }
   .btn--lg { min-height: var(--btn-h-lg); padding: 0 var(--sp-24); font-size: var(--fs-body-lg); line-height: 24px; }
 
+  .btn__icon { flex: none; width: 16px; height: 16px; }
+  .btn--lg .btn__icon { width: 20px; height: 20px; }
+
   /* Only the filled/outline variants draw the 1px ring; the rest keep it transparent so all six share one box. */
-  .btn--primary, .btn--secondary, .btn--ghost, .btn--negative { --btn-ring: transparent; }
+  .btn--primary, .btn--secondary, .btn--ghost, .btn--negative, .btn--ghost-negative, .btn--ghost-primary { --btn-ring: transparent; }
 
   .btn--primary { --btn-bg: var(--action-primary-background); --btn-fg: var(--action-primary-text); }
   .btn--secondary { --btn-bg: var(--action-secondary-background); --btn-fg: var(--action-secondary-text); }
   .btn--ghost { --btn-fg: var(--action-ghost-text); }
   .btn--outline-primary { --btn-fg: var(--action-primary-background); --btn-ring: var(--action-primary-background); --btn-focus: var(--accent-primary); }
   .btn--outline-secondary { --btn-fg: var(--action-secondary-background); --btn-ring: var(--action-secondary-background); }
+  /* Ghost Negative (white) and Ghost Primary (yellow): dark grounds only. */
+  .btn--ghost-negative { --btn-fg: var(--text-inverse); --btn-focus: var(--accent-primary); }
+  .btn--ghost-primary { --btn-fg: var(--action-primary-background); --btn-focus: var(--accent-primary); }
   .btn--negative { --btn-bg: var(--action-negative-background); --btn-fg: var(--action-negative-text); --btn-focus: var(--accent-primary); }
 
   .btn--on-dark { --btn-focus: var(--accent-primary); }
@@ -79,6 +95,8 @@ const Tag = href && !disabled ? 'a' : 'button';
     .btn--outline-primary:hover:not(:disabled) { --btn-bg: var(--action-primary-background); --btn-fg: var(--action-primary-text); }
     .btn--outline-secondary:hover:not(:disabled) { --btn-bg: var(--action-secondary-background); --btn-fg: var(--action-secondary-text); }
     .btn--negative:hover:not(:disabled) { --btn-bg: var(--surface-soft); }
+    .btn--ghost-negative:hover:not(:disabled) { --btn-bg: var(--surface-overlay-ink); }
+    .btn--ghost-primary:hover:not(:disabled) { --btn-bg: var(--surface-overlay-ink); --btn-fg: var(--accent-bright); }
   }
 
   .btn:active:not(:disabled) { transform: scale(0.97); }
@@ -92,7 +110,7 @@ const Tag = href && !disabled ? 'a' : 'button';
     --btn-bg: var(--action-disabled-background);
     --btn-fg: var(--action-disabled-text);
   }
-  .btn--ghost:disabled { --btn-bg: transparent; }
+  .btn--ghost:disabled, .btn--ghost-negative:disabled, .btn--ghost-primary:disabled { --btn-bg: transparent; }
   .btn--outline-primary:disabled, .btn--outline-secondary:disabled { --btn-bg: transparent; --btn-ring: var(--action-disabled-text); }
 
   @media (prefers-reduced-motion: reduce) {

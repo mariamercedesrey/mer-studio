@@ -7,6 +7,7 @@
 import { getImage } from 'astro:assets';
 import { projects } from '../../data/projects';
 import SectionHeading from '../primitives/SectionHeading.astro';
+import Button from '../primitives/Button.astro';
 import RoleChip from '../primitives/RoleChip.astro';
 import mosaic from '../../assets/work-index-mosaic.svg';
 import asociart from '../../assets/work-cover/asociart.png';
@@ -82,6 +83,10 @@ const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
           </li>
         ))}
       </ol>
+
+      <div class="work__next" style={`--cur-img-top:${items[0].imgTop}%`}>
+        <Button variant="ghost-primary" size="sm" icon="arrow-down" href={items[1] ? `#work-${items[1].id}` : '#services'} data-work-next><span data-work-next-label>next project</span></Button>
+      </div>
 
       <div class="work__stage" data-work-stage>
         <a class="work__stage-link" href={`/work/${items[0].slug}/`} data-project-open={items[0].slug} data-work-stage-link tabindex="-1" aria-hidden="true">
@@ -178,6 +183,13 @@ const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
   /* ── Pane: text (left 356) + image (right 722) on one 1090 × 600 box ── */
   .work__pane { position: relative; width: 100%; max-width: 1090px; aspect-ratio: 1090 / 600; }
   .work__list { margin: 0; padding: 0; }
+  /* "next project" (Figma 2240:707): Ghost Primary Small, bottom-right of the text column, on the image's bottom edge.
+     --cur-img-top (set by work-scroll.ts) is the current project's gap between the frame edge and its contain-fitted image. */
+  .work__next { position: absolute; z-index: 2; left: 0; width: calc(356 / 1090 * 100%); bottom: var(--cur-img-top, 0%); display: flex; justify-content: flex-end; pointer-events: none; }
+  .work__next :global(.btn) { pointer-events: auto; }
+  /* Affordance while the reader has not scrolled (data-bob is set by work-scroll.ts, never under reduced motion). */
+  @keyframes work-next-bob { 0%, 45%, 100% { transform: translateY(0); } 22% { transform: translateY(3px); } }
+  .work[data-bob] .work__next :global(.btn__icon) { animation: work-next-bob 2s var(--ease-enter) infinite; }
   .work__stage { position: absolute; top: 0; right: 0; width: calc(722 / 1090 * 100%); height: 100%; }
   .work__stage-link { display: block; width: 100%; height: 100%; color: inherit; cursor: pointer; }
   .work__frame { position: relative; width: 100%; height: 100%; }
@@ -263,7 +275,7 @@ const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
     .work__track { margin-top: var(--sp-48); }
     .work__step { display: none; }
     .work__grid { display: block; }
-    .work__rail, .work__stage { display: none; }
+    .work__rail, .work__stage, .work__next { display: none; }
     .work__pane { aspect-ratio: auto; max-width: none; }
     .work__list { display: flex; flex-direction: column; gap: var(--sp-64); }
     .work-item__link { gap: var(--sp-24); }
