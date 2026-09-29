@@ -160,5 +160,6 @@ Rules for every animation on the site (the concrete motion of each section still
 8. `prefers-reduced-motion`: show the final state with no animation (final numbers, text at 100 %, static banner). Animate only `transform` / `opacity` (canvas draws count as opacity/transform-only); exception: `filter: blur` is allowed only in the intro's "ghost" effect. Lighthouse Performance ≥ 90 on mobile.
 
 Exception — Intro de la home: supera los 3 s por decisión de la dueña; siempre salteable con click/scroll.
+Durante la intro de la home el scroll se bloquea y el primer gesto solo sube la cortina; es la única excepción a la regla de no bloquear el scroll.
 
 Tokens live in `src/styles/tokens.ext.css` (proposed extensions of `/brand/tokens/base.css`): `--dur-section`, `--dur-count`, `--dur-signature-max`, `--ease-enter`, `--enter-shift`, `--word-reveal-min`. Reusable pieces: `WordReveal`, `CountUp` (`src/components/primitives`), `scripts/reveal.ts` (one shared IntersectionObserver: `[data-reveal="rise"]` fade + 16 px lift with sibling stagger, `afterIntro`, `tween`), `DecodeTitle` (section/page titles: letters scramble → resolve, ~900 ms, once; not the home h1 or the hero).
