@@ -24,7 +24,7 @@ const addons = [
       <SectionHeading eyebrow="services" id="services-title">Strategy, Design &amp; Build, end to end</SectionHeading>
       <ol role="list" class="services__list" data-services-list>
         {services.map((s, i) => (
-          <li class="services__row" id={s.id} tabindex="0" data-services-row>
+          <li class="services__row" id={s.id} data-services-row>
             <div class="services__row-main">
               <span class="services__slot" aria-hidden="true" data-services-slot></span>
               <h3 class="services__item-title">{s.name}</h3>
@@ -81,7 +81,6 @@ const addons = [
     min-height: 45px;
   }
   .services__row::before { content: ''; flex-shrink: 0; height: 1px; background: var(--fills-primary); }
-  .services__row:focus-visible { outline-offset: -2px; }
   /* Figma 149:5766 — 24px start padding holds the 12px active dot (slot at x 6). */
   .services__row-main {
     position: relative;

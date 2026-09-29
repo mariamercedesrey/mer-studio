@@ -1,7 +1,7 @@
 // Services animated list (Figma 2204:616). The row nearest the viewport centre is active: 100 % opacity and
 // the title's yellow dot beside it; the rest are subdued (CSS owns opacity). Read-only — never touches scroll.
 // The dot is the heading's own signature dot: it travels once to the list when the section enters, then follows
-// the active row. Transform/opacity only; hover and keyboard focus also activate a row on desktop.
+// the active row. Transform/opacity only; hover (mouse) also activates a row on desktop; rows are not focusable.
 export function initServicesActive() {
   const root = document.querySelector<HTMLElement>('[data-services]');
   if (!root) return;
@@ -16,10 +16,9 @@ export function initServicesActive() {
 
   let scrollRow = rows[0];
   let hoverRow: HTMLElement | null = null;
-  let focusRow: HTMLElement | null = null;
   let entered = false;
 
-  const current = () => hoverRow ?? focusRow ?? scrollRow;
+  const current = () => hoverRow ?? scrollRow;
 
   const place = (row: HTMLElement) => {
     // Rest position = current rect minus the in-flight translate (correct even mid-transition).
@@ -60,8 +59,6 @@ export function initServicesActive() {
   rows.forEach((r) => {
     r.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') { hoverRow = r; apply(); } });
     r.addEventListener('pointerleave', () => { if (hoverRow === r) { hoverRow = null; apply(); } });
-    r.addEventListener('focus', () => { focusRow = r; apply(); });
-    r.addEventListener('blur', () => { if (focusRow === r) { focusRow = null; apply(); } });
   });
 
   // Layout changes (resize, font load) move the slots: re-place without animating the jump.
