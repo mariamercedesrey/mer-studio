@@ -1,35 +1,59 @@
 ---
-// Figma 2045:2485 — monochrome pixel mosaic between Selected Work and Services.
-// CROP transform [[0.9982,0,0.0009],[0,0.6278,0.0655]] → image drawn at 100.18% × 159.3%, offset −0.09% / −10.43%.
+// Figma 2118:51 — monochrome pixel mosaic (2045:2485) with the statement under it, between Selected Work and Services.
+// The image is Figma's own render of 2045:2485 (crop already applied, monochrome) at 2×. The previous
+// brand/assets/img/pixel-banner-mono.png was in colour (blue/yellow/red), not the greyscale mosaic in Figma.
+// Ambient texture: scripts/pixel-rain.ts drops grid-sized squares over the whole banner (canvas, aria-hidden).
 import { getImage } from 'astro:assets';
-import banner from '../../../brand/assets/img/pixel-banner-mono.png';
+import banner from '../../assets/pixel-banner.png';
+import WordReveal from '../primitives/WordReveal.astro';
 const [avif, webp] = await Promise.all(
-  (['avif', 'webp'] as const).map((format) => getImage({ src: banner, widths: [720, 1440, 2160, 2880], format })),
+  (['avif', 'webp'] as const).map((format) => getImage({ src: banner, widths: [720, 1436, 2154, 2872], format })),
 );
 ---
-<div class="pixel-banner" aria-hidden="true">
-  <picture>
-    <source type="image/avif" srcset={avif.srcSet.attribute} sizes="100vw" />
-    <source type="image/webp" srcset={webp.srcSet.attribute} sizes="100vw" />
-    <img src={webp.src} alt="" width={banner.width} height={banner.height} loading="lazy" decoding="async" />
-  </picture>
-</div>
+<section class="pixel-banner" data-pixel-rain aria-label="Design, for us">
+  <canvas class="pixel-banner__rain" aria-hidden="true"></canvas>
+  <div class="pixel-banner__art" aria-hidden="true">
+    <picture>
+      <source type="image/avif" srcset={avif.srcSet.attribute} sizes="100vw" />
+      <source type="image/webp" srcset={webp.srcSet.attribute} sizes="100vw" />
+      <img src={webp.src} alt="" width={banner.width} height={banner.height} loading="lazy" decoding="async" />
+    </picture>
+  </div>
+  <WordReveal class="pixel-banner__quote" data-rain-avoid text="[For us, design isn't decoration. It's a transformation. It evolves what's stuck, strengthens what matters, and makes space for something better.]" />
+</section>
+
+<script>
+  import { initPixelRain } from '../../scripts/pixel-rain';
+  document.querySelectorAll<HTMLElement>('[data-pixel-rain]').forEach(initPixelRain);
+</script>
 
 <style>
   .pixel-banner {
     position: relative;
-    width: calc(100% - 4px);
-    margin: 0 auto;
-    aspect-ratio: 1436 / 255;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 26px;
+    padding-bottom: 22px;
     overflow: hidden;
     background: var(--surface-soft);
   }
-  .pixel-banner img {
-    position: absolute;
-    left: -0.09%;
-    top: -10.43%;
-    width: 100.18%;
-    height: 159.3%;
-    max-width: none;
+  .pixel-banner__rain { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; pointer-events: none; } /* over the mosaic, under the statement */
+  .pixel-banner__art {
+    position: relative;
+    width: calc(100% - 4px);
+    aspect-ratio: 1436 / 255;
+    overflow: hidden;
+  }
+  .pixel-banner__art img { display: block; width: 100%; height: 100%; }
+  .pixel-banner__quote {
+    position: relative;
+    z-index: 2; /* above the canvas */
+    width: min(854px, 100% - 2 * var(--page-gutter));
+    font-family: var(--font-brand);
+    font-variation-settings: 'opsz' 14, 'wdth' 100;
+    font-size: clamp(22px, 2.222vw, 32px);
+    line-height: normal;
+    color: var(--text-primary);
   }
 </style>
