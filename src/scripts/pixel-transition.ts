@@ -1,12 +1,12 @@
 // Pixelated image swap for the Selected Work stage. One <canvas>, one requestAnimationFrame that only exists
-// while a transition runs (nothing loops when idle). The outgoing image pixelates in growing blocks (8 → 48 px),
-// then the incoming one resolves from large blocks down to sharp — ≈ 550 ms in total.
-import { easePrecise, clamp01 } from './easing';
-
-const DURATION = 550;
-const BLOCK_FROM = 8;
-const BLOCK_MAX = 48;
-const SWAP: [number, number] = [0.42, 0.58]; // cross-over window, around the coarsest point (k = 0.5)
+// while a transition runs (nothing loops when idle). Discrete steps, no interpolation between sizes: the outgoing
+// image goes 12 → 32 → 64 → 128 px blocks, the incoming one resolves 64 → 32 → 12 → sharp; every step is held.
+const STEPS: Array<{ block: number; incoming: boolean }> = [
+  { block: 12, incoming: false }, { block: 32, incoming: false }, { block: 64, incoming: false },
+  { block: 128, incoming: false },
+  { block: 64, incoming: true }, { block: 32, incoming: true }, { block: 12, incoming: true },
+];
+const STEP_MS = 95; // 7 steps ≈ 665 ms
 
 export function createPixelTransition(canvas: HTMLCanvasElement) {
   const ctx = canvas.getContext('2d');
@@ -25,20 +25,17 @@ export function createPixelTransition(canvas: HTMLCanvasElement) {
   resize();
   new ResizeObserver(resize).observe(canvas);
 
-  /** Draws `img` (contain-fit, centred) pixelated in `block`-px squares at `alpha`. */
-  const draw = (img: HTMLImageElement, block: number, alpha: number) => {
-    if (alpha <= 0.003 || !img.naturalWidth) return;
+  /** Draws `img` (contain-fit, centred) pixelated in `block`-px squares. */
+  const draw = (img: HTMLImageElement, block: number) => {
+    if (!img.naturalWidth) return;
     const s = Math.min(W / img.naturalWidth, H / img.naturalHeight);
     const rw = img.naturalWidth * s, rh = img.naturalHeight * s;
     const rx = (W - rw) / 2, ry = (H - rh) / 2;
-    const b = Math.max(1, Math.round(block));
-    small.width = Math.ceil(W / b); small.height = Math.ceil(H / b);
+    small.width = Math.ceil(W / block); small.height = Math.ceil(H / block);
     sctx.imageSmoothingEnabled = true;
-    sctx.drawImage(img, rx / b, ry / b, rw / b, rh / b);
-    ctx.globalAlpha = alpha;
+    sctx.drawImage(img, rx / block, ry / block, rw / block, rh / block);
     ctx.imageSmoothingEnabled = false;
-    ctx.drawImage(small, 0, 0, small.width, small.height, 0, 0, small.width * b, small.height * b);
-    ctx.globalAlpha = 1;
+    ctx.drawImage(small, 0, 0, small.width, small.height, 0, 0, small.width * block, small.height * block);
   };
 
   const clear = () => { ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, canvas.width, canvas.height); };
@@ -48,15 +45,19 @@ export function createPixelTransition(canvas: HTMLCanvasElement) {
     cancelAnimationFrame(raf);
     const id = ++run;
     const t0 = performance.now();
+    let drawn = -1;
     const frame = (now: number) => {
       if (id !== run) return resolve();
-      const k = clamp01((now - t0) / DURATION);
-      const mix = clamp01((k - SWAP[0]) / (SWAP[1] - SWAP[0]));
-      clear();
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      if (from && mix < 1) draw(from, BLOCK_FROM + (BLOCK_MAX - BLOCK_FROM) * easePrecise(clamp01(k / 0.5)), 1 - mix);
-      if (mix > 0) draw(to, BLOCK_MAX - (BLOCK_MAX - 1) * easePrecise(clamp01((k - 0.5) / 0.5)), mix);
-      if (k >= 1) { clear(); return resolve(); }
+      const k = Math.floor((now - t0) / STEP_MS);
+      if (k >= STEPS.length) { clear(); return resolve(); }
+      if (k !== drawn) { // only repaint when the step changes
+        drawn = k;
+        clear();
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const st = STEPS[k];
+        const img = st.incoming ? to : from;
+        if (img) draw(img, st.block);
+      }
       raf = requestAnimationFrame(frame);
     };
     raf = requestAnimationFrame(frame);

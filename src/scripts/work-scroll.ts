@@ -1,7 +1,8 @@
-// Selected Work, desktop (≥1024 px): text scrolls in the centre column, the image of the active project is
-// sticky on the right and swaps with a pixelated transition (pixel-transition.ts). The active project is the
-// text block closest to the viewport centre; the left index mirrors it and scrolls to a project on click.
-// Never hijacks the scroll: no wheel/touch handlers, only smooth `scrollIntoView` on an explicit index click.
+// Selected Work, desktop (≥1024 px): stepped scroll. The section pins (CSS sticky inside a track that is
+// (projects + 1) × 100svh tall) and the scroll progress picks the project: one 100svh stretch per project.
+// The scroll stays 100 % native — no wheel/touch handlers, nothing is intercepted or slowed; JS only reads the
+// position and, on an explicit index click, scrolls to that project's stretch.
+// A change swaps the text (out up / in from below, CSS via data-pos) and the image (pixelated canvas transition).
 // Below 1024 px nothing runs here — text and image stack (CSS) and reveal.ts does the fade + rise.
 import { createPixelTransition } from './pixel-transition';
 import { prefersReducedMotion } from './reveal';
@@ -64,7 +65,10 @@ function setup(section: HTMLElement) {
   };
 
   const mark = (i: number) => {
-    items.forEach((el, j) => el.toggleAttribute('data-active', j === i));
+    items.forEach((el, j) => {
+      el.toggleAttribute('data-active', j === i);
+      el.dataset.pos = j === i ? 'current' : j < i ? 'before' : 'after'; // before: exited up · after: waiting below
+    });
     links.forEach((a, j) => {
       a.toggleAttribute('data-active', j === i);
       if (j === i) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
@@ -80,28 +84,30 @@ function setup(section: HTMLElement) {
     load(i + 1); // preload the next project
   };
 
-  // ── Activation: block closest to the viewport centre ──
-  let lock = false, lockTimer = 0, frame = 0, inView = false;
+  // ── Activation: scroll progress through the track. One stretch of `step` px per project; project 1 is in place on
+  //    arrival (progress ≤ 0) and the change to project 2 starts once the first stretch has been scrolled. ──
+  const track = section.querySelector<HTMLElement>('[data-work-track]');
+  const pin = section.querySelector<HTMLElement>('[data-work-pin]');
+  if (!track || !pin) return null;
+  const stepPx = () => pin.offsetHeight;
+  let lock = false, lockTimer = 0, frame = 0;
   const update = () => {
     frame = 0;
-    if (lock || !inView) return;
-    const mid = window.innerHeight / 2;
-    let best = 0, bestDist = Infinity;
-    items.forEach((el, i) => {
-      const r = el.getBoundingClientRect();
-      const d = Math.abs(r.top + r.height / 2 - mid);
-      if (d < bestDist) { bestDist = d; best = i; }
-    });
-    setActive(best);
+    if (lock) return;
+    const travelled = -track.getBoundingClientRect().top;
+    const i = Math.min(items.length - 1, Math.max(0, Math.floor(travelled / stepPx())));
+    setActive(i);
   };
   const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
 
-  // ── Index click: smooth scroll to the block; intermediate projects don't flash by ──
+  // ── Index click: smooth scroll to the middle of that project's stretch; intermediate projects don't flash by ──
   const release = () => { lock = false; window.clearTimeout(lockTimer); schedule(); };
   const goTo = (i: number) => {
     lock = true;
     setActive(i);
-    items[i].scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+    load(i);
+    const top = track.getBoundingClientRect().top + window.scrollY + (i + 0.5) * stepPx();
+    window.scrollTo({ top, behavior: reduced ? 'auto' : 'smooth' });
     window.clearTimeout(lockTimer);
     lockTimer = window.setTimeout(release, reduced ? 50 : 1600); // safety net; scroll events below release earlier
   };
@@ -117,24 +123,11 @@ function setup(section: HTMLElement) {
     el.addEventListener(type, fn, opts);
     cleanups.push(() => el.removeEventListener(type, fn, opts));
   };
-
   links.forEach((a, i) => on(a, 'click', (e: Event) => { e.preventDefault(); goTo(i); }));
-  // Title link of a block that isn't the active one: bring it to the centre first (the modal opens from the active one).
-  const list = section.querySelector<HTMLElement>('[data-work-list]');
-  if (list) on(list, 'click', (e: MouseEvent) => {
-    const li = (e.target as HTMLElement).closest<HTMLElement>('[data-work-item]');
-    const i = li ? items.indexOf(li) : -1;
-    if (i >= 0 && i !== current && !(e.metaKey || e.ctrlKey || e.shiftKey)) { e.preventDefault(); e.stopPropagation(); goTo(i); }
-  }, true);
-  items.forEach((el, i) => on(el, 'focusin', () => { if (!lock) { setActive(i); } }));
   on(window, 'scroll', onScroll, { passive: true });
   on(window, 'resize', schedule);
 
-  const io = new IntersectionObserver((entries) => {
-    inView = entries[0].isIntersecting;
-    if (inView) schedule();
-  }, { rootMargin: '0px' });
-  io.observe(section);
+  // Images: the first two as the section nears the viewport, the next one as each project activates, the rest lazy.
   const preIo = new IntersectionObserver((entries) => {
     if (!entries[0].isIntersecting) return;
     preIo.disconnect();
@@ -146,12 +139,14 @@ function setup(section: HTMLElement) {
   current = 0;
   mark(0);
   setShown(0);
+  schedule(); // e.g. reload in the middle of the track
 
   return () => {
     cleanups.forEach((f) => f());
-    io.disconnect(); preIo.disconnect();
+    preIo.disconnect();
     cancelAnimationFrame(frame); window.clearTimeout(lockTimer);
     pt?.stop();
     stage.classList.remove('is-swapping');
+    items.forEach((el) => { delete el.dataset.pos; });
   };
 }

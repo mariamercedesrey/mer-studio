@@ -19,13 +19,13 @@ export const projects: Project[] = [
   { id: 'coupon', slug: 'quilmes', title: 'A coupon that works one-handed, in a crowd', meta: '[Consumer Brands]',
     roles: ['Product Concept', 'UX/UI', 'Mobile'], index: 'Special Promotion App' },
   { id: 'industrial', slug: 'carbon-optimum', title: 'Making an industrial process legible', meta: '[Agrobusiness] [Enterprise]',
-    roles: ['Web design', 'branding', 'Brand System', 'Web Development'], index: 'Ecology Industry work' },
+    roles: ['Web design', 'branding', 'Brand System', 'Web Development'], index: 'Climate Tech Brand' },
   { id: 'safety', slug: 'agente-mama', title: 'A safety net, not a productivity app', meta: '[Startups]',
     roles: ['Product Strategy', 'UX Research', 'Design System', 'AI-Assisted Build'], index: 'AI Family Assistant' },
   { id: 'aps', slug: 'american-padel-systems', title: 'A site that answers "does it pay for itself?"', meta: '[Enterprise]',
     roles: ['branding', 'Web Design', 'Interactive Tool', 'Web Development'], index: 'Empowering Padel' },
   { id: 'units', slug: 'hifi-hub', title: 'Six business units, one product', meta: '[Startups] [Ecommerce]',
-    roles: ['branding', 'Product Design', 'Design System', 'Information Architecture'], index: 'Creation Audiophile Directory' },
+    roles: ['branding', 'Product Design', 'Design System', 'Information Architecture'], index: 'Audiophile Directory' },
 ];
 
 /** Project Detail slugs whose card is hidden: no overlay, noindex, not in the sitemap (still reachable by URL). */

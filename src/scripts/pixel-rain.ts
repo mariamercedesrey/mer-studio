@@ -1,19 +1,22 @@
 // Pixel rain engine — one canvas, one requestAnimationFrame, grid-sized squares. Two presets share it:
 //  · 'banner' (PixelBanner): squares fall like Lego bricks — accelerate, land with a short squash (no bounce),
 //    rest a moment and fade out; they fade with their distance to the statement so the text always reads clean.
-//  · 'index'  (Selected Work index block): squares fall one by one down their column, stepping cell by cell, and
-//    turn transparent with the distance travelled until they vanish ("code rain").
+//  · 'index'  (Selected Work index block): the fixed Figma mosaic (data/work-mosaic.ts) is drawn on the canvas; the
+//    lowest square of a column detaches, falls cell by cell and turns transparent with the distance until it
+//    vanishes, and its spot regenerates a moment later, so the mosaic never empties ("Tetris in reverse").
 // Continuous, low-density loop. It sleeps when the root is off screen or the tab is hidden, and doesn't run at all
 // with prefers-reduced-motion (the static mosaic underneath stays).
 import { prefersReducedMotion } from './reveal';
+import { MOSAIC, MOSAIC_COLS, MOSAIC_PITCH, MOSAIC_SQUARE } from '../data/work-mosaic';
 
+type Cell = { col: number; row: number; color: string; state: 'on' | 'off' | 'in'; t: number; back: number };
 type Piece = {
   x: number; y: number; y0: number; vy: number; land: number; fadeLen: number;
   color: string; state: 'fall' | 'settle' | 'hold' | 'fade'; t: number; hold: number;
 };
 
 export type RainOptions = {
-  mode: 'land' | 'trail';
+  mode: 'land' | 'mosaic';
   direction: 'down' | 'up';
   /** Cell size in px for a root of W × H. */
   cell: (W: number, H: number) => number;
@@ -22,7 +25,7 @@ export type RainOptions = {
   accent?: { token: string; fallback: string; oneIn: number };
   maxLive: (W: number) => number;
   gap: (W: number) => [number, number];
-  /** trail mode: rows travelled per second. */
+  /** mosaic mode: rows fallen per second. */
   speed?: number;
   /** land mode: squares fade near this element and land in the band under `band`'s upper half. */
   avoid?: HTMLElement;
@@ -49,15 +52,15 @@ const bannerPreset = (root: HTMLElement): RainOptions | null => {
   };
 };
 
-// Figma 2220:5787 — 230 × 144.6 block of ~9.6 px squares under the Selected Work index (24 × 15 cells).
+// Figma 2220:5787 — 230 × 144.6 mosaic of 8.47 px squares on a 9.615 px pitch (24 × 15 cells) under the index.
 const indexPreset = (): RainOptions => ({
-  mode: 'trail',
+  mode: 'mosaic',
   direction: 'down',
-  cell: (W) => W / 24,
-  palette: ['--color-neutral-600', '--color-neutral-600', '--color-neutral-700', '--color-neutral-700', '--color-neutral-800', '--color-neutral-500', '--color-neutral-400'],
+  cell: (W) => W / MOSAIC_COLS, // the root is as wide as the mosaic
+  palette: [],
   maxLive: () => 9,
-  gap: () => [260, 620],
-  speed: 11,
+  gap: () => [190, 330],
+  speed: 9,
 });
 
 export function initPixelRain(root: HTMLElement, preset: 'banner' | 'index' = 'banner') {
@@ -71,9 +74,10 @@ export function initPixelRain(root: HTMLElement, preset: 'banner' | 'index' = 'b
   const token = (n: string, fb: string) => css.getPropertyValue(n).trim() || fb;
   const greys = opt.palette.map((n) => token(n, '#838383'));
   const accent = opt.accent ? token(opt.accent.token, opt.accent.fallback) : '';
-  const down = opt.direction === 'down';
+  const mosaic = opt.mode === 'mosaic';
+  const dir = opt.direction === 'down' ? 1 : -1; // mosaic mode; the banner always drops from the top
 
-  let W = 0, H = 0, cell = 8, cols = 1, rows = 1, dpr = 1;
+  let W = 0, H = 0, cell = 8, cols = 1, dpr = 1, square = 8;
   let avoidRect = { x: 0, y: 0, w: 0, h: 0 };
   let bandTop = 0;
   let fadeRange = 90;
@@ -81,6 +85,14 @@ export function initPixelRain(root: HTMLElement, preset: 'banner' | 'index' = 'b
   let gap: [number, number] = [220, 520];
   const pieces: Piece[] = [];
   const recentCols: number[] = [];
+  let cells: Cell[] = [];
+  const grid = new Map<number, Cell>(); // col * 100 + row
+
+  const buildMosaic = () => {
+    cells = MOSAIC.map(([col, row, color]) => ({ col, row, color, state: 'on', t: 0, back: 0 }));
+    grid.clear();
+    cells.forEach((c) => grid.set(c.col * 100 + c.row, c));
+  };
 
   const measure = () => {
     const r = root.getBoundingClientRect();
@@ -89,8 +101,8 @@ export function initPixelRain(root: HTMLElement, preset: 'banner' | 'index' = 'b
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
     cell = opt.cell(W, H);
+    square = mosaic ? cell * (MOSAIC_SQUARE / MOSAIC_PITCH) : cell;
     cols = Math.max(1, Math.floor(W / cell));
-    rows = Math.max(1, Math.round(H / cell));
     maxLive = opt.maxLive(W);
     gap = opt.gap(W);
     fadeRange = cell * 7;
@@ -103,6 +115,7 @@ export function initPixelRain(root: HTMLElement, preset: 'banner' | 'index' = 'b
       bandTop = b.top - r.top + b.height * 0.5; // pieces land in the open band under the mosaic's ragged edge
     }
     pieces.length = 0;
+    if (mosaic) buildMosaic();
   };
 
   const pickCol = () => {
@@ -116,26 +129,49 @@ export function initPixelRain(root: HTMLElement, preset: 'banner' | 'index' = 'b
     return c;
   };
 
+  /** Mosaic: the square on the falling edge (lowest for 'down') still in place in a column (not already detached / regenerating). */
+  const lowestOn = (col: number) => {
+    let low: Cell | null = null;
+    for (const c of cells) if (c.col === col && c.state === 'on' && (!low || (dir > 0 ? c.row > low.row : c.row < low.row))) low = c;
+    return low;
+  };
+
   const spawn = () => {
-    const color = accent && Math.floor(Math.random() * opt.accent!.oneIn) === 0 ? accent : greys[Math.floor(Math.random() * greys.length)];
-    const x = pickCol() * cell;
-    const y0 = down ? -cell : H;
-    if (opt.mode === 'trail') {
-      // Fades over 55–95 % of the block's height, so most squares vanish before reaching the far edge.
-      pieces.push({ x, y: y0, y0, vy: 0, land: 0, fadeLen: H * (0.55 + Math.random() * 0.4), color, state: 'fall', t: 0, hold: 0 });
+    if (mosaic) {
+      for (let tries = 0; tries < 8; tries++) {
+        const c = lowestOn(pickCol());
+        if (!c) continue;
+        c.state = 'off'; c.back = 1300 + Math.random() * 1500; c.t = 0; // regenerates in place after a moment
+        pieces.push({ x: c.col * cell, y: c.row * cell, y0: c.row * cell, vy: 0, land: 0, fadeLen: cell * (5 + Math.random() * 4), color: c.color, state: 'fall', t: 0, hold: 0 });
+        return;
+      }
       return;
     }
+    const color = accent && Math.floor(Math.random() * opt.accent!.oneIn) === 0 ? accent : greys[Math.floor(Math.random() * greys.length)];
+    const x = pickCol() * cell;
     // Land on the grid in the open band between the mosaic's lower half and just above the statement.
     const floor = Math.max(bandTop + cell, avoidRect.y - cell * 3);
     const r0 = Math.floor(bandTop / cell), r1 = Math.max(r0, Math.floor(floor / cell));
     const row = r0 + Math.floor(Math.random() * (r1 - r0 + 1));
-    pieces.push({ x, y: y0, y0, vy: 0, land: row * cell, fadeLen: 0, color, state: 'fall', t: 0, hold: 500 + Math.random() * 900 });
+    pieces.push({ x, y: -cell, y0: -cell, vy: 0, land: row * cell, fadeLen: 0, color, state: 'fall', t: 0, hold: 500 + Math.random() * 900 });
   };
 
   const proximity = (p: Piece) => {
     const dx = Math.max(avoidRect.x - (p.x + cell), 0, p.x - (avoidRect.x + avoidRect.w));
     const dy = Math.max(avoidRect.y - (p.y + cell), 0, p.y - (avoidRect.y + avoidRect.h));
     return Math.min(1, Math.hypot(dx, dy) / fadeRange);
+  };
+
+  const REGEN_MS = 420;
+  const drawMosaic = (dt: number) => {
+    for (const c of cells) {
+      if (c.state === 'off') { c.t += dt; if (c.t >= c.back) { c.state = 'in'; c.t = 0; } continue; }
+      let a = 1;
+      if (c.state === 'in') { c.t += dt; a = Math.min(1, c.t / REGEN_MS); if (a >= 1) c.state = 'on'; }
+      ctx.globalAlpha = a;
+      ctx.fillStyle = c.color;
+      ctx.fillRect(c.col * cell, c.row * cell, square, square);
+    }
   };
 
   let raf = 0, last = 0, nextSpawn = 0;
@@ -153,16 +189,16 @@ export function initPixelRain(root: HTMLElement, preset: 'banner' | 'index' = 'b
     }
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, W, H);
+    if (mosaic) drawMosaic(dt);
     for (let i = pieces.length - 1; i >= 0; i--) {
       const p = pieces[i];
       let alpha = 1, sy = 1;
-      if (opt.mode === 'trail') {
+      if (mosaic) {
         p.t += dt;
-        const travelled = (opt.speed ?? 10) * cell * p.t / 1000;
+        const travelled = (opt.speed ?? 9) * cell * p.t / 1000;
         if (travelled >= p.fadeLen) { pieces.splice(i, 1); continue; }
         // Steps cell by cell (digital, not smooth) and turns transparent with the distance travelled.
-        const step = Math.floor(travelled / cell) * cell;
-        p.y = down ? p.y0 + step : p.y0 - step - cell;
+        p.y = p.y0 + dir * Math.floor(travelled / cell) * cell;
         alpha = 1 - travelled / p.fadeLen;
       } else if (p.state === 'fall') {
         p.vy += g * dt / 1000;
@@ -185,8 +221,8 @@ export function initPixelRain(root: HTMLElement, preset: 'banner' | 'index' = 'b
       if (alpha <= 0.01) continue;
       ctx.globalAlpha = alpha;
       ctx.fillStyle = p.color;
-      const h = cell * sy;
-      ctx.fillRect(Math.round(p.x), p.y + cell - h, Math.ceil(cell), Math.ceil(h)); // squash anchored to the floor
+      const h = square * sy;
+      ctx.fillRect(Math.round(p.x), p.y + square - h, Math.ceil(square), Math.ceil(h)); // squash anchored to the floor
     }
     ctx.globalAlpha = 1;
     raf = requestAnimationFrame(frame);
