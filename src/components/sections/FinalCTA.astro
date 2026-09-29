@@ -27,13 +27,14 @@ import { WHATSAPP } from '../../data/contact';
   }
   .cta__copy { display: flex; flex-direction: column; gap: 4px; min-height: 214px; }
   .cta__eyebrow { font-family: var(--font-technical); font-size: var(--fs-eyebrow); line-height: 1.5; letter-spacing: 0.02em; }
-  .cta__title {
+  /* :global — the h2 is rendered by DecodeTitle, so it never carries this component's scope attribute. */
+  .cta :global(.cta__title) {
     font-weight: 400;
     font-size: clamp(44px, 5.556vw, 80px);
     line-height: 1.16;
     letter-spacing: -0.02em;
   }
-  .cta__title :global(.cta__dot) { margin-left: 0.25em; vertical-align: -0.04em; }
+  .cta :global(.cta__title .cta__dot) { margin-left: 0.25em; vertical-align: -0.04em; }
   .cta__action { display: flex; justify-content: flex-end; }
 
   @media (max-width: 767px) {
