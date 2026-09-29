@@ -19,7 +19,7 @@ export const projects: Project[] = [
   { id: 'storefront', slug: 'orchard-mile', title: '250 brands, one storefront', meta: '[Ecommerce & Fashion]',
     roles: ['UX/UI', 'Front-End', 'Growth Design'], align: 'start', width: 1060, height: 654 },
   { id: 'coupon', slug: 'quilmes', title: 'A benefits app for 35,000 visitors a week', meta: '[Consumer Brands]',
-    roles: ['Product Concept', 'UX/UI', 'Mobile'], align: 'end', width: 654, height: 654, hidden: true }, // R2-B: no MP4 yet — its modal (Quilmes) is live at /work/quilmes/
+    roles: ['Product Concept', 'UX/UI', 'Mobile'], align: 'end', width: 654, height: 654 }, // cover: static export of the Quilmes modal (Figma 2099:141) instead of the MP4
   { id: 'industrial', slug: 'carbon-optimum', title: 'Making an industrial process legible', meta: '[Agrobusiness] [Enterprise]',
     roles: ['Web design', 'branding', 'Brand System', 'Web Development'], align: 'start', width: 1049, height: 654 },
   { id: 'safety', slug: 'agente-mama', title: 'A safety net, not a productivity app', meta: '[Startups]',
