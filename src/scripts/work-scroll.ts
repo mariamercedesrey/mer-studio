@@ -1,5 +1,5 @@
 // Selected Work, desktop (≥1024 px): stepped scroll. The section pins (CSS sticky inside a track that is
-// (projects + 1) × 100svh tall) and the scroll progress picks the project: one 100svh stretch per project.
+// 100svh + projects × 60svh tall) and the scroll progress picks the project: one 60svh stretch per project.
 // The scroll stays 100 % native — no wheel/touch handlers, nothing is intercepted or slowed; JS only reads the
 // position and, on an explicit index click, scrolls to that project's stretch.
 // A change swaps the text (out up / in from below, CSS via data-pos) and the image (pixelated canvas transition).
@@ -89,7 +89,8 @@ function setup(section: HTMLElement) {
   const track = section.querySelector<HTMLElement>('[data-work-track]');
   const pin = section.querySelector<HTMLElement>('[data-work-pin]');
   if (!track || !pin) return null;
-  const stepPx = () => pin.offsetHeight;
+  const stepEl = section.querySelector<HTMLElement>('[data-work-step]');
+  const stepPx = () => stepEl?.offsetHeight || window.innerHeight * 0.6;
   let lock = false, lockTimer = 0, frame = 0;
   const update = () => {
     frame = 0;

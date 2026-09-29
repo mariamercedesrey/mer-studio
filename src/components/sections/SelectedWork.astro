@@ -41,6 +41,7 @@ const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
   <SectionHeading eyebrow="selected work" id="work-title" tone="dark" title="What we've built" />
 
   <div class="work__track" data-work-track>
+   <span class="work__step" data-work-step aria-hidden="true"></span>
    <div class="work__pin" data-work-pin>
     <div class="work__grid">
     <aside class="work__rail">
@@ -206,10 +207,12 @@ const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
     letter-spacing: 0.02em;
   }
 
-  /* ── Desktop: pinned, stepped scroll. Native scroll through a track of (projects + 1) × 100svh; the pin holds
+  /* ── Desktop: pinned, stepped scroll. Native scroll through a track of ; the pin holds
         the section while scroll progress picks the project (scripts/work-scroll.ts). ── */
   @media (min-width: 1024px) {
-    .work__track { height: calc((var(--work-n) + 1) * 100vh); height: calc((var(--work-n) + 1) * 100svh); }
+    /* Pin (100svh) + one --work-step stretch per project, so the last project also gets a full stretch before unpinning. */
+    .work__track { position: relative; --work-step: 60vh; --work-step: 60svh; height: calc(100vh + var(--work-n) * var(--work-step)); height: calc(100svh + var(--work-n) * var(--work-step)); }
+    .work__step { position: absolute; left: 0; top: 0; width: 0; height: var(--work-step); visibility: hidden; pointer-events: none; } /* JS reads the step from here */
     .work__pin {
       position: sticky;
       top: 0;
@@ -258,6 +261,7 @@ const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
     .work { padding-top: var(--sp-80); padding-bottom: var(--sp-80); }
     .work::after { margin-right: 0; }
     .work__track { margin-top: var(--sp-48); }
+    .work__step { display: none; }
     .work__grid { display: block; }
     .work__rail, .work__stage { display: none; }
     .work__pane { aspect-ratio: auto; max-width: none; }
