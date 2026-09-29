@@ -1,8 +1,10 @@
 ---
-// Figma 2033:1913 — immersive full-screen Project Detail. Reusable across projects: copy comes from
-// project-details.ts, the gallery from a per-project slot. Used inside the overlay <dialog> on the
-// home page and as the body of the prerendered /work/<slug> page (R2-E).
-import type { ProjectDetailData } from '../../data/project-details';
+// Figma 2033:1913 / 2099:43 … 2099:337 — immersive full-screen Project Detail. One pattern for every project:
+// bar (client · credit · link · close), intro (title, meta, roles) and the project's sections, laid out from
+// the Figma coordinates in data/project-details.ts. Used inside the overlay <dialog> on the home page and as
+// the body of the prerendered /work/<slug> page (R2-E).
+import type { ProjectDetailData, DetailItem, DetailSection } from '../../data/project-details';
+import DetailImage from './DetailImage.astro';
 
 interface Props {
   project: ProjectDetailData;
@@ -11,16 +13,19 @@ interface Props {
 }
 const { project: p, headingLevel = 'h2', closeHref } = Astro.props;
 const Title = headingLevel;
+const pct = (n: number, of: number) => `${(n / of) * 100}%`;
 ---
 <article class="pd" aria-labelledby={`pd-title-${p.id}`}>
   <header class="pd__bar">
-    <p class="pd__client">{p.client}</p>
+    <p class="pd__client">{p.client}<span class="pd__credit">{p.credit}</span></p>
     <div class="pd__actions">
-      <a class="pd__link" href={p.link.href} target="_blank" rel="noopener">
-        {p.link.label}
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 3H21V9M10 14L21 3M18 13V19C18 19.53 17.79 20.04 17.41 20.41C17.04 20.79 16.53 21 16 21H5C4.47 21 3.96 20.79 3.59 20.41C3.21 20.04 3 19.53 3 19V8C3 7.47 3.21 6.96 3.59 6.59C3.96 6.21 4.47 6 5 6H11" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="visually-hidden">(opens in a new tab)</span>
-      </a>
+      {p.link && (
+        <a class="pd__link" href={p.link.href} target="_blank" rel="noopener">
+          {p.link.label}
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 3H21V9M10 14L21 3M18 13V19C18 19.53 17.79 20.04 17.41 20.41C17.04 20.79 16.53 21 16 21H5C4.47 21 3.96 20.79 3.59 20.41C3.21 20.04 3 19.53 3 19V8C3 7.47 3.21 6.96 3.59 6.59C3.96 6.21 4.47 6 5 6H11" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="visually-hidden">(opens in a new tab)</span>
+        </a>
+      )}
       {closeHref ? (
         <a class="pd__close" href={closeHref} aria-label="Close project">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -40,39 +45,65 @@ const Title = headingLevel;
   </div>
 
   <div class="pd__body">
-    <div class="pd__row">
-      <div class="pd__text">
-        {p.blocks.map((b) => (
-          <section class="pd__block">
-            <h3 class="pd__block-title">{b.heading}</h3>
-            <p class="pd__block-body">{b.body}</p>
-          </section>
+    {p.sections.map((s: DetailSection) => s.kind === 'flow' ? (
+      <div class="pd-flow" style={`--cw:${s.cw ?? 1312};--ai:${{ start: 'flex-start', center: 'center', end: 'flex-end' }[s.align ?? 'start']}`}>
+        {s.cols.map((c) => (
+          <div class="pd-col" style={`--w:${c.w};--j:${{ start: 'flex-start', center: 'center', end: 'flex-end' }[c.justify ?? 'start']}`}>
+            {c.items.map((i: DetailItem) => i.t === 'text' ? (
+              <section class:list={['pd__block', i.panel && 'pd__block--panel']}>
+                <h3 class="pd__block-title">{i.heading}</h3>
+                <p class="pd__block-body">{i.body}</p>
+              </section>
+            ) : (
+              <DetailImage src={i.src} width={i.w} alt={i.alt} desc={i.desc} style={`--iw:${pct(i.w, c.w)}`} />
+            ))}
+          </div>
         ))}
       </div>
-      <div class="pd__hero"><slot name="hero" /></div>
-    </div>
-    <div class="pd__gallery"><slot name="gallery" /></div>
+    ) : (
+      <div class="pd-stage" style={`--sw:${s.w};aspect-ratio:${s.w} / ${s.h}`}>
+        {s.items.map((i) => {
+          const pos = `z-index:${i.back ? 0 : 1};left:${pct(i.x, s.w)};top:${pct(i.y, s.h)};width:${pct(i.t === 'img' ? i.w : (i.tw ?? 470), s.w)}`;
+          return i.t === 'text' ? (
+            <section class="pd-stage__item pd__block" style={pos}>
+              <h3 class="pd__block-title">{i.heading}</h3>
+              <p class="pd__block-body">{i.body}</p>
+            </section>
+          ) : (
+            <DetailImage src={i.src} width={i.w} alt={i.alt} desc={i.desc} style={pos} />
+          );
+        })}
+      </div>
+    ))}
   </div>
 </article>
 
 <style is:global>
   .pd {
-    --pd-pad: var(--page-gutter);
     min-height: 100%;
-    background: var(--surface-soft);
+    background: var(--surface-base); /* Figma modal frames are white */
     color: var(--text-primary);
-    padding-bottom: 95px;
+    padding: 0 var(--pd-pad, 64px) 95px;
+    overflow-x: clip; /* Agente Mamá's phone bleeds past the frame edge, as in Figma */
+    --pd-pad: 64px;
+    --fs-pd-block: clamp(32px, 3.125vw, 45px); /* proposed token: Figma block heading 45/54 */
   }
   .pd__bar {
-    position: sticky; top: 0; z-index: 2;
-    display: flex; align-items: center; justify-content: space-between; gap: var(--sp-24);
-    padding: 35px 0 36px 28px;
-    margin: 0 16.5px 0 20px;
-    background: var(--surface-soft);
+    position: sticky; top: 0; z-index: 3;
+    display: flex; align-items: flex-start; justify-content: space-between; gap: var(--sp-24);
+    padding: 48px 0 32px;
+    background: var(--surface-base);
     border-bottom: 0.5px solid rgb(141, 141, 141);
   }
-  .pd__client { font-size: clamp(32px, 3.333vw, 48px); line-height: 1.2; }
-  .pd__actions { display: flex; align-items: flex-start; gap: var(--sp-12); }
+  .pd__client {
+    display: flex; align-items: center; gap: var(--sp-12);
+    min-height: 58px; font-size: clamp(32px, 3.333vw, 48px); line-height: 1.2; letter-spacing: 0;
+  }
+  .pd__credit {
+    font-family: var(--font-technical); font-size: var(--fs-meta); line-height: 34px;
+    letter-spacing: 0.02em; text-transform: uppercase;
+  }
+  .pd__actions { display: flex; align-items: flex-start; gap: var(--sp-12); flex-shrink: 0; }
   .pd__link {
     display: inline-flex; align-items: center; justify-content: center; gap: 9px;
     height: 48px; padding: 0 26px;
@@ -91,7 +122,7 @@ const Title = headingLevel;
   }
   .pd__close:hover { background: var(--fills-primary); }
 
-  .pd__intro { display: flex; flex-direction: column; gap: var(--sp-4); padding: 47px var(--pd-pad) 0; }
+  .pd__intro { position: relative; z-index: 1; display: flex; flex-direction: column; gap: var(--sp-4); padding-top: 42px; }
   .pd__title { font-weight: 200; font-size: clamp(36px, 4.306vw, 62px); line-height: 1.2; }
   .pd__meta {
     font-family: var(--font-technical); font-size: var(--fs-meta); letter-spacing: 0.02em;
@@ -103,42 +134,55 @@ const Title = headingLevel;
     font-size: var(--fs-nav); line-height: 1; letter-spacing: 0.02em; text-transform: uppercase; white-space: nowrap;
   }
 
-  .pd__body { display: flex; flex-direction: column; gap: var(--sp-64); padding: 72px 48px 0 43px; }
-  .pd__row { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--sp-48); }
-  .pd__text { display: flex; flex-direction: column; gap: 29px; width: 561px; flex-shrink: 0; }
-  .pd__block { display: flex; flex-direction: column; gap: var(--sp-12); }
-  .pd__block-title { font-weight: 500; font-size: 28px; line-height: normal; }
-  .pd__block-body { font-size: var(--fs-body-lg); line-height: normal; }
-  .pd__hero { width: 725px; max-width: 100%; aspect-ratio: 725 / 688; flex-shrink: 1; }
-  .pd__hero img { width: 100%; height: 100%; object-fit: cover; }
-  .pd__gallery { display: flex; align-items: flex-start; gap: var(--sp-24); }
+  .pd__body { display: flex; flex-direction: column; gap: var(--sp-48); padding-top: 42px; }
 
-  /* Tablet + mobile: text above the hero image; the gallery keeps its Figma sizes and
-     scrolls sideways (snap) instead of being squeezed. */
+  /* Text blocks: Figma "Title" 45/54 + body 18 */
+  .pd__block { display: flex; flex-direction: column; gap: var(--sp-12); min-width: 0; }
+  .pd__block-title { font-weight: 400; font-size: var(--fs-pd-block); line-height: 1.2; letter-spacing: -0.02em; }
+  .pd__block-body { font-size: var(--fs-body-lg); line-height: normal; }
+  .pd__block--panel { background: var(--surface-canvas); padding: clamp(24px, 5vw, 66px); }
+
+  /* Images: display width = Figma width / column width */
+  .pd-img { width: var(--iw, 100%); max-width: 100%; }
+  .pd-img picture, .pd-img img { display: block; width: 100%; height: auto; }
+
+  /* flow — columns side by side; a column is w/cw of the frame (Figma), the rest is space-between */
+  .pd-flow { display: flex; justify-content: space-between; align-items: var(--ai); gap: var(--sp-24); }
+  .pd-col { flex: 0 1 calc(var(--w) / var(--cw) * 100%); min-width: 0; display: flex; flex-direction: column; justify-content: var(--j); gap: var(--sp-32); }
+
+  /* stage — free composition from Figma x/y/w; everything (text too) scales with the frame */
+  .pd-stage { position: relative; container-type: inline-size; }
+  .pd-stage__item, .pd-stage > .pd-img { position: absolute; }
+  .pd-stage .pd__block { gap: 1.1cqw; }
+  .pd-stage .pd__block-title { font-size: 3.43cqw; }
+  .pd-stage .pd__block-body { font-size: 1.372cqw; }
+
+  /* Tablet + mobile: everything stacks in reading order; images go full width. */
   @media (max-width: 1199px) {
-    .pd__bar { margin: 0 var(--page-gutter); padding: 20px 0 20px; }
+    .pd { --pd-pad: var(--page-gutter); padding: 0 var(--page-gutter) var(--sp-80); }
+    .pd__bar { padding: 20px 0; }
     .pd__intro { padding-top: var(--sp-32); }
-    .pd__body { padding: var(--sp-48) var(--page-gutter) 0; gap: var(--sp-48); }
-    .pd__row { flex-direction: column; gap: var(--sp-40); }
-    .pd__text { width: 100%; max-width: 720px; }
-    .pd__hero { width: 100%; max-width: 725px; }
-    .pd__gallery {
-      overflow-x: auto;
-      margin: 0 calc(-1 * var(--page-gutter));
-      padding: 0 var(--page-gutter) var(--sp-16);
-      scroll-snap-type: x mandatory;
-      scroll-padding-inline: var(--page-gutter);
-      scrollbar-width: thin;
-    }
-    .pd__gallery > * { scroll-snap-align: start; }
+    .pd__body { padding-top: var(--sp-48); gap: var(--sp-40); }
+    .pd-flow { flex-direction: column; align-items: stretch; gap: var(--sp-40); }
+    .pd-col { flex: none; gap: var(--sp-24); max-width: 720px; }
+    .pd-col:has(.pd-img:only-child), .pd-col:has(.pd-img) { max-width: none; }
+    .pd-col .pd__block { max-width: 720px; }
+    .pd-img { width: 100%; }
+    .pd-stage { aspect-ratio: auto !important; container-type: normal; display: flex; flex-direction: column; gap: var(--sp-24); }
+    .pd-stage__item, .pd-stage > .pd-img { position: static; width: 100% !important; left: auto !important; top: auto !important; }
+    .pd-stage .pd__block { gap: var(--sp-12); max-width: 720px; }
+    .pd-stage .pd__block-title { font-size: var(--fs-pd-block); }
+    .pd-stage .pd__block-body { font-size: var(--fs-body-lg); }
+    .pd-stage > .pd-img[style*="width:6"] { max-width: 720px; }
   }
   @media (max-width: 767px) {
     .pd { padding-bottom: var(--sp-64); }
-    .pd__client { font-size: 28px; }
+    .pd__client { flex-wrap: wrap; row-gap: 0; font-size: 28px; min-height: 0; }
+    .pd__credit { line-height: 1.4; }
     .pd__link { height: 44px; padding: 0 16px; font-size: var(--fs-meta); }
     .pd__actions { align-items: center; gap: var(--sp-4); }
     .pd__close { margin: 0 -10px 0 0; }
-    .pd__block-title { font-size: 22px; }
     .pd__block-body { font-size: var(--fs-body); line-height: 1.5; }
+    .pd-stage .pd__block-body { font-size: var(--fs-body); }
   }
 </style>

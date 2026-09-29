@@ -1,6 +1,6 @@
 // JSON-LD (schema.org) for search and AI answer engines. Facts only from the site's own copy:
 // Services (149:5756), About (149:6015), Contact (149:6087), Footer (149:6099), project-details.ts.
-import type { ProjectDetailData } from './project-details';
+import { detailBlocks, type ProjectDetailData } from './project-details';
 import { EMAIL, WHATSAPP } from './contact';
 
 const SITE = 'https://mer.studio';
@@ -59,17 +59,21 @@ export function homeSchema() {
 }
 
 export function projectSchema(p: ProjectDetailData, url: string) {
+  const blocks = detailBlocks(p);
+  const neoris = /neoris/i.test(p.credit);
   return {
     '@context': 'https://schema.org',
     '@type': 'CreativeWork',
+    '@id': `${url}#project`,
     name: `${p.client} — ${p.title}`,
     headline: p.title,
     url,
-    description: p.blocks[0].body,
-    text: p.blocks.map((b) => `${b.heading}. ${b.body}`).join('\n\n'),
+    description: blocks[0].body,
+    text: blocks.map((b) => `${b.heading}. ${b.body}`).join('\n\n'),
     keywords: p.roles.join(', '),
-    about: { '@type': 'Organization', name: p.client, url: p.link.href },
-    sourceOrganization: { '@type': 'Organization', name: 'Neoris' }, // meta: "AT NEORIS"
+    genre: p.meta.replace(/\[|\]/g, '').replace(/\s+/g, ' ').trim(),
+    about: { '@type': 'Organization', name: p.client, ...(p.link && { url: p.link.href }) },
+    ...(neoris && { sourceOrganization: { '@type': 'Organization', name: 'Neoris' } }), // credit: "in collaboration with NEORIS"
     creator: { '@type': 'Person', '@id': MER_ID, name: 'Mer' },
     publisher: { '@type': 'ProfessionalService', '@id': ORG_ID, name: 'MER Studio', url: `${SITE}/` },
     inLanguage: 'en',
