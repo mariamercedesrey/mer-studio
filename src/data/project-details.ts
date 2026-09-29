@@ -35,6 +35,7 @@ export type ProjectDetailData = {
   link?: { label: string; href: string };
   title: string;
   meta: string;
+  note?: string; // extra meta line under the title (same style as meta)
   roles: string[];
   sections: DetailSection[];
 };
@@ -136,8 +137,9 @@ export const projectDetails: Record<string, ProjectDetailData> = {
     id: 'quilmes',
     client: 'Quilmes',
     credit: 'studio client',
-    title: 'A benefits app for 35,000 visitors a week',
+    title: 'A coupon that works one-handed, in a crowd',
     meta: '[Consumer Brands]',
+    note: '35,000 visitors a week',
     roles: ['Product Concept', 'UX/UI', 'Mobile'],
     sections: [
       { kind: 'flow', align: 'center', cols: [
