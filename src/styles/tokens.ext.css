@@ -24,6 +24,7 @@
   --dur-signature-max: 3000ms;                    /* ceiling for a signature moment */
   --ease-enter: var(--ease-precise);              /* THE entrance easing — one curve site-wide; linear only for continuous motion */
   --enter-shift: 40px;                            /* slide distance of a from-the-side entrance */
-  --word-reveal-min: 0.15;                        /* resting opacity of a not-yet-read word */
+  --word-reveal-min: 0.12;                        /* resting opacity of a not-yet-read word */
+  --rise-shift: 16px;                             /* fade + rise entrance distance ([data-reveal="rise"]) */
   --shadow-mockup-lg: 22.431px 44.863px 12.462px rgba(0, 0, 0, 0.12);
 }

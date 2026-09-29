@@ -71,3 +71,15 @@ button { font: inherit; color: inherit; }
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Fade + rise entrance (CLAUDE.md §22, scripts/reveal.ts). JS marks below-the-fold elements data-rs="hidden" and flips
+   them to "in" once; the attribute is removed when the transition ends, so the element returns to plain CSS.
+   Nothing hides without JS, under reduced motion, or for elements already on screen at load. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal='rise'][data-rs='hidden'] { opacity: 0; transform: translateY(var(--rise-shift)); }
+  .js [data-reveal='rise'][data-rs='in'] {
+    opacity: 1;
+    transform: none;
+    transition: opacity var(--dur-slow) var(--ease-enter) var(--rd, 0ms), transform var(--dur-slow) var(--ease-enter) var(--rd, 0ms);
+  }
+}
