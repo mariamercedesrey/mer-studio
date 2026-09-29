@@ -24,11 +24,7 @@ const [avif, webp] = await Promise.all(
 
 <script>
   import { initPixelRain } from '../../scripts/pixel-rain';
-  import { afterIntro } from '../../scripts/intro-gate';
-  import { whenIdle, whenNear } from '../../scripts/reveal';
-  // Not before the home intro is gone, and not until the banner is a viewport away.
-  document.querySelectorAll<HTMLElement>('[data-pixel-rain]').forEach((root) =>
-    afterIntro(() => whenNear(root, () => whenIdle(() => initPixelRain(root)))));
+  document.querySelectorAll<HTMLElement>('[data-pixel-rain]').forEach(initPixelRain);
 </script>
 
 <style>
