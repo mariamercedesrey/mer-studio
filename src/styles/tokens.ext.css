@@ -26,7 +26,13 @@
   --enter-shift: 40px;                            /* slide distance of a from-the-side entrance */
   --word-reveal-min: 0.12;                        /* resting opacity of a not-yet-read word */
   --rise-shift: 16px;                             /* fade + rise entrance distance ([data-reveal="rise"]) */
-  --header-h: 62px;                               /* fixed top bar height (Figma 2132:2386 loading02); 60px on mobile (global.css) */
+  --header-h: 60px;                               /* in-flow height of the sticky header = main's 28 px top + 32 px capsule; 68 px on mobile (global.css) */
+  --header-pad-top: 28px;                         /* header row's top offset (20 px on mobile) */
+  --header-content-h: 32px;                       /* header row's height (capsule; 48 px hamburger on mobile) */
+  --header-bar-h: 51px;                           /* scrolled state: the bar's visual height (Mer) */
+  --surface-nav-scrolled: #141414ab;              /* scrolled header ground (Mer) */
+  --border-nav-scrolled: #b1b1b11e;               /* scrolled header rule, almost imperceptible (Mer) */
+  --dur-nav: 300ms;                               /* header state change (Mer), always with --ease-enter */
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); /* PROPOSED — the intro curtain's exit only (Mer: "ease-in-out"); entrances keep --ease-enter */
   --dur-curtain: 1100ms;                          /* intro curtain exit (Mer: 1000–1200 ms) */
   --shadow-mockup-lg: 22.431px 44.863px 12.462px rgba(0, 0, 0, 0.12);

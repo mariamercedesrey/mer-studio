@@ -2,8 +2,11 @@
 // Figma 149:5105 › 149:5107 — logo + tagline + nav capsule. "EN" chip removed (R2-F).
 // Mobile (≤767, JS on): classic hamburger opening a full-screen menu (Mer, review round 10).
 // Native <dialog>: focus containment, Esc and inert page for free. Without JS the capsule stays.
-// Fixed top bar on every page (Figma 2132:2386: --header-h, soft ground, 0.5px rule): sticky under the home intro curtain (z-index 200),
-// under any modal <dialog> (top layer). On /work/<slug>/ the in-page anchors point back to the home.
+// Sticky on every page, under the home intro curtain (z-index 200) and any modal <dialog> (top layer). Two states:
+// top of the home = exactly main's header (no bar); [data-scrolled] (hero "book a call" out of the viewport, and always on
+// /work/<slug>/) = a 51 px dark bar, negative logo, white links. The in-flow height never changes (--header-h): the bar is
+// a pseudo-element fading in, the row slides up, everything else is colour/opacity — CLS 0. On /work/<slug>/ the in-page
+// anchors point back to the home.
 import { EMAIL, WHATSAPP } from '../../data/contact';
 const nav = [
   { label: 'selected work', href: '#work' },
@@ -14,22 +17,25 @@ const nav = [
 const home = Astro.url.pathname === '/';
 const link = (href: string) => (home ? href : `/${href}`);
 ---
-<header class="site-header">
-  <div class="site-header__brand">
-    <a class="site-header__logo" href="/" aria-label="MER Studio, home">
-      <img src="/logo.svg" width="182" height="29" alt="" />
-    </a>
-    <p class="site-header__tagline">Design and build, end to end</p>
+<header class="site-header" data-site-header data-scrolled={home ? undefined : ''}>
+  <div class="site-header__row">
+    <div class="site-header__brand">
+      <a class="site-header__logo" href="/" aria-label="MER Studio, home">
+        <img class="site-header__logo-pos" src="/logo.svg" width="182" height="29" alt="" />
+        <img class="site-header__logo-neg" src="/logo-negative.svg" width="150" height="24" alt="" />
+      </a>
+      <p class="site-header__tagline">Design and build, end to end</p>
+    </div>
+    <nav class="site-nav" aria-label="Primary">
+      <ul role="list" class="site-nav__list">
+        {nav.map((item) => <li><a href={link(item.href)}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+    <button class="site-header__toggle" type="button" aria-haspopup="dialog" aria-controls="mobile-menu" data-menu-open>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 6H21M3 12H21M3 18H21" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/></svg>
+      <span class="visually-hidden">Open menu</span>
+    </button>
   </div>
-  <nav class="site-nav" aria-label="Primary">
-    <ul role="list" class="site-nav__list">
-      {nav.map((item) => <li><a href={link(item.href)}>{item.label}</a></li>)}
-    </ul>
-  </nav>
-  <button class="site-header__toggle" type="button" aria-haspopup="dialog" aria-controls="mobile-menu" data-menu-open>
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 6H21M3 12H21M3 18H21" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/></svg>
-    <span class="visually-hidden">Open menu</span>
-  </button>
 </header>
 
 <dialog id="mobile-menu" class="mobile-menu" aria-label="Menu" data-menu>
@@ -54,6 +60,13 @@ const link = (href: string) => (home ? href : `/${href}`);
 </dialog>
 
 <script>
+  // Scrolled state on the home: the hero "book a call" button leaving through the top of the viewport.
+  const header = document.querySelector<HTMLElement>('[data-site-header]');
+  const sentinel = document.querySelector<HTMLElement>('[data-nav-sentinel]');
+  if (header && sentinel && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => header.toggleAttribute('data-scrolled', !e.isIntersecting && e.boundingClientRect.bottom <= 0)).observe(sentinel);
+  }
+
   const menu = document.querySelector<HTMLDialogElement>('[data-menu]');
   const toggle = document.querySelector<HTMLButtonElement>('[data-menu-open]');
   if (menu && toggle) {
@@ -72,18 +85,34 @@ const link = (href: string) => (home ? href : `/${href}`);
     position: sticky;
     top: 0;
     z-index: 50; /* above page content, below the intro curtain (200); modal <dialog>s live in the top layer */
+    height: var(--header-h); /* constant in both states: nothing below it ever moves */
+  }
+  /* Scrolled bar (Mer): 51 px, #141414ab, 0.5 px rule. Fades in; the header itself stays transparent at the top. */
+  .site-header::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: var(--header-bar-h);
+    background: var(--surface-nav-scrolled);
+    border-bottom: 0.5px solid var(--border-nav-scrolled);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--dur-nav) var(--ease-enter);
+  }
+  .site-header__row {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: var(--sp-24);
-    height: var(--header-h);
-    padding: 0 var(--page-gutter);
-    background: var(--surface-soft);
-    border-bottom: 0.5px solid var(--border-subtle);
+    height: 100%;
+    padding: var(--header-pad-top) var(--page-gutter) 0;
+    transition: transform var(--dur-nav) var(--ease-enter);
   }
   .site-header__brand { display: flex; align-items: flex-end; gap: 14px; }
-  .site-header__logo { display: inline-flex; }
-  .site-header__logo img { width: 182px; height: auto; }
+  .site-header__logo { position: relative; display: inline-flex; }
+  .site-header__logo-pos { width: 182px; height: auto; transition: opacity var(--dur-nav) var(--ease-enter); }
+  .site-header__logo-neg { position: absolute; left: 0; top: 50%; width: 150px; height: auto; opacity: 0; transform: translateY(-50%); transition: opacity var(--dur-nav) var(--ease-enter); }
   .site-header__tagline {
     font-family: var(--font-technical);
     font-size: var(--fs-caption);
@@ -91,16 +120,25 @@ const link = (href: string) => (home ? href : `/${href}`);
     letter-spacing: 0.02em;
     text-transform: uppercase;
     color: var(--text-tagline);
+    transition: color var(--dur-nav) var(--ease-enter), transform var(--dur-nav) var(--ease-enter);
   }
   .site-nav {
+    position: relative;
     display: flex;
     align-items: center;
     height: 32px;
     padding: 0 11px;
+  }
+  /* The capsule is its own layer so it can fade out — a transparent element would still blur what is behind it. */
+  .site-nav::before {
+    content: '';
+    position: absolute;
+    inset: 0;
     border-radius: var(--radius-nav);
     background: var(--fills-quaternary);
     -webkit-backdrop-filter: blur(var(--blur-nav));
     backdrop-filter: blur(var(--blur-nav));
+    transition: opacity var(--dur-nav) var(--ease-enter);
   }
   .site-nav__list {
     display: flex;
@@ -120,7 +158,7 @@ const link = (href: string) => (home ? href : `/${href}`);
     color: var(--text-secondary);
     text-decoration: none;
     white-space: nowrap;
-    transition: color var(--dur-fast) var(--ease-precise);
+    transition: color var(--dur-nav) var(--ease-enter);
   }
   /* Extend the hit area to 44px without changing the drawn capsule. */
   .site-nav a::after { content: ''; position: absolute; inset: -16px -9px; }
@@ -142,27 +180,42 @@ const link = (href: string) => (home ? href : `/${href}`);
   .site-nav a:hover, .site-nav a:focus-visible { color: var(--text-primary); }
   .site-nav a:hover::before, .site-nav a:focus-visible::before { opacity: 1; transform: none; }
 
+  /* ── Scrolled state (needs JS: without it the header keeps its top look on a soft ground) ── */
+  :global(html.js) .site-header[data-scrolled]::before { opacity: 1; }
+  /* The row is centred on y 44 (28 + 32/2; 20 + 48/2 on mobile); the bar's centre is 25.5 → −18.5 px. */
+  :global(html.js) .site-header[data-scrolled] .site-header__row { transform: translateY(calc(var(--header-bar-h) / 2 - var(--header-pad-top) - var(--header-content-h) / 2)); }
+  :global(html.js) .site-header[data-scrolled] .site-header__logo-pos { opacity: 0; }
+  :global(html.js) .site-header[data-scrolled] .site-header__logo-neg { opacity: 1; }
+  :global(html.js) .site-header[data-scrolled] .site-header__tagline { color: var(--fg-on-ink); transform: translateX(-32px); /* 182 → 150 px logo */ }
+  :global(html.js) .site-header[data-scrolled] .site-nav::before { opacity: 0; }
+  :global(html.js) .site-header[data-scrolled] .site-nav a,
+  :global(html.js) .site-header[data-scrolled] .site-nav a:hover,
+  :global(html.js) .site-header[data-scrolled] .site-nav a:focus-visible { color: var(--text-inverse); }
+  :global(html.js) .site-header[data-scrolled] .site-header__toggle { color: var(--text-inverse); }
+  :global(html:not(.js)) .site-header { background: var(--surface-soft); border-bottom: 0.5px solid var(--border-subtle); }
+
   @media (max-width: 1199px) {
     .site-header__tagline { display: none; }
   }
   .site-header__toggle { display: none; }
 
   @media (max-width: 767px) {
-    /* No JS: the capsule stays, so the bar grows with it and scrolls with the page instead of covering it. */
-    .site-header { flex-direction: column; align-items: flex-start; gap: var(--sp-12); height: auto; padding-block: var(--sp-12); position: static; }
+    .site-header__logo-pos { width: 150px; }
+    .site-nav a::after { inset: -16px -6px; }
+    /* No JS: the capsule stays, in a static column above the hero. */
+    :global(html:not(.js)) .site-header { position: static; height: auto; }
+    :global(html:not(.js)) .site-header__row { flex-direction: column; align-items: flex-start; gap: var(--sp-20); padding-bottom: var(--sp-12); }
+    .site-nav { max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+    .site-nav__list { gap: 16px; padding: 0 6px; }
     /* JS on: logo + hamburger in one row; the capsule moves into the full-screen menu. */
-    :global(.js) .site-header { flex-direction: row; align-items: center; gap: var(--sp-24); height: var(--header-h); padding-block: 0; position: sticky; }
     :global(.js) .site-nav { display: none; }
     :global(.js) .site-header__toggle {
       display: inline-flex; align-items: center; justify-content: center;
       width: var(--hit-min); height: var(--hit-min); margin-right: -12px; padding: 0;
       border: 0; background: none; color: var(--text-primary); cursor: pointer;
       border-radius: var(--r-pill);
+      transition: color var(--dur-nav) var(--ease-enter);
     }
-    .site-header__logo img { width: 150px; }
-    .site-nav { max-width: 100%; overflow-x: auto; scrollbar-width: none; }
-    .site-nav__list { gap: 16px; padding: 0 6px; }
-    .site-nav a::after { inset: -16px -6px; }
   }
 
   /* Full-screen menu — on ink, like the Contact block. */
