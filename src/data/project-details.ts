@@ -89,7 +89,7 @@ export const projectDetails: Record<string, ProjectDetailData> = {
         ] },
         { w: 614, items: [img('the-mile/brand', 614, 'The Mile brand system: colours, logotypes and brand fonts')] },
       ] },
-      { kind: 'flow', cols: [{ w: 1312, items: [text('What I did', "I started with the brand — logo, brand guide and brand system. Then the app, designed from zero with the CEO and the marketing team after a short round of research, covering consumer and creator journeys end to end: onboarding, live and pre-recorded shoppable shows, reels, creator storefronts, affiliate links, discovery and checkout. I also redesigned the Orchard Mile site to match, with a new Reels section, built navigable prototypes to pitch investors and recruit influencers before development, and supported the React Native developer on selected components.")] }] },
+      { kind: 'flow', cols: [{ w: 1312, items: [text('The work', "I started with the brand — logo, brand guide and brand system. Then the app, designed from zero with the CEO and the marketing team after a short round of research, covering consumer and creator journeys end to end: onboarding, live and pre-recorded shoppable shows, reels, creator storefronts, affiliate links, discovery and checkout. I also redesigned the Orchard Mile site to match, with a new Reels section, built navigable prototypes to pitch investors and recruit influencers before development, and supported the React Native developer on selected components.")] }] },
       { kind: 'flow', cols: [{ w: 1312, items: [
         text('Checkout inside the app', 'Most creator-commerce apps send buyers somewhere else to pay. Here the whole purchase happened in the app: products came from Orchard Mile as the retailer, so discovery, trust in the creator and checkout stayed in one loop.'),
         img('the-mile/checkout', 1312, 'The Mile on desktop and mobile, above the connected onboarding and account screens of the navigable prototype', 'Navigable prototypes used with investors and creators to validate each journey before development.', 'Navigable prototypes'),
@@ -173,7 +173,7 @@ export const projectDetails: Record<string, ProjectDetailData> = {
     id: 'agente-mama',
     client: 'Agente Mamá',
     credit: 'own product',
-    // Figma shows "Launch Project → landing" without a URL: add `link` when the landing address is confirmed.
+    link: { label: 'Launch Project → landing', href: 'https://agentemama.ai' }, // label as in Figma; URL confirmed by Mer
     title: 'A safety net, not a productivity app',
     meta: '[Startups]',
     roles: ['Product Strategy', 'UX Research', 'Design System', 'AI-Assisted Build'],
@@ -191,7 +191,7 @@ export const projectDetails: Record<string, ProjectDetailData> = {
         text('Every event shows its source', "A badge on each event — school platform, WhatsApp or calendar. When an AI acts on a family's information, being able to trace every item back is what makes it adoptable."),
       ] }] },
       { kind: 'flow', cols: [{ w: 1312, items: [img('agente-mama/matrix', 1312, 'What matters most to mothers? A map of needs by importance to mothers and impact on mental load',
-        'An illustrative map of needs and product decisions for Agente Mamá. Core opportunity, high impact and high priority: unified school agenda, trust in AI decisions, visible information source, child reminders. Deprioritized or reconsidered: recipes and shopping lists, automated school messages, approve every event. Conceptual synthesis of 10 exploratory conversations. Positions are illustrative, not measured scores.', 'What matters most to mothers?')] }] },
+        'An illustrative map of needs and product decisions for Agente Mamá. Core opportunity, high impact and high priority: Unified school agenda, Trust in AI decisions, Visible information source, Child reminders. Deprioritized or reconsidered: Recipes & shopping lists, Automated school messages, Approve every event. Conceptual synthesis of 10 exploratory conversations. Positions are illustrative, not measured scores.', 'What matters most to mothers?')] }] },
       { kind: 'flow', cols: [{ w: 1312, items: [text('Outcome', 'Functional POC: 38 high-fidelity screens, a complete Design System and the key AI workflows defined and tested. Landing live for early market validation.')] }] },
       { kind: 'flow', cols: [{ w: 1312, items: [img('agente-mama/brand', 1312, 'Agente Mamá AI brand: the house icon in light, dark and accent modes, and the logotype')] }] },
       { kind: 'flow', cols: [{ w: 1312, items: [img('agente-mama/screens', 1312, 'Four Agente Mamá screens: welcome, child profile, daily dashboard and agenda')] }] },

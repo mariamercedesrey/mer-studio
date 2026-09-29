@@ -29,3 +29,6 @@ export const projects: Project[] = [
   { id: 'units', slug: 'hifi-hub', title: 'Six business units, one product', meta: '[Startups] [Ecommerce]',
     roles: ['branding', 'Product Design', 'Design System', 'Information Architecture'], align: 'end', width: 1081, height: 654 },
 ];
+
+/** Project Detail slugs whose card is hidden: no overlay, noindex, not in the sitemap (still reachable by URL). */
+export const hiddenSlugs = projects.filter((p) => p.hidden).map((p) => p.slug);

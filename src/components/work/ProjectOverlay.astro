@@ -4,8 +4,9 @@
 // (R2-D, R2-E). Images inside a closed dialog are lazy, so they only load when the project opens.
 import ProjectDetail from './ProjectDetail.astro';
 import { projectDetails } from '../../data/project-details';
+import { hiddenSlugs } from '../../data/projects';
 ---
-{Object.values(projectDetails).map((p) => (
+{Object.values(projectDetails).filter((p) => !hiddenSlugs.includes(p.id)).map((p) => (
   <dialog class="project-overlay" data-project-dialog={p.id} aria-labelledby={`pd-title-${p.id}`}>
     <ProjectDetail project={p} />
   </dialog>
