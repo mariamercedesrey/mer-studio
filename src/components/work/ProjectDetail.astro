@@ -96,6 +96,8 @@ const pct = (n: number, of: number) => `${(n / of) * 100}%`;
     background: var(--surface-base);
     border-bottom: 0.5px solid rgb(141, 141, 141);
   }
+  /* Standalone /work/<slug>/ page: the fixed site bar already sticks, so the project bar scrolls with the page (in the overlay it stays sticky). */
+  main > .pd .pd__bar { position: static; }
   .pd__client {
     display: flex; align-items: center; gap: var(--sp-12);
     min-height: 58px; font-size: clamp(32px, 3.333vw, 48px); line-height: 1.2; letter-spacing: 0;

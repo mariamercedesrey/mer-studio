@@ -2,6 +2,8 @@
 // Figma 149:5105 › 149:5107 — logo + tagline + nav capsule. "EN" chip removed (R2-F).
 // Mobile (≤767, JS on): classic hamburger opening a full-screen menu (Mer, review round 10).
 // Native <dialog>: focus containment, Esc and inert page for free. Without JS the capsule stays.
+// Fixed top bar on every page (Figma 2132:2386: --header-h, soft ground, 0.5px rule): sticky under the home intro curtain (z-index 200),
+// under any modal <dialog> (top layer). On /work/<slug>/ the in-page anchors point back to the home.
 import { EMAIL, WHATSAPP } from '../../data/contact';
 const nav = [
   { label: 'selected work', href: '#work' },
@@ -9,6 +11,8 @@ const nav = [
   { label: 'AI Visibility', href: '#ai-visibility' },
   { label: 'About us', href: '#about' },
 ];
+const home = Astro.url.pathname === '/';
+const link = (href: string) => (home ? href : `/${href}`);
 ---
 <header class="site-header">
   <div class="site-header__brand">
@@ -19,7 +23,7 @@ const nav = [
   </div>
   <nav class="site-nav" aria-label="Primary">
     <ul role="list" class="site-nav__list">
-      {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      {nav.map((item) => <li><a href={link(item.href)}>{item.label}</a></li>)}
     </ul>
   </nav>
   <button class="site-header__toggle" type="button" aria-haspopup="dialog" aria-controls="mobile-menu" data-menu-open>
@@ -40,7 +44,7 @@ const nav = [
   </div>
   <nav aria-label="Primary">
     <ul role="list" class="mobile-menu__list">
-      {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      {nav.map((item) => <li><a href={link(item.href)}>{item.label}</a></li>)}
     </ul>
   </nav>
   <address class="mobile-menu__contact">
@@ -65,10 +69,17 @@ const nav = [
 
 <style>
   .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50; /* above page content, below the intro curtain (200); modal <dialog>s live in the top layer */
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: var(--sp-24);
+    height: var(--header-h);
+    padding: 0 var(--page-gutter);
+    background: var(--surface-soft);
+    border-bottom: 0.5px solid var(--border-subtle);
   }
   .site-header__brand { display: flex; align-items: flex-end; gap: 14px; }
   .site-header__logo { display: inline-flex; }
@@ -137,9 +148,10 @@ const nav = [
   .site-header__toggle { display: none; }
 
   @media (max-width: 767px) {
-    .site-header { flex-direction: column; align-items: flex-start; gap: var(--sp-20); }
+    /* No JS: the capsule stays, so the bar grows with it and scrolls with the page instead of covering it. */
+    .site-header { flex-direction: column; align-items: flex-start; gap: var(--sp-12); height: auto; padding-block: var(--sp-12); position: static; }
     /* JS on: logo + hamburger in one row; the capsule moves into the full-screen menu. */
-    :global(.js) .site-header { flex-direction: row; align-items: center; }
+    :global(.js) .site-header { flex-direction: row; align-items: center; gap: var(--sp-24); height: var(--header-h); padding-block: 0; position: sticky; }
     :global(.js) .site-nav { display: none; }
     :global(.js) .site-header__toggle {
       display: inline-flex; align-items: center; justify-content: center;

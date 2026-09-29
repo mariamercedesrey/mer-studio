@@ -1,6 +1,5 @@
 ---
 // Figma 149:5104 Hero — header band (soft) + video row with the "m" mark and the hero dot.
-import SiteHeader from './SiteHeader.astro';
 import Button from '../primitives/Button.astro';
 import SignatureDot from '../primitives/SignatureDot.astro';
 import { getImage } from 'astro:assets';
@@ -14,7 +13,6 @@ const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Financ
 ---
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero__band">
-    <SiteHeader />
     <div class="hero__intro">
       <div class="hero__copy">
         <p class="hero__lead">From the first decision to the last detail.</p>
@@ -75,13 +73,13 @@ const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Financ
 <style>
   .hero { position: relative; }
 
-  /* Header band — Figma 149:5105: soft ground, 28/48/100 padding, overlapped 65px by the row below. */
+  /* Header band — Figma 149:5105: soft ground, overlapped 65px by the row below. The logo + nav bar is now the fixed
+     SiteHeader (--header-h); top padding = the old 28 + 32 header + 116 gap minus that bar, so the composition is unchanged. */
   .hero__band {
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 116px;
-    padding: 28px var(--page-gutter) 100px;
+    padding: calc(28px + 32px + 116px - var(--header-h)) var(--page-gutter) 100px;
     margin-bottom: -65px;
     background: var(--surface-soft);
   }
@@ -201,7 +199,7 @@ const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Financ
   /* Tablet + mobile: the band no longer overlaps the row; the row stacks as
      video → m + summary → where we've worked. */
   @media (max-width: 1199px) {
-    .hero__band { gap: 72px; padding-bottom: 64px; margin-bottom: 0; }
+    .hero__band { padding-top: calc(28px + 32px + 72px - var(--header-h)); padding-bottom: 64px; margin-bottom: 0; }
     .hero__intro { min-height: 0; }
     .hero__title { font-size: clamp(56px, 8.5vw, 96px); }
     .hero__row { display: flex; flex-direction: column; align-items: stretch; gap: 0; padding: 0 0 64px; }
@@ -222,7 +220,7 @@ const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Financ
     .hero__worked { order: 3; padding: var(--sp-48) var(--page-gutter) 0; }
   }
   @media (max-width: 767px) {
-    .hero__band { gap: 56px; padding-top: 20px; padding-bottom: 48px; }
+    .hero__band { padding-top: calc(20px + 48px + 56px - var(--header-h)); padding-bottom: 48px; }
     .hero__lead { font-size: 20px; }
     .hero__title { font-size: clamp(40px, 11.5vw, 56px); }
     .hero__aside { display: flex; flex-direction: column; align-items: flex-start; padding-top: var(--sp-40); }
