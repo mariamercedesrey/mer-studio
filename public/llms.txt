@@ -22,7 +22,7 @@ Industries: Ecommerce, Agribusiness, Fashion, Insurance, Finance, Foreign Trade,
 Strategy, design & build, end to end.
 
 - Branding: Identity, and the system to keep it consistent.
-- Websites: A landing, a full site, or an online store.
+- Websites: A landing, a full site, or an online store — on Shopify, Tiendanube or WooCommerce.
 - Digital Product: An app or a platform that doesn't exist yet.
 - AI Visibility · GEO / AEO: So people find you when they ask an AI, not just Google.
 
@@ -62,7 +62,8 @@ Four steps, no surprises. Every project starts with a 20-minute call. You get ba
 
 ## Pages
 
-- [AI Visibility (GEO / AEO)](https://mer.studio/ai-visibility/): How we make a brand readable, understood and quotable by ChatGPT, Perplexity, Gemini and Google's AI Overviews.
+- [AI Visibility (GEO / AEO)](https://mer.studio/ai-visibility/): Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO) — how we make a brand readable, understood and quotable by ChatGPT, Perplexity, Gemini and Google's AI Overviews. Includes its own FAQ.
+- [FAQ](https://mer.studio/faq/): Cost, timing, revisions, handover, platforms (Shopify, Tiendanube, WooCommerce), working outside Argentina, AI assistants and AI Visibility.
 - [Start a project](https://mer.studio/start-a-project/): Project inquiry form. We reply within 2 business days with a focused next step.
 
 ## Contact

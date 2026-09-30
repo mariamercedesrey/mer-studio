@@ -6,9 +6,12 @@ import PageIntro from '../../components/sections/PageIntro.astro';
 import IntakePanel from '../../components/sections/IntakePanel.astro';
 import NextSteps from '../../components/sections/NextSteps.astro';
 import FinalCTA from '../../components/sections/FinalCTA.astro';
+import SectionHeading from '../../components/primitives/SectionHeading.astro';
+import FaqList from '../../components/primitives/FaqList.astro';
 import SiteFooter from '../../components/sections/SiteFooter.astro';
 import Button from '../../components/primitives/Button.astro';
 import { aiVisibilitySchema } from '../../data/schema';
+import { aiVisibilityFaq, faqSchema } from '../../data/faq';
 import { offer } from '../../data/offer';
 import { llmsSnippet } from '../../data/llms-snippet';
 import llms from '../../../public/llms.txt?raw';
@@ -28,16 +31,16 @@ const proof = [
 const snippet = llmsSnippet(llms);
 ---
 <BaseLayout
-  title="AI Visibility (GEO / AEO) — MER Studio"
-  description="Search is moving from a list of links to a single answer. We make your brand readable, understood and quotable by ChatGPT, Perplexity, Gemini and Google’s AI Overviews."
-  schema={aiVisibilitySchema()}
+  title="AI Visibility — Generative Engine Optimization (GEO & AEO)"
+  description="Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO): we make your brand readable and quotable by ChatGPT, Perplexity and Google AI."
+  schema={[aiVisibilitySchema(), faqSchema(aiVisibilityFaq, 'https://mer.studio/ai-visibility/')]}
 >
   <main id="main">
     <PageIntro
       id="aiv-title"
       eyebrow="ai visibility · geo / aeo"
       title="When people ask an AI, does it name you?"
-      note="Search is moving from a list of links to a single answer. We make your brand readable, understood and quotable by ChatGPT, Perplexity, Gemini and Google’s AI Overviews."
+      note="Search is moving from a list of links to a single answer. With Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO), we make your brand readable, understood and quotable by ChatGPT, Perplexity, Gemini and Google’s AI Overviews."
     />
     {offer.active && (
       <section class="offer" data-offer aria-labelledby="offer-title">
@@ -77,6 +80,10 @@ const snippet = llmsSnippet(llms);
         <pre class="snippet__code"><code>{snippet}</code></pre>
       </figure>
     </NextSteps>
+    <section class="aiv-faq" id="faq" aria-labelledby="aiv-faq-title">
+      <SectionHeading eyebrow="faq" title="Questions about AI Visibility." id="aiv-faq-title" dot={false} />
+      <FaqList items={aiVisibilityFaq} prefix="aiv-faq" />
+    </section>
     <FinalCTA eyebrow="One question to start." title={"What does AI say\nabout your brand?"} />
   </main>
   <SiteFooter tone="ink" />
@@ -99,6 +106,8 @@ const snippet = llmsSnippet(llms);
   .offer__list li::before { content: ''; position: absolute; left: 0; top: 0.55em; width: 8px; height: 8px; border-radius: 50%; background: var(--divider-dashed); }
   .offer__list--free li::before { background: var(--accent-primary); }
   @media (max-width: 767px) { .offer__cols { grid-template-columns: minmax(0, 1fr); } }
+
+  .aiv-faq { display: flex; flex-direction: column; gap: var(--sp-32); padding: var(--sp-64) var(--page-gutter) var(--sp-96); }
 
   .method { flex: 1 1 0; min-width: 0; }
   .method__list { margin: 0; }
