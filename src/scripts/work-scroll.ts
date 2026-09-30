@@ -16,7 +16,7 @@ export function initWorkScroll() {
   if (!section) return;
   const mq = matchMedia(DESKTOP);
   let teardown: (() => void) | null = null;
-  const sync = () => { teardown?.(); teardown = mq.matches ? setup(section) : null; };
+  const sync = () => { teardown?.(); teardown = mq.matches && !prefersReducedMotion() ? setup(section) : null; };
   mq.addEventListener('change', sync);
   sync();
 }

@@ -79,7 +79,7 @@ const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
               <picture class="work-item__thumb" style={`aspect-ratio:${p.w}/${p.h}`}>
                 <source type="image/avif" srcset={p.avif} sizes={STACK_SIZES} />
                 <source type="image/webp" srcset={p.webp} sizes={STACK_SIZES} />
-                <img src={p.fallback} width={p.w} height={p.h} alt={`${p.title} — project preview`} loading="lazy" decoding="async" />
+                <img src={p.fallback} width={p.w} height={p.h} alt={p.alt} loading="lazy" decoding="async" />
               </picture>
             </a>
           </li>
@@ -99,13 +99,13 @@ const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
                   <>
                     <source type="image/avif" srcset={p.avif} sizes={STAGE_SIZES} />
                     <source type="image/webp" srcset={p.webp} sizes={STAGE_SIZES} />
-                    <img src={p.fallback} width={p.w} height={p.h} alt="" loading="lazy" decoding="async" />
+                    <img src={p.fallback} width={p.w} height={p.h} alt={p.alt} loading="lazy" decoding="async" />
                   </>
                 ) : (
                   <>
                     <source type="image/avif" data-srcset={p.avif} sizes={STAGE_SIZES} />
                     <source type="image/webp" data-srcset={p.webp} sizes={STAGE_SIZES} />
-                    <img data-src={p.fallback} width={p.w} height={p.h} alt="" loading="lazy" decoding="async" />
+                    <img data-src={p.fallback} width={p.w} height={p.h} alt={p.alt} loading="lazy" decoding="async" />
                   </>
                 )}
               </picture>
@@ -124,8 +124,8 @@ const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
   import { initWorkScroll } from '../../scripts/work-scroll';
   import { initPixelRain } from '../../scripts/pixel-rain';
   initWorkScroll();
-  // Desktop only (the rail is display:none below 1024, where the canvas would measure 0).
-  if (matchMedia('(min-width: 1024px)').matches) {
+  // Desktop with motion only (the rail is display:none below 1024 and under reduced motion, where the canvas would measure 0).
+  if (matchMedia('(min-width: 1024px)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     document.querySelectorAll<HTMLElement>('[data-work-rain]').forEach((el) => initPixelRain(el, 'index'));
   }
 </script>
@@ -223,7 +223,7 @@ const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
 
   /* ── Desktop: pinned, stepped scroll. Native scroll through a track of ; the pin holds
         the section while scroll progress picks the project (scripts/work-scroll.ts). ── */
-  @media (min-width: 1024px) {
+  @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
     /* Pin (100svh) + one --work-step stretch between consecutive projects: the last project is reached exactly as the
        pin releases, so the scroll is free again right after it. Scroll-snap stops sit at each step (StepSnap). */
     .work__track { position: relative; --work-step: var(--step-scroll); --step: var(--work-step); height: calc(100vh + (var(--work-n) - 1) * var(--work-step)); height: calc(100svh + (var(--work-n) - 1) * var(--work-step)); }
@@ -259,20 +259,13 @@ const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
       transform: none;
       transition: opacity 260ms var(--ease-enter) 300ms, transform 260ms var(--ease-enter) 300ms, visibility 0s linear 300ms;
     }
-    @media (prefers-reduced-motion: reduce) {
-      .work-item[data-pos='before'], .work-item[data-pos='after'] { transform: none; transition: opacity var(--dur-base) linear, visibility 0s linear var(--dur-base); }
-      .work-item[data-pos='current'] { transition: opacity var(--dur-base) linear, visibility 0s; }
-      .stage-pic { transition: opacity var(--dur-base) var(--ease-enter); } /* simple crossfade, no canvas */
-      .work__canvas, .work-rain__canvas { display: none; }
-      .work-rain__static { opacity: 1 !important; }
-    }
   }
-  @media (min-width: 1024px) and (max-width: 1199px) {
+  @media (min-width: 1024px) and (max-width: 1199px) and (prefers-reduced-motion: no-preference) {
     .work__grid { grid-template-columns: 190px minmax(0, 1fr); column-gap: var(--sp-16); }
   }
 
-  /* ── Mobile / tablet: stacked, no pin, no canvas, no rain ── */
-  @media (max-width: 1023px) {
+  /* ── Mobile / tablet, and reduced motion at any width: a plain stacked list — no pin, no snap, no canvas, no rain ── */
+  @media (max-width: 1023px), (prefers-reduced-motion: reduce) {
     .work { padding-top: var(--sp-80); padding-bottom: var(--sp-80); }
     .work::after { margin-right: 0; }
     .work__track { margin-top: var(--sp-48); }
