@@ -191,6 +191,7 @@ const current = (href: string) => (href.startsWith('/') && Astro.url.pathname.st
   .site-nav a:hover::before, .site-nav a:focus-visible::before, .site-nav a:is([aria-current='page'], [aria-current='location'])::before { opacity: 1; transform: none; }
 
   /* ── Scrolled state (needs JS: without it the header keeps its top look on a soft ground) ── */
+  :global(html.js) .site-header[data-scrolled] { --focus-ring: var(--focus-ring-on-dark); } /* dark bar */
   :global(html.js) .site-header[data-scrolled]::before { opacity: 1; }
   :global(html.js) .site-header[data-scrolled]::after { opacity: 0; visibility: hidden; -webkit-backdrop-filter: none; backdrop-filter: none; transition: opacity var(--dur-nav) var(--ease-enter), visibility 0s linear var(--dur-nav); }
   /* The row is centred on y 44 (28 + 32/2; 20 + 48/2 on mobile); the bar's centre is 25.5 → −18.5 px. */
@@ -238,7 +239,7 @@ const current = (href: string) => (href.startsWith('/') && Astro.url.pathname.st
     display: none;
     flex-direction: column;
     gap: var(--sp-64);
-    background: var(--surface-inverse);
+    background: var(--surface-inverse); --focus-ring: var(--focus-ring-on-dark);
     color: var(--text-inverse);
     overflow-y: auto; overscroll-behavior: contain;
     opacity: 0;

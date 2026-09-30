@@ -42,7 +42,7 @@ const Tag = href && !disabled ? 'a' : 'button';
     --btn-bg: transparent;
     --btn-fg: var(--text-primary);
     --btn-ring: currentColor;
-    --btn-focus: var(--action-secondary-background); /* ring on light grounds; dark-ground variants override to yellow */
+    --btn-focus: var(--focus-ring); /* accent/dark on light grounds, yellow on dark (inherited); dark-ground variants pin yellow */
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -108,7 +108,7 @@ const Tag = href && !disabled ? 'a' : 'button';
 
   .btn:active:not(:disabled) { transform: scale(0.97); }
 
-  /* Focus — 2px ring, 3px offset. Ink on light grounds (yellow on white is ~1.7:1), yellow on dark grounds. */
+  /* Focus — 2px ring, 3px offset. accent/dark on light grounds (yellow on white is ~1.7:1), yellow on dark grounds. */
   .btn:focus-visible { outline: 2px solid var(--btn-focus); outline-offset: 3px; }
 
   /* Disabled — Figma: grey fill + grey text; ghost has no fill; outlines keep a grey ring. */

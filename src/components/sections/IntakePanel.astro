@@ -19,7 +19,7 @@ const { eyebrow, title, lede, id } = Astro.props;
 </section>
 
 <style>
-  .intake { display: flex; gap: 96px; padding: 72px var(--page-gutter) 88px; background: var(--surface-inverse); color: var(--text-inverse); }
+  .intake { display: flex; gap: 96px; padding: 72px var(--page-gutter) 88px; background: var(--surface-inverse); --focus-ring: var(--focus-ring-on-dark); color: var(--text-inverse); }
   .intake__context { flex: 0 0 300px; display: flex; flex-direction: column; gap: var(--sp-32); }
   .intake__context :global(.intake__heading) { gap: var(--sp-32); }
   .intake__lede { opacity: 0.62; }

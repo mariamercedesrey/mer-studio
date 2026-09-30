@@ -21,6 +21,10 @@
   --text-body-lg-weight: 400;
   --text-body-lg-size: 20px;
   --text-body-lg-line: 1.5;
+  /* Focus ring (WCAG 2.4.11, ≥ 3:1 against the ground it sits on): accent/dark on light grounds (6.4:1), yellow on dark grounds (≥ 11:1).
+     --focus-ring is what every ring reads; dark grounds (ink / charcoal sections, footer, scrolled header bar, mobile menu) redeclare it. */
+  --focus-ring-on-dark: var(--accent-primary);
+  --focus-ring: var(--accent-dark);
   --fs-body-xl: 20px;                             /* About body (Figma 2119:84) — no /brand size sits between body-lg 18 and lead-sm 22 */
   --surface-overlay-ink: rgba(255, 255, 255, 0.05); /* About profile card on ink (Figma 2121:163) */
 

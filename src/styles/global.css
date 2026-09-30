@@ -48,7 +48,7 @@ button { font: inherit; color: inherit; }
 [id] { scroll-margin-top: var(--header-h); }
 
 :focus-visible {
-  outline: 2px solid var(--accent-primary);
+  outline: 2px solid var(--focus-ring); /* accent/dark on light, yellow on dark grounds (tokens.ext.css) */
   outline-offset: 3px;
 }
 

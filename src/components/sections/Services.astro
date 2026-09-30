@@ -368,13 +368,13 @@ const diagramLabel = 'Services diagram: Brand and Product, connected by Strategy
   [data-s3] .svc-dg .svc-pill, [data-s3] .svc-dg .svc-chip { opacity: 1; visibility: visible; transform: translate(-50%, -50%); transition-delay: calc(450ms + var(--i) * 90ms), calc(450ms + var(--i) * 90ms), calc(450ms + var(--i) * 90ms); }
 
   /* AI Visibility pill during the launch offer (src/data/offer.ts): same fill, 3 px yellow border, label + tag on ONE line inside the same <a>. */
-  .svc-pill--offer { gap: calc(8.5 * var(--u)); padding: 0 calc(10.7 * var(--u)); border: max(2px, calc(3 * var(--u))) solid var(--accent-primary); } /* border inside Figma's 13.7 padding: ≈ 260 wide */
+  .svc-pill--offer { gap: calc(8.5 * var(--u)); padding: 0 calc(10.7 * var(--u)); border: max(2px, calc(3 * var(--u))) solid var(--accent-primary); } /* border inside Figma's 13.7 padding; width follows the 11 px tag */
   .svc-pill--offer .svc-pill__tag {
-    font-family: var(--font-technical); font-weight: 400; font-size: max(9px, calc(9.5 * var(--u))); /* Figma tag box = 154 px for 27 mono chars → 9.5 px, not 11 */
-    line-height: 1; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-neutral-0);
+    font-family: var(--font-technical); font-weight: 400; font-size: max(11px, calc(11 * var(--u))); /* Mer: never below 11 px — the pill grows in width instead */
+    line-height: 1; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-neutral-0);
   }
   .svc-pill__more { text-transform: none; text-decoration: underline; text-underline-offset: 0.18em; }
-  .svc-pill:is(a):focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 3px; }
+  .svc-pill:is(a):focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
   @media (hover: hover) { .svc-pill:is(a):hover { background: var(--color-neutral-800); } }
   html[data-offer-ended] .svc-pill--offer { border-color: transparent; }
 

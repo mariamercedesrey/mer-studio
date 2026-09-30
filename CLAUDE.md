@@ -111,6 +111,8 @@ Colour on grounds (contrast matrix):
 | `accent/dark` #635834 | text OK, 6.4:1 (hero rotating `[ChatGPT]`, accents) | no (too low) |
 | `color/brand/yellow-dark` #A68208 | 3.3:1: borders, icons and large text (≥24px) only, never body text | 5.1:1: text OK |
 
+Focus ring (WCAG 2.4.11, ≥ 3:1 against its ground): every ring reads `--focus-ring` — `accent/dark` (#635834, 6.4–7:1) on light grounds, yellow (`--focus-ring-on-dark`, 10:1) on dark grounds. Dark grounds (ink/charcoal sections, footer, scrolled header bar, mobile menu) redeclare `--focus-ring: var(--focus-ring-on-dark)`; new dark containers must do the same. Never hardcode a ring colour.
+
 Body/Large text style (`text/body-lg`: Outfit Regular 20 / 150 %, tokens `--text-body-lg-*`, 18 px on phones via the token): the hero eyebrow, the offer line and the right-hand paragraph. Colour `--text-primary`.
 
 ## 13. ACCESSIBILITY
