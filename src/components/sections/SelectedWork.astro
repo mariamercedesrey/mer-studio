@@ -9,6 +9,7 @@ import { projects } from '../../data/projects';
 import SectionHeading from '../primitives/SectionHeading.astro';
 import Button from '../primitives/Button.astro';
 import RoleChip from '../primitives/RoleChip.astro';
+import StepSnap from '../primitives/StepSnap.astro';
 import mosaic from '../../assets/work-index-mosaic.svg';
 import asociart from '../../assets/work-cover/asociart.png';
 import theMile from '../../assets/work-cover/the-mile.png';
@@ -43,6 +44,7 @@ const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
 
   <div class="work__track" data-work-track>
    <span class="work__step" data-work-step aria-hidden="true"></span>
+   <StepSnap count={items.length} />
    <div class="work__pin" data-work-pin>
     <div class="work__grid">
     <aside class="work__rail">
@@ -222,8 +224,9 @@ const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
   /* ── Desktop: pinned, stepped scroll. Native scroll through a track of ; the pin holds
         the section while scroll progress picks the project (scripts/work-scroll.ts). ── */
   @media (min-width: 1024px) {
-    /* Pin (100svh) + one --work-step stretch per project, so the last project also gets a full stretch before unpinning. */
-    .work__track { position: relative; --work-step: 60vh; --work-step: 60svh; height: calc(100vh + var(--work-n) * var(--work-step)); height: calc(100svh + var(--work-n) * var(--work-step)); }
+    /* Pin (100svh) + one --work-step stretch between consecutive projects: the last project is reached exactly as the
+       pin releases, so the scroll is free again right after it. Scroll-snap stops sit at each step (StepSnap). */
+    .work__track { position: relative; --work-step: var(--step-scroll); --step: var(--work-step); height: calc(100vh + (var(--work-n) - 1) * var(--work-step)); height: calc(100svh + (var(--work-n) - 1) * var(--work-step)); }
     .work__step { position: absolute; left: 0; top: 0; width: 0; height: var(--work-step); visibility: hidden; pointer-events: none; } /* JS reads the step from here */
     .work__pin {
       position: sticky;

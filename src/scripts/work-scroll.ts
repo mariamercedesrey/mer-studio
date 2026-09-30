@@ -1,11 +1,13 @@
 // Selected Work, desktop (≥1024 px): stepped scroll. The section pins (CSS sticky inside a track that is
 // 100svh + projects × 60svh tall) and the scroll progress picks the project: one 60svh stretch per project.
 // The scroll stays 100 % native — no wheel/touch handlers, nothing is intercepted or slowed; JS only reads the
-// position and, on an explicit index click, scrolls to that project's stretch.
+// position and, on an explicit index click, scrolls to that project's stop. One gesture = one project: the stops are
+// CSS scroll-snap points (StepSnap + step-snap.ts), `scroll-snap-stop: always`.
 // A change swaps the text (out up / in from below, CSS via data-pos) and the image (pixelated canvas transition).
 // Below 1024 px nothing runs here — text and image stack (CSS) and reveal.ts does the fade + rise.
 import { createPixelTransition } from './pixel-transition';
 import { prefersReducedMotion } from './reveal';
+import { initStepSnap } from './step-snap';
 
 const DESKTOP = '(min-width: 1024px)';
 
@@ -92,8 +94,8 @@ function setup(section: HTMLElement) {
     load(i + 1); // preload the next project
   };
 
-  // ── Activation: scroll progress through the track. One stretch of `step` px per project; project 1 is in place on
-  //    arrival (progress ≤ 0) and the change to project 2 starts once the first stretch has been scrolled. ──
+  // ── Activation: scroll progress through the track. Project i rests at i × `step` px (its snap stop); the nearest
+  //    stop is the active one, so project 1 is in place on arrival (progress ≤ 0). ──
   const track = section.querySelector<HTMLElement>('[data-work-track]');
   const pin = section.querySelector<HTMLElement>('[data-work-pin]');
   if (!track || !pin) return null;
@@ -104,18 +106,18 @@ function setup(section: HTMLElement) {
     frame = 0;
     if (lock) return;
     const travelled = -track.getBoundingClientRect().top;
-    const i = Math.min(items.length - 1, Math.max(0, Math.floor(travelled / stepPx())));
+    const i = Math.min(items.length - 1, Math.max(0, Math.round(travelled / stepPx())));
     setActive(i);
   };
   const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
 
-  // ── Index click: smooth scroll to the middle of that project's stretch; intermediate projects don't flash by ──
+  // ── Index click: smooth scroll to that project's stop; intermediate projects don't flash by ──
   const release = () => { lock = false; window.clearTimeout(lockTimer); schedule(); };
   const goTo = (i: number) => {
     lock = true;
     setActive(i);
     load(i);
-    const top = track.getBoundingClientRect().top + window.scrollY + (i + 0.5) * stepPx();
+    const top = track.getBoundingClientRect().top + window.scrollY + i * stepPx();
     window.scrollTo({ top, behavior: reduced ? 'auto' : 'smooth' });
     window.clearTimeout(lockTimer);
     lockTimer = window.setTimeout(release, reduced ? 50 : 1600); // safety net; scroll events below release earlier
@@ -141,7 +143,7 @@ function setup(section: HTMLElement) {
     } else schedule();
   };
 
-  const cleanups: Array<() => void> = [];
+  const cleanups: Array<() => void> = [initStepSnap(track, items.length, stepPx)];
   const on = (el: HTMLElement | Window, type: string, fn: (e: any) => void, opts?: AddEventListenerOptions | boolean) => {
     el.addEventListener(type, fn, opts);
     cleanups.push(() => el.removeEventListener(type, fn, opts));

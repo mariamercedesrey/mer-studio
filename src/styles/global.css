@@ -21,6 +21,8 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
+/* Stepped tracks (Services, Selected Work): scripts/step-snap.ts sets the attribute only while inside one. */
+@media (min-width: 1024px) { html[data-step-snap] { scroll-snap-type: y mandatory; } }
 body {
   margin: 0;
   overflow-x: clip;

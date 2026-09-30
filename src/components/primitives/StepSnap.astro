@@ -1,0 +1,31 @@
+---
+// Snap points for a pinned, stepped track (Services, Selected Work). Native CSS scroll-snap only — no wheel handling.
+// Put it inside a `position: relative` track that sets `--step` (the scroll distance of one step); scripts/step-snap.ts
+// turns `html[data-step-snap]` on only while the reader is between the two outer stops.
+//   stops 0 … count-1 — one per step, `scroll-snap-stop: always`: one gesture can never skip one.
+//   stops -1 and count — a buffer step before the first and after the last: snapping is released while resting on them, so
+//                        the page is free again right after the last step (and right before the first).
+// `count` = number of steps. Desktop only (≥1024); below that the track is not pinned.
+// (Tall "free rest" snap areas were tried instead of the buffers: Chromium does not honour them for the viewport.)
+interface Props { count: number }
+const { count } = Astro.props;
+const stops = Array.from({ length: count + 2 }, (_, i) => i - 1);
+---
+<span class="step-snap step-snap--unit" data-step-unit aria-hidden="true"></span>
+{stops.map((at) => <span class="step-snap step-snap--stop" style={`--at:${at}`} aria-hidden="true"></span>)}
+
+<style>
+  .step-snap { display: none; }
+  @media (min-width: 1024px) {
+    .step-snap {
+      display: block;
+      position: absolute;
+      left: 0;
+      width: 1px;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .step-snap--unit { top: 0; height: var(--step); } /* scripts read the step length from here */
+    .step-snap--stop { top: calc(var(--at) * var(--step)); height: 1px; scroll-snap-align: start; scroll-snap-stop: always; }
+  }
+</style>
