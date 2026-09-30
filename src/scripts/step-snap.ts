@@ -128,13 +128,13 @@ export function initStepSnap(track: HTMLElement, steps: number, stepPx: () => nu
   addEventListener('scroll', schedule, { passive: true });
   addEventListener('resize', schedule);
   addEventListener('keydown', onKey);
-  addEventListener('stepsnap:suspend', schedule);
+  addEventListener('stepsnap:suspend', update); // synchronous: the snap attribute must be off BEFORE the anchor's scrollTo runs (mandatory snap retargets it to the nearest stop)
   update();
   return () => {
     removeEventListener('scroll', schedule);
     removeEventListener('resize', schedule);
     removeEventListener('keydown', onKey);
-    removeEventListener('stepsnap:suspend', schedule);
+    removeEventListener('stepsnap:suspend', update);
     cancelAnimationFrame(frame);
     set(false);
   };
