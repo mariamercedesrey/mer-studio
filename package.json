@@ -8,7 +8,8 @@
     "build": "astro build && node scripts/check-site.mjs",
     "preview": "astro preview",
     "check": "astro check",
-    "check:site": "node scripts/check-site.mjs"
+    "check:site": "node scripts/check-site.mjs",
+    "qa:overflow": "node scripts/qa-overflow.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

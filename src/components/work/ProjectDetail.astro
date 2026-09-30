@@ -23,7 +23,7 @@ const pct = (n: number, of: number) => `${(n / of) * 100}%`;
     <div class="pd__actions">
       {p.link && (
         <Button class="pd__link" href={p.link.href} variant="outline-secondary" target="_blank" rel="noopener">
-          {p.link.label}
+          <span class="pd__link-label">{p.link.label}</span>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 3H21V9M10 14L21 3M18 13V19C18 19.53 17.79 20.04 17.41 20.41C17.04 20.79 16.53 21 16 21H5C4.47 21 3.96 20.79 3.59 20.41C3.21 20.04 3 19.53 3 19V8C3 7.47 3.21 6.96 3.59 6.59C3.96 6.21 4.47 6 5 6H11" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <span class="visually-hidden">(opens in a new tab)</span>
         </Button>
@@ -173,11 +173,15 @@ const pct = (n: number, of: number) => `${(n / of) * 100}%`;
   }
   @media (max-width: 767px) {
     .pd { padding-bottom: var(--sp-64); }
-    .pd__client { flex-wrap: wrap; row-gap: 0; font-size: 28px; min-height: 0; }
+    /* Bar in three rows: 1 external link (left, truncates) + close (right) · 2 title (client) · 3 meta (credit), each full width. */
+    .pd__bar { display: flex; flex-direction: column-reverse; align-items: stretch; justify-content: flex-start; gap: var(--sp-12); }
+    .pd__actions { align-items: center; justify-content: space-between; gap: var(--sp-12); flex-shrink: 1; min-width: 0; width: 100%; }
+    .pd__actions .pd__link { flex: 0 1 auto; min-width: 0; min-height: var(--btn-h-sm); padding: 0 var(--sp-16); font-size: var(--fs-meta); line-height: 20px; }
+    .pd__actions .pd__link .pd__link-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .pd__actions .pd__link svg { flex: none; }
+    .pd__close { flex: none; margin: 0 -10px 0 auto; }
+    .pd__client { flex-direction: column; align-items: flex-start; gap: var(--sp-4); font-size: 28px; min-height: 0; }
     .pd__credit { line-height: 1.4; }
-    .pd__actions :global(.pd__link) { min-height: var(--btn-h-sm); padding: 0 var(--sp-16); font-size: var(--fs-meta); line-height: 20px; }
-    .pd__actions { align-items: center; gap: var(--sp-4); }
-    .pd__close { margin: 0 -10px 0 0; }
     .pd__block-body { font-size: var(--fs-body); line-height: 1.5; }
     .pd-stage .pd__block-body { font-size: var(--fs-body); }
   }

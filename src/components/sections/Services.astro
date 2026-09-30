@@ -443,9 +443,11 @@ const diagramLabel = 'Services diagram: Brand and Product, connected by Strategy
 
   /* Launch-offer tag (list row [4]): outline yellow, visual only — the row's title link covers the whole row. */
   .offer-tag {
-    flex: none; margin-left: var(--sp-16); padding: 3px 10px; border: 1px solid var(--accent-primary); border-radius: var(--r-pill);
-    font-family: var(--font-technical); font-size: var(--fs-caption); line-height: 1.4; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap;
+    flex: 0 1 auto; min-width: 0; max-width: 100%; margin-left: var(--sp-16); padding: 3px 10px; border: 1px solid var(--accent-primary); border-radius: 16px;
+    font-family: var(--font-technical); font-size: var(--fs-caption); line-height: 1.4; letter-spacing: 0.04em; text-transform: uppercase;
+    white-space: normal; /* wraps below desktop: never wider than its row */
   }
+  @media (min-width: 1200px) { .offer-tag { flex: none; white-space: nowrap; border-radius: var(--r-pill); } }
   .offer-tag__more { text-transform: none; text-decoration: underline; text-underline-offset: 0.18em; }
 
   .services__addons { display: flex; justify-content: center; align-items: flex-start; gap: 54px; }
