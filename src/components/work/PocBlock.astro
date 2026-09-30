@@ -31,15 +31,27 @@ const facts = [c.facts.domain, c.facts.length, c.facts.role];
       <div class="poc__part"><p class="poc__label">{c.status.label}</p><p class="poc__body">{c.status.body}</p></div>
       <dl class="poc__facts">{facts.map((f) => <div><dt>{f.label}</dt><dd>{f.value}</dd></div>)}</dl>
     </div>
-    <figure class="poc__diagram"><img src={diagram.src} width={diagram.width} height={diagram.height} alt={poc.alt} loading="lazy" decoding="async" /></figure>
+    <div class="poc__diagram-wrap" data-poc-wrap><figure class="poc__diagram" data-poc-scroll><img src={diagram.src} width={diagram.width} height={diagram.height} alt={poc.alt} loading="lazy" decoding="async" /></figure></div>
   </div>
   <p class="poc__bar"><span class="poc__bar-label">{c.humanInLoop.label}:</span> {c.humanInLoop.body}</p>
 </section>
+
+<script>
+  // Phones: the diagram scrolls sideways inside its box; a fade on the right edge says there is more, and goes away at the end.
+  document.querySelectorAll<HTMLElement>('[data-poc-wrap]').forEach((wrap) => {
+    const box = wrap.querySelector<HTMLElement>('[data-poc-scroll]')!;
+    const sync = () => wrap.toggleAttribute('data-end', box.scrollLeft + box.clientWidth >= box.scrollWidth - 2 || box.scrollWidth <= box.clientWidth + 2);
+    box.addEventListener('scroll', sync, { passive: true });
+    new ResizeObserver(sync).observe(box);
+    sync();
+  });
+</script>
 
 <style>
   .poc { display: flex; flex-direction: column; min-width: 0; }
   /* Figma: 570 px text column (32 px inset) + the diagram on the rest of the 1349 px frame. */
   .poc__grid { display: grid; grid-template-columns: 570fr 779fr; gap: var(--sp-24); align-items: center; background: var(--poc-grid) center / cover no-repeat; }
+  .poc__diagram-wrap { position: relative; min-width: 0; }
   .poc__diagram { margin: 0; min-width: 0; }
   .poc__diagram img { display: block; width: 100%; height: auto; }
   .poc__text { display: flex; flex-direction: column; gap: var(--sp-12); padding-left: var(--sp-32); min-width: 0; }
@@ -74,7 +86,14 @@ const facts = [c.facts.domain, c.facts.length, c.facts.role];
   @media (max-width: 767px) {
     .poc__intro, .poc__body { font-size: var(--fs-body); line-height: 1.5; }
     /* The diagram's labels are 12 px in the design: on a phone it scrolls sideways inside its own box instead of shrinking them to ~5 px (560 px wide = labels at ~8.6 px). */
-    .poc__diagram { overflow-x: auto; overscroll-behavior-x: contain; }
+    .poc__diagram { overflow-x: auto; overscroll-behavior-x: contain; } /* vertical drags stay with the page / dialog: only horizontal ones scroll the box */
     .poc__diagram img { width: 560px; max-width: none; }
+    /* Right-edge fade: says "there is more"; gone once the end is reached (no motion under reduced motion). */
+    .poc__diagram-wrap::after {
+      content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 56px; pointer-events: none;
+      background: linear-gradient(to right, transparent, var(--surface-base)); opacity: 1; transition: opacity var(--dur-base) var(--ease-enter);
+    }
+    .poc__diagram-wrap[data-end]::after { opacity: 0; }
+    @media (prefers-reduced-motion: reduce) { .poc__diagram-wrap::after { transition: none; } }
   }
 </style>
