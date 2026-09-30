@@ -2,6 +2,7 @@
 // Services (149:5756), About (149:6015), Contact (149:6087), Footer (149:6099), project-details.ts.
 import { detailBlocks, type ProjectDetailData } from './project-details';
 import { EMAIL, WHATSAPP } from './contact';
+import { offer } from './offer';
 
 const SITE = 'https://mer.studio';
 const ORG_ID = `${SITE}/#studio`;
@@ -13,8 +14,8 @@ const services = [
   { name: 'Digital Product', description: "An app or a platform that doesn't exist yet." },
   { name: 'AI Visibility · GEO / AEO', description: 'So people find you when they ask an AI, not just Google.' },
   { name: 'Design System', description: 'Exported tokens, a documented component library, and a usage guide — so your team, or an AI agent, can keep building on it without breaking the system.' },
+  { name: 'AI Assistants & Automation', description: 'AI assistants and automations that take repetitive work off your team — built into your site, store or product.' },
   { name: 'Maintenance', description: 'Optional, after handover. Changes, updates, backups and priority response.' },
-  { name: 'AI-assisted & Automation', description: 'AI assistants and automations that take repetitive work off your team — built into your site, store or product.' },
 ];
 
 export function homeSchema() {
@@ -42,6 +43,8 @@ export function homeSchema() {
           itemListElement: services.map((s) => ({
             '@type': 'Offer',
             itemOffered: { '@type': 'Service', ...s, provider: { '@id': ORG_ID } },
+            // Launch offer (src/data/offer.ts): the AI Visibility setup is free for projects started in October 2026. Setup only; no currency invented.
+            ...(offer.active && s.name.startsWith('AI Visibility') ? { price: 0, validThrough: offer.validThrough, description: offer.llms } : {}),
           })),
         },
       },
