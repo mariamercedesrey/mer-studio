@@ -53,8 +53,9 @@ export function initStepSnap(track: HTMLElement, steps: number, stepPx: () => nu
     consumed = true;
     lockUntil = now + COOLDOWN;
     const clamp = (i: number) => Math.min(steps - 1, Math.max(0, i));
-    // Momentum carried the page into the track: rest on the stop it just passed (M0 coming from above, the last stop coming from below).
-    const target = entering ? clamp(dir > 0 ? Math.floor(t / step + 0.02) : Math.ceil(t / step - 0.02)) : clamp(Math.round(t / step) + dir);
+    // Momentum carried the page into the track (the wheel animation the browser had already accepted overshoots): rest on the
+    // stop it entered through — the first coming from above, the last coming from below.
+    const target = entering ? (dir > 0 ? 0 : steps - 1) : clamp(Math.round(t / step) + dir);
     const top = track.getBoundingClientRect().top + scrollY + target * step;
     scrollTo({ top, behavior: 'smooth' });
   };
