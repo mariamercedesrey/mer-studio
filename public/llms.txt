@@ -6,12 +6,14 @@ From the first decision to the last detail. Twenty-five years across enterprise 
 
 ## Who
 
-MER Studio was founded by Mer (Mercedes Rey). In Mer's words: "I've been designing digital products for more than 25 years. Eight of those years went into complex enterprise products, and seven into working with US startups, often directly with founders and CEOs. That is what I bring to a small project: the judgement to decide quickly and well, and the ability to build what I design."
+MER Studio was founded by Mer (Mercedes Rey). We partner with early-stage founders who treat design as a must, not a nice-to-have. From seed to Series A and beyond, we help them validate ideas, win over investors and build brands and products that last. We treat every project as our own — founders deserve a partner, not a vendor. We use AI to move faster, not to cut corners, so the time goes where it matters most: strategy and craft.
+
+"For more than 25 years I've designed digital products for companies in the US and Latin America — enterprises and startups, often working directly with founders and CEOs." — Mer Rey, Founder · Design Lead
 
 - 25+ years of experience designing products, brands and websites
 - 35+ websites and digital products delivered directly to clients
 - 1:1 direct access to the senior designer, from first call to final files
-- 7 years designing for US startups, working alongside founders
+- +300% orders in The Mile's first year after launch
 
 Industries: Ecommerce, Agribusiness, Fashion, Insurance, Finance, Foreign Trade, Startups, Enterprise, Healthcare.
 
@@ -46,13 +48,19 @@ Four steps, no surprises. Every project starts with a 20-minute call. You get ba
 
 ## Selected work
 
-- [Asociart — Reengineering a 13-module legacy platform](https://mer.studio/work/asociart/): Insurance & Finance, at Neoris. UX research, service blueprints for thirteen interconnected modules and a Core Design System of 71+ components, documented in Storybook. One shared foundation serving 500+ internal users; five years on the account, 130+ sprints, a 98% successful build rate across active modules.
-- Turning creators into storefronts (Ecommerce & Fashion, at Orchard Mile)
-- 250 brands, one storefront (Ecommerce & Fashion)
-- Making an industrial process legible (Agrobusiness, Enterprise)
-- A safety net, not a productivity app (Startups)
-- A site that answers "does it pay for itself?" (Enterprise)
-- Six business units, one product (Startups, Ecommerce)
+- [Reengineering a 13-module legacy platform](https://mer.studio/work/asociart/): Insurance & Finance, at Neoris. UX research, service blueprints for thirteen interconnected modules and a Core Design System of 71+ components, documented in Storybook. One shared foundation serving 500+ internal users; five years on the account, 130+ sprints, a 98% successful build rate across active modules.
+- [Turning creators into storefronts](https://mer.studio/work/the-mile/): Ecommerce & Fashion, at Orchard Mile.
+- [250 brands, one storefront](https://mer.studio/work/orchard-mile/): Ecommerce & Fashion.
+- [A coupon that works one-handed, in a crowd](https://mer.studio/work/quilmes/): Consumer Brands.
+- [Making an industrial process legible](https://mer.studio/work/carbon-optimum/): Agrobusiness, Enterprise.
+- [A safety net, not a productivity app](https://mer.studio/work/agente-mama/): Startups.
+- [A site that answers "does it pay for itself?"](https://mer.studio/work/american-padel-systems/): Enterprise.
+- [Six business units, one product](https://mer.studio/work/hifi-hub/): Startups, Ecommerce.
+
+## Pages
+
+- [AI Visibility (GEO / AEO)](https://mer.studio/ai-visibility/): How we make a brand readable, understood and quotable by ChatGPT, Perplexity, Gemini and Google's AI Overviews.
+- [Start a project](https://mer.studio/start-a-project/): Project inquiry form. We reply within 2 business days with a focused next step.
 
 ## Contact
 

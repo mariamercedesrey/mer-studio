@@ -1,0 +1,31 @@
+---
+// Page intro (Figma 2084:217 › Introduction; 2230:646 on /ai-visibility/): mono eyebrow + dot, decoding h1, arrow note.
+// The copy block is the header's [data-nav-sentinel]: once it leaves the viewport the header turns into the dark bar.
+import DecodeTitle from '../primitives/DecodeTitle.astro';
+import SignatureDot from '../primitives/SignatureDot.astro';
+interface Props { eyebrow: string; title: string; note: string; id: string }
+const { eyebrow, title, note, id } = Astro.props;
+---
+<section class="intro" aria-labelledby={id}>
+  <div class="intro__copy" data-nav-sentinel>
+    <p class="intro__eyebrow">{eyebrow} <SignatureDot size={10} /></p>
+    <DecodeTitle as="h1" id={id} class="intro__title" text={title} />
+  </div>
+  <div class="intro__note" data-reveal="rise">
+    <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true"><path d="M9.9178 9.9178L24.0822 24.0822M9.9178 24.0822H24.0822V9.9178" stroke="var(--accent-primary)" stroke-width="2" stroke-linecap="round"/></svg>
+    <p>{note}</p>
+  </div>
+</section>
+
+<style>
+  .intro { display: flex; justify-content: space-between; gap: var(--sp-48); padding: 72px var(--page-gutter) 82px; }
+  .intro__copy { display: flex; flex-direction: column; gap: var(--sp-24); max-width: 840px; }
+  .intro__eyebrow { display: flex; align-items: center; gap: var(--sp-12); font-family: var(--font-technical); font-size: var(--fs-eyebrow); line-height: 1.5; letter-spacing: 0.02em; }
+  .intro :global(.intro__title) { font-weight: 400; font-size: clamp(44px, 5vw, 72px); line-height: 1.03; letter-spacing: -0.03em; text-wrap: balance; }
+  .intro__note { flex: 0 0 350px; display: flex; flex-direction: column; gap: var(--sp-20); padding-top: 52px; }
+  @media (max-width: 1199px) {
+    .intro { flex-direction: column; gap: var(--sp-32); padding-bottom: var(--sp-64); }
+    .intro__note { flex: none; max-width: 420px; padding-top: 0; }
+  }
+  @media (max-width: 767px) { .intro { padding-top: var(--sp-48); } }
+</style>
