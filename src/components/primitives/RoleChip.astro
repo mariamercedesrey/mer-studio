@@ -16,5 +16,9 @@
     line-height: 1.2;
     letter-spacing: 0.02em;
     white-space: nowrap;
+    transition: background-color var(--dur-fast) var(--ease-precise), color var(--dur-fast) var(--ease-precise);
   }
+  /* Decorative hover (chips are not links): accent/primary-dark ground, text-primary for AA (5.1:1; white is 3.6:1). */
+  .role-chip:hover, .role-chip:focus-visible { background: var(--accent-primary-dark); color: var(--text-primary); }
+  @media (prefers-reduced-motion: reduce) { .role-chip { transition: none; } }
 </style>

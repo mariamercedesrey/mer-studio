@@ -14,11 +14,12 @@ interface Props {
   disabled?: boolean; // always renders a <button disabled>: a link cannot be disabled
   type?: 'button' | 'submit';
   width?: number;   // Figma fixes some CTAs to a width (e.g. 183px)
+  minWidth?: number; // floor for short labels (e.g. "faq" = 100px); the label stays centred
   class?: string;
   [key: string]: unknown;
 }
-const { href, variant = 'primary', icon, showIcon = false, iconOnly = false, size = 'md', onDark = false, disabled = false, type = 'button', width, class: className, ...rest } = Astro.props;
-const style = width ? `width:${width}px` : undefined;
+const { href, variant = 'primary', icon, showIcon = false, iconOnly = false, size = 'md', onDark = false, disabled = false, type = 'button', width, minWidth, class: className, ...rest } = Astro.props;
+const style = [width && `width:${width}px`, minWidth && `min-width:${minWidth}px`].filter(Boolean).join(';') || undefined;
 const iconName = icon ?? (showIcon ? 'arrow-right' : undefined);
 const Tag = href && !disabled ? 'a' : 'button';
 ---

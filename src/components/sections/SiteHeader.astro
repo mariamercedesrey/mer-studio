@@ -11,8 +11,8 @@ import { EMAIL, WHATSAPP } from '../../data/contact';
 const nav = [
   { label: 'Work', href: '#work' },
   { label: 'Services', href: '#services' },
+  { label: 'How it works', href: '#how-it-works' },
   { label: 'About', href: '#about' },
-  { label: 'Start a project', href: '/start-a-project/' },
 ];
 const home = Astro.url.pathname === '/';
 // Light at the top, then scrolled once [data-nav-sentinel] leaves the viewport: the home, /start-a-project/ and /ai-visibility/. Everywhere else (/work/<slug>/) the bar is always on.
@@ -269,6 +269,16 @@ const current = (href: string) => (href.startsWith('/') && Astro.url.pathname.st
     text-transform: uppercase;
     text-decoration: none;
     transition: color var(--dur-fast) var(--ease-precise);
+  }
+  /* Current section / page: the signature dot as a full stop after the label, same as the desktop nav. Static — no motion in the menu. */
+  .mobile-menu__list a:is([aria-current='page'], [aria-current='location'])::after {
+    content: '';
+    display: inline-block;
+    width: 0.16em;
+    height: 0.16em;
+    margin-left: 0.12em;
+    border-radius: 50%;
+    background: var(--accent-bright);
   }
   .mobile-menu__contact { display: flex; flex-direction: column; gap: var(--sp-12); margin-top: auto; font-style: normal; }
   .mobile-menu__contact a {

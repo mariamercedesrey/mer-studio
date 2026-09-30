@@ -101,7 +101,7 @@ Buttons: one Primary button per screen/section. The secondary action uses Second
 
 Buttons — labels are always lowercase ("book a call", "start a project", "learn more", "show less", "next project"). The rule lives in `Button.astro` (`text-transform: lowercase`); never lowercase a label by hand. Text links and the nav are NOT affected (the nav stays uppercase).
 
-Colour tokens (Figma "01 Primitives" → "02 Semantic"; semantic always references a primitive, never a hex): `color/brand/yellow` #EEBB0A, `color/brand/yellow-bright` #FCC814, `color/brand/yellow-dark` #A68208, `color/brand/dark` #635834. Semantic: `action/primary/background` → yellow-bright (text neutral/900, 11.8:1) · `accent/primary` → yellow · `accent/bright` → yellow-bright · `accent/dark` → brand/dark · `surface/dark` → brand/dark. `yellow-dark` has no semantic role.
+Colour tokens (Figma "01 Primitives" → "02 Semantic"; semantic always references a primitive, never a hex): `color/brand/yellow` #EEBB0A, `color/brand/yellow-bright` #FCC814, `color/brand/yellow-dark` #A68208, `color/brand/dark` #635834. Semantic: `action/primary/background` → yellow-bright (text neutral/900, 11.8:1) · `accent/primary` → yellow · `accent/primary-dark` → yellow-dark · `accent/dark` → brand/dark · `accent/bright` → yellow-bright · `surface/dark` → brand/dark. Text on `accent/primary-dark` (#A68208) is `text/primary` (#141414, 5.1:1); white on it is 3.6:1 and fails for small text.
 
 Colour on grounds (contrast matrix):
 
@@ -109,7 +109,7 @@ Colour on grounds (contrast matrix):
 |---|---|---|
 | `accent/primary`, `accent/bright`, `action/primary` (yellows) | never as text (dots, borders, fills only) | text OK |
 | `accent/dark` #635834 | text OK, 6.4:1 (hero rotating `[ChatGPT]`, accents) | no (too low) |
-| `color/brand/yellow-dark` #A68208 | 3.3:1: borders, icons and large text (≥24px) only, never body text | 5.1:1: text OK |
+| `color/brand/yellow-dark` = `accent/primary-dark` #A68208 | 3.3:1: borders, icons and large text (≥24px) only, never body text | 5.1:1: text OK |
 
 Focus ring (WCAG 2.4.11, ≥ 3:1 against its ground): every ring reads `--focus-ring` — `accent/dark` (#635834, 6.4–7:1) on light grounds, yellow (`--focus-ring-on-dark`, 10:1) on dark grounds. Dark grounds (ink/charcoal sections, footer, scrolled header bar, mobile menu) redeclare `--focus-ring: var(--focus-ring-on-dark)`; new dark containers must do the same. Never hardcode a ring colour.
 
