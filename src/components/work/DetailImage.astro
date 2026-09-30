@@ -9,9 +9,13 @@ interface Props {
   width: number; // Figma display width in px at 1440
   alt: string;
   desc?: string; // copy baked into the image, exposed as real text
+  caption?: string; // visible caption above the image (HTML text: translated, never baked into the picture)
+  center?: boolean; // centred in its column
+  reveal?: boolean; // the shared fade + rise (off when a parent already reveals)
+  decorative?: boolean; // alt="" (the text next to it says it all)
   style?: string;
 }
-const { src, width, alt, desc, style } = Astro.props;
+const { src, width, alt, desc, caption, center = false, reveal = true, decorative = false, style } = Astro.props;
 
 const files = import.meta.glob<ImageMetadata>('../../assets/work-detail/**/*.webp', { eager: true, import: 'default' });
 const meta = files[`../../assets/work-detail/${src}.webp`];
@@ -26,11 +30,12 @@ const [avif, webp] = await Promise.all(
 const fallback = await getImage({ src: meta, width: w2, format: 'webp' });
 const sizes = `(max-width: 1199px) 100vw, ${Math.round(width)}px`;
 ---
-<figure class="pd-img" style={style} data-reveal="rise">
+<figure class:list={['pd-img', center && 'pd-img--center', caption && 'pd-img--captioned']} style={style} data-reveal={reveal ? 'rise' : undefined}>
+  {caption && <figcaption class="pd-img__cap">{caption}</figcaption>}
   <picture>
     <source type="image/avif" srcset={avif.srcSet.attribute} sizes={sizes} />
     <source type="image/webp" srcset={webp.srcSet.attribute} sizes={sizes} />
-    <img src={fallback.src} alt={alt} width={meta.width} height={meta.height} loading="lazy" decoding="async" />
+    <img src={fallback.src} alt={decorative ? '' : alt} data-decorative={decorative ? '' : undefined} width={meta.width} height={meta.height} loading="lazy" decoding="async" />
   </picture>
   {desc && <figcaption class="visually-hidden">{desc}</figcaption>}
 </figure>

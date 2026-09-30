@@ -9,7 +9,7 @@ Generated from `src/i18n/en.ts` by `npm run i18n:export` — do not edit by hand
 - Not in this file on purpose: URLs, e-mail, phone, and the `value` of form fields (they stay English so the inbox is uniform).
 - Also still in English outside `en.ts`: `public/llms.txt` (the launch-offer line must match `offer.llms`; `scripts/check-site.mjs` enforces it).
 
-Strings: 568.
+Strings: 589.
 
 ## Global (every page)
 
@@ -35,8 +35,8 @@ Strings: 568.
 - `buttons.sendInquiry` → send inquiry
 - `buttons.sending` → sending…
 - `buttons.checkMyBrand` → check my brand
-- `faqCta.prompt` → Questions about how we work?
-- `faqCta.questionsFirst` → Questions first?
+- `faqCta.prompt` → Want to know more?
+- `faqCta.questionsFirst` → Questions before you start?
 - `faqCta.readFaq` → Read the faq
 - `nav.ariaLabel` → Primary
 - `nav.tagline` → Design and build, end to end
@@ -186,7 +186,7 @@ Strings: 568.
 - `services.included.items[1]` → Two rounds of revisions
 - `services.included.items[2]` → Responsive, mobile & desktop
 - `services.included.items[3]` → Files & accounts in your name
-- `services.addonsLead` → Added to any project — or contracted on their own.
+- `services.addonsLead` → Add-ons for any project.
 - `services.addonFor` → For:
 - `services.addons.designSystem.title` → Design System
 - `services.addons.designSystem.cta` → what's included
@@ -434,7 +434,7 @@ Strings: 568.
 ### Asociart — `asociart`
 
 - `caseStudies.asociart.client` → Asociart
-- `caseStudies.asociart.credit` → in collaboration with NEORIS
+- `caseStudies.asociart.credit` → delivered through NEORIS
 - `caseStudies.asociart.linkLabel` → asociart.com
 - `caseStudies.asociart.title` → Reengineering a 13-module legacy platform
 - `caseStudies.asociart.meta` → [Insurance & Finance]
@@ -442,6 +442,22 @@ Strings: 568.
 - `caseStudies.asociart.roles[1]` → Design System
 - `caseStudies.asociart.roles[2]` → PRODUCT DESIGN
 - `caseStudies.asociart.roles[3]` → Front-End
+- `caseStudies.asociart.poc.title` → AI-Assisted Design System Workflow
+- `caseStudies.asociart.poc.subtitle` → From user stories to design-system-driven interfaces
+- `caseStudies.asociart.poc.intro[0]` → I built a Proof of Concept to test whether an AI-assisted workflow could translate product requirements into editable Figma interfaces while preserving an existing enterprise Design System as the source of truth.
+- `caseStudies.asociart.poc.intro[1]` → I curated pairs of previous user stories and their approved Figma outcomes as few-shot / in-context examples, giving the model concrete references for how requirements had historically translated into UX patterns, components and layouts. The workflow combined that contextual guidance with explicit UX rules and structured Design System information — components, variants, variables, tokens and interaction patterns — reaching the system through an MCP-based context layer instead of inventing UI from scratch.
+- `caseStudies.asociart.poc.tested.label` → What I tested
+- `caseStudies.asociart.poc.tested.body` → Running a real user story through the pipeline, the agent produced editable Figma views built from existing Design System components — not generic UI. The translation held: component reuse and UX intent survived, and the output was reviewable and editable rather than a flat mockup.
+- `caseStudies.asociart.poc.status.label` → Status
+- `caseStudies.asociart.poc.status.body` → Validated POC. Not taken to production — the goal was to prove the translation layer worked, not to automate design decisions. The designer retains validation and final judgment.
+- `caseStudies.asociart.poc.facts.domain.label` → Domain
+- `caseStudies.asociart.poc.facts.domain.value` → Design System Automation
+- `caseStudies.asociart.poc.facts.length.label` → Length
+- `caseStudies.asociart.poc.facts.length.value` → POC · 2026
+- `caseStudies.asociart.poc.facts.role.label` → Role
+- `caseStudies.asociart.poc.facts.role.value` → Design & Execution
+- `caseStudies.asociart.poc.humanInLoop.label` → Human-in-the-loop
+- `caseStudies.asociart.poc.humanInLoop.body` → AI accelerates translation and component mapping; the designer retains validation and final design decisions.
 - `caseStudies.asociart.blocks.startingPoint.heading` → Starting point
 - `caseStudies.asociart.blocks.startingPoint.body` → Asociart brought Neoris in to replace a monolithic legacy system running claims, legal, medical and financial operations across ten-plus departments. There was no UX practice on the product and no shared visual system. As part of Neoris' team, I was brought in to build that foundation while the platform was reengineered.
 - `caseStudies.asociart.blocks.theWork.heading` → The work
@@ -455,8 +471,6 @@ Strings: 568.
 - `caseStudies.asociart.images.recoveriesB.alt` → Asociart Storybook documentation for the aso-button component
 - `caseStudies.asociart.images.outcome.alt` → The reengineered Asociart claims management screen on a laptop
 - `caseStudies.asociart.images.workflow.alt` → AI-Assisted Design System Workflow: a diagram from user story, few-shot examples and rules through Claude and the Figma MCP to an editable Figma interface built from the Design System
-- `caseStudies.asociart.images.workflow.desc` → From user stories to design-system-driven interfaces. I built a Proof of Concept to test whether an AI-assisted workflow could translate product requirements into editable Figma interfaces while preserving an existing enterprise Design System as the source of truth. I curated pairs of previous user stories and their approved Figma outcomes as few-shot / in-context examples, giving the model concrete references for how requirements had historically translated into UX patterns, components and layouts. The workflow combined that contextual guidance with explicit UX rules and structured Design System information — components, variants, variables, tokens and interaction patterns — reaching the system through an MCP-based context layer instead of inventing UI from scratch. What I tested: running a real user story through the pipeline, the agent produced editable Figma views built from existing Design System components — not generic UI. The translation held: component reuse and UX intent survived, and the output was reviewable and editable rather than a flat mockup. Status: validated POC. Not taken to production — the goal was to prove the translation layer worked, not to automate design decisions. The designer retains validation and final judgment. Domain: Design System Automation. Length: POC · 2026. Role: Design & Execution. Human-in-the-loop: AI accelerates translation and component mapping; the designer retains validation and final design decisions.
-- `caseStudies.asociart.images.workflow.label` → AI-Assisted Design System Workflow
 
 ### The Mile — `the-mile`
 
@@ -542,14 +556,21 @@ Strings: 568.
 - `caseStudies.carbon-optimum.roles[1]` → Brand Architecture
 - `caseStudies.carbon-optimum.roles[2]` → Web Design
 - `caseStudies.carbon-optimum.roles[3]` → Web Development
+- `caseStudies.carbon-optimum.startingPoint.heading` → Starting point
+- `caseStudies.carbon-optimum.startingPoint.steps[0]` → Raw material
+- `caseStudies.carbon-optimum.startingPoint.steps[1]` → Microalgae
+- `caseStudies.carbon-optimum.startingPoint.steps[2]` → Biomass
+- `caseStudies.carbon-optimum.startingPoint.steps[3]` → Organic goods
+- `caseStudies.carbon-optimum.startingPoint.body` → Carbon Optimum turns captured CO₂ into value: microalgae absorb it, the biomass is harvested in a single day, and it becomes raw material for organic goods. A Miami-based company with a genuinely complex process — and a brand that had to make it easy to understand for partners and buyers.
 - `caseStudies.carbon-optimum.blocks.theWork.heading` → The work
 - `caseStudies.carbon-optimum.blocks.theWork.body` → I redesigned the Carbon Optimum logo and built a brand architecture around it: Optimarine, the marine-ingredients line powered by microalgae, and its three product brands — OptiCosmetics, OptiOmega3 and Biomass. Then I designed and developed the site: information architecture and a visual system that turn the process into a clear narrative, built as modular, responsive pages.
 - `caseStudies.carbon-optimum.blocks.outcome.heading` → Outcome
 - `caseStudies.carbon-optimum.blocks.outcome.body` → Brand and site live; I handle ongoing maintenance.
-- `caseStudies.carbon-optimum.images.hero.alt` → The Carbon Optimum process — raw material, microalgae, biomass, organic goods — over an ocean photograph, with the brand palette
-- `caseStudies.carbon-optimum.images.hero.desc` → Carbon Optimum turns captured CO₂ into value: microalgae absorb it, the biomass is harvested in a single day, and it becomes raw material for organic goods. A Miami-based company with a genuinely complex process — and a brand that had to make it easy to understand for partners and buyers.
-- `caseStudies.carbon-optimum.images.hero.label` → Starting point
-- `caseStudies.carbon-optimum.images.logos.alt` → The redesigned Carbon Optimum logo, “Carbon dioxide is the problem. We are the solution.”, and the new Optimarine logo, “Sustainable Marine Ingredients, Powered by Microalgae”
+- `caseStudies.carbon-optimum.images.hero.alt` → Aerial photograph of dark blue ocean waves, beside the Carbon Optimum brand palette
+- `caseStudies.carbon-optimum.images.logoCarbon.alt` → The redesigned Carbon Optimum logo, with the slogan “Carbon dioxide is the problem. We are the solution.”
+- `caseStudies.carbon-optimum.images.logoCarbon.caption` → Carbon Optimum logo redesign
+- `caseStudies.carbon-optimum.images.logoOptimarine.alt` → The new Optimarine logo, with the slogan “Sustainable Marine Ingredients, Powered by Microalgae”
+- `caseStudies.carbon-optimum.images.logoOptimarine.caption` → Optimarine logo design
 - `caseStudies.carbon-optimum.images.site.alt` → The Carbon Optimum website on a desktop computer and its modular pages, with the OptiCosmetics, OptiOmega3 and Biomass brands
 
 ### Agente Mamá — `agente-mama`

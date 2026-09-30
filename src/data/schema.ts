@@ -109,7 +109,7 @@ export function projectSchema(p: ProjectDetailData, url: string, locale: Locale 
     keywords: p.roles.join(', '),
     genre: p.meta.replace(/\[|\]/g, '').replace(/\s+/g, ' ').trim(),
     about: { '@type': 'Organization', name: p.client, ...(p.link && { url: p.link.href }) },
-    ...(neoris && { sourceOrganization: { '@type': 'Organization', name: 'Neoris' } }), // credit: "in collaboration with NEORIS"
+    ...(neoris && { sourceOrganization: { '@type': 'Organization', name: 'Neoris' } }), // credit: "delivered through NEORIS"
     creator: { '@type': 'Person', '@id': MER_ID, name: 'Mer' },
     publisher: { '@type': 'ProfessionalService', '@id': ORG_ID, name: copy.site.name, url: `${SITE}${pagePath('home', locale)}` },
     inLanguage: copy.site.lang,

@@ -25,7 +25,7 @@ export const es = {
     startProject: 'empieza un proyecto',
     letsTalk: 'hablemos',
     backToHome: 'volver al inicio',
-    faq: 'preguntas',
+    faq: 'preguntas frecuentes',
     showLess: 'ver menos',
     nextProject: 'siguiente proyecto',
     nextSection: 'siguiente sección',
@@ -36,9 +36,9 @@ export const es = {
   },
 
   faqCta: {
-    prompt: '¿Preguntas sobre cómo trabajamos?',
-    questionsFirst: '¿Primero, dudas?',
-    readFaq: 'Lee las preguntas frecuentes',
+    prompt: '¿Quieres saber más?',
+    questionsFirst: '¿Tienes dudas antes de empezar?',
+    readFaq: 'Revisa las preguntas frecuentes',
   },
 
   nav: {
@@ -105,11 +105,11 @@ export const es = {
     indexAriaLabel: 'Proyectos seleccionados',
     mosaicAlt: 'Mosaico de miniaturas de proyectos de MER Studio',
     projects: {
-      asociart: { title: 'Rediseño de una plataforma heredada de 13 módulos', meta: '[Seguros y Finanzas] EN NEORIS', roles: ['UX Research', 'Design System', 'Product Designer', 'Front-End'], index: 'Rediseño del núcleo', alt: 'Pantalla de gestión de siniestros de Asociart en una laptop, sobre láminas con los colores y la tipografía del design system de Asociart' },
+      asociart: { title: 'Rediseño de una plataforma legacy de 13 módulos', meta: '[Seguros y Finanzas] EN NEORIS', roles: ['UX Research', 'Design System', 'Product Designer', 'Front-End'], index: 'Rediseño del Core', alt: 'Pantalla de gestión de siniestros de Asociart en una laptop, sobre láminas con los colores y la tipografía del design system de Asociart' },
       'the-mile': { title: 'Creadores convertidos en tiendas', meta: '[Ecommerce y Moda] EN ORCHARDMILE', roles: ['UX/UI', 'Design System', 'DISEÑO DE PRODUCTO', 'Prototipado'], index: 'App de live shopping', alt: 'La app The Mile Fashion en teléfonos: la pantalla de bienvenida con una modelo vestida de negro, rodeada de otras pantallas de la app' },
       'orchard-mile': { title: '250 marcas, una sola tienda', meta: '[Ecommerce y Moda]', roles: ['UX/UI', 'Front-End', 'Growth Design'], index: 'Sitio de lujo', alt: 'La home de Orchard Mile en una laptop, rodeada de páginas editoriales de moda inclinadas' },
       quilmes: { title: 'Un cupón que se usa con una mano, en medio de la gente', meta: '[Marcas de consumo]', roles: ['Concepto de producto', 'UX/UI', 'Mobile'], index: 'App de promociones', alt: 'Pantallas de la app Pasaporte Quilmes en teléfonos: mapa de locales, páginas de locales y un cupón de descuento con código QR' },
-      'carbon-optimum': { title: 'Un proceso industrial, fácil de entender', meta: '[Agronegocios] [Empresas]', roles: ['Diseño web', 'branding', 'Sistema de marca', 'Desarrollo web'], index: 'Marca de climate tech', alt: 'El sitio de Carbon Optimum en un monitor, sobre una fotografía del océano, junto a la paleta de colores de la marca' },
+      'carbon-optimum': { title: 'Un proceso industrial, fácil de entender', meta: '[Agronegocios] [Empresas]', roles: ['Diseño web', 'branding', 'Sistema de marca', 'Desarrollo web'], index: 'Sitio de soluciones ecológicas', alt: 'El sitio de Carbon Optimum en un monitor, sobre una fotografía del océano, junto a la paleta de colores de la marca' },
       'agente-mama': { title: 'Una red de contención, no una app de productividad', meta: '[Startups]', roles: ['Estrategia de producto', 'UX Research', 'Design System', 'Desarrollo asistido por IA'], index: 'Asistente familiar con IA', alt: 'Agente Mamá AI en teléfonos: el panel del día y la agenda, alimentados por mensajes del grupo de WhatsApp y de la plataforma escolar' },
       'american-padel-systems': { title: 'Un sitio que responde "¿se paga solo?"', meta: '[Empresas]', roles: ['branding', 'Diseño web', 'Herramienta interactiva', 'Desarrollo web'], index: 'Pádel que rinde', alt: 'El sitio de American Padel Systems en una laptop inclinada, sobre un fondo azul marino cruzado por líneas naranjas' },
       'hifi-hub': { title: 'Seis unidades de negocio, un solo producto', meta: '[Startups] [Ecommerce]', roles: ['branding', 'Diseño de producto', 'Design System', 'Arquitectura de información'], index: 'Directorio audiófilo', alt: 'HiFi Hub — vista previa del proyecto' },
@@ -144,7 +144,7 @@ export const es = {
       title: 'TODO PROYECTO INCLUYE',
       items: ['Alcance y precio cerrados', 'Dos rondas de revisiones', 'Responsive, mobile y desktop', 'Archivos y cuentas a tu nombre'],
     },
-    addonsLead: 'Se suman a cualquier proyecto, o se contratan por separado.',
+    addonsLead: 'Servicios adicionales, para sumar a cualquier proyecto.',
     addonFor: 'Para:',
     addons: {
       designSystem: {
@@ -183,7 +183,7 @@ export const es = {
 
   about: {
     eyebrow: 'Nosotros',
-    title: 'Trabajamos con founders en etapa temprana que ven el diseño como algo imprescindible, no como un extra. Desde la ronda seed hasta la Serie A y más allá, los ayudamos a validar ideas, convencer a inversores y construir marcas y productos que perduran.',
+    title: 'Trabajamos con founders que ven el diseño como algo imprescindible, no como un extra. Desde la primera inversión hasta cada ronda que sigue, los ayudamos a validar ideas, convencer a inversores y construir marcas y productos que perduran.',
     body: 'Tratamos cada proyecto como si fuera propio: un founder merece un socio, no un proveedor. Estuvimos en esa situación las veces suficientes como para saber lo que está en juego. Usamos la IA para avanzar más rápido, no para recortar calidad, y así el tiempo va a donde más importa: la estrategia y el oficio.',
     portraitAlt: 'Mer Rey, fundadora de MER Studio',
     name: 'Mer Rey',
@@ -401,23 +401,39 @@ export const es = {
   caseStudies: {
     asociart: {
       client: 'Asociart',
-      credit: 'en colaboración con NEORIS',
+      credit: 'trabajo realizado a través de NEORIS',
       linkLabel: 'asociart.com',
-      title: 'Rediseño de una plataforma heredada de 13 módulos',
+      title: 'Rediseño de una plataforma legacy de 13 módulos',
       meta: '[Seguros y Finanzas]',
       roles: ['UX Research', 'Design System', 'DISEÑO DE PRODUCTO', 'Front-End'],
+      poc: {
+        title: 'Flujo de Design System asistido por IA',
+        subtitle: 'De historias de usuario a interfaces basadas en el design system',
+        intro: [
+          'Construí una prueba de concepto para validar si un flujo asistido por IA podía traducir requerimientos de producto en interfaces editables en Figma, manteniendo como fuente de verdad un Design System empresarial existente.',
+          'Seleccioné pares de historias de usuario anteriores con sus resultados aprobados en Figma como ejemplos few-shot / in-context, para darle al modelo referencias concretas de cómo los requerimientos se habían traducido históricamente en patrones de UX, componentes y layouts. El flujo combinaba esa guía de contexto con reglas explícitas de UX e información estructurada del Design System —componentes, variantes, variables, tokens y patrones de interacción—, que llegaba al sistema a través de una capa de contexto basada en MCP en lugar de inventar UI desde cero.',
+        ],
+        tested: { label: 'Qué probé', body: 'Al pasar una historia de usuario real por el flujo, el agente generó vistas editables en Figma construidas con componentes existentes del Design System, no UI genérica. La traducción funcionó: se mantuvieron la reutilización de componentes y la intención de UX, y el resultado se podía revisar y editar en lugar de ser un mockup plano.' },
+        status: { label: 'Estado', body: 'POC validada. No se llevó a producción: el objetivo era probar que la capa de traducción funcionaba, no automatizar decisiones de diseño. La diseñadora conserva la validación y el criterio final.' },
+        facts: {
+          domain: { label: 'Dominio', value: 'Automatización de Design System' },
+          length: { label: 'Duración', value: 'POC · 2026' },
+          role: { label: 'Rol', value: 'Diseño y ejecución' },
+        },
+        humanInLoop: { label: 'Humano en el circuito', body: 'La IA acelera la traducción y el mapeo de componentes; la diseñadora conserva la validación y las decisiones finales de diseño.' },
+      },
       blocks: {
-        startingPoint: { heading: 'Punto de partida', body: 'Asociart convocó a Neoris para reemplazar un sistema heredado monolítico que manejaba las operaciones de siniestros, legales, médicas y financieras de más de diez áreas. El producto no tenía práctica de UX ni un sistema visual compartido. Como parte del equipo de Neoris, me sumé para construir esa base mientras se rediseñaba la plataforma.' },
+        startingPoint: { heading: 'Punto de partida', body: 'Asociart convocó a Neoris para reemplazar un sistema legacy monolítico que manejaba las operaciones de siniestros, legales, médicas y financieras de más de diez áreas. El producto no tenía práctica de UX ni un sistema visual compartido. Como parte del equipo de Neoris, me sumé para construir esa base mientras se rediseñaba la plataforma.' },
         theWork: { heading: 'El trabajo', body: 'Lideré la investigación con usuarios internos y stakeholders, mapeé los service blueprints de trece módulos interconectados y construí el Core Design System que los sostiene a todos: más de 71 componentes, una arquitectura de tokens para color, tipografía y espaciado, documentada en Storybook. Especifiqué los estados de los componentes y el comportamiento de las interacciones según el contraste WCAG, y trabajé directamente en Angular para mantener alineadas las especificaciones y la interfaz en producción.' },
-        criticalityFirst: { heading: 'La criticidad primero', body: 'Recuperos fue el primer módulo que rediseñé, reemplazando una pantalla heredada muy pesada. Un proceso diario toma cada siniestro recuperable, calcula su criticidad y lo asigna a un gestor. La bandeja se abre ordenada por ese puntaje, y un panel de vista rápida muestra los datos clave sin salir de la lista: menos pantallas entre el gestor y el próximo caso que importa.' },
+        criticalityFirst: { heading: 'La criticidad primero', body: 'Recuperos fue el primer módulo que rediseñé, reemplazando una pantalla legacy muy pesada. Un proceso diario toma cada siniestro recuperable, calcula su criticidad y lo asigna a un gestor. La bandeja se abre ordenada por ese puntaje, y un panel de vista rápida muestra los datos clave sin salir de la lista: menos pantallas entre el gestor y el próximo caso que importa.' },
         outcome: { heading: 'Resultado', body: 'Una base compartida para trece módulos y varios equipos, que usan más de 500 personas internas. Cinco años en la cuenta, más de 130 sprints y un 98 % de builds exitosos en los módulos activos.' },
       },
       images: {
-        legacy: { alt: 'El sistema heredado de Asociart: una pantalla densa y cargada de formularios de la plataforma de interconexión con prestadores' },
+        legacy: { alt: 'El sistema legacy de Asociart: una pantalla densa y cargada de formularios de la plataforma de interconexión con prestadores' },
         recoveriesA: { alt: 'Core Design System de Asociart: fundamentos de color y tipografía' },
         recoveriesB: { alt: 'Documentación en Storybook de Asociart para el componente aso-button' },
         outcome: { alt: 'La pantalla rediseñada de gestión de siniestros de Asociart en una laptop' },
-        workflow: { alt: 'Flujo de Design System asistido por IA: un diagrama que va de la historia de usuario, los ejemplos few-shot y las reglas, pasando por Claude y el MCP de Figma, hasta una interfaz editable en Figma construida con el Design System', desc: 'De historias de usuario a interfaces basadas en el design system. Construí una prueba de concepto para validar si un flujo asistido por IA podía traducir requerimientos de producto en interfaces editables en Figma, manteniendo como fuente de verdad un Design System empresarial existente. Seleccioné pares de historias de usuario anteriores con sus resultados aprobados en Figma como ejemplos few-shot / in-context, para darle al modelo referencias concretas de cómo los requerimientos se habían traducido históricamente en patrones de UX, componentes y layouts. El flujo combinaba esa guía de contexto con reglas explícitas de UX e información estructurada del Design System —componentes, variantes, variables, tokens y patrones de interacción—, que llegaba al sistema a través de una capa de contexto basada en MCP en lugar de inventar UI desde cero. Qué probé: al pasar una historia de usuario real por el flujo, el agente generó vistas editables en Figma construidas con componentes existentes del Design System, no UI genérica. La traducción funcionó: se mantuvieron la reutilización de componentes y la intención de UX, y el resultado se podía revisar y editar en lugar de ser un mockup plano. Estado: POC validada. No se llevó a producción: el objetivo era probar que la capa de traducción funcionaba, no automatizar decisiones de diseño. La diseñadora conserva la validación y el criterio final. Dominio: automatización de Design System. Duración: POC · 2026. Rol: diseño y ejecución. Humano en el circuito: la IA acelera la traducción y el mapeo de componentes; la diseñadora conserva la validación y las decisiones finales de diseño.', label: 'Flujo de Design System asistido por IA' },
+        workflow: { alt: 'Flujo de Design System asistido por IA: un diagrama que va de la historia de usuario, los ejemplos few-shot y las reglas, pasando por Claude y el MCP de Figma, hasta una interfaz editable en Figma construida con el Design System' },
       },
     },
     'the-mile': {
@@ -488,13 +504,19 @@ export const es = {
       title: 'Un proceso industrial, fácil de entender',
       meta: '[Climate Tech] [Empresas]',
       roles: ['Branding', 'Arquitectura de marca', 'Diseño web', 'Desarrollo web'],
+      startingPoint: {
+        heading: 'Punto de partida',
+        steps: ['Materia prima', 'Microalgas', 'Biomasa', 'Productos orgánicos'],
+        body: 'Carbon Optimum convierte el CO₂ capturado en valor: las microalgas lo absorben, la biomasa se cosecha en un solo día y se transforma en materia prima para productos orgánicos. Una empresa de Miami con un proceso realmente complejo, y una marca que tenía que hacerlo fácil de entender para partners y compradores.',
+      },
       blocks: {
         theWork: { heading: 'El trabajo', body: 'Rediseñé el logo de Carbon Optimum y construí una arquitectura de marca a su alrededor: Optimarine, la línea de ingredientes marinos basada en microalgas, y sus tres marcas de producto, OptiCosmetics, OptiOmega3 y Biomass. Después diseñé y desarrollé el sitio: arquitectura de información y un sistema visual que convierten el proceso en un relato claro, construido con páginas modulares y responsive.' },
         outcome: { heading: 'Resultado', body: 'Marca y sitio publicados; me ocupo del mantenimiento continuo.' },
       },
       images: {
-        hero: { alt: 'El proceso de Carbon Optimum —materia prima, microalgas, biomasa, productos orgánicos— sobre una fotografía del océano, con la paleta de la marca', desc: 'Carbon Optimum convierte el CO₂ capturado en valor: las microalgas lo absorben, la biomasa se cosecha en un solo día y se transforma en materia prima para productos orgánicos. Una empresa de Miami con un proceso realmente complejo, y una marca que tenía que hacerlo fácil de entender para partners y compradores.', label: 'Punto de partida' },
-        logos: { alt: 'El logo rediseñado de Carbon Optimum, “Carbon dioxide is the problem. We are the solution.”, y el nuevo logo de Optimarine, “Sustainable Marine Ingredients, Powered by Microalgae”' },
+        hero: { alt: 'Fotografía aérea de olas de océano en azul oscuro, junto a la paleta de colores de la marca Carbon Optimum' },
+        logoCarbon: { alt: 'El logo rediseñado de Carbon Optimum, con el lema “Carbon dioxide is the problem. We are the solution.”', caption: 'Rediseño del logo de Carbon Optimum' },
+        logoOptimarine: { alt: 'El nuevo logo de Optimarine, con el lema “Sustainable Marine Ingredients, Powered by Microalgae”', caption: 'Diseño del logo de Optimarine' },
         site: { alt: 'El sitio de Carbon Optimum en una computadora de escritorio y sus páginas modulares, con las marcas OptiCosmetics, OptiOmega3 y Biomass' },
       },
     },

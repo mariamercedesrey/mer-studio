@@ -43,8 +43,8 @@ export const en = {
 
   // Shared by the home (How it works, Services), the Final CTA and the inquiry form.
   faqCta: {
-    prompt: 'Questions about how we work?',
-    questionsFirst: 'Questions first?',
+    prompt: 'Want to know more?',
+    questionsFirst: 'Questions before you start?',
     readFaq: 'Read the faq',
   },
 
@@ -153,7 +153,7 @@ export const en = {
       title: 'EVERY PROJECT INCLUDES',
       items: ['Fixed scope and price', 'Two rounds of revisions', 'Responsive, mobile & desktop', 'Files & accounts in your name'],
     },
-    addonsLead: 'Added to any project — or contracted on their own.',
+    addonsLead: 'Add-ons for any project.',
     addonFor: 'For:',
     // Add-ons = outer-ring chips, exactly. `more` = the expandable copy; `cta` = its button label (⇄ buttons.showLess).
     addons: {
@@ -422,11 +422,27 @@ export const en = {
   caseStudies: {
     asociart: {
       client: 'Asociart',
-      credit: 'in collaboration with NEORIS',
+      credit: 'delivered through NEORIS',
       linkLabel: 'asociart.com',
       title: 'Reengineering a 13-module legacy platform',
       meta: '[Insurance & Finance]',
       roles: ['UX Research', 'Design System', 'PRODUCT DESIGN', 'Front-End'],
+      poc: {
+        title: 'AI-Assisted Design System Workflow',
+        subtitle: 'From user stories to design-system-driven interfaces',
+        intro: [
+          'I built a Proof of Concept to test whether an AI-assisted workflow could translate product requirements into editable Figma interfaces while preserving an existing enterprise Design System as the source of truth.',
+          'I curated pairs of previous user stories and their approved Figma outcomes as few-shot / in-context examples, giving the model concrete references for how requirements had historically translated into UX patterns, components and layouts. The workflow combined that contextual guidance with explicit UX rules and structured Design System information — components, variants, variables, tokens and interaction patterns — reaching the system through an MCP-based context layer instead of inventing UI from scratch.',
+        ],
+        tested: { label: 'What I tested', body: 'Running a real user story through the pipeline, the agent produced editable Figma views built from existing Design System components — not generic UI. The translation held: component reuse and UX intent survived, and the output was reviewable and editable rather than a flat mockup.' },
+        status: { label: 'Status', body: 'Validated POC. Not taken to production — the goal was to prove the translation layer worked, not to automate design decisions. The designer retains validation and final judgment.' },
+        facts: {
+          domain: { label: 'Domain', value: 'Design System Automation' },
+          length: { label: 'Length', value: 'POC · 2026' },
+          role: { label: 'Role', value: 'Design & Execution' },
+        },
+        humanInLoop: { label: 'Human-in-the-loop', body: 'AI accelerates translation and component mapping; the designer retains validation and final design decisions.' },
+      },
       blocks: {
         startingPoint: { heading: 'Starting point', body: "Asociart brought Neoris in to replace a monolithic legacy system running claims, legal, medical and financial operations across ten-plus departments. There was no UX practice on the product and no shared visual system. As part of Neoris' team, I was brought in to build that foundation while the platform was reengineered." },
         theWork: { heading: 'The work', body: 'I led research with internal users and stakeholders, mapped service blueprints for thirteen interconnected modules and built the Core Design System underneath all of them — 71+ components, token architecture for colour, type and spacing, documented in Storybook. I specified component states and interaction behaviour against WCAG contrast, and worked hands-on in Angular to keep the specs and the production UI aligned.' },
@@ -438,7 +454,7 @@ export const en = {
         recoveriesA: { alt: 'Asociart Core Design System: colour and typography foundations' },
         recoveriesB: { alt: 'Asociart Storybook documentation for the aso-button component' },
         outcome: { alt: 'The reengineered Asociart claims management screen on a laptop' },
-        workflow: { alt: 'AI-Assisted Design System Workflow: a diagram from user story, few-shot examples and rules through Claude and the Figma MCP to an editable Figma interface built from the Design System', desc: 'From user stories to design-system-driven interfaces. I built a Proof of Concept to test whether an AI-assisted workflow could translate product requirements into editable Figma interfaces while preserving an existing enterprise Design System as the source of truth. I curated pairs of previous user stories and their approved Figma outcomes as few-shot / in-context examples, giving the model concrete references for how requirements had historically translated into UX patterns, components and layouts. The workflow combined that contextual guidance with explicit UX rules and structured Design System information — components, variants, variables, tokens and interaction patterns — reaching the system through an MCP-based context layer instead of inventing UI from scratch. What I tested: running a real user story through the pipeline, the agent produced editable Figma views built from existing Design System components — not generic UI. The translation held: component reuse and UX intent survived, and the output was reviewable and editable rather than a flat mockup. Status: validated POC. Not taken to production — the goal was to prove the translation layer worked, not to automate design decisions. The designer retains validation and final judgment. Domain: Design System Automation. Length: POC · 2026. Role: Design & Execution. Human-in-the-loop: AI accelerates translation and component mapping; the designer retains validation and final design decisions.', label: 'AI-Assisted Design System Workflow' },
+        workflow: { alt: 'AI-Assisted Design System Workflow: a diagram from user story, few-shot examples and rules through Claude and the Figma MCP to an editable Figma interface built from the Design System' },
       },
     },
     'the-mile': {
@@ -509,13 +525,19 @@ export const en = {
       title: 'Making an industrial process legible',
       meta: '[Climate Tech] [Enterprise]',
       roles: ['Branding', 'Brand Architecture', 'Web Design', 'Web Development'],
+      startingPoint: {
+        heading: 'Starting point',
+        steps: ['Raw material', 'Microalgae', 'Biomass', 'Organic goods'],
+        body: 'Carbon Optimum turns captured CO₂ into value: microalgae absorb it, the biomass is harvested in a single day, and it becomes raw material for organic goods. A Miami-based company with a genuinely complex process — and a brand that had to make it easy to understand for partners and buyers.',
+      },
       blocks: {
         theWork: { heading: 'The work', body: 'I redesigned the Carbon Optimum logo and built a brand architecture around it: Optimarine, the marine-ingredients line powered by microalgae, and its three product brands — OptiCosmetics, OptiOmega3 and Biomass. Then I designed and developed the site: information architecture and a visual system that turn the process into a clear narrative, built as modular, responsive pages.' },
         outcome: { heading: 'Outcome', body: 'Brand and site live; I handle ongoing maintenance.' },
       },
       images: {
-        hero: { alt: 'The Carbon Optimum process — raw material, microalgae, biomass, organic goods — over an ocean photograph, with the brand palette', desc: 'Carbon Optimum turns captured CO₂ into value: microalgae absorb it, the biomass is harvested in a single day, and it becomes raw material for organic goods. A Miami-based company with a genuinely complex process — and a brand that had to make it easy to understand for partners and buyers.', label: 'Starting point' },
-        logos: { alt: 'The redesigned Carbon Optimum logo, “Carbon dioxide is the problem. We are the solution.”, and the new Optimarine logo, “Sustainable Marine Ingredients, Powered by Microalgae”' },
+        hero: { alt: 'Aerial photograph of dark blue ocean waves, beside the Carbon Optimum brand palette' },
+        logoCarbon: { alt: 'The redesigned Carbon Optimum logo, with the slogan “Carbon dioxide is the problem. We are the solution.”', caption: 'Carbon Optimum logo redesign' },
+        logoOptimarine: { alt: 'The new Optimarine logo, with the slogan “Sustainable Marine Ingredients, Powered by Microalgae”', caption: 'Optimarine logo design' },
         site: { alt: 'The Carbon Optimum website on a desktop computer and its modular pages, with the OptiCosmetics, OptiOmega3 and Biomass brands' },
       },
     },

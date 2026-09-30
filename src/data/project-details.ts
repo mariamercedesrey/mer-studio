@@ -17,8 +17,15 @@ export type DetailImage = {
   alt: string;
   desc?: string;    // copy that is baked into the image, kept as real (visually hidden) text
   label?: string;   // heading for `desc` (JSON-LD / meta)
+  caption?: string; // visible caption above the image (HTML text)
+  center?: boolean; // centred in its column
 };
-export type DetailItem = DetailText | DetailImage;
+// Asociart "AI-Assisted Design System Workflow": the copy is HTML (components/work/PocBlock.astro), the diagram is the image.
+export type PocCopy = Copy['caseStudies']['asociart']['poc'];
+export type DetailPoc = { t: 'poc'; src: string; w: number; alt: string; copy: PocCopy };
+// Carbon Optimum "Starting point": ocean photo + palette as image; the card over it (steps, heading, paragraph) is HTML (components/work/StepsCard.astro).
+export type DetailSteps = { t: 'steps'; src: string; w: number; alt: string; heading: string; steps: readonly string[]; icons: readonly string[]; body: string };
+export type DetailItem = DetailText | DetailImage | DetailPoc | DetailSteps;
 export type Placed = DetailItem & { x: number; y: number; tw?: number; back?: boolean }; // tw: width of a text block (Figma px)
 
 export type FlowSection = {
@@ -46,7 +53,9 @@ export type ProjectDetailData = {
 type Block = { heading: string; body: string };
 type ImageCopy = { alt: string; desc?: string; label?: string };
 const text = (b: Block, panel = false): DetailText => ({ t: 'text', heading: b.heading, body: b.body, panel });
-const img = (src: string, w: number, i: ImageCopy): DetailImage => ({ t: 'img', src, w, alt: i.alt, desc: i.desc, label: i.label });
+const img = (src: string, w: number, i: ImageCopy & { caption?: string }, center = false): DetailImage => ({ t: 'img', src, w, alt: i.alt, desc: i.desc, label: i.label, caption: i.caption, center });
+const poc = (src: string, w: number, alt: string, copy: PocCopy): DetailPoc => ({ t: 'poc', src, w, alt, copy });
+const steps = (src: string, w: number, alt: string, sp: { heading: string; steps: readonly string[]; body: string }, icons: readonly string[]): DetailSteps => ({ t: 'steps', src, w, alt, icons, ...sp });
 const at = (x: number, y: number, item: DetailItem, tw?: number): Placed => ({ ...item, x, y, tw });
 
 // All copy (client, credit, titles, meta, roles, text blocks, alt texts, baked-in image copy) is in src/i18n/{en,es}.ts → `caseStudies[slug]`.
@@ -85,7 +94,7 @@ const build = (cs: Copy['caseStudies']): Record<string, ProjectDetailData> => {
           { w: 620, items: [text(asociart.blocks.outcome)] },
           { w: 698, items: [img('asociart/outcome', 698, asociart.images.outcome)] },
         ] },
-        { kind: 'flow', cw: 1349, cols: [{ w: 1349, items: [img('asociart/workflow', 1349, asociart.images.workflow)] }] },
+        { kind: 'flow', cw: 1349, cols: [{ w: 1349, items: [poc('asociart/workflow', 779, asociart.images.workflow.alt, asociart.poc)] }] },
       ],
     },
 
@@ -177,9 +186,12 @@ const build = (cs: Copy['caseStudies']): Record<string, ProjectDetailData> => {
       meta: carbon.meta,
       roles: carbon.roles,
       sections: [
-        { kind: 'flow', cw: 1349, cols: [{ w: 1349, items: [img('carbon-optimum/hero', 1349, carbon.images.hero)] }] },
+        { kind: 'flow', cw: 1349, cols: [{ w: 1349, items: [steps('carbon-optimum/hero', 1349, carbon.images.hero.alt, carbon.startingPoint, ['carbon-optimum/step-1', 'carbon-optimum/step-2', 'carbon-optimum/step-3', 'carbon-optimum/step-4'])] }] },
         { kind: 'flow', cw: 1349, cols: [{ w: 1349, items: [text(carbon.blocks.theWork)] }] },
-        { kind: 'flow', cw: 1349, cols: [{ w: 1349, items: [img('carbon-optimum/logos', 1349, carbon.images.logos)] }] },
+        { kind: 'flow', cw: 1349, cols: [{ w: 1349, items: [
+        img('carbon-optimum/logo-carbon', 417, carbon.images.logoCarbon, true),
+        img('carbon-optimum/logo-optimarine', 474, carbon.images.logoOptimarine, true),
+      ] }] },
         { kind: 'flow', cw: 1349, cols: [{ w: 1349, items: [text(carbon.blocks.outcome)] }] },
         { kind: 'flow', cw: 1349, cols: [{ w: 1349, items: [img('carbon-optimum/site', 1349, carbon.images.site)] }] },
       ],
@@ -274,11 +286,19 @@ const cache: Partial<Record<Locale, Record<string, ProjectDetailData>>> = {};
 /** The project details in a language (same structure and layout; only the copy changes). */
 export const getProjectDetails = (locale: Locale) => (cache[locale] ??= build(getCopy(locale).caseStudies));
 
-/** Every text block of a project (headings + bodies, incl. copy baked into images), for JSON-LD and meta. */
+/** Every text block of a project (headings + bodies, incl. copy that lives in a composed block or is baked into an image), for JSON-LD and meta. */
 export function detailBlocks(p: ProjectDetailData): { heading: string; body: string }[] {
   const out: { heading: string; body: string }[] = [];
   const visit = (i: DetailItem) => {
     if (i.t === 'text') out.push({ heading: i.heading, body: i.body });
+    else if (i.t === 'poc') {
+      const c = i.copy;
+      const f = c.facts;
+      out.push({
+        heading: c.title,
+        body: [`${c.subtitle}.`, ...c.intro, `${c.tested.label}: ${c.tested.body}`, `${c.status.label}: ${c.status.body}`, `${f.domain.label}: ${f.domain.value}.`, `${f.length.label}: ${f.length.value}.`, `${f.role.label}: ${f.role.value}.`, `${c.humanInLoop.label}: ${c.humanInLoop.body}`].join(' '),
+      });
+    } else if (i.t === 'steps') out.push({ heading: i.heading, body: i.body });
     else if (i.desc) out.push({ heading: i.label ?? i.alt, body: i.desc });
   };
   for (const s of p.sections) {

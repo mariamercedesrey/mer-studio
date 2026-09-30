@@ -5,6 +5,8 @@
 // the body of the prerendered /work/<slug> page (R2-E).
 import type { ProjectDetailData, DetailItem, DetailSection } from '../../data/project-details';
 import DetailImage from './DetailImage.astro';
+import PocBlock from './PocBlock.astro';
+import StepsCard from './StepsCard.astro';
 import Button from '../primitives/Button.astro';
 import DecodeTitle from '../primitives/DecodeTitle.astro';
 import { getCopy, localeOf } from '../../i18n';
@@ -59,8 +61,12 @@ const pct = (n: number, of: number) => `${(n / of) * 100}%`;
                 <h3 class="pd__block-title">{i.heading}</h3>
                 <p class="pd__block-body">{i.body}</p>
               </section>
+            ) : i.t === 'poc' ? (
+              <PocBlock poc={i} />
+            ) : i.t === 'steps' ? (
+              <StepsCard item={i} style={`--iw:${pct(i.w, c.w)}`} />
             ) : (
-              <DetailImage src={i.src} width={i.w} alt={i.alt} desc={i.desc} style={`--iw:${pct(i.w, c.w)}`} />
+              <DetailImage src={i.src} width={i.w} alt={i.alt} desc={i.desc} caption={i.caption} center={i.center} style={`--iw:${pct(i.w, c.w)}`} />
             ))}
           </div>
         ))}
@@ -68,15 +74,15 @@ const pct = (n: number, of: number) => `${(n / of) * 100}%`;
     ) : (
       <div class="pd-stage" style={`--sw:${s.w};aspect-ratio:${s.w} / ${s.h}`}>
         {s.items.map((i) => {
-          const pos = `z-index:${i.back ? 0 : 1};left:${pct(i.x, s.w)};top:${pct(i.y, s.h)};width:${pct(i.t === 'img' ? i.w : (i.tw ?? 470), s.w)}`;
+          const pos = `z-index:${i.back ? 0 : 1};left:${pct(i.x, s.w)};top:${pct(i.y, s.h)};width:${pct(i.t === 'text' ? (i.tw ?? 470) : i.w, s.w)}`;
           return i.t === 'text' ? (
             <section class="pd-stage__item pd__block" style={pos} data-reveal="rise">
               <h3 class="pd__block-title">{i.heading}</h3>
               <p class="pd__block-body">{i.body}</p>
             </section>
-          ) : (
+          ) : i.t === 'img' ? (
             <DetailImage src={i.src} width={i.w} alt={i.alt} desc={i.desc} style={pos} />
-          );
+          ) : null;
         })}
       </div>
     ))}
@@ -146,6 +152,10 @@ const pct = (n: number, of: number) => `${(n / of) * 100}%`;
   /* Images: display width = Figma width / column width */
   .pd-img { width: var(--iw, 100%); max-width: 100%; }
   .pd-img picture, .pd-img img { display: block; width: 100%; height: auto; }
+  .pd-img--center { margin-inline: auto; }
+  /* Visible caption above an image (Carbon logos, Figma 2192:621): mono 16/24, centred. */
+  .pd-img__cap { margin-bottom: var(--sp-12); font-family: var(--font-technical); font-size: var(--fs-eyebrow); line-height: 24px; letter-spacing: 0.02em; text-align: center; color: var(--text-primary); }
+  .pd-img--captioned + .pd-img--captioned { margin-top: var(--sp-48); }
 
   /* flow — columns side by side; a column is w/cw of the frame (Figma), the rest is space-between */
   .pd-flow { display: flex; justify-content: space-between; align-items: var(--ai); gap: var(--sp-24); }
