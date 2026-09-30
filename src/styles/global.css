@@ -44,8 +44,8 @@ img, picture, video, svg { display: block; max-width: 100%; }
 a { color: inherit; }
 button { font: inherit; color: inherit; }
 
-/* The fixed top bar must never cover an anchor target. */
-[id] { scroll-margin-top: calc(var(--header-bar-h) + var(--sp-24)); }
+/* The sticky header must never cover an anchor target: landing = the section's real top, right under the header. */
+[id] { scroll-margin-top: var(--header-h); }
 
 :focus-visible {
   outline: 2px solid var(--accent-primary);

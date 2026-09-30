@@ -400,7 +400,7 @@ function SignatureDot(_p = {}) {
     style,
     ...rest
   } = _p;
-  const bg = tone === 'dark' ? 'var(--accent-dark)' : tone === 'muted' ? 'rgb(126,126,126)' : 'var(--accent-primary)';
+  const bg = tone === 'dark' ? 'var(--signature-dot-on-light)' : tone === 'muted' ? 'rgb(126,126,126)' : 'var(--accent-primary)';
   return /*#__PURE__*/React.createElement("span", _extends({
     "aria-hidden": "true",
     "data-mer-dot": ""

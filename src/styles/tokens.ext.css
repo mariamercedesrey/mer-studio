@@ -15,6 +15,12 @@
   --opacity-step-pending: 0.6;                    /* How it works step not yet reached by the dot — same 60 % as --text-tertiary (dark), keeps AA on charcoal */
   --ascii-bg: rgb(16, 16, 25);                    /* How it works ASCII panel ground, sampled from brand/assets/img/how-it-works.png */
   --ascii-ink: rgb(202, 203, 209);                /* How it works ASCII glyphs, sampled from the same asset */
+  /* Body/Large — Figma text style text/body-lg: Outfit Regular 20 / 150 %. (--fs-body-lg is the older 18 px step; this style is separate.)
+     The hero eyebrow, offer line and summary use it. Scales down with the token on phones, never with loose values. */
+  --text-body-lg-family: var(--font-display);
+  --text-body-lg-weight: 400;
+  --text-body-lg-size: 20px;
+  --text-body-lg-line: 1.5;
   --fs-body-xl: 20px;                             /* About body (Figma 2119:84) — no /brand size sits between body-lg 18 and lead-sm 22 */
   --surface-overlay-ink: rgba(255, 255, 255, 0.05); /* About profile card on ink (Figma 2121:163) */
 
@@ -41,3 +47,4 @@
   --step-scroll: clamp(150px, 18svh, 200px);
   --dur-curtain: 1100ms;                          /* intro curtain exit (Mer: 1000–1200 ms) */
 }
+@media (max-width: 767px) { :root { --text-body-lg-size: 18px; } } /* phones: one step down, still 150 % */

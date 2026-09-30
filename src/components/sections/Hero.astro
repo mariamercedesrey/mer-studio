@@ -77,6 +77,9 @@ const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Financ
       <Button href="/start-a-project/" variant="secondary" width={185}>start a project</Button>
     </div>
   </div>
+
+  <!-- Figma 149:5103: the yellow arrow sits under the tags, centred, right before the logo marquee. Straight to Selected Work. -->
+  <div class="hero__scroll"><a class="hero__scroll-link" href="#work" aria-label="Go to selected work"></a></div>
 </section>
 
 <style>
@@ -102,10 +105,13 @@ const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Financ
     min-height: 502px;
   }
   .hero__copy { max-width: 880px; }
-  .hero__lead {
-    font-weight: 500;
-    font-size: var(--fs-lead);
-    line-height: 1.2;
+  /* Eyebrow, offer line and summary share ONE text style: Body/Large (--text-body-lg-*), colour text-primary. */
+  .hero__lead, .hero__offer, .hero__summary {
+    font-family: var(--text-body-lg-family);
+    font-weight: var(--text-body-lg-weight);
+    font-size: var(--text-body-lg-size);
+    line-height: var(--text-body-lg-line);
+    color: var(--text-primary);
   }
   /* :global — the h1 is rendered by DecodeTitle, so it never carries this component's scope attribute. */
   .hero :global(.hero__title) {
@@ -116,8 +122,8 @@ const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Financ
   }
 
   /* Offer line (Figma 2255:1517): one line on desktop, two on mobile. The brackets hug the current word (Mer): no reserved width. */
-  .hero__offer { max-width: 880px; font-size: var(--fs-body-lg); line-height: 1.35; }
-  .hero__rot { white-space: nowrap; }
+  .hero__offer { max-width: 880px; }
+  .hero__rot { white-space: nowrap; color: var(--accent-dark); } /* rotating [engine]: accent/dark on light (6.4:1) */
   .hero__rot-b { font-weight: 500; }
   .hero__rot-w { display: inline-block; font-weight: 500; vertical-align: baseline; }
   .hero__more { color: inherit; text-decoration: underline; text-underline-offset: 0.18em; font-weight: 500; }
@@ -224,11 +230,23 @@ const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Financ
     height: 0.161em;
     margin: 0.4921em 0 0 0.6667em;
   }
-  .hero__summary {
-    font-weight: 500;
-    font-size: var(--fs-lead);
-    line-height: 1.2;
+  /* Scroll arrow (Figma 149:5103): centred under the tags, 60 px icon; nudges 3 px every 3 s. */
+  .hero__scroll { display: flex; justify-content: center; padding: 0 var(--page-gutter) var(--sp-64); }
+  .hero__scroll-link {
+    display: block; width: 60px; height: 60px; flex-shrink: 0;
+    /* Icon: brand/assets/icons/circle-arrow-down.svg (24 box, ring r=10). 60px box → 50px ring, as in Figma. */
+    background: var(--accent-primary);
+    -webkit-mask: url(/icons/circle-arrow-down.svg) center / contain no-repeat;
+    mask: url(/icons/circle-arrow-down.svg) center / contain no-repeat;
+    transition: background-color var(--dur-fast) var(--ease-precise);
+    animation: scroll-nudge 3s var(--ease-precise) infinite;
   }
+  .hero__scroll-link:hover { background: var(--accent-bright); }
+  @keyframes scroll-nudge {
+    0%, 80%, 100% { translate: 0 0; }
+    88% { translate: 0 3px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .hero__scroll-link { animation: none; } }
 
   /* Tablet + mobile: the band no longer overlaps the row; the row stacks as
      video → m + summary → where we've worked. */
@@ -257,11 +275,9 @@ const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Financ
     .hero__band { padding-top: 124px; padding-bottom: 48px; }
     /* No JS: the header stays a static column above the band. */
     :global(html:not(.js)) .hero__band { margin-top: 0; padding-top: 56px; }
-    .hero__lead { font-size: 20px; }
     .hero :global(.hero__title) { font-size: clamp(40px, 11.5vw, 56px); }
     .hero__aside { display: flex; flex-direction: column; align-items: flex-start; padding-top: var(--sp-40); }
     .hero__mark { font-size: 132px; }
-    .hero__summary { font-size: 20px; }
     .hero__worked { padding-top: var(--sp-40); }
     .hero__worked-title { font-size: var(--fs-meta); }
   }

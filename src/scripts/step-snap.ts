@@ -20,10 +20,17 @@ const MIN_DELTA = 12;   // px accumulated before a gesture counts as intent
 const ACCEL = 1.6;      // a delta this many times the previous one (after the cooldown) is a new flick
 
 const active = new Set<HTMLElement>();
+// An anchor scroll (scripts/anchor-nav.ts) is travelling: no snapping, no gate, until it lands or the user takes over.
+let suspended = false;
+export function suspendStepSnap(on: boolean) {
+  if (suspended === on) return;
+  suspended = on;
+  dispatchEvent(new Event('stepsnap:suspend'));
+}
 const sync = () => document.documentElement.toggleAttribute('data-step-snap', active.size > 0);
 const DOWN = new Set(['ArrowDown', 'PageDown', ' ']);
 const UP = new Set(['ArrowUp', 'PageUp']);
-const canGate = () => matchMedia('(min-width: 1024px)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches && !document.querySelector('dialog[open]');
+const canGate = () => !suspended && matchMedia('(min-width: 1024px)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches && !document.querySelector('dialog[open]');
 // Passive, always-on recorder of the wheel stream (timestamps only, never prevents anything): the gate must know whether a
 // gesture was already running before it reached the track (momentum carried in), so `prev*` is the event BEFORE this one.
 const wheelSeen = { prev: -1e9, prevAbs: 0, last: -1e9, lastAbs: 0 };
@@ -96,7 +103,7 @@ export function initStepSnap(track: HTMLElement, steps: number, stepPx: () => nu
   const update = () => {
     frame = 0;
     const t = travelled(), step = stepPx();
-    set(inside(t, step));
+    set(!suspended && inside(t, step));
     if (hold) { // when the page settled on the hold stop (dwell counts from here)
       const on = Math.abs(t - hold.at * step) < 3;
       if (on && !holdSince) holdSince = performance.now();
@@ -119,11 +126,13 @@ export function initStepSnap(track: HTMLElement, steps: number, stepPx: () => nu
   addEventListener('scroll', schedule, { passive: true });
   addEventListener('resize', schedule);
   addEventListener('keydown', onKey);
+  addEventListener('stepsnap:suspend', schedule);
   update();
   return () => {
     removeEventListener('scroll', schedule);
     removeEventListener('resize', schedule);
     removeEventListener('keydown', onKey);
+    removeEventListener('stepsnap:suspend', schedule);
     cancelAnimationFrame(frame);
     set(false);
   };

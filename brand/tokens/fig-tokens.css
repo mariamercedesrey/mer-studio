@@ -3,21 +3,21 @@
 
 :root {
   --accent-bright: var(--color-brand-yellow-bright); /* @kind color */
-  --accent-dark: var(--color-brand-yellow-dark); /* @kind color */
+  --accent-dark: var(--color-brand-dark); /* @kind color */
   --accent-primary: var(--color-brand-yellow); /* @kind color */
   --action-disabled-background: var(--color-neutral-300); /* @kind color */
   --action-disabled-text: var(--color-neutral-500); /* @kind color */
   --action-ghost-text: var(--color-neutral-900); /* @kind color */
-  --action-primary-background: var(--color-brand-yellow); /* @kind color */
+  --action-primary-background: var(--color-brand-yellow-bright); /* @kind color */
   --action-primary-text: var(--color-neutral-900); /* @kind color */
   --action-secondary-background: var(--color-neutral-900); /* @kind color */
   --action-secondary-text: var(--color-neutral-0); /* @kind color */
   --border-default: var(--color-neutral-300); /* @kind color */
   --border-subtle: var(--color-neutral-400); /* @kind color */
   --color-base-white: rgb(255,255,255); /* @kind color */
-  --color-brand-dark: rgb(14,34,41); /* @kind color */
+  --color-brand-dark: rgb(99,88,52); /* @kind color */
   --color-brand-yellow-bright: rgb(252,200,20); /* @kind color */
-  --color-brand-yellow-dark: rgb(214,169,12); /* @kind color */
+  --color-brand-yellow-dark: rgb(166,130,8); /* @kind color */
   --color-brand-yellow: rgb(238,187,10); /* @kind color */
   --color-feedback-info-default: var(--color-secondary-500); /* @kind color */
   --color-feedback-info-text: var(--color-secondary-700-2); /* @kind color */

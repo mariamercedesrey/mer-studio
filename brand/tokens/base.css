@@ -32,7 +32,7 @@
   --divider:var(--fills-primary);         /* rgba(120,120,120,.2) — list dividers, nav pill */
   --divider-dashed:rgb(155,155,155);      /* dashed article borders */
   --signature-dot:var(--accent-primary);
-  --signature-dot-on-light:var(--accent-dark);
+  --signature-dot-on-light:var(--accent-primary); /* the dot stays yellow on light grounds; accent-dark is now brand/dark (#635834) */
 
   /* Motion — from Figma "Motion" guidance: dot + marquee loop at 2s */
   --motion-loop:2s; /* @kind other */
