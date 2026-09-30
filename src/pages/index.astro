@@ -8,7 +8,6 @@ import Services from '../components/sections/Services.astro';
 import HowItWorks from '../components/sections/HowItWorks.astro';
 import About from '../components/sections/About.astro';
 import FinalCTA from '../components/sections/FinalCTA.astro';
-import Contact from '../components/sections/Contact.astro';
 import HomeIntro from '../components/sections/HomeIntro.astro';
 import SiteFooter from '../components/sections/SiteFooter.astro';
 import ProjectOverlay from '../components/work/ProjectOverlay.astro';
@@ -18,7 +17,7 @@ import { homeSchema } from '../data/schema';
   <!-- Intro gate: first visit of the session, motion allowed. Runs before first paint; no attribute = no overlay (also without JS). -->
   <script is:inline slot="head">
     try {
-      if (!matchMedia('(prefers-reduced-motion: reduce)').matches && !sessionStorage.getItem('mer-intro')) {
+      if (!location.hash && !matchMedia('(prefers-reduced-motion: reduce)').matches && !sessionStorage.getItem('mer-intro')) { // a deep link (/#about) skips the intro: it lands on its section
         document.documentElement.setAttribute('data-intro', '');
         sessionStorage.setItem('mer-intro', '1');
       }
@@ -34,7 +33,6 @@ import { homeSchema } from '../data/schema';
     <HowItWorks />
     <About />
     <FinalCTA faqLink />
-    <Contact />
   </main>
   <SiteFooter />
   <ProjectOverlay />

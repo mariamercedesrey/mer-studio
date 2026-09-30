@@ -1,49 +1,82 @@
 ---
-// Figma 149:6099 Footer — on the page (white) ground. tone="ink": the /start-a-project/ footer (Figma 2084:370), on ink.
-interface Props { tone?: 'base' | 'ink' }
-const { tone = 'base' } = Astro.props;
+// The one footer, on every page: logo + channels (Figma 149:6087 Contact), the link list, and the copyright band (Figma 149:6099).
+// Home links are in-page anchors on the home and "/#…" everywhere else (same rule as the header); direct entry lands via scripts/anchor-nav.ts.
+// The band carries no links.
+import { EMAIL, WHATSAPP } from '../../data/contact';
+const home = Astro.url.pathname === '/';
+const anchor = (h: string) => (home ? h : `/${h}`);
+const links = [
+  { label: 'Selected Works', href: anchor('#work') },
+  { label: 'Services', href: anchor('#services') },
+  { label: 'AI Visibility', href: '/ai-visibility/' },
+  { label: 'About Us', href: anchor('#about') },
+  { label: 'FAQ', href: '/faq/' },
+];
 ---
-{tone === 'ink' ? (
-  <footer class="site-footer-ink">
-    <div class="site-footer-ink__brand">
-      <p class="site-footer-ink__name">mer.studio™</p>
-      <p class="site-footer-ink__meta">©2026 mer.studio™ All Rights Reserved</p>
+<footer class="site-footer" id="contact">
+  <div class="site-footer__main">
+    <div class="footer__top">
+      <a class="footer__logo" href="/">
+        <img src="/logo-negative.svg" width="182" height="29" alt="MER Studio" />
+      </a>
+      <address class="footer__channels">
+        <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+        <a href={WHATSAPP.href} target="_blank" rel="noopener"><span class="visually-hidden">WhatsApp </span>{WHATSAPP.label}<span class="visually-hidden"> (opens in a new tab)</span></a>
+      </address>
     </div>
-    <nav class="site-footer-ink__nav" aria-label="Footer">
-      <ul role="list"><li><a href="/faq/">FAQ</a></li></ul>
+    <nav aria-label="Footer">
+      <ul role="list" class="footer__nav">
+        {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      </ul>
     </nav>
-    <div class="site-footer-ink__where">
-      <p class="site-footer-ink__meta">WORKING WORLDWIDE FROM</p>
-      <p>Buenos Aires</p>
-    </div>
-  </footer>
-) : (
-  <footer class="site-footer">
+  </div>
+  <div class="site-footer__band">
     <p>©2026 mer.studio™ All Rights Reserved</p>
     <p class="site-footer__where">Working Worldwide from <span class="site-footer__tag">argentina</span></p>
-  </footer>
-)}
+  </div>
+</footer>
 
 <style>
-  /* The link list lives in Contact (home). Pages whose footer is this ink one carry the same list style with FAQ only. */
-  .site-footer-ink__nav a { font-size: var(--fs-body); line-height: 1.5; text-decoration: none; transition: color var(--dur-fast) var(--ease-precise); }
-  .site-footer-ink__nav a:hover { color: var(--accent-primary); }
-  .site-footer-ink {
+  .site-footer__main {
     display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: var(--sp-24);
-    flex-wrap: wrap;
-    padding: var(--sp-32) var(--page-gutter);
+    flex-direction: column;
+    gap: var(--sp-48);
+    padding: var(--sp-48) var(--page-gutter);
     background: var(--surface-inverse); --focus-ring: var(--focus-ring-on-dark);
     color: var(--text-inverse);
+    border-top: 0.6px solid var(--border-default);
   }
-  .site-footer-ink__brand { display: flex; flex-direction: column; gap: var(--sp-12); }
-  .site-footer-ink__name { font-weight: 600; font-size: var(--fs-lead); line-height: 1; letter-spacing: -0.04em; }
-  .site-footer-ink__where { display: flex; flex-direction: column; gap: var(--sp-8); align-items: flex-end; }
-  .site-footer-ink__meta { font-family: var(--font-technical); font-size: var(--fs-caption); line-height: 1.4; letter-spacing: 0.02em; opacity: 0.52; }
-  @media (max-width: 767px) { .site-footer-ink { flex-direction: column; align-items: flex-start; } .site-footer-ink__where { align-items: flex-start; } }
-  .site-footer {
+  .footer__top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--sp-24); flex-wrap: wrap; }
+  /* Figma draws the wordmark at 65.3px type → the 182px logo scaled ×1.718. */
+  .footer__logo { display: inline-flex; margin-top: 2px; }
+  .footer__logo img { width: 312.7px; height: auto; }
+  .footer__channels { display: flex; gap: 22px; font-style: normal; }
+  /* Same size as the footer nav links (Mer, review round 10). */
+  .footer__channels a {
+    font-size: var(--fs-body);
+    line-height: 1.5;
+    text-decoration: underline;
+    text-decoration-thickness: from-font;
+    text-underline-position: from-font;
+    white-space: nowrap;
+    transition: color var(--dur-fast) var(--ease-precise);
+  }
+  .footer__channels a:hover, .footer__nav a:hover { color: var(--accent-primary); }
+  .footer__nav { display: flex; flex-direction: column; gap: 14px; }
+  @media (max-width: 767px) {
+    .site-footer__main { gap: var(--sp-40); padding: var(--sp-48) var(--page-gutter); }
+    .footer__top { flex-direction: column; gap: var(--sp-32); }
+    .footer__logo img { width: 220px; }
+    .footer__channels { flex-direction: column; gap: var(--sp-12); }
+  }
+  .footer__nav a {
+    font-size: var(--fs-body);
+    line-height: 1.5;
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease-precise);
+  }
+
+  .site-footer__band {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -58,7 +91,7 @@ const { tone = 'base' } = Astro.props;
   }
   .site-footer__where { display: flex; align-items: center; gap: 10px; }
   @media (max-width: 767px) {
-    .site-footer { flex-direction: column; align-items: flex-start; gap: var(--sp-8); padding-top: var(--sp-16); padding-bottom: var(--sp-16); }
+    .site-footer__band { flex-direction: column; align-items: flex-start; gap: var(--sp-8); padding-top: var(--sp-16); padding-bottom: var(--sp-16); }
   }
   .site-footer__tag {
     display: inline-flex;
