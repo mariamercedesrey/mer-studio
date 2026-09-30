@@ -2,7 +2,7 @@
 // Figma 2084:251 Inquiry form — Netlify Forms (name="project-inquiry"), honeypot, native validation with inline messages,
 // AJAX submit with a fallback to /start-a-project/thanks/. ?service=<slug> preselects a service chip. Script at the bottom.
 import Button from '../primitives/Button.astro';
-const services = ['Branding', 'Website', 'Digital product', 'AI visibility', 'Design system', 'Something else'];
+const services = ['Branding', 'Website', 'Digital product', 'AI visibility', 'AI-assisted & Automation', 'Design system', 'Something else'].map((label) => ({ label, value: label === 'AI-assisted & Automation' ? 'ai-automation' : label }));
 const timing = ['As soon as possible', 'Within 1–3 months', '3–6 months', 'Just exploring'];
 ---
 <div class="inquiry" data-inquiry>
@@ -53,7 +53,7 @@ const timing = ['As soon as possible', 'Within 1–3 months', '3–6 months', 'J
         <fieldset class="chips">
           <legend class="visually-hidden">Services (choose any)</legend>
           {services.map((s) => (
-            <label class="chip"><input type="checkbox" name="services" value={s} /><span class="chip__face"><i class="chip__dot" aria-hidden="true"></i>{s}</span></label>
+            <label class="chip"><input type="checkbox" name="services" value={s.value} /><span class="chip__face"><i class="chip__dot" aria-hidden="true"></i>{s.label}</span></label>
           ))}
         </fieldset>
         <div class="field">

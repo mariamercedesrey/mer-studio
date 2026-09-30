@@ -14,6 +14,7 @@ const services = [
   { name: 'AI Visibility · GEO / AEO', description: 'So people find you when they ask an AI, not just Google.' },
   { name: 'Design System', description: 'Exported tokens, a documented component library, and a usage guide — so your team, or an AI agent, can keep building on it without breaking the system.' },
   { name: 'Maintenance', description: 'Optional, after handover. Changes, updates, backups and priority response.' },
+  { name: 'AI-assisted & Automation', description: 'AI assistants and automations that take repetitive work off your team — built into your site, store or product.' },
 ];
 
 export function homeSchema() {

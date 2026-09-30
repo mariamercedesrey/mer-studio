@@ -36,6 +36,7 @@ Added to any project — or contracted on their own:
 
 - Design System: Exported tokens, a documented component library, and a usage guide — so your team, or an AI agent, can keep building on it without breaking the system.
 - Maintenance: Optional, after handover. Changes, updates, backups and priority response.
+- AI-assisted & Automation: AI assistants and automations that take repetitive work off your team — built into your site, store or product.
 
 ## How we work
 
