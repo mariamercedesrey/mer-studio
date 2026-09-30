@@ -2,7 +2,7 @@ import { chromium } from 'playwright';
 // QA: no element may make the page wider than the viewport (document.scrollingElement.scrollWidth === clientWidth) at 360 and 390 px,
 // on every page. Usage: npm run build && npx astro preview --port 4322 &  then  npm run qa:overflow [-- http://localhost:4322]
 const base = process.argv[2] || 'http://localhost:4322';
-const b = await chromium.launch();
+const b = await chromium.launch(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {}); // CHROME_PATH: optional Chromium binary
 const pages = ['/', '/ai-visibility/', '/start-a-project/', '/start-a-project/thanks/', '/404.html', '/work/asociart/', '/work/the-mile/', '/work/orchard-mile/', '/work/quilmes/', '/work/carbon-optimum/', '/work/agente-mama/', '/work/american-padel-systems/', '/work/hifi-hub/'];
 let bad = 0;
 for (const w of [360, 390]) {

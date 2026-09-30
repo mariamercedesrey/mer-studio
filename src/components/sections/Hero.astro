@@ -25,7 +25,7 @@ const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Financ
       <!-- Figma 2255:1517. The rotator reuses the DecodeTitle effect (scripts/hero-rotator.ts); screen readers get the full list once. -->
       <p class="hero__offer">
         <span class="visually-hidden">Every project ships findable on {engines.slice(0, -1).join(', ')} and {engines[engines.length - 1]}</span>
-        <span aria-hidden="true">Every project ships findable on <span class="hero__rot" data-hero-rot><span class="hero__rot-b">[</span><span class="hero__rot-w"><span class="decode hero__rot-word" data-decode="rotate"><span class="decode__t" data-rot-text>ChatGPT</span></span>{engines.map((e) => <span class="hero__rot-size">{e}</span>)}</span><span class="hero__rot-b">]</span></span></span>{offer.active && <span data-offer> — {offer.hero}</span>}. <a class="hero__more" href="/ai-visibility/">Read more.</a>
+        <span aria-hidden="true">Every project ships findable on <span class="hero__rot" data-hero-rot><span class="hero__rot-b">[</span><span class="hero__rot-w"><span class="decode hero__rot-word" data-decode="rotate"><span class="decode__t" data-rot-text>ChatGPT</span></span></span><span class="hero__rot-b">]</span></span></span>{offer.active && <span data-offer> — {offer.hero}</span>}. <a class="hero__more" href="/ai-visibility/">Read more.</a>
       </p>
       <Button href={BOOKING_URL} width={183} target="_blank" rel="noopener" data-nav-sentinel>book a call<span class="visually-hidden"> (opens in a new tab)</span></Button>
     </div>
@@ -115,13 +115,11 @@ const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Financ
     letter-spacing: -0.03em;
   }
 
-  /* Offer line (Figma 2255:1517): one line on desktop, two on mobile. The rotating word keeps the width of the longest one. */
+  /* Offer line (Figma 2255:1517): one line on desktop, two on mobile. The brackets hug the current word (Mer): no reserved width. */
   .hero__offer { max-width: 880px; font-size: var(--fs-body-lg); line-height: 1.35; }
   .hero__rot { white-space: nowrap; }
   .hero__rot-b { font-weight: 500; }
-  .hero__rot-w { display: inline-grid; font-weight: 500; vertical-align: baseline; }
-  .hero__rot-w > * { grid-area: 1 / 1; }
-  .hero__rot-size { visibility: hidden; height: 0; overflow: hidden; }
+  .hero__rot-w { display: inline-block; font-weight: 500; vertical-align: baseline; }
   .hero__more { color: inherit; text-decoration: underline; text-underline-offset: 0.18em; font-weight: 500; }
   .hero__more:hover { text-decoration-thickness: 2px; }
 
