@@ -9,7 +9,8 @@
     "preview": "astro preview",
     "check": "astro check",
     "check:site": "node scripts/check-site.mjs",
-    "qa:overflow": "node scripts/qa-overflow.mjs"
+    "qa:overflow": "node scripts/qa-overflow.mjs",
+    "i18n:export": "node scripts/i18n-export.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

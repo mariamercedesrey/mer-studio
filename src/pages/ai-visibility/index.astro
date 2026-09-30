@@ -15,32 +15,25 @@ import { aiVisibilityFaq, faqSchema } from '../../data/faq';
 import { offer } from '../../data/offer';
 import { llmsSnippet } from '../../data/llms-snippet';
 import llms from '../../../public/llms.txt?raw';
+import { copy } from '../../i18n';
 
-const method = [
-  { t: 'Readable', d: 'Crawlers can reach and parse your site: fast pages, clean HTML, an llms.txt, and a robots.txt that lets AI search bots in instead of blocking them.' },
-  { t: 'Understood', d: 'Structured data (JSON-LD) and consistent entity details, so a model knows who you are, what you sell, where you work and who you work for — without guessing.' },
-  { t: 'Quotable', d: 'Pages that answer the real questions your clients ask, in a format a model can lift and cite: clear FAQs, comparisons, scope and pricing ranges.' },
-  { t: 'Present', d: 'Being named in the places models use to double-check you: Google Business Profile, directories, reviews, press and partner sites.' },
-];
-const proof = [
-  { t: 'An llms.txt', d: 'A plain-language summary of who we are and what we do, written for AI crawlers.' },
-  { t: 'Structured data', d: 'JSON-LD tells machines our name, services and location — no guessing.' },
-  { t: 'Open to AI crawlers', d: 'Our robots.txt welcomes GPTBot, ClaudeBot, PerplexityBot and Google-Extended instead of blocking them.' },
-];
+const page = copy.aiVisibility;
+const { buttons } = copy;
+
 // Snippet card: generated at build from public/llms.txt (no manual sync): title, quote, "## Services" heading and its first list.
 const snippet = llmsSnippet(llms);
 ---
 <BaseLayout
-  title="AI Visibility — Generative Engine Optimization (GEO & AEO)"
-  description="Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO): we make your brand readable and quotable by ChatGPT, Perplexity and Google AI."
+  title={page.meta.title}
+  description={page.meta.description}
   schema={[aiVisibilitySchema(), faqSchema(aiVisibilityFaq, 'https://mer.studio/ai-visibility/')]}
 >
   <main id="main">
     <PageIntro
       id="aiv-title"
-      eyebrow="ai visibility · geo / aeo"
-      title="When people ask an AI, does it name you?"
-      note="Search is moving from a list of links to a single answer. With Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO), we make your brand readable, understood and quotable by ChatGPT, Perplexity, Gemini and Google’s AI Overviews."
+      eyebrow={page.intro.eyebrow}
+      title={page.intro.title}
+      note={page.intro.note}
     />
     {offer.active && (
       <section class="offer" data-offer aria-labelledby="offer-title">
@@ -58,10 +51,10 @@ const snippet = llmsSnippet(llms);
         </div>
       </section>
     )}
-    <IntakePanel id="method-title" eyebrow="the method" title="Four things an AI needs before it recommends you." lede="Ranking still matters. But an AI only names what it can read, understand and verify somewhere else.">
+    <IntakePanel id="method-title" eyebrow={page.method.eyebrow} title={page.method.title} lede={page.method.lede}>
       <div class="method">
         <ol class="method__list" role="list">
-          {method.map((m, i) => (
+          {page.method.items.map((m, i) => (
             <li class="mrow" data-reveal="rise">
               <div class="mrow__head"><p class="mrow__num">{String(i + 1).padStart(2, '0')}</p><h3 class="mrow__title">{m.t}</h3></div>
               <p class="mrow__desc">{m.d}</p>
@@ -69,22 +62,22 @@ const snippet = llmsSnippet(llms);
           ))}
         </ol>
         <div class="method__submit" data-reveal="rise">
-          <p class="method__note"><i class="method__status" aria-hidden="true"></i><span>No one can guarantee an AI will name you. We make sure it can — and we measure which questions mention you, before and after.</span></p>
-          <Button class="method__btn" href="/start-a-project/?service=ai-visibility" size="lg" onDark>check my brand</Button>
+          <p class="method__note"><i class="method__status" aria-hidden="true"></i><span>{page.method.note}</span></p>
+          <Button class="method__btn" href="/start-a-project/?service=ai-visibility" size="lg" onDark>{buttons.checkMyBrand}</Button>
         </div>
       </div>
     </IntakePanel>
-    <NextSteps id="proof-title" eyebrow="proof, not promises" title="This site is built the same way." steps={proof}>
+    <NextSteps id="proof-title" eyebrow={page.proof.eyebrow} title={page.proof.title} steps={page.proof.steps}>
       <figure class="snippet" data-reveal="rise">
-        <figcaption class="snippet__label">mer.studio/llms.txt</figcaption>
+        <figcaption class="snippet__label">{page.proof.snippetLabel}</figcaption>
         <pre class="snippet__code"><code>{snippet}</code></pre>
       </figure>
     </NextSteps>
     <section class="aiv-faq" id="faq" aria-labelledby="aiv-faq-title">
-      <SectionHeading eyebrow="faq" title="Questions about AI Visibility." id="aiv-faq-title" dot={false} />
+      <SectionHeading eyebrow={page.faq.eyebrow} title={page.faq.title} id="aiv-faq-title" dot={false} />
       <FaqList items={aiVisibilityFaq} prefix="aiv-faq" />
     </section>
-    <FinalCTA eyebrow="One question to start." title={"What does AI say\nabout your brand?"} />
+    <FinalCTA eyebrow={page.cta.eyebrow} title={page.cta.title} />
   </main>
   <SiteFooter />
 </BaseLayout>

@@ -9,56 +9,39 @@ import SectionHeading from '../primitives/SectionHeading.astro';
 import Button from '../primitives/Button.astro';
 import StepSnap from '../primitives/StepSnap.astro';
 import { offer } from '../../data/offer';
+import { copy } from '../../i18n';
 
-const included = [
-  'Fixed scope and price',
-  'Two rounds of revisions',
-  'Responsive, mobile & desktop',
-  'Files & accounts in your name',
-];
+const { services: svc, buttons, faqCta } = copy;
+const { diagram } = svc;
+
+const included = svc.included.items;
 const AI_HREF = '/ai-visibility/';
 // Row titles = diagram pills, exactly (one list, one vocabulary).
 const services = [
-  { name: 'Branding', body: 'Identity, and the system to keep it consistent.' },
-  { name: 'Websites', body: 'A landing, a full site, or an online store — on Shopify, Tiendanube or WooCommerce.' },
-  { name: 'Digital Product', body: "An app or a platform that doesn't exist yet." },
-  { name: 'AI Visibility', body: 'GEO / AEO — so people find you when they ask an AI, not just Google.', href: AI_HREF, offer: true },
+  { ...svc.rows.branding },
+  { ...svc.rows.websites },
+  { ...svc.rows.digitalProduct },
+  { ...svc.rows.aiVisibility, href: AI_HREF, offer: true },
 ];
 // Add-ons = outer-ring chips, exactly. `more` = the expandable copy (button label per add-on ⇄ "show less").
 const addons = [
-  {
-    id: 'design-system', title: 'Design System', cta: "what's included",
-    body: 'Exported tokens, a documented component library, and a usage guide — so your team, or an AI agent, can keep building on it without breaking the system.',
-    more: ['Design tokens (color, type, spacing) exported to code', 'Component library in Figma + code, with states and variants', 'Usage guide and do/don\'t rules', 'Handover session with your team'],
-    for: 'products that will keep growing after launch.',
-  },
-  {
-    id: 'ai-assistants', title: 'AI Assistants & Automation', cta: 'how it works',
-    body: 'AI assistants and automations that take repetitive work off your team — built into your site, store or product.',
-    more: ['Assistants that answer customers with your own content', 'Automated flows: leads, orders, follow-ups, reports (n8n / API)', 'Connected to the tools you already use', 'Measured: what it saves, what it handles, what it escalates'],
-    for: 'teams answering the same questions or doing the same steps every day.',
-  },
-  {
-    id: 'maintenance', title: 'Maintenance', cta: 'learn more',
-    body: 'Optional, after handover. Changes, updates, backups and priority response.',
-    more: ['Changes and content updates', 'Platform and plugin updates', 'Backups', 'Priority response'],
-    for: 'sites and stores that need to stay current after launch.',
-  },
+  { id: 'design-system', ...svc.addons.designSystem },
+  { id: 'ai-assistants', ...svc.addons.aiAssistants },
+  { id: 'maintenance', ...svc.addons.maintenance },
 ];
 // Diagram geometry (Figma 2248:6534): centre-relative offsets in px @1440, which are the design units of the 880 × 600
 // drawing (--u scales them with the diagram's width). `i` = order of entrance.
 const pills = [
-  { label: 'AI Visibility', x: 59, y: -127, i: 0, link: AI_HREF },
-  { label: 'Digital Product', x: 173, y: 50, i: 1 },
-  { label: 'Websites', x: -118, y: 135, i: 2 },
-  { label: 'Branding', x: -202, y: -51, i: 3 },
+  { label: svc.rows.aiVisibility.name, x: 59, y: -127, i: 0, link: AI_HREF },
+  { label: svc.rows.digitalProduct.name, x: 173, y: 50, i: 1 },
+  { label: svc.rows.websites.name, x: -118, y: 135, i: 2 },
+  { label: svc.rows.branding.name, x: -202, y: -51, i: 3 },
 ];
 const chips = [
-  { label: 'AI Assistants & Automation', x: 255, y: -202, i: 4 },
-  { label: 'Maintenance', x: 148, y: 236, i: 5 },
-  { label: 'Design System', x: -278, y: -135, i: 6 },
+  { label: svc.addons.aiAssistants.title, x: 255, y: -202, i: 4 },
+  { label: svc.addons.maintenance.title, x: 148, y: 236, i: 5 },
+  { label: svc.addons.designSystem.title, x: -278, y: -135, i: 6 },
 ];
-const diagramLabel = 'Services diagram: Brand and Product, connected by Strategy, Design and Build — one connected practice, 25+ years of experience.';
 ---
 <section id="services" class="services" aria-labelledby="services-title" data-services data-s2 data-s3>
   <!-- Runs while parsing, before the section paints: the pinned layout must exist from the first frame (no layout shift). -->
@@ -78,11 +61,11 @@ const diagramLabel = 'Services diagram: Brand and Product, connected by Strategy
   <div class="services__track" data-svc-track>
     <StepSnap count={4} />
     <div class="services__pin">
-      <SectionHeading eyebrow="services" id="services-title" title="Strategy, Design & Build, end to end" />
+      <SectionHeading eyebrow={svc.eyebrow} id="services-title" title={svc.title} />
 
       <div class="services__stage">
         <div class="svc-dgwrap">
-          <div class="svc-dg" role="group" aria-label={diagramLabel}>
+          <div class="svc-dg" role="group" aria-label={svc.diagramLabel}>
             <svg class="svc-svg" viewBox="0 0 880 600" aria-hidden="true" focusable="false">
               <defs>
                 <clipPath id="svc-clip-l"><circle cx="388" cy="300" r="110" /></clipPath>
@@ -127,23 +110,23 @@ const diagramLabel = 'Services diagram: Brand and Product, connected by Strategy
             </svg>
 
             <!-- Etapa 1 — Venn -->
-            <span class="svc-t svc-v" aria-hidden="true" style="--x:-105;--y:2"><span class="svc-v__side">Brand</span></span>
-            <span class="svc-t svc-v" aria-hidden="true" style="--x:105;--y:2"><span class="svc-v__side">Product</span></span>
+            <span class="svc-t svc-v" aria-hidden="true" style="--x:-105;--y:2"><span class="svc-v__side">{diagram.brand}</span></span>
+            <span class="svc-t svc-v" aria-hidden="true" style="--x:105;--y:2"><span class="svc-v__side">{diagram.product}</span></span>
             <span class="svc-t svc-v svc-v__lens" aria-hidden="true" style="--x:0;--y:9">
-              <span class="svc-v__mer">MER</span>
-              <span class="svc-v__years">25+ years of experience</span>
+              <span class="svc-v__mer">{diagram.mer}</span>
+              <span class="svc-v__years">{diagram.years}</span>
             </span>
 
             <!-- Etapas 2–3 — core, axis labels -->
             <span class="svc-t svc-core-text" style="--x:0;--y:0">
-              <span class="svc-core-text__title">Strategy<br />Design<br />Build <i class="svc-core-text__dot" aria-hidden="true"></i></span>
-              <span class="svc-core-text__desc">One connected<br />practice<br />MER Studio</span>
+              <span class="svc-core-text__title">{diagram.coreTitleLines.map((l, i) => <>{i > 0 && <br />}{l}</>)} <i class="svc-core-text__dot" aria-hidden="true"></i></span>
+              <span class="svc-core-text__desc">{diagram.coreDescLines.map((l, i) => <>{i > 0 && <br />}{l}</>)}</span>
             </span>
-            <span class="svc-t svc-axis-label svc-axis-label--brand" aria-hidden="true" style="--x:-379;--y:2">Brand</span>
-            <span class="svc-t svc-axis-label svc-axis-label--product" aria-hidden="true" style="--x:361;--y:2">Product</span>
+            <span class="svc-t svc-axis-label svc-axis-label--brand" aria-hidden="true" style="--x:-379;--y:2">{diagram.brand}</span>
+            <span class="svc-t svc-axis-label svc-axis-label--product" aria-hidden="true" style="--x:361;--y:2">{diagram.product}</span>
 
             <!-- Etapa 3 — area label, pills, outer chips -->
-            <span class="svc-t svc-area" style="--x:0;--y:-227">25+ years of experience</span>
+            <span class="svc-t svc-area" style="--x:0;--y:-227">{diagram.years}</span>
             {pills.map((p) => p.link ? (
               <a class:list={['svc-t', 'svc-pill', { 'svc-pill--offer': offer.active }]} href={p.link} style={`--x:${p.x};--y:${p.y};--i:${p.i}`}>
                 <span class="svc-pill__label">{p.label}</span>
@@ -161,32 +144,32 @@ const diagramLabel = 'Services diagram: Brand and Product, connected by Strategy
         <!-- ≤1023 (and reduced motion is desktop-static): etapa 3 stacked — core, Brand + its pills, Product + its pills, add-ons -->
         <div class="svc-stack">
           <div class="svc-stack__core">
-            <span class="svc-stack__core-title">Strategy<br />Design<br />Build <i class="svc-core-text__dot" aria-hidden="true"></i></span>
-            <span class="svc-stack__core-desc">One connected<br />practice<br />MER Studio</span>
+            <span class="svc-stack__core-title">{diagram.coreTitleLines.map((l, i) => <>{i > 0 && <br />}{l}</>)} <i class="svc-core-text__dot" aria-hidden="true"></i></span>
+            <span class="svc-stack__core-desc">{diagram.coreDescLines.map((l, i) => <>{i > 0 && <br />}{l}</>)}</span>
           </div>
-          <p class="svc-stack__area">25+ years of experience</p>
+          <p class="svc-stack__area">{diagram.years}</p>
           <ul role="list" class="svc-stack__pills svc-stack__pills--center">
             <li>
               <a class:list={['svc-pill', 'svc-pill--flow', { 'svc-pill--offer': offer.active }]} href={AI_HREF}>
-                <span class="svc-pill__label">AI Visibility</span>
+                <span class="svc-pill__label">{svc.rows.aiVisibility.name}</span>
                 {offer.active && <span class="svc-pill__tag" data-offer><span class="svc-pill__free">{offer.pill}</span> · <span class="svc-pill__more">{offer.more}</span></span>}
               </a>
             </li>
           </ul>
           <div class="svc-stack__side">
-            <p class="svc-stack__label">Brand</p>
-            <ul role="list" class="svc-stack__pills">{['Branding', 'Websites'].map((l) => <li class="svc-pill svc-pill--flow">{l}</li>)}</ul>
+            <p class="svc-stack__label">{diagram.brand}</p>
+            <ul role="list" class="svc-stack__pills">{[svc.rows.branding.name, svc.rows.websites.name].map((l) => <li class="svc-pill svc-pill--flow">{l}</li>)}</ul>
           </div>
           <div class="svc-stack__side">
-            <p class="svc-stack__label">Product</p>
-            <ul role="list" class="svc-stack__pills"><li class="svc-pill svc-pill--flow">Digital Product</li></ul>
+            <p class="svc-stack__label">{diagram.product}</p>
+            <ul role="list" class="svc-stack__pills"><li class="svc-pill svc-pill--flow">{svc.rows.digitalProduct.name}</li></ul>
           </div>
           <ul role="list" class="svc-stack__pills svc-stack__pills--chips">{chips.map((c) => <li class="svc-chip svc-chip--flow">{c.label}</li>)}</ul>
         </div>
 
-        <p class="svc-caption">Set of services that complement each other and allow us to design, develop, implement, maintain, and extend a consistent experience</p>
+        <p class="svc-caption">{svc.caption}</p>
         <div class="svc-next">
-          <Button size="sm" icon="arrow-down" iconOnly aria-label="Next step" data-svc-next />
+          <Button size="sm" icon="arrow-down" iconOnly aria-label={buttons.nextStep} data-svc-next />
         </div>
       </div>
     </div>
@@ -208,14 +191,14 @@ const diagramLabel = 'Services diagram: Brand and Product, connected by Strategy
     </ol>
 
     <div class="services__included svc-r svc-r--lift" style="--r:4" data-reveal="rise">
-      <h3 class="services__included-title">EVERY PROJECT INCLUDES</h3>
+      <h3 class="services__included-title">{svc.included.title}</h3>
       <ul role="list" class="services__included-list">
         {included.map((t) => <li><i class="services__bullet" aria-hidden="true"></i>{t}</li>)}
       </ul>
     </div>
 
     <div class="services__addons">
-      <p class="services__addons-lead svc-r svc-r--lift" style="--r:5" data-reveal="rise">Added to any project — or contracted on their own.</p>
+      <p class="services__addons-lead svc-r svc-r--lift" style="--r:5" data-reveal="rise">{svc.addonsLead}</p>
       <div class="services__addons-list">
         {addons.map((a, i) => (
           <article class="services__addon svc-r svc-r--lift" style={`--r:${6 + i}`} data-reveal="rise" data-addon>
@@ -226,10 +209,10 @@ const diagramLabel = 'Services diagram: Brand and Product, connected by Strategy
                 <div class="services__addon-more" id={`addon-${a.id}`} data-addon-more>
                   <div class="services__addon-more-in">
                     <ul role="list" class="services__addon-list">{a.more.map((m) => <li>{m}</li>)}</ul>
-                    {a.for && <p class="services__addon-for"><b>For:</b> {a.for}</p>}
+                    {a.for && <p class="services__addon-for"><b>{svc.addonFor}</b> {a.for}</p>}
                   </div>
                 </div>
-                <Button variant="outline-secondary" size="md" class="services__addon-btn" aria-expanded="false" aria-controls={`addon-${a.id}`} data-addon-toggle data-label={a.cta}><span data-addon-label>{a.cta}</span></Button>
+                <Button variant="outline-secondary" size="md" class="services__addon-btn" aria-expanded="false" aria-controls={`addon-${a.id}`} data-addon-toggle data-label={a.cta} data-label-less={buttons.showLess}><span data-addon-label>{a.cta}</span></Button>
               </>
             )}
           </article>
@@ -237,8 +220,8 @@ const diagramLabel = 'Services diagram: Brand and Product, connected by Strategy
       </div>
     </div>
     <div class="services__faq svc-r svc-r--lift" style={`--r:${6 + addons.length}`} data-reveal="rise">
-      <p>Questions about how we work?</p>
-      <Button href="/faq/" variant="secondary" size="sm" minWidth={100}>faq</Button>
+      <p>{faqCta.prompt}</p>
+      <Button href="/faq/" variant="secondary" size="sm" minWidth={100}>{buttons.faq}</Button>
     </div>
   </div>
 </section>
@@ -258,7 +241,7 @@ const diagramLabel = 'Services diagram: Brand and Product, connected by Strategy
       card.toggleAttribute('data-open', open);
       btn.setAttribute('aria-expanded', String(open));
       const label = btn.querySelector('[data-addon-label]');
-      if (label) label.textContent = open ? 'show less' : btn.dataset.label ?? '';
+      if (label) label.textContent = (open ? btn.dataset.labelLess : btn.dataset.label) ?? ''; // both labels come from the page copy (data-label = add-on cta, data-label-less = buttons.showLess)
     });
   });
 </script>

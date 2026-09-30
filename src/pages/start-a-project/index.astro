@@ -6,28 +6,25 @@ import IntakePanel from '../../components/sections/IntakePanel.astro';
 import InquiryForm from '../../components/sections/InquiryForm.astro';
 import NextSteps from '../../components/sections/NextSteps.astro';
 import SiteFooter from '../../components/sections/SiteFooter.astro';
+import { copy } from '../../i18n';
 
-const steps = [
-  { t: 'We read every brief', d: 'A senior team member reviews your goals, fit, and timing.' },
-  { t: 'We meet for 20 minutes', d: 'No sales script — just context, questions, and useful next steps.' },
-  { t: 'You get a clear plan', d: 'If it’s a fit, we’ll outline scope, team, timing, and investment.' },
-];
+const page = copy.startProject;
 ---
 <BaseLayout
-  title="Start a project — MER Studio"
-  description="Tell us what you’re ready to build. Share a few details about your project and we’ll reply within 2 business days with a focused next step."
+  title={page.meta.title}
+  description={page.meta.description}
 >
   <main id="main">
     <PageIntro
       id="inq-title"
-      eyebrow="start a project"
-      title="Tell us what you’re ready to build."
-      note="A few thoughtful details help us bring the right people to the first conversation. It takes about 4 minutes."
+      eyebrow={page.intro.eyebrow}
+      title={page.intro.title}
+      note={page.intro.note}
     />
-    <IntakePanel id="brief-title" eyebrow="the brief" title="Good work starts with a clear conversation." lede="Not every answer needs to be final. Share what you know and we’ll shape the rest together.">
+    <IntakePanel id="brief-title" eyebrow={page.brief.eyebrow} title={page.brief.title} lede={page.brief.lede}>
       <InquiryForm />
     </IntakePanel>
-    <NextSteps id="next-title" eyebrow="what happens next" title="Simple, transparent, human." steps={steps} />
+    <NextSteps id="next-title" eyebrow={page.next.eyebrow} title={page.next.title} steps={page.next.steps} />
   </main>
   <SiteFooter />
 </BaseLayout>

@@ -5,6 +5,7 @@ import ProjectDetail from '../../components/work/ProjectDetail.astro';
 import { projectDetails, detailBlocks } from '../../data/project-details';
 import { projectSchema } from '../../data/schema';
 import { hiddenSlugs } from '../../data/projects';
+import { copy, fmt } from '../../i18n';
 
 export function getStaticPaths() {
   return Object.keys(projectDetails).map((slug) => ({ params: { slug } }));
@@ -15,7 +16,7 @@ const url = new URL(Astro.url.pathname, Astro.site).href;
 const hidden = hiddenSlugs.includes(p.id); // card hidden (no media yet): keep the page out of search
 ---
 <BaseLayout
-  title={`${p.client} — ${p.seoTitle ?? p.title} | MER Studio`}
+  title={fmt(copy.site.caseStudyTitle, { client: p.client, title: p.seoTitle ?? p.title })}
   description={detailBlocks(p)[0].body}
   schema={hidden ? undefined : projectSchema(p, url)}
   noindex={hidden}

@@ -1,16 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/primitives/Button.astro';
+import { copy } from '../i18n';
+const { notFound, site, buttons } = copy;
 ---
-<BaseLayout title="Page not found — MER Studio" noindex header={false}>
+<BaseLayout title={notFound.meta.title} noindex header={false}>
   <main id="main" class="not-found">
     <a class="not-found__logo" href="/">
-      <img src="/logo.svg" width="182" height="29" alt="MER Studio" />
+      <img src="/logo.svg" width="182" height="29" alt={site.logoAlt} />
     </a>
     <div class="not-found__body">
-      <p class="not-found__eyebrow">Error 404</p>
-      <h1 class="not-found__title">This page doesn't exist<span class="not-found__dot" aria-hidden="true"></span></h1>
-      <Button href="/">back to home</Button>
+      <p class="not-found__eyebrow">{notFound.eyebrow}</p>
+      <h1 class="not-found__title">{notFound.title}<span class="not-found__dot" aria-hidden="true"></span></h1>
+      <Button href="/">{buttons.backToHome}</Button>
     </div>
   </main>
 </BaseLayout>

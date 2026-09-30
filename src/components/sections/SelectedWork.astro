@@ -6,6 +6,7 @@
 // Images are Figma's own 2× exports of each project block (src/assets/work-cover, AVIF/WebP via astro:assets).
 import { getImage } from 'astro:assets';
 import { projects } from '../../data/projects';
+import { copy } from '../../i18n';
 import SectionHeading from '../primitives/SectionHeading.astro';
 import Button from '../primitives/Button.astro';
 import RoleChip from '../primitives/RoleChip.astro';
@@ -25,6 +26,7 @@ const covers: Record<string, ImageMetadata> = {
   'agente-mama': agenteMama, 'american-padel-systems': americanPadel, 'hifi-hub': hifiHub,
 };
 
+const { work, buttons } = copy;
 const visible = projects.filter((p) => !p.hidden);
 const items = await Promise.all(visible.map(async (p) => {
   const src = covers[p.slug];
@@ -40,7 +42,7 @@ const STAGE_SIZES = '(min-width: 1440px) 722px, 45vw';
 const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
 ---
 <section id="work" class="work" aria-labelledby="work-title" data-work-scroll style={`--work-n:${items.length}`}>
-  <SectionHeading eyebrow="selected work" id="work-title" tone="dark" title="What we've built" />
+  <SectionHeading eyebrow={work.eyebrow} id="work-title" tone="dark" title={work.title} />
 
   <div class="work__track" data-work-track>
    <span class="work__step" data-work-step aria-hidden="true"></span>
@@ -48,7 +50,7 @@ const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
    <div class="work__pin" data-work-pin>
     <div class="work__grid">
     <aside class="work__rail">
-      <nav aria-label="Selected projects">
+      <nav aria-label={work.indexAriaLabel}>
         <ol role="list" class="work-index">
           {items.map((p, i) => (
             <li>
@@ -58,7 +60,7 @@ const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
         </ol>
       </nav>
       <div class="work-rain" data-work-rain aria-hidden="true">
-        <img class="work-rain__static" src={mosaic.src} width="230" height="144.57" alt="Mosaic of MER Studio project thumbnails" loading="lazy" decoding="async" />
+        <img class="work-rain__static" src={mosaic.src} width="230" height="144.57" alt={work.mosaicAlt} loading="lazy" decoding="async" />
         <canvas class="work-rain__canvas"></canvas>
         <span class="work-rain__dot"></span>
       </div>
@@ -87,7 +89,7 @@ const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
       </ol>
 
       <div class="work__next" style={`--cur-img-top:${items[0].imgTop}%`}>
-        <Button variant="ghost-primary" size="sm" icon="arrow-down" href={items[1] ? `#work-${items[1].id}` : '#services'} data-work-next><span data-work-next-label>next project</span></Button>
+        <Button variant="ghost-primary" size="sm" icon="arrow-down" href={items[1] ? `#work-${items[1].id}` : '#services'} data-work-next data-label-next={buttons.nextProject} data-label-last={buttons.nextSection}><span data-work-next-label>{buttons.nextProject}</span></Button>
       </div>
 
       <div class="work__stage" data-work-stage>

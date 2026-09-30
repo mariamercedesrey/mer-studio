@@ -77,7 +77,7 @@ function setup(section: HTMLElement) {
     });
     if (nextBtn && nextLabel) { // "next project" → the following project; on the last one "next section" → Services
       const last = i === items.length - 1;
-      nextLabel.textContent = last ? 'next section' : 'next project';
+      nextLabel.textContent = (last ? nextBtn.dataset.labelLast : nextBtn.dataset.labelNext) ?? ''; // labels come from the page copy (buttons.nextSection / nextProject)
       nextBtn.href = last ? '#services' : `#${items[i + 1].id}`;
       nextBtn.parentElement!.style.setProperty('--cur-img-top', items[i].style.getPropertyValue('--img-top'));
     }

@@ -8,34 +8,37 @@ import SiteFooter from '../../components/sections/SiteFooter.astro';
 import FaqList from '../../components/primitives/FaqList.astro';
 import { faqGroups, faqSchema, live } from '../../data/faq';
 import { BOOKING_URL } from '../../data/contact';
+import { copy } from '../../i18n';
+
+const page = copy.faqPage;
 
 const groups = faqGroups.map((g) => ({ ...g, items: live(g.items) })).filter((g) => g.items.length);
 const schema = faqSchema(faqGroups.flatMap((g) => g.items), 'https://mer.studio/faq/');
 ---
 <BaseLayout
-  title="FAQ — Process, Timing & Platforms | MER Studio"
-  description="Answers on cost, timing, revisions, handover, e-commerce platforms (Shopify, Tiendanube, WooCommerce) and AI visibility — from a design-and-build studio."
+  title={page.meta.title}
+  description={page.meta.description}
   schema={schema}
 >
   <main id="main">
-    <PageIntro id="faq-title" eyebrow="faq" title="Questions, answered.">
-      <Fragment slot="note">Process, timing, platforms and AI visibility — everything worth knowing before we start. If something is missing, ask us on a <a class="faq-note-link" href={BOOKING_URL} target="_blank" rel="noopener">20-min call<span class="visually-hidden"> (opens in a new tab)</span></a>.</Fragment>
+    <PageIntro id="faq-title" eyebrow={page.eyebrow} title={page.title}>
+      <Fragment slot="note">{page.noteBefore}<a class="faq-note-link" href={BOOKING_URL} target="_blank" rel="noopener">{page.noteLink}<span class="visually-hidden"> {copy.a11y.opensInNewTab}</span></a>{page.noteAfter}</Fragment>
     </PageIntro>
 
-    <section class="faq" aria-label="Frequently asked questions">
+    <section class="faq" aria-label={page.listAriaLabel}>
       {groups.map((g) => (
         <div class="faq__group">
           <div class="faq__label" aria-hidden="true"><p class="faq__num">{g.num}</p><p class="faq__name">{g.label}</p></div>
           <div class="faq__questions">
             <h2 class="visually-hidden">{g.label}</h2>
             <FaqList items={g.items} prefix={`faq-${g.num}`} />
-            {g.label === 'ai visibility' && <p class="faq__more"><a href="/ai-visibility/#faq">All AI Visibility questions → read more</a></p>}
+            {g.id === 'aiVisibility' && <p class="faq__more"><a href="/ai-visibility/#faq">{page.moreAiVisibility}</a></p>}
           </div>
         </div>
       ))}
     </section>
 
-    <FinalCTA eyebrow="Didn’t find it?" title={"Still have\na question?"} />
+    <FinalCTA eyebrow={page.cta.eyebrow} title={page.cta.title} />
   </main>
   <SiteFooter />
 </BaseLayout>

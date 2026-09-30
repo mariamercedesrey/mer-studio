@@ -3,19 +3,24 @@
 import { detailBlocks, type ProjectDetailData } from './project-details';
 import { EMAIL, WHATSAPP } from './contact';
 import { offer } from './offer';
+import { copy } from '../i18n';
+
+const j = copy.jsonld;
 
 const SITE = 'https://mer.studio';
 const ORG_ID = `${SITE}/#studio`;
 const MER_ID = `${SITE}/#mer`;
 
+// Names and descriptions are the site's own copy: rows / add-ons of the Services section (src/i18n/en.ts → `services`).
+const svc = copy.services;
 const services = [
-  { name: 'Branding', description: 'Identity, and the system to keep it consistent.' },
-  { name: 'Websites', description: 'A landing, a full site, or an online store — on Shopify, Tiendanube or WooCommerce.' },
-  { name: 'Digital Product', description: "An app or a platform that doesn't exist yet." },
-  { name: 'AI Visibility · GEO / AEO', description: 'So people find you when they ask an AI, not just Google.' },
-  { name: 'Design System', description: 'Exported tokens, a documented component library, and a usage guide — so your team, or an AI agent, can keep building on it without breaking the system.' },
-  { name: 'AI Assistants & Automation', description: 'AI assistants and automations that take repetitive work off your team — built into your site, store or product.' },
-  { name: 'Maintenance', description: 'Optional, after handover. Changes, updates, backups and priority response.' },
+  { name: svc.rows.branding.name, description: svc.rows.branding.body },
+  { name: svc.rows.websites.name, description: svc.rows.websites.body },
+  { name: svc.rows.digitalProduct.name, description: svc.rows.digitalProduct.body },
+  { name: copy.jsonld.home.aiVisibilityService.name, description: copy.jsonld.home.aiVisibilityService.description, offer: true },
+  { name: svc.addons.designSystem.title, description: svc.addons.designSystem.body },
+  { name: svc.addons.aiAssistants.title, description: svc.addons.aiAssistants.body },
+  { name: svc.addons.maintenance.title, description: svc.addons.maintenance.body },
 ];
 
 export function homeSchema() {
@@ -25,26 +30,26 @@ export function homeSchema() {
       {
         '@type': 'ProfessionalService',
         '@id': ORG_ID,
-        name: 'MER Studio',
+        name: copy.site.name,
         url: `${SITE}/`,
         logo: `${SITE}/logo.svg`,
         image: `${SITE}/og.png`,
-        description: 'Strategy, design and code, handled end to end by one team. Twenty-five years across enterprise products and US startups, applied at any size — a brand, a website, an online store, a full platform.',
-        slogan: 'Strategy, design and build, end to end.',
+        description: j.home.description,
+        slogan: j.home.slogan,
         email: EMAIL,
         telephone: WHATSAPP.tel,
         address: { '@type': 'PostalAddress', addressCountry: 'AR' },
-        areaServed: 'Worldwide',
+        areaServed: j.areaServed,
         contactPoint: { '@type': 'ContactPoint', contactType: 'sales', email: EMAIL, telephone: WHATSAPP.tel, url: WHATSAPP.href },
         founder: { '@id': MER_ID },
         hasOfferCatalog: {
           '@type': 'OfferCatalog',
-          name: 'Services',
-          itemListElement: services.map((s) => ({
+          name: j.home.catalogName,
+          itemListElement: services.map(({ offer: isOffer, ...s }) => ({
             '@type': 'Offer',
             itemOffered: { '@type': 'Service', ...s, provider: { '@id': ORG_ID } },
             // Launch offer (src/data/offer.ts): the AI Visibility setup is free for projects started in October 2026. Setup only.
-            ...(offer.active && s.name.startsWith('AI Visibility') ? { price: 0, priceCurrency: 'USD', validThrough: offer.validThrough, description: offer.llms } : {}),
+            ...(offer.active && isOffer ? { price: 0, priceCurrency: 'USD', validThrough: offer.validThrough, description: offer.llms } : {}),
           })),
         },
       },
@@ -53,10 +58,10 @@ export function homeSchema() {
         '@id': MER_ID,
         name: 'Mer',
         alternateName: 'Mercedes Rey',
-        jobTitle: 'Founder',
+        jobTitle: j.home.founderJobTitle,
         worksFor: { '@id': ORG_ID },
         url: `${SITE}/#about`,
-        description: "I've been designing digital products for more than 25 years. Eight of those years went into complex enterprise products, and seven into working with US startups, often directly with founders and CEOs.",
+        description: j.home.founderDescription,
       },
     ],
   };
@@ -68,21 +73,17 @@ export function aiVisibilitySchema() {
     '@context': 'https://schema.org',
     '@type': 'Service',
     '@id': `${url}#service`,
-    name: 'AI Visibility (GEO / AEO)',
-    serviceType: 'Generative engine optimization (GEO) and answer engine optimization (AEO)',
+    name: j.aiVisibility.name,
+    serviceType: j.aiVisibility.serviceType,
     url,
-    description: 'We make your brand readable, understood and quotable by ChatGPT, Perplexity, Gemini and Google’s AI Overviews: crawlable pages, structured data, citable answers and a presence in the places models use to verify you.',
+    description: j.aiVisibility.description,
     provider: { '@id': ORG_ID },
-    areaServed: 'Worldwide',
+    areaServed: j.areaServed,
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
-      name: 'Four things an AI needs before it recommends you',
-      itemListElement: [
-        { name: 'Readable', description: 'Crawlers can reach and parse your site: fast pages, clean HTML, an llms.txt, and a robots.txt that lets AI search bots in instead of blocking them.' },
-        { name: 'Understood', description: 'Structured data (JSON-LD) and consistent entity details, so a model knows who you are, what you sell, where you work and who you work for — without guessing.' },
-        { name: 'Quotable', description: 'Pages that answer the real questions your clients ask, in a format a model can lift and cite: clear FAQs, comparisons, scope and pricing ranges.' },
-        { name: 'Present', description: 'Being named in the places models use to double-check you: Google Business Profile, directories, reviews, press and partner sites.' },
-      ].map((d) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', ...d } })),
+      name: j.aiVisibility.catalogName,
+      // The four "things an AI needs" are the method rows of the page itself.
+      itemListElement: copy.aiVisibility.method.items.map((m) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: m.t, description: m.d } })),
     },
   };
 }
@@ -104,7 +105,7 @@ export function projectSchema(p: ProjectDetailData, url: string) {
     about: { '@type': 'Organization', name: p.client, ...(p.link && { url: p.link.href }) },
     ...(neoris && { sourceOrganization: { '@type': 'Organization', name: 'Neoris' } }), // credit: "in collaboration with NEORIS"
     creator: { '@type': 'Person', '@id': MER_ID, name: 'Mer' },
-    publisher: { '@type': 'ProfessionalService', '@id': ORG_ID, name: 'MER Studio', url: `${SITE}/` },
-    inLanguage: 'en',
+    publisher: { '@type': 'ProfessionalService', '@id': ORG_ID, name: copy.site.name, url: `${SITE}/` },
+    inLanguage: copy.site.lang,
   };
 }

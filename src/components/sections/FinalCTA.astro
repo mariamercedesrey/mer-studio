@@ -4,8 +4,10 @@ import Button from '../primitives/Button.astro';
 import SignatureDot from '../primitives/SignatureDot.astro';
 import DecodeTitle from '../primitives/DecodeTitle.astro';
 import { BOOKING_URL } from '../../data/contact';
+import { copy } from '../../i18n';
 interface Props { eyebrow?: string; title?: string; faqLink?: boolean }
-const { eyebrow = "That's all for now.", title = 'Got a project in mind?\nLet’s talk', faqLink = false } = Astro.props;
+const { finalCta, buttons, faqCta } = copy;
+const { eyebrow = finalCta.eyebrow, title = finalCta.title, faqLink = false } = Astro.props;
 ---
 <section class="cta" aria-labelledby="cta-title">
   <div class="cta__copy">
@@ -13,10 +15,10 @@ const { eyebrow = "That's all for now.", title = 'Got a project in mind?\nLet’
     <DecodeTitle as="h2" id="cta-title" class="cta__title" text={title}><SignatureDot class="cta__dot" /></DecodeTitle>
   </div>
   <div class="cta__action" data-reveal="rise">
-    <Button href={BOOKING_URL} variant="outline-primary" target="_blank" rel="noopener">let's talk<span class="visually-hidden"> (book a 20-minute call, opens in a new tab)</span></Button>
-    <Button href="/start-a-project/" variant="negative">start a project</Button>
+    <Button href={BOOKING_URL} variant="outline-primary" target="_blank" rel="noopener">{buttons.letsTalk}<span class="visually-hidden"> {finalCta.letsTalkSr}</span></Button>
+    <Button href="/start-a-project/" variant="negative">{buttons.startProject}</Button>
   </div>
-  {faqLink && <p class="cta__faq" data-reveal="rise">Questions first? <a href="/faq/">Read the faq</a></p>}
+  {faqLink && <p class="cta__faq" data-reveal="rise">{faqCta.questionsFirst} <a href="/faq/">{faqCta.readFaq}</a></p>}
 </section>
 
 <style>

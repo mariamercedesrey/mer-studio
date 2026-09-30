@@ -7,27 +7,26 @@ import { getImage } from 'astro:assets';
 import heroPoster from '../../assets/hero-poster.webp';
 import { BOOKING_URL } from '../../data/contact';
 import { offer } from '../../data/offer';
+import { copy } from '../../i18n';
 
-const engines = ['ChatGPT', 'Perplexity', 'Gemini', 'Google AI'];
+const { hero, buttons, a11y } = copy;
 
 // Responsive poster under the video: it is the LCP element, so mobile gets a small file.
 const poster = await getImage({ src: heroPoster, widths: [480, 800, 1218], format: 'webp', quality: 72 });
-
-const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Finance', 'Foreign Trade', 'Startups', 'Enterprise', 'Healthcare'];
 ---
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero__band">
     <div class="hero__intro">
       <div class="hero__copy">
-        <p class="hero__lead">From the first decision to the last detail.</p>
-        <DecodeTitle as="h1" mode="hero" id="hero-title" class="hero__title" text="Strategy, design and build, end to end." />
+        <p class="hero__lead">{hero.lead}</p>
+        <DecodeTitle as="h1" mode="hero" id="hero-title" class="hero__title" text={hero.title} />
       </div>
       <!-- Figma 2255:1517. The rotator reuses the DecodeTitle effect (scripts/hero-rotator.ts); screen readers get the full list once. -->
       <p class="hero__offer">
-        <span class="visually-hidden">Every project ships findable on {engines.slice(0, -1).join(', ')} and {engines[engines.length - 1]}</span>
-        <span aria-hidden="true">Every project ships findable on <span class="hero__rot" data-hero-rot><span class="hero__rot-b">[</span><span class="hero__rot-w"><span class="decode hero__rot-word" data-decode="rotate"><span class="decode__t" data-rot-text>ChatGPT</span></span></span><span class="hero__rot-b">]</span></span></span>{offer.active && <span data-offer> — {offer.hero}</span>}. <a class="hero__more" href="/ai-visibility/">Read more.</a>
+        <span class="visually-hidden">{hero.offerSr}</span>
+        <span aria-hidden="true">{hero.offerPrefix} <span class="hero__rot" data-hero-rot data-words={JSON.stringify(hero.engines)}><span class="hero__rot-b">[</span><span class="hero__rot-w"><span class="decode hero__rot-word" data-decode="rotate"><span class="decode__t" data-rot-text>{hero.engines[0]}</span></span></span><span class="hero__rot-b">]</span></span></span>{offer.active && <span data-offer> — {offer.hero}</span>}. <a class="hero__more" href="/ai-visibility/">{hero.readMore}</a>
       </p>
-      <Button href={BOOKING_URL} width={183} target="_blank" rel="noopener" data-nav-sentinel>book a call<span class="visually-hidden"> (opens in a new tab)</span></Button>
+      <Button href={BOOKING_URL} width={183} target="_blank" rel="noopener" data-nav-sentinel>{buttons.bookCall}<span class="visually-hidden"> {a11y.opensInNewTab}</span></Button>
     </div>
   </div>
 
@@ -41,7 +40,7 @@ const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Financ
           sizes="(min-width: 1200px) 65vw, 100vw"
           width="1920"
           height="964"
-          alt="Smartphone tied with a red cord to raw concrete blocks"
+          alt={hero.posterAlt}
           fetchpriority="high"
           decoding="async"
         />
@@ -61,9 +60,9 @@ const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Financ
         ></video>
       </div>
       <div class="hero__worked">
-        <h2 class="hero__worked-title">WHERE WE'VE WORKED</h2>
+        <h2 class="hero__worked-title">{hero.workedTitle}</h2>
         <ul role="list" class="hero__industries" data-typewriter>
-          {industries.map((name) => <li>[{name}]</li>)}
+          {hero.industries.map((name) => <li>[{name}]</li>)}
         </ul>
       </div>
     </div>
@@ -73,13 +72,13 @@ const industries = ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Financ
         <span class="hero__m">m</span>
         <SignatureDot class="hero__dot" tone="dark" motion="hero-path" />
       </div>
-      <p class="hero__summary">Strategy, design and code, handled end to end by one team. Twenty-five years across enterprise products and US startups, applied at any size — a brand, a website, an online store, a full platform.</p>
-      <Button href="/start-a-project/" variant="secondary" width={185}>start a project</Button>
+      <p class="hero__summary">{hero.summary}</p>
+      <Button href="/start-a-project/" variant="secondary" width={185}>{buttons.startProject}</Button>
     </div>
   </div>
 
   <!-- Figma 149:5103: the yellow arrow sits under the tags, centred, right before the logo marquee. Straight to Selected Work. -->
-  <div class="hero__scroll"><a class="hero__scroll-link" href="#work" aria-label="Go to selected work"></a></div>
+  <div class="hero__scroll"><a class="hero__scroll-link" href="#work" aria-label={hero.scrollLabel}></a></div>
 </section>
 
 <style>
