@@ -19,8 +19,13 @@
 @media (max-width: 1199px) { :root { --page-gutter: 32px; } }
 @media (max-width: 767px) { :root { --page-gutter: 20px; --header-h: 68px; --header-pad-top: 20px; --header-content-h: 48px; } }
 
+/* Launch offer (src/data/offer.ts): the inline script in BaseLayout sets this once `endsAt` has passed. */
+html[data-offer-ended] [data-offer] { display: none !important; }
+
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
+/* Stepped tracks (Services, Selected Work): scripts/step-snap.ts sets the attribute only while inside one. */
+@media (min-width: 1024px) { html[data-step-snap] { scroll-snap-type: y mandatory; } }
 body {
   margin: 0;
   overflow-x: clip;

@@ -9,6 +9,7 @@ import FinalCTA from '../../components/sections/FinalCTA.astro';
 import SiteFooter from '../../components/sections/SiteFooter.astro';
 import Button from '../../components/primitives/Button.astro';
 import { aiVisibilitySchema } from '../../data/schema';
+import { offer } from '../../data/offer';
 import { llmsSnippet } from '../../data/llms-snippet';
 import llms from '../../../public/llms.txt?raw';
 
@@ -38,6 +39,22 @@ const snippet = llmsSnippet(llms);
       title="When people ask an AI, does it name you?"
       note="Search is moving from a list of links to a single answer. We make your brand readable, understood and quotable by ChatGPT, Perplexity, Gemini and Google’s AI Overviews."
     />
+    {offer.active && (
+      <section class="offer" data-offer aria-labelledby="offer-title">
+        <p class="offer__tag">{offer.tag}</p>
+        <h2 id="offer-title" class="offer__title">{offer.intro}</h2>
+        <div class="offer__cols">
+          <div class="offer__col">
+            <h3 class="offer__h">{offer.free.title}</h3>
+            <ul role="list" class="offer__list offer__list--free">{offer.free.items.map((t) => <li>{t}</li>)}</ul>
+          </div>
+          <div class="offer__col">
+            <h3 class="offer__h">{offer.paid.title}</h3>
+            <ul role="list" class="offer__list">{offer.paid.items.map((t) => <li>{t}</li>)}</ul>
+          </div>
+        </div>
+      </section>
+    )}
     <IntakePanel id="method-title" eyebrow="the method" title="Four things an AI needs before it recommends you." lede="Ranking still matters. But an AI only names what it can read, understand and verify somewhere else.">
       <div class="method">
         <ol class="method__list" role="list">
@@ -69,6 +86,19 @@ const snippet = llmsSnippet(llms);
   :global(body) { background: var(--surface-soft); }
   main { background: var(--surface-soft); }
   main :global(.intro__title) { text-wrap: wrap; } /* Figma 2230:651 breaks after "AI," (not balanced) */
+
+  /* Launch offer notice (src/data/offer.ts): what is free in October, what stays paid. */
+  .offer { display: flex; flex-direction: column; gap: var(--sp-24); padding: var(--sp-48) var(--page-gutter); background: var(--surface-soft); }
+  .offer__tag { align-self: flex-start; padding: 3px 12px; border: 1px solid var(--accent-primary); border-radius: var(--r-pill); font-family: var(--font-technical); font-size: var(--fs-caption); line-height: 1.4; letter-spacing: 0.04em; text-transform: uppercase; }
+  .offer__title { max-width: 820px; font-weight: 500; font-size: var(--fs-block-title); line-height: 1.2; letter-spacing: -0.01em; }
+  .offer__cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-32); max-width: 1000px; }
+  .offer__col { display: flex; flex-direction: column; gap: var(--sp-12); padding-left: var(--sp-20); border-left: 1px dashed var(--divider-dashed); }
+  .offer__h { font-family: var(--font-technical); font-weight: 400; font-size: var(--fs-eyebrow); line-height: 1.5; letter-spacing: 0.02em; text-transform: uppercase; }
+  .offer__list { display: flex; flex-direction: column; gap: var(--sp-8); font-size: var(--fs-body); line-height: 1.45; }
+  .offer__list li { position: relative; padding-left: 18px; }
+  .offer__list li::before { content: ''; position: absolute; left: 0; top: 0.55em; width: 8px; height: 8px; border-radius: 50%; background: var(--divider-dashed); }
+  .offer__list--free li::before { background: var(--accent-primary); }
+  @media (max-width: 767px) { .offer__cols { grid-template-columns: minmax(0, 1fr); } }
 
   .method { flex: 1 1 0; min-width: 0; }
   .method__list { margin: 0; }

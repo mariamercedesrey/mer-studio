@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import SiteHeader from '../components/sections/SiteHeader.astro';
 // Preload the one font every screen needs first (Outfit, latin subset); the rest load on demand.
+import { offer } from '../data/offer';
 import outfitLatin from '@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2?url';
 
 interface Props {
@@ -37,6 +38,7 @@ const ogImage = new URL(image, Astro.site);
   <head>
     <meta charset="utf-8" />
     <script is:inline>document.documentElement.classList.add('js')</script>
+    {offer.active && <script is:inline define:vars={{ endsAt: offer.endsAt }}>try { if (Date.now() > Date.parse(endsAt)) document.documentElement.setAttribute('data-offer-ended', ''); } catch (e) {}</script>}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />

@@ -36,7 +36,7 @@ const copies = [false, true];
             <li class:list={['marquee__logo', l.crop && 'marquee__logo--crop']} style={`width:${l.w}px;height:${l.h}px`}>
               <img
                 src={`/clients/${l.src}`}
-                alt={hidden ? '' : l.name}
+                alt={`${l.name} logo`}
                 decoding="async"
                 style={[
                   l.blend && `mix-blend-mode:${l.blend}`,

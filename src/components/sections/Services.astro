@@ -1,158 +1,551 @@
 ---
-// Figma 149:5756 Services; active-row spec 2204:616. scripts/services-active.ts drives the animated list.
+// Figma Services in 3 stages — etapa 1 2248:714 (Venn), etapa 2 2248:3636 (drops separate, core appears), etapa 3 2248:6534
+// (full diagram + list, "Project includes", "Added to any project"); active-row spec 2204:616.
+// Desktop (≥1024, motion allowed): the section pins and advances by steps — 1 Venn · 2 drops + core + rings · 3 axis + pills ·
+// 4 the diagram closes into the core and the content is revealed (scripts/services-stages.ts sets data-s2/s3/s4 on the section;
+// the snap stops come from StepSnap). Mobile / tablet / reduced motion: no pin, stage 3 static (stacked on ≤1023) + the content.
+// Without JS the markup is the static stage 3 (data-s2 data-s3 are its default state).
 import SectionHeading from '../primitives/SectionHeading.astro';
+import Button from '../primitives/Button.astro';
+import StepSnap from '../primitives/StepSnap.astro';
+import { offer } from '../../data/offer';
+
 const included = [
-  'Files and accounts handed over in your name',
-  'Responsive design for mobile and desktop',
+  'Fixed scope and price',
   'Two rounds of revisions',
-  'Fixed scope and price before we start',
+  'Responsive, mobile & desktop',
+  'Files & accounts in your name',
 ];
+const AI_HREF = '/ai-visibility/';
+// Row titles = diagram pills, exactly (one list, one vocabulary).
 const services = [
   { name: 'Branding', body: 'Identity, and the system to keep it consistent.' },
   { name: 'Websites', body: 'A landing, a full site, or an online store.' },
   { name: 'Digital Product', body: "An app or a platform that doesn't exist yet." },
-  { name: 'AI Visibility · GEO / AEO', body: 'So people find you when they ask an AI, not just Google.', href: '/ai-visibility/' },
+  { name: 'AI Visibility', body: 'GEO / AEO — so people find you when they ask an AI, not just Google.', href: AI_HREF, offer: true },
 ];
+// Add-ons = outer-ring chips, exactly. `more` = the expandable copy (Learn more / Show less); Maintenance has none.
 const addons = [
-  { title: 'Design System', body: 'Exported tokens, a documented component library, and a usage guide — so your team, or an AI agent, can keep building on it without breaking the system.' },
-  { title: 'Maintenance', body: 'Optional, after handover. Changes, updates, backups and priority response.' },
+  {
+    id: 'design-system', title: 'Design System',
+    body: 'Exported tokens, a documented component library, and a usage guide — so your team, or an AI agent, can keep building on it without breaking the system.',
+    more: ['Design tokens (color, type, spacing) exported to code', 'Component library in Figma + code, with states and variants', 'Usage guide and do/don\'t rules', 'Handover session with your team'],
+    for: 'products that will keep growing after launch.',
+  },
+  {
+    id: 'ai-assistants', title: 'AI Assistants & Automation',
+    body: 'AI assistants and automations that take repetitive work off your team — built into your site, store or product.',
+    more: ['Assistants that answer customers with your own content', 'Automated flows: leads, orders, follow-ups, reports (n8n / API)', 'Connected to the tools you already use', 'Measured: what it saves, what it handles, what it escalates'],
+    for: 'teams answering the same questions or doing the same steps every day.',
+  },
+  { id: 'maintenance', title: 'Maintenance', body: 'Optional, after handover. Changes, updates, backups and priority response.' },
 ];
+// Diagram geometry: offsets from the centre of the 880 × 600 drawing. `i` = order of entrance.
+const pills = [
+  { label: 'AI Visibility', x: 0, y: -158, i: 0, link: AI_HREF },
+  { label: 'Digital Product', x: 206, y: -25, i: 1 },
+  { label: 'Websites', x: 0, y: 158, i: 2 },
+  { label: 'Branding', x: -226, y: -25, i: 3 },
+];
+const chips = [
+  { label: 'AI Assistants & Automation', x: 296, y: -232, i: 4 },
+  { label: 'Maintenance', x: 325, y: 231, i: 5 },
+  { label: 'Design System', x: -342, y: 231, i: 6 },
+];
+const diagramLabel = 'Services diagram: Brand and Product, connected by Strategy, Design and Build — one connected practice, 25+ years of experience.';
 ---
-<section id="services" class="services" aria-labelledby="services-title" data-services>
-  <div class="services__top">
-    <div class="services__intro">
+<section id="services" class="services" aria-labelledby="services-title" data-services data-s2 data-s3>
+  <!-- Runs while parsing, before the section paints: the pinned layout must exist from the first frame (no layout shift). -->
+  <script is:inline>
+    (function () {
+      try {
+        var s = document.currentScript.parentElement;
+        if (matchMedia('(min-width: 1024px)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          s.setAttribute('data-pinned', '');
+          s.removeAttribute('data-s2');
+          s.removeAttribute('data-s3');
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <div class="services__track" data-svc-track>
+    <StepSnap count={4} />
+    <div class="services__pin">
       <SectionHeading eyebrow="services" id="services-title" title="Strategy, Design & Build, end to end" />
-      <ol role="list" class="services__list" data-services-list>
-        {services.map((s, i) => (
-          <li class="services__row" data-services-row>
-            <div class="services__row-main">
-              <span class="services__slot" aria-hidden="true" data-services-slot></span>
-              <h3 class="services__item-title">{s.href ? <a class="services__link" href={s.href}>{s.name}</a> : s.name}</h3>
-              <p class="services__note">{s.body}</p>
-              <span class="services__index">[{i + 1}]</span>
-            </div>
-          </li>
-        ))}
-      </ol>
-    </div>
-    <div class="services__card" data-reveal="rise">
-      <h3 class="services__card-title">EVERY PROJECT INCLUDES</h3>
-      <ul role="list" class="services__included">
-        {included.map((t, i) => <li>[{i + 1}] —{t}</li>)}
-      </ul>
+
+      <div class="services__stage">
+        <div class="svc-dgwrap">
+          <div class="svc-dg" role="group" aria-label={diagramLabel}>
+            <svg class="svc-svg" viewBox="0 0 880 600" aria-hidden="true" focusable="false">
+              <defs>
+                <clipPath id="svc-clip-l"><circle cx="388" cy="300" r="110" /></clipPath>
+                <mask id="svc-mask-tl" maskUnits="userSpaceOnUse" x="0" y="0" width="880" height="600">
+                  <line class="svc-draw svc-draw--thread" x1="352" y1="300" x2="212" y2="300" pathLength="1" />
+                </mask>
+                <mask id="svc-mask-tr" maskUnits="userSpaceOnUse" x="0" y="0" width="880" height="600">
+                  <line class="svc-draw svc-draw--thread" x1="528" y1="300" x2="668" y2="300" pathLength="1" />
+                </mask>
+                <mask id="svc-mask-outer" maskUnits="userSpaceOnUse" x="0" y="0" width="880" height="600">
+                  <circle class="svc-draw" cx="440" cy="300" r="278.6" pathLength="1" transform="rotate(-90 440 300)" />
+                </mask>
+                <mask id="svc-mask-inner" maskUnits="userSpaceOnUse" x="0" y="0" width="880" height="600">
+                  <circle class="svc-draw svc-draw--inner" cx="440" cy="300" r="173.5" pathLength="1" transform="rotate(-90 440 300)" />
+                </mask>
+              </defs>
+
+              <g class="svc-contract">
+                <circle class="svc-ring" cx="440" cy="300" r="278.6" mask="url(#svc-mask-outer)" />
+                <circle class="svc-ring" cx="440" cy="300" r="173.5" mask="url(#svc-mask-inner)" />
+              </g>
+
+              <g class="svc-contract svc-drops">
+                <rect class="svc-bar" x="176" y="210" width="528" height="180" />
+                <circle class="svc-ball svc-ball--l" cx="440" cy="300" r="110" />
+                <circle class="svc-ball svc-ball--r" cx="440" cy="300" r="110" />
+              </g>
+              <!-- Etapa 2 threads: ball → core, flared where they leave the ball (Figma 2248:3636) -->
+              <g class="svc-contract">
+                <path class="svc-thread svc-thread--l" mask="url(#svc-mask-tl)" d="M222 276.5C244 284 248 298 268 298H352V302H268C248 302 244 316 222 323.5Z" />
+                <path class="svc-thread svc-thread--r" mask="url(#svc-mask-tr)" d="M658 276.5C636 284 632 298 612 298H528V302H612C632 302 636 316 658 323.5Z" />
+              </g>
+              <circle class="svc-lens" cx="492" cy="300" r="110" clip-path="url(#svc-clip-l)" />
+              <circle class="svc-core" cx="440" cy="300" r="94" />
+
+              <g class="svc-contract svc-axis">
+                <line class="svc-axis-line" x1="53.4" y1="300" x2="338" y2="300" pathLength="1" />
+                <line class="svc-axis-line" x1="826.6" y1="300" x2="542" y2="300" pathLength="1" />
+                <circle class="svc-endpoint" cx="53.4" cy="300" r="5.1" />
+                <circle class="svc-endpoint" cx="826.6" cy="300" r="5.1" />
+              </g>
+            </svg>
+
+            <!-- Etapa 1 — Venn -->
+            <span class="svc-t svc-v" aria-hidden="true" style="--x:-105;--y:2"><span class="svc-v__side">Brand</span></span>
+            <span class="svc-t svc-v" aria-hidden="true" style="--x:105;--y:2"><span class="svc-v__side">Product</span></span>
+            <span class="svc-t svc-v svc-v__lens" aria-hidden="true" style="--x:0;--y:9">
+              <span class="svc-v__mer">MER</span>
+              <span class="svc-v__years">25+ years of experience</span>
+            </span>
+
+            <!-- Etapas 2–3 — core, axis labels -->
+            <span class="svc-t svc-core-text" style="--x:0;--y:0">
+              <span class="svc-core-text__title">Strategy<br />Design<br />Build <i class="svc-core-text__dot" aria-hidden="true"></i></span>
+              <span class="svc-core-text__desc">One connected practice<br />MER Studio</span>
+            </span>
+            <span class="svc-t svc-axis-label svc-axis-label--brand" aria-hidden="true" style="--x:-379;--y:2">Brand</span>
+            <span class="svc-t svc-axis-label svc-axis-label--product" aria-hidden="true" style="--x:361;--y:2">Product</span>
+
+            <!-- Etapa 3 — area label, pills, outer chips -->
+            <span class="svc-t svc-area" style="--x:0;--y:-227">25+ years of experience</span>
+            {pills.map((p) => p.link ? (
+              <a class:list={['svc-t', 'svc-pill', { 'svc-pill--offer': offer.active }]} href={p.link} style={`--x:${p.x};--y:${p.y};--i:${p.i}`}>
+                <i class="svc-pill__dot" aria-hidden="true"></i><span class="svc-pill__label">{p.label}</span>
+                {offer.active && <span class="svc-pill__tag" data-offer><span class="svc-pill__free">{offer.tag}</span> · <span class="svc-pill__more">{offer.more}</span></span>}
+              </a>
+            ) : (
+              <span class="svc-t svc-pill" style={`--x:${p.x};--y:${p.y};--i:${p.i}`}><i class="svc-pill__dot" aria-hidden="true"></i>{p.label}</span>
+            ))}
+            {chips.map((c) => (
+              <span class="svc-t svc-chip" style={`--x:${c.x};--y:${c.y};--i:${c.i}`}>{c.label}</span>
+            ))}
+          </div>
+        </div>
+
+        <!-- ≤1023 (and reduced motion is desktop-static): etapa 3 stacked — core, Brand + its pills, Product + its pills, add-ons -->
+        <div class="svc-stack">
+          <div class="svc-stack__core">
+            <span class="svc-stack__core-title">Strategy<br />Design<br />Build <i class="svc-core-text__dot" aria-hidden="true"></i></span>
+            <span class="svc-stack__core-desc">One connected practice<br />MER Studio</span>
+          </div>
+          <p class="svc-stack__area">25+ years of experience</p>
+          <ul role="list" class="svc-stack__pills svc-stack__pills--center">
+            <li>
+              <a class:list={['svc-pill', 'svc-pill--flow', { 'svc-pill--offer': offer.active }]} href={AI_HREF}>
+                <i class="svc-pill__dot" aria-hidden="true"></i><span class="svc-pill__label">AI Visibility</span>
+                {offer.active && <span class="svc-pill__tag" data-offer><span class="svc-pill__free">{offer.tag}</span> · <span class="svc-pill__more">{offer.more}</span></span>}
+              </a>
+            </li>
+          </ul>
+          <div class="svc-stack__side">
+            <p class="svc-stack__label">Brand</p>
+            <ul role="list" class="svc-stack__pills">{['Branding', 'Websites'].map((l) => <li class="svc-pill svc-pill--flow"><i class="svc-pill__dot" aria-hidden="true"></i>{l}</li>)}</ul>
+          </div>
+          <div class="svc-stack__side">
+            <p class="svc-stack__label">Product</p>
+            <ul role="list" class="svc-stack__pills"><li class="svc-pill svc-pill--flow"><i class="svc-pill__dot" aria-hidden="true"></i>Digital Product</li></ul>
+          </div>
+          <ul role="list" class="svc-stack__pills svc-stack__pills--chips">{chips.map((c) => <li class="svc-chip svc-chip--flow">{c.label}</li>)}</ul>
+        </div>
+
+        <p class="svc-caption">Set of services that complement each other and allow us to design, develop, implement, maintain, and extend a consistent experience</p>
+        <div class="svc-next">
+          <Button size="sm" icon="arrow-down" iconOnly aria-label="Next step" data-svc-next />
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="services__addons">
-    <p class="services__addons-lead" data-reveal="rise">Added to any project — or contracted on their own.</p>
-    <div class="services__addons-list">
-      {addons.map((a) => (
-        <article class="services__addon" data-reveal="rise">
-          <h3 class="services__addon-title">{a.title}</h3>
-          <p class="services__addon-body">{a.body}</p>
-        </article>
+  <div class="services__body" id="services-content" data-svc-body>
+    <ol role="list" class="services__list" data-services-list>
+      {services.map((s, i) => (
+        <li class="services__row svc-r" style={`--r:${i}`} data-services-row>
+          <div class="services__row-main">
+            <span class="services__slot" aria-hidden="true" data-services-slot></span>
+            <h3 class="services__item-title">{s.href ? <a class="services__link" href={s.href}>{s.name}</a> : s.name}</h3>
+            <p class="services__note">{s.body}</p>
+            {s.offer && offer.active && <span class="offer-tag" data-offer><span class="offer-tag__free">{offer.tag}</span> · <span class="offer-tag__more">{offer.more}</span></span>}
+            <span class="services__index">[{i + 1}]</span>
+          </div>
+        </li>
       ))}
+    </ol>
+
+    <div class="services__included svc-r svc-r--lift" style="--r:4" data-reveal="rise">
+      <h3 class="services__included-title">EVERY PROJECT INCLUDES</h3>
+      <ul role="list" class="services__included-list">
+        {included.map((t) => <li><i class="services__bullet" aria-hidden="true"></i>{t}</li>)}
+      </ul>
+    </div>
+
+    <div class="services__addons">
+      <p class="services__addons-lead svc-r svc-r--lift" style="--r:5" data-reveal="rise">Added to any project — or contracted on their own.</p>
+      <div class="services__addons-list">
+        {addons.map((a, i) => (
+          <article class="services__addon svc-r svc-r--lift" style={`--r:${6 + i}`} data-reveal="rise" data-addon>
+            <h3 class="services__addon-title">{a.title}</h3>
+            <p class="services__addon-body">{a.body}</p>
+            {a.more && (
+              <>
+                <div class="services__addon-more" id={`addon-${a.id}`} data-addon-more>
+                  <div class="services__addon-more-in">
+                    <ul role="list" class="services__addon-list">{a.more.map((m) => <li>{m}</li>)}</ul>
+                    <p class="services__addon-for"><b>For:</b> {a.for}</p>
+                  </div>
+                </div>
+                <Button variant="outline-secondary" size="md" class="services__addon-btn" aria-expanded="false" aria-controls={`addon-${a.id}`} data-addon-toggle><span data-addon-label>Learn more</span></Button>
+              </>
+            )}
+          </article>
+        ))}
+      </div>
     </div>
   </div>
 </section>
 
 <script>
   import { initServicesActive } from '../../scripts/services-active';
+  import { initServicesStages } from '../../scripts/services-stages';
   initServicesActive();
+  initServicesStages();
+
+  // Add-ons: Learn more ⇄ Show less, in place.
+  document.querySelectorAll<HTMLButtonElement>('[data-addon-toggle]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest<HTMLElement>('[data-addon]');
+      if (!card) return;
+      const open = !card.hasAttribute('data-open');
+      card.toggleAttribute('data-open', open);
+      btn.setAttribute('aria-expanded', String(open));
+      const label = btn.querySelector('[data-addon-label]');
+      if (label) label.textContent = open ? 'Show less' : 'Learn more';
+    });
+  });
 </script>
 
 <style>
   .services {
-    display: flex;
-    flex-direction: column;
-    gap: 65px;
+    --svc-head: 99px; /* eyebrow 24 + gap 22 + title 53 (Figma Heading 2) */
+    --svc-grey-ball: color-mix(in srgb, var(--color-neutral-900) 50%, var(--color-neutral-800)); /* Figma balls ≈ rgb(36) */
+    --svc-grey-venn: color-mix(in srgb, var(--color-neutral-900) 25%, var(--color-neutral-800)); /* Figma Venn circles ≈ rgb(44) */
+    --svc-grey-lens: color-mix(in srgb, var(--color-neutral-900) 78%, var(--color-neutral-800)); /* Figma Venn overlap ≈ rgb(27) */
+    --svc-dur: 800ms;
     padding: 3px var(--page-gutter) 100px;
     background: var(--surface-soft);
   }
-  .services__top { display: flex; flex-direction: column; align-items: flex-end; gap: var(--sp-24); }
-  .services__intro { display: flex; flex-direction: column; gap: 45px; width: min(822px, 100%); align-self: flex-start; }
+
+  /* ── Frame: heading + stage. Static on ≤1023 / reduced motion; pinned (below) when data-pinned. ── */
+  .services__pin { display: flex; flex-direction: column; gap: 45px; }
+  .services__stage { display: flex; flex-direction: column; align-items: center; gap: var(--sp-24); }
+
+  /* ── Diagram (≥1024). Everything is placed in design units of an 880 × 600 drawing; --u scales them. ── */
+  .svc-dgwrap { container-type: inline-size; width: min(100%, 1000px, calc(var(--dg-h, 680px) * 880 / 600)); }
+  .svc-dg { --u: calc(100cqw / 880); position: relative; aspect-ratio: 880 / 600; }
+  .svc-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .svc-t {
+    position: absolute;
+    left: calc(50% + var(--x) * var(--u));
+    top: calc(50% + var(--y) * var(--u));
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  /* Shapes. Transforms/opacity/stroke only (no filter: blur — §22); every state change is one transition on --ease-enter. */
+  .svc-ring { fill: none; stroke: var(--color-neutral-400); stroke-width: 1; stroke-dasharray: 1 4; stroke-linecap: round; }
+  .svc-draw { fill: none; stroke: #fff; stroke-width: 6; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1000ms var(--ease-enter) 250ms; }
+  .svc-draw--inner { transition-delay: 450ms; }
+  [data-s2] .svc-draw { stroke-dashoffset: 0; }
+
+  .svc-bar { fill: var(--svc-grey-venn); transform-box: fill-box; transform-origin: center; transform: scaleX(0.197); transition: transform var(--svc-dur) var(--ease-enter), fill var(--svc-dur) var(--ease-enter); }
+  [data-s2] .svc-bar { fill: var(--svc-grey-ball); transform: scaleX(1) scaleY(0.02); } /* the bridge between the drops: full at the start, a hair by the end */
+  .svc-ball { fill: var(--svc-grey-venn); transform-box: fill-box; transform-origin: center; transition: transform var(--svc-dur) var(--ease-enter), fill var(--svc-dur) var(--ease-enter); }
+  .svc-ball--l { transform: translateX(-52px); }
+  .svc-ball--r { transform: translateX(52px); }
+  [data-s2] .svc-ball { fill: var(--svc-grey-ball); }
+  [data-s2] .svc-ball--l { transform: translateX(-264px) scale(0.5455); }
+  [data-s2] .svc-ball--r { transform: translateX(264px) scale(0.5455); }
+  /* Threads grow out of the core toward the balls once the drops have separated, and leave when the axis takes over. */
+  .svc-thread { fill: var(--svc-grey-ball); opacity: 1; transition: opacity 300ms var(--ease-enter); }
+  .svc-draw--thread { stroke-width: 60; transition: stroke-dashoffset 600ms var(--ease-enter) 450ms; }
+  [data-s2] .svc-draw--thread { stroke-dashoffset: 0; }
+  [data-s3] .svc-thread { opacity: 0; transition-duration: var(--dur-fast); }
+  [data-s3] .svc-ball--l { transform: translateX(-386.6px) scale(0.0464); }
+  [data-s3] .svc-ball--r { transform: translateX(386.6px) scale(0.0464); }
+  .svc-drops { transition: opacity 350ms var(--ease-enter); }
+  [data-s3] .svc-drops { opacity: 0; transition-delay: 450ms; }
+
+  .svc-lens { fill: var(--svc-grey-lens); transition: opacity var(--dur-fast) var(--ease-enter); }
+  [data-s2] .svc-lens { opacity: 0; transition: none; } /* gone at once: its cusps would stick out of the separating drops */
+  .svc-core {
+    fill: var(--surface-inverse);
+    transform-box: fill-box; transform-origin: center; transform: scale(0.2); opacity: 0;
+    transition: transform var(--svc-dur) var(--ease-enter) 250ms, opacity 400ms var(--ease-enter) 250ms;
+  }
+  [data-s2] .svc-core { transform: scale(1); opacity: 1; }
+
+  .svc-axis-line { stroke: var(--text-primary); stroke-width: 1; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset var(--svc-dur) var(--ease-enter); }
+  .svc-endpoint { fill: var(--text-primary); opacity: 0; transition: opacity 300ms var(--ease-enter); }
+  [data-s3] .svc-axis-line { stroke-dashoffset: 0; transition-delay: 350ms; }
+  [data-s3] .svc-endpoint { opacity: 1; transition-delay: 350ms; }
+
+  /* Etapa 1 texts (fade out as the circles separate) */
+  .svc-v { transition: opacity 250ms var(--ease-enter); color: var(--text-inverse); font-family: var(--font-display); }
+  [data-s2] .svc-v { opacity: 0; }
+  .svc-v__side { font-weight: 600; font-size: max(18px, calc(24 * var(--u))); line-height: 1; }
+  .svc-v__lens { display: flex; flex-direction: column; align-items: center; gap: calc(6 * var(--u)); }
+  .svc-v__mer { font-weight: 600; font-size: max(18px, calc(24 * var(--u))); line-height: 1; color: var(--accent-primary); }
+  .svc-v__years { display: block; width: calc(100 * var(--u)); min-width: 96px; white-space: normal; font-weight: 400; font-size: max(13px, calc(14 * var(--u))); line-height: 1.35; letter-spacing: 0.04em; }
+
+  /* Core text + axis labels (etapa 2 → 3) */
+  .svc-core-text { display: flex; flex-direction: column; align-items: center; gap: calc(8 * var(--u)); color: var(--text-inverse); font-family: var(--font-display); opacity: 0; transition: opacity 400ms var(--ease-enter); }
+  [data-s2] .svc-core-text { opacity: 1; transition-delay: 650ms; }
+  .svc-core-text__title { display: block; text-align: left; font-weight: 500; font-size: max(17px, calc(22 * var(--u))); line-height: 1.17; letter-spacing: -0.01em; }
+  .svc-core-text__dot { display: inline-block; width: 0.83em; height: 0.83em; margin-left: 0.15em; border-radius: 50%; background: var(--accent-primary); vertical-align: -0.05em; }
+  .svc-core-text__desc { font-weight: 300; font-size: max(12px, calc(12 * var(--u))); line-height: 1.1; opacity: 0.85; }
+
+  .svc-axis-label { font-family: var(--font-display); font-weight: 600; color: var(--text-secondary); font-size: max(16px, calc(19 * var(--u))); line-height: 1; opacity: 0; transition: opacity 400ms var(--ease-enter), transform var(--svc-dur) var(--ease-enter), color var(--svc-dur) var(--ease-enter); }
+  [data-s2] .svc-axis-label { opacity: 1; transition-delay: 500ms, 0s, 0s; }
+  [data-s3] .svc-axis-label { color: var(--text-primary); font-size: max(14px, calc(16 * var(--u))); transition-delay: 0s; }
+  [data-s3] .svc-axis-label--brand { transform: translate(calc(-50% + 5 * var(--u)), calc(-50% - 17 * var(--u))); }
+  [data-s3] .svc-axis-label--product { transform: translate(calc(-50% + 0 * var(--u)), calc(-50% - 17 * var(--u))); }
+
+  /* Etapa 3 — area label, pills, chips */
+  .svc-area { font-family: var(--font-display); font-weight: 600; font-size: max(14px, calc(17 * var(--u))); letter-spacing: 0.17em; opacity: 0; transition: opacity 500ms var(--ease-enter); }
+  [data-s3] .svc-area { opacity: 1; transition-delay: 500ms; }
+
+  .svc-pill, .svc-chip {
+    display: inline-flex; align-items: center; gap: calc(8 * var(--u));
+    height: calc(44 * var(--u)); min-height: 36px;
+    padding: 0 calc(16 * var(--u));
+    border-radius: 999px;
+    font-family: var(--font-display); font-weight: 500; font-size: max(14px, calc(15.5 * var(--u))); line-height: 1;
+  }
+  .svc-pill { background: var(--color-neutral-700); color: var(--text-inverse); box-shadow: 0 2px 8px rgb(0 0 0 / 0.14); }
+  .svc-pill__dot { width: calc(9 * var(--u)); height: calc(9 * var(--u)); min-width: 7px; min-height: 7px; border-radius: 50%; background: rgb(255 255 255 / 0.72); }
+  .svc-chip { color: var(--text-secondary); background: rgb(255 255 255 / 0.45); border: 1px solid var(--border-default); }
+  .svc-pill { text-decoration: none; }
+  .svc-dg .svc-pill, .svc-dg .svc-chip {
+    opacity: 0;
+    visibility: hidden; /* not focusable / not clickable until stage 3 */
+    transform: translate(-50%, -50%) scale(0.85);
+    transition: opacity 500ms var(--ease-enter), transform 600ms var(--ease-enter), visibility 0s linear 600ms;
+  }
+  [data-s3] .svc-dg .svc-pill, [data-s3] .svc-dg .svc-chip { opacity: 1; visibility: visible; transform: translate(-50%, -50%); transition-delay: calc(450ms + var(--i) * 90ms), calc(450ms + var(--i) * 90ms), calc(450ms + var(--i) * 90ms); }
+
+  /* AI Visibility pill during the launch offer (src/data/offer.ts): dark ground, yellow border, tag inside the same <a>. */
+  .svc-pill--offer {
+    display: inline-grid; grid-template-columns: auto 1fr; align-items: center; justify-items: start; text-align: left; column-gap: calc(8 * var(--u)); row-gap: calc(3 * var(--u));
+    height: auto; padding: calc(8 * var(--u)) calc(16 * var(--u)) calc(8 * var(--u)) calc(14 * var(--u));
+    border: 1px solid var(--accent-primary); border-radius: calc(22 * var(--u));
+  }
+  .svc-pill--offer .svc-pill__tag {
+    grid-column: 2; font-family: var(--font-technical); font-weight: 400; font-size: max(12px, calc(11.5 * var(--u)));
+    line-height: 1.2; letter-spacing: 0.04em; text-transform: uppercase; color: rgb(255 255 255 / 0.78);
+  }
+  .svc-pill__more { color: var(--accent-primary); text-transform: none; text-decoration: underline; text-underline-offset: 0.18em; }
+  .svc-pill:is(a):focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 3px; }
+  @media (hover: hover) { .svc-pill:is(a):hover { background: var(--color-neutral-800); } }
+  html[data-offer-ended] .svc-pill--offer { border-color: transparent; }
+
+  /* Etapa 4 — the diagram closes into the core, then fades; the caption and the arrow leave with it. */
+  .svc-contract { transform-origin: 440px 300px; transition: transform 650ms var(--ease-enter), opacity 500ms var(--ease-enter); }
+  [data-s4] .svc-contract { transform: scale(0.25); opacity: 0; }
+  [data-s4] .svc-dg .svc-pill, [data-s4] .svc-dg .svc-chip {
+    opacity: 0; transition-delay: 0ms;
+    transform: translate(calc(-50% - var(--x) * var(--u)), calc(-50% - var(--y) * var(--u))) scale(0.2);
+  }
+  [data-s4] .svc-area, [data-s4] .svc-axis-label { opacity: 0; transition-delay: 0ms; }
+  [data-s4] .svc-axis-label--brand { transform: translate(calc(-50% + 5 * var(--u) + 379 * var(--u)), calc(-50% - 17 * var(--u))); }
+  [data-s4] .svc-axis-label--product { transform: translate(calc(-50% - 361 * var(--u)), calc(-50% - 17 * var(--u))); }
+  .svc-dg { transition: opacity 400ms var(--ease-enter), transform 650ms var(--ease-enter); }
+  [data-s4] .svc-dg { opacity: 0; transform: scale(0.94); transition-delay: 300ms; }
+  [data-s4] .svc-core-text { transition-delay: 0ms; }
+
+  .svc-caption {
+    width: 100%; text-align: center; text-transform: uppercase;
+    font-family: var(--font-technical); font-size: 13px; line-height: 20px; letter-spacing: 0.06em;
+    transition: opacity 400ms var(--ease-enter);
+  }
+  .svc-next { display: none; }
+  .svc-stack { display: none; }
+
+  /* ── Content (list, project includes, add-ons) ── */
+  .services__body { display: flex; flex-direction: column; gap: 65px; margin-top: 67px; }
 
   .services__list { display: flex; flex-direction: column; gap: 26px; }
   .services__list::after { content: ''; flex-shrink: 0; height: 1px; background: var(--fills-primary); }
-  .services__row {
-    display: flex;
-    flex-direction: column;
-    gap: var(--sp-20);
-    min-height: 45px;
-  }
-  .services__row::before { content: ''; flex-shrink: 0; height: 1px; background: var(--fills-primary); }
+  .services__row { display: flex; flex-direction: column; gap: var(--sp-20); min-height: 45px; }
+  .services__row::before { content: ''; flex-shrink: 0; height: 1px; background: var(--fills-primary); transform-origin: left; }
   /* Figma 149:5766 — 24px start padding holds the 12px active dot (slot at x 6). */
-  .services__row-main {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 22px;
-    padding: 0 2px 0 var(--sp-24);
-  }
-  .services__item-title { font-weight: 500; font-size: var(--fs-lead); line-height: 1.2; white-space: nowrap; }
+  .services__row-main { position: relative; display: flex; align-items: center; gap: 22px; padding: 0 2px 0 var(--sp-24); }
+  .services__item-title { font-weight: 500; font-size: var(--fs-block-title); line-height: 1.2; white-space: nowrap; }
   /* Linked row: the title link stretches over the whole row (no nested interactive content), ink on hover like a plain link. */
   .services__link { color: inherit; text-decoration: none; }
   .services__link::after { content: ''; position: absolute; inset: -10px 0; }
   .services__link:hover, .services__link:focus-visible { text-decoration: underline; text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
-  .services__note { flex: 1 1 auto; font-weight: 500; font-size: var(--fs-meta); line-height: 1.2; letter-spacing: 0.02em; }
-  .services__index { margin-left: auto; font-weight: 500; font-size: var(--fs-meta); line-height: 1.2; letter-spacing: 0.02em; }
-  .services__slot { position: absolute; left: 6px; top: 8.5px; width: 12px; height: 12px; pointer-events: none; }
+  .services__note { flex: 1 1 auto; font-weight: 500; font-size: var(--fs-body); line-height: 1.2; letter-spacing: 0.02em; text-transform: uppercase; }
+  .services__index { margin-left: auto; font-weight: 500; font-size: var(--fs-body); line-height: 1.2; letter-spacing: 0.02em; }
+  .services__slot { position: absolute; left: 6px; top: 11px; width: 12px; height: 12px; pointer-events: none; }
 
   /* Active row (Figma 2204:616): inactive rows sit at --opacity-service-inactive, only once JS is live. */
-  .services[data-live] .services__row-main {
-    opacity: var(--opacity-service-inactive);
-    transition: opacity 250ms var(--ease-enter);
-  }
+  .services[data-live] .services__row-main { opacity: var(--opacity-service-inactive); transition: opacity 250ms var(--ease-enter); }
   .services[data-live] .services__row[data-active] .services__row-main { opacity: 1; }
 
   /* The title's signature dot travels to the active row (transform only). */
   .services[data-live] :global(.section-heading__dot) {
-    position: relative;
-    z-index: 1;
-    transform-origin: 0 0;
+    position: relative; z-index: 1; transform-origin: 0 0;
     transform: translate(var(--dot-x, 0), var(--dot-y, 0)) scale(var(--dot-s, 1));
     transition: transform var(--dot-dur, var(--dur-base)) var(--ease-enter);
     will-change: transform;
   }
 
-  .services__card {
-    width: min(754px, 100%);
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-    padding: var(--sp-24);
-    border-radius: 16px;
-    background: var(--surface-base);
+  /* Every project includes: one dark bar, mono label + four items separated by yellow dots. */
+  .services__included {
+    display: flex; align-items: center; gap: var(--sp-8) var(--sp-24); flex-wrap: wrap;
+    padding: 12px var(--sp-24);
+    background: var(--surface-inverse); color: var(--text-inverse);
   }
-  .services__card-title { font-family: var(--font-technical); font-weight: 400; font-size: var(--fs-eyebrow); line-height: 24px; letter-spacing: 0.02em; }
-  .services__included { display: flex; flex-direction: column; font-size: var(--fs-body); line-height: 1.5; }
+  .services__included-title { font-family: var(--font-technical); font-weight: 400; font-size: var(--fs-body-lg); line-height: 24px; letter-spacing: 0.02em; }
+  .services__included-list { display: flex; flex-wrap: wrap; align-items: center; gap: 4px var(--sp-24); font-size: var(--fs-body); line-height: 24px; }
+  .services__included-list li { display: inline-flex; align-items: center; gap: 8px; }
+  .services__bullet { width: 10px; height: 10px; border-radius: 50%; background: var(--accent-primary); flex: none; }
 
-  .services__addons { display: flex; justify-content: center; align-items: stretch; gap: 54px; }
+  /* Launch-offer tag (list row [4]): outline yellow, visual only — the row's title link covers the whole row. */
+  .offer-tag {
+    flex: 0 1 auto; min-width: 0; max-width: 100%; margin-left: var(--sp-16); padding: 3px 10px; border: 1px solid var(--accent-primary); border-radius: 16px;
+    font-family: var(--font-technical); font-size: var(--fs-nav); line-height: 1.4; letter-spacing: 0.04em; text-transform: uppercase;
+    white-space: normal; /* wraps below desktop: never wider than its row */
+  }
+  @media (min-width: 1200px) { .offer-tag { flex: none; white-space: nowrap; border-radius: var(--r-pill); } }
+  .offer-tag__more { text-transform: none; text-decoration: underline; text-underline-offset: 0.18em; }
+
+  .services__addons { display: flex; justify-content: center; align-items: flex-start; gap: 54px; }
   .services__addons-lead {
-    flex: 0 0 332px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    font-size: var(--fs-block-title);
-    line-height: 36px;
-    text-align: right;
+    flex: 0 0 400px; display: flex; align-items: center; justify-content: flex-end; min-height: 139px; /* centred on the collapsed row: opening a column never moves it */
+    font-size: var(--fs-work-title); line-height: 1.2; text-align: right;
   }
-  .services__addons-list { flex: 1 1 0; min-width: 0; display: flex; gap: 2px; }
-  .services__addon {
-    flex: 1 1 0;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 5.8px;
-    padding: 22px var(--sp-20);
-    border-left: 1px dashed var(--divider-dashed);
-  }
-  .services__addon-title { font-weight: 500; font-size: var(--fs-lead); line-height: 1.2; }
-  .services__addon-body { font-size: var(--fs-meta); line-height: 1.4; }
+  .services__addons-list { flex: 1 1 0; min-width: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px; }
+  .services__addon { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 5.8px; padding: 22px var(--sp-20); border-left: 1px dashed var(--divider-dashed); }
+  .services__addon-title { font-weight: 500; font-size: var(--fs-block-title); line-height: 1.2; }
+  .services__addon-body { font-size: var(--fs-body); line-height: 1.4; }
+  .services__addon-btn { margin-top: var(--sp-16); }
+  /* Learn more: the height opens in place (short); neighbouring columns keep their content where it is (grid, top-aligned). */
+  .services__addon-more { width: 100%; display: grid; grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows var(--dur-base) var(--ease-enter), visibility 0s linear var(--dur-base); }
+  .services__addon-more-in { min-height: 0; overflow: hidden; }
+  .services__addon[data-open] .services__addon-more { grid-template-rows: 1fr; visibility: visible; transition-delay: 0s; }
+  .services__addon-list { display: flex; flex-direction: column; gap: 6px; margin: var(--sp-8) 0 0; padding: 0 0 0 1.1em; list-style: disc; font-size: var(--fs-body); line-height: 1.4; }
+  .services__addon-for { margin: var(--sp-12) 0 0; font-size: var(--fs-body); line-height: 1.4; }
+  .services__addon-for b { font-weight: 500; }
 
-  /* Tablet: rows grow with their copy. */
-  @media (max-width: 1199px) {
-    .services { gap: var(--sp-48); padding-bottom: var(--sp-80); }
+  /* ── Desktop, static (reduced motion / no JS): stage 3 as designed, then the content. ── */
+  @media (min-width: 1024px) {
+    .services__pin { gap: 67px; }
+    .services__stage { gap: var(--sp-24); }
+    .svc-caption { max-width: 100%; }
+  }
+
+  /* ── Desktop, pinned ── */
+  @media (min-width: 1024px) {
+    .services[data-pinned] { --svc-step: var(--step-scroll); }
+    .services[data-pinned] .services__track { --step: var(--svc-step); position: relative; height: calc(100vh + 3 * var(--svc-step)); height: calc(100svh + 3 * var(--svc-step)); }
+    .services[data-pinned] .services__pin {
+      position: sticky; top: 0;
+      height: 100vh; height: 100svh;
+      box-sizing: border-box;
+      padding-top: var(--header-h);
+      gap: 0;
+      /* what is not the diagram: header, heading, gaps, caption, arrow, bottom breathing room */
+      --dg-h: clamp(400px, calc(100svh - var(--header-h) - var(--svc-head) - 196px), 680px);
+    }
+    .services[data-pinned] .services__stage { flex: 1 1 auto; min-height: 0; justify-content: center; gap: var(--sp-16); padding-bottom: var(--sp-16); }
+    .services__pin { --dg-h: 680px; }
+    /* Content sits right under the heading when the last step is reached, over the (now empty) diagram area. */
+    .services[data-pinned] .services__body {
+      position: relative; z-index: 2;
+      margin-top: calc(-100vh + var(--header-h) + var(--svc-head) + 45px);
+      margin-top: calc(-100svh + var(--header-h) + var(--svc-head) + 45px);
+      visibility: hidden;
+      transition: visibility 0s linear 400ms;
+    }
+    .services[data-pinned][data-s4] .services__body { visibility: visible; transition-delay: 0s; }
+
+    /* "Next step" arrow while stages remain (1–3); gone at 4. */
+    .services[data-pinned] .svc-next { display: flex; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 400ms var(--ease-enter), visibility 0s linear 400ms; }
+    .services[data-pinned]:not([data-s4]) .svc-next { opacity: 1; visibility: visible; transition-delay: 300ms, 300ms; }
+    .services[data-pinned][data-s4] .svc-caption { opacity: 0; }
+
+    /* Content entrance (stage 4): fades in with a stagger. Rows only fade + draw their rule: the dot's target slot must not move. */
+    .services[data-pinned] .svc-r { opacity: 0; transition: opacity var(--dur-slow) var(--ease-enter) calc(300ms + var(--r) * 90ms), transform var(--dur-slow) var(--ease-enter) calc(300ms + var(--r) * 90ms); }
+    .services[data-pinned] .svc-r--lift { transform: translateY(var(--rise-shift)); }
+    .services[data-pinned] .services__row::before { transform: scaleX(0); transition: transform var(--dur-section) var(--ease-enter) calc(300ms + var(--r) * 90ms); }
+    .services[data-pinned][data-s4] .svc-r { opacity: 1; }
+    .services[data-pinned][data-s4] .svc-r--lift { transform: none; }
+    .services[data-pinned][data-s4] .services__row::before { transform: none; }
+    /* Leaving stage 4 upward: content out at once, the diagram re-assembles. */
+    .services[data-pinned]:not([data-s4]) .svc-r, .services[data-pinned]:not([data-s4]) .services__row::before { transition-delay: 0ms; transition-duration: 200ms; }
+  }
+
+  /* Tablet ≥1024 but short desktop */
+  @media (min-width: 1024px) and (max-width: 1199px) {
+    .services__addons { flex-direction: column; gap: var(--sp-24); }
+    .services__addons-lead { flex: none; justify-content: flex-start; text-align: left; }
+    .services__addons-list { width: 100%; }
+  }
+
+  /* ── ≤1023: no pin, no diagram — etapa 3 stacked, then the list (fade + rise from reveal.ts) ── */
+  @media (max-width: 1023px) {
+    .services { padding-bottom: var(--sp-80); }
+    .services__pin { gap: var(--sp-32); }
+    .svc-dgwrap { display: none; }
+    .svc-stack { display: flex; flex-direction: column; align-items: center; gap: var(--sp-24); width: 100%; }
+    .svc-stack__core {
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+      width: 220px; height: 220px; border-radius: 50%;
+      background: var(--surface-inverse); color: var(--text-inverse); font-family: var(--font-display);
+    }
+    .svc-stack__core-title { display: block; text-align: left; font-weight: 500; font-size: 22px; line-height: 1.17; letter-spacing: -0.01em; }
+    .svc-stack__core-desc { font-weight: 300; font-size: 12px; line-height: 1.1; text-align: center; opacity: 0.85; }
+    .svc-stack__area { font-family: var(--font-display); font-weight: 600; font-size: 15px; letter-spacing: 0.17em; text-align: center; }
+    .svc-stack__side { display: flex; flex-direction: column; align-items: flex-start; gap: var(--sp-12); width: 100%; max-width: 420px; padding-left: var(--sp-16); border-left: 1px solid var(--text-primary); }
+    .svc-stack__label { font-family: var(--font-display); font-weight: 600; font-size: 19px; line-height: 1; }
+    .svc-stack__pills { display: flex; flex-wrap: wrap; gap: var(--sp-8); }
+    .svc-stack__pills--center, .svc-stack__pills--chips { justify-content: center; }
+    .svc-pill--flow, .svc-chip--flow { height: 44px; padding: 0 16px; font-size: 15px; gap: 8px; }
+    .svc-pill--offer.svc-pill--flow { height: auto; padding: 8px 16px 8px 14px; border-radius: 22px; column-gap: 8px; row-gap: 3px; }
+    .svc-pill--offer .svc-pill__tag { font-size: 11px; white-space: normal; }
+    .svc-caption { font-size: 12px; }
+    .services__body { margin-top: var(--sp-48); gap: var(--sp-48); }
     .services__row-main { flex-wrap: wrap; row-gap: 4px; padding-right: var(--sp-40); }
     .services__note { flex-basis: 100%; }
     .services__index { position: absolute; right: 2px; top: 6px; }
@@ -162,14 +555,19 @@ const addons = [
     .services__addons-list { width: 100%; }
   }
   @media (max-width: 767px) {
-    .services__item-title { font-size: 22px; white-space: normal; }
-    .services__slot { top: 7px; }
-    .services__addons-list { flex-direction: column; gap: var(--sp-16); }
+    .services__item-title { font-size: 26px; white-space: normal; }
+    .services__slot { top: 9px; }
+    .services__addons-list { grid-template-columns: minmax(0, 1fr); gap: var(--sp-16); }
+    .services__addons-lead { min-height: 0; }
+    .offer-tag { margin-left: 0; }
     .services__addons-lead { font-size: var(--fs-lead-sm); line-height: 1.3; }
+    .services__included { align-items: flex-start; flex-direction: column; gap: var(--sp-8); }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .services[data-live] .services__row-main { opacity: 1; transition: none; }
     .services[data-live] :global(.section-heading__dot) { transform: none; transition: none; }
+    .svc-dg, .svc-dg * { transition: none !important; }
+    .services__addon-more { transition: none; }
   }
 </style>

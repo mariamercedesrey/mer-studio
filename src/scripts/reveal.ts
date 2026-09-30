@@ -93,6 +93,7 @@ export function initReveals() {
   const reduced = prefersReducedMotion();
   document.querySelectorAll<HTMLElement>('[data-reveal]').forEach((el) => {
     if (el.closest('dialog')) return; // overlays are not part of the page flow
+    if (el.closest('[data-pinned]')) return; // pinned Services reveals by step (services-stages.ts), not by viewport
     if (reduced) { el.classList.add('is-in'); return; }
     const rise = el.dataset.reveal === 'rise';
     if (rise && el.getBoundingClientRect().top < innerHeight) return;

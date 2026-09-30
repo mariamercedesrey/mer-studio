@@ -35,7 +35,10 @@ Always included:
 Added to any project — or contracted on their own:
 
 - Design System: Exported tokens, a documented component library, and a usage guide — so your team, or an AI agent, can keep building on it without breaking the system.
+- AI Assistants & Automation: AI assistants and automations that take repetitive work off your team — built into your site, store or product.
 - Maintenance: Optional, after handover. Changes, updates, backups and priority response.
+
+Launch offer: projects started in October 2026 include AI Visibility setup free (schema, llms.txt, AI crawler access, semantic structure, and an initial AI visibility check). Content strategy, full audit and monthly measurement are paid.
 
 ## How we work
 

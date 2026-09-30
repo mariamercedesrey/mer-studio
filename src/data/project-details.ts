@@ -34,6 +34,7 @@ export type ProjectDetailData = {
   credit: string;
   link?: { label: string; href: string };
   title: string;
+  seoTitle?: string; // shorter <title> text when `client — title | MER Studio` would pass 70 characters (Bing)
   meta: string;
   note?: string; // extra meta line under the title (same style as meta)
   roles: string[];
@@ -206,6 +207,7 @@ export const projectDetails: Record<string, ProjectDetailData> = {
     credit: 'studio client',
     link: { label: 'americanpadelsystems.com', href: 'https://americanpadelsystems.com' },
     title: 'A site that answers "does it pay for itself?"',
+    seoTitle: 'Does it pay for itself?',
     meta: '[Enterprise]',
     roles: ['branding', 'Web Design', 'Interactive Tool', 'Web Development'],
     sections: [

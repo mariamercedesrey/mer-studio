@@ -1,11 +1,13 @@
 // Selected Work, desktop (≥1024 px): stepped scroll. The section pins (CSS sticky inside a track that is
 // 100svh + projects × 60svh tall) and the scroll progress picks the project: one 60svh stretch per project.
 // The scroll stays 100 % native — no wheel/touch handlers, nothing is intercepted or slowed; JS only reads the
-// position and, on an explicit index click, scrolls to that project's stretch.
+// position and, on an explicit index click, scrolls to that project's stop. One gesture = one project: the stops are
+// CSS scroll-snap points (StepSnap + step-snap.ts), `scroll-snap-stop: always`.
 // A change swaps the text (out up / in from below, CSS via data-pos) and the image (pixelated canvas transition).
 // Below 1024 px nothing runs here — text and image stack (CSS) and reveal.ts does the fade + rise.
 import { createPixelTransition } from './pixel-transition';
 import { prefersReducedMotion } from './reveal';
+import { initStepSnap } from './step-snap';
 
 const DESKTOP = '(min-width: 1024px)';
 
@@ -14,7 +16,7 @@ export function initWorkScroll() {
   if (!section) return;
   const mq = matchMedia(DESKTOP);
   let teardown: (() => void) | null = null;
-  const sync = () => { teardown?.(); teardown = mq.matches ? setup(section) : null; };
+  const sync = () => { teardown?.(); teardown = mq.matches && !prefersReducedMotion() ? setup(section) : null; };
   mq.addEventListener('change', sync);
   sync();
 }
@@ -34,16 +36,13 @@ function setup(section: HTMLElement) {
   const pt = !reduced && canvas ? createPixelTransition(canvas) : null;
   const imgs = pics.map((p) => p.querySelector('img') as HTMLImageElement);
 
-  // ── Loading: the first two as the section nears the viewport, the next one as each project activates, the rest lazy.
+  // ── Loading: every stage image ships a real src + native loading="lazy" (crawlers without JS see them). The first two
+  //    are fetched as the section nears the viewport, the next one as each project activates: `load` only forces eager. ──
   const load = (i: number) => {
     const pic = pics[i];
     if (!pic || pic.dataset.loaded) return;
     pic.dataset.loaded = '';
-    pic.querySelectorAll<HTMLSourceElement>('source[data-srcset]').forEach((s) => { s.srcset = s.dataset.srcset!; });
-    const img = imgs[i];
-    img.loading = 'eager';
-    if (img.dataset.srcset) img.srcset = img.dataset.srcset;
-    if (img.dataset.src) img.src = img.dataset.src;
+    imgs[i].loading = 'eager';
   };
 
   // ── Which image is on screen (plain <img>, crossfaded by CSS with reduced motion) ──
@@ -92,8 +91,8 @@ function setup(section: HTMLElement) {
     load(i + 1); // preload the next project
   };
 
-  // ── Activation: scroll progress through the track. One stretch of `step` px per project; project 1 is in place on
-  //    arrival (progress ≤ 0) and the change to project 2 starts once the first stretch has been scrolled. ──
+  // ── Activation: scroll progress through the track. Project i rests at i × `step` px (its snap stop); the nearest
+  //    stop is the active one, so project 1 is in place on arrival (progress ≤ 0). ──
   const track = section.querySelector<HTMLElement>('[data-work-track]');
   const pin = section.querySelector<HTMLElement>('[data-work-pin]');
   if (!track || !pin) return null;
@@ -104,18 +103,18 @@ function setup(section: HTMLElement) {
     frame = 0;
     if (lock) return;
     const travelled = -track.getBoundingClientRect().top;
-    const i = Math.min(items.length - 1, Math.max(0, Math.floor(travelled / stepPx())));
+    const i = Math.min(items.length - 1, Math.max(0, Math.round(travelled / stepPx())));
     setActive(i);
   };
   const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
 
-  // ── Index click: smooth scroll to the middle of that project's stretch; intermediate projects don't flash by ──
+  // ── Index click: smooth scroll to that project's stop; intermediate projects don't flash by ──
   const release = () => { lock = false; window.clearTimeout(lockTimer); schedule(); };
   const goTo = (i: number) => {
     lock = true;
     setActive(i);
     load(i);
-    const top = track.getBoundingClientRect().top + window.scrollY + (i + 0.5) * stepPx();
+    const top = track.getBoundingClientRect().top + window.scrollY + i * stepPx();
     window.scrollTo({ top, behavior: reduced ? 'auto' : 'smooth' });
     window.clearTimeout(lockTimer);
     lockTimer = window.setTimeout(release, reduced ? 50 : 1600); // safety net; scroll events below release earlier
@@ -141,7 +140,7 @@ function setup(section: HTMLElement) {
     } else schedule();
   };
 
-  const cleanups: Array<() => void> = [];
+  const cleanups: Array<() => void> = [initStepSnap(track, items.length, stepPx)];
   const on = (el: HTMLElement | Window, type: string, fn: (e: any) => void, opts?: AddEventListenerOptions | boolean) => {
     el.addEventListener(type, fn, opts);
     cleanups.push(() => el.removeEventListener(type, fn, opts));

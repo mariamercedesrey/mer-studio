@@ -7,6 +7,7 @@ interface Props {
   href?: string;
   variant?: 'primary' | 'secondary' | 'ghost' | 'outline-primary' | 'outline-secondary' | 'negative' | 'ghost-negative' | 'ghost-primary';
   icon?: 'arrow-right' | 'arrow-down'; // leading icon (implies Show icon)
+  iconOnly?: boolean; // round, no visible label: pass aria-label (a11y name) — Primary = yellow circle, dark arrow
   showIcon?: boolean; // Show icon without choosing one → arrow-right (Figma default)
   size?: 'sm' | 'md' | 'lg';
   onDark?: boolean; // Primary/Secondary/Ghost/Outline Secondary sitting on an ink ground: focus ring turns yellow
@@ -16,13 +17,13 @@ interface Props {
   class?: string;
   [key: string]: unknown;
 }
-const { href, variant = 'primary', icon, showIcon = false, size = 'md', onDark = false, disabled = false, type = 'button', width, class: className, ...rest } = Astro.props;
+const { href, variant = 'primary', icon, showIcon = false, iconOnly = false, size = 'md', onDark = false, disabled = false, type = 'button', width, class: className, ...rest } = Astro.props;
 const style = width ? `width:${width}px` : undefined;
 const iconName = icon ?? (showIcon ? 'arrow-right' : undefined);
 const Tag = href && !disabled ? 'a' : 'button';
 ---
 <Tag
-  class:list={['btn', `btn--${variant}`, `btn--${size}`, { 'btn--on-dark': onDark }, className]}
+  class:list={['btn', `btn--${variant}`, `btn--${size}`, { 'btn--on-dark': onDark, 'btn--icon-only': iconOnly }, className]}
   href={Tag === 'a' ? href : undefined}
   type={Tag === 'button' ? type : undefined}
   disabled={Tag === 'button' && disabled ? true : undefined}
@@ -68,6 +69,11 @@ const Tag = href && !disabled ? 'a' : 'button';
   .btn--sm { min-height: var(--btn-h-sm); padding: 0 var(--sp-16); font-size: var(--fs-meta); line-height: 20px; }
   .btn--md { min-height: var(--btn-h-md); padding: 0 var(--sp-20); font-size: var(--fs-body); line-height: 20px; }
   .btn--lg { min-height: var(--btn-h-lg); padding: 0 var(--sp-24); font-size: var(--fs-body-lg); line-height: 24px; }
+
+  /* Icon-only: a circle as wide as the size's height. */
+  .btn--icon-only { padding: 0; width: var(--btn-h-md); }
+  .btn--icon-only.btn--sm { width: var(--btn-h-sm); }
+  .btn--icon-only.btn--lg { width: var(--btn-h-lg); }
 
   .btn__icon { flex: none; width: 16px; height: 16px; }
   .btn--lg .btn__icon { width: 20px; height: 20px; }
