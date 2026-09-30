@@ -10,7 +10,7 @@ const MER_ID = `${SITE}/#mer`;
 
 const services = [
   { name: 'Branding', description: 'Identity, and the system to keep it consistent.' },
-  { name: 'Websites', description: 'A landing, a full site, or an online store.' },
+  { name: 'Websites', description: 'A landing, a full site, or an online store — on Shopify, Tiendanube or WooCommerce.' },
   { name: 'Digital Product', description: "An app or a platform that doesn't exist yet." },
   { name: 'AI Visibility · GEO / AEO', description: 'So people find you when they ask an AI, not just Google.' },
   { name: 'Design System', description: 'Exported tokens, a documented component library, and a usage guide — so your team, or an AI agent, can keep building on it without breaking the system.' },

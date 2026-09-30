@@ -20,25 +20,30 @@ const AI_HREF = '/ai-visibility/';
 // Row titles = diagram pills, exactly (one list, one vocabulary).
 const services = [
   { name: 'Branding', body: 'Identity, and the system to keep it consistent.' },
-  { name: 'Websites', body: 'A landing, a full site, or an online store.' },
+  { name: 'Websites', body: 'A landing, a full site, or an online store — on Shopify, Tiendanube or WooCommerce.' },
   { name: 'Digital Product', body: "An app or a platform that doesn't exist yet." },
   { name: 'AI Visibility', body: 'GEO / AEO — so people find you when they ask an AI, not just Google.', href: AI_HREF, offer: true },
 ];
-// Add-ons = outer-ring chips, exactly. `more` = the expandable copy (Learn more / Show less); Maintenance has none.
+// Add-ons = outer-ring chips, exactly. `more` = the expandable copy (button label per add-on ⇄ "show less").
 const addons = [
   {
-    id: 'design-system', title: 'Design System',
+    id: 'design-system', title: 'Design System', cta: "what's included",
     body: 'Exported tokens, a documented component library, and a usage guide — so your team, or an AI agent, can keep building on it without breaking the system.',
     more: ['Design tokens (color, type, spacing) exported to code', 'Component library in Figma + code, with states and variants', 'Usage guide and do/don\'t rules', 'Handover session with your team'],
     for: 'products that will keep growing after launch.',
   },
   {
-    id: 'ai-assistants', title: 'AI Assistants & Automation',
+    id: 'ai-assistants', title: 'AI Assistants & Automation', cta: 'how it works',
     body: 'AI assistants and automations that take repetitive work off your team — built into your site, store or product.',
     more: ['Assistants that answer customers with your own content', 'Automated flows: leads, orders, follow-ups, reports (n8n / API)', 'Connected to the tools you already use', 'Measured: what it saves, what it handles, what it escalates'],
     for: 'teams answering the same questions or doing the same steps every day.',
   },
-  { id: 'maintenance', title: 'Maintenance', body: 'Optional, after handover. Changes, updates, backups and priority response.' },
+  {
+    id: 'maintenance', title: 'Maintenance', cta: 'learn more',
+    body: 'Optional, after handover. Changes, updates, backups and priority response.',
+    more: ['Changes and content updates', 'Platform and plugin updates', 'Backups', 'Priority response'],
+    for: 'sites and stores that need to stay current after launch.',
+  },
 ];
 // Diagram geometry (Figma 2248:6534): centre-relative offsets in px @1440, which are the design units of the 880 × 600
 // drawing (--u scales them with the diagram's width). `i` = order of entrance.
@@ -221,15 +226,19 @@ const diagramLabel = 'Services diagram: Brand and Product, connected by Strategy
                 <div class="services__addon-more" id={`addon-${a.id}`} data-addon-more>
                   <div class="services__addon-more-in">
                     <ul role="list" class="services__addon-list">{a.more.map((m) => <li>{m}</li>)}</ul>
-                    <p class="services__addon-for"><b>For:</b> {a.for}</p>
+                    {a.for && <p class="services__addon-for"><b>For:</b> {a.for}</p>}
                   </div>
                 </div>
-                <Button variant="outline-secondary" size="md" class="services__addon-btn" aria-expanded="false" aria-controls={`addon-${a.id}`} data-addon-toggle><span data-addon-label>Learn more</span></Button>
+                <Button variant="outline-secondary" size="md" class="services__addon-btn" aria-expanded="false" aria-controls={`addon-${a.id}`} data-addon-toggle data-label={a.cta}><span data-addon-label>{a.cta}</span></Button>
               </>
             )}
           </article>
         ))}
       </div>
+    </div>
+    <div class="services__faq svc-r svc-r--lift" style={`--r:${6 + addons.length}`} data-reveal="rise">
+      <p>Questions about how we work?</p>
+      <Button href="/faq/" variant="secondary" size="sm">faq</Button>
     </div>
   </div>
 </section>
@@ -240,7 +249,7 @@ const diagramLabel = 'Services diagram: Brand and Product, connected by Strategy
   initServicesActive();
   initServicesStages();
 
-  // Add-ons: Learn more ⇄ Show less, in place.
+  // Add-ons: their own label ⇄ show less, in place.
   document.querySelectorAll<HTMLButtonElement>('[data-addon-toggle]').forEach((btn) => {
     btn.addEventListener('click', () => {
       const card = btn.closest<HTMLElement>('[data-addon]');
@@ -249,7 +258,7 @@ const diagramLabel = 'Services diagram: Brand and Product, connected by Strategy
       card.toggleAttribute('data-open', open);
       btn.setAttribute('aria-expanded', String(open));
       const label = btn.querySelector('[data-addon-label]');
-      if (label) label.textContent = open ? 'Show less' : 'Learn more';
+      if (label) label.textContent = open ? 'show less' : btn.dataset.label ?? '';
     });
   });
 </script>
@@ -456,6 +465,8 @@ const diagramLabel = 'Services diagram: Brand and Product, connected by Strategy
     flex: 0 0 400px; display: flex; align-items: center; justify-content: flex-end; min-height: 139px; /* centred on the collapsed row: opening a column never moves it */
     font-size: var(--fs-work-title); line-height: 1.2; text-align: right;
   }
+  .services__faq { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: var(--sp-16); font-size: var(--fs-body); line-height: 1.4; }
+  .services__faq p { margin: 0; }
   .services__addons-list { flex: 1 1 0; min-width: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px; }
   .services__addon { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 5.8px; padding: 22px var(--sp-20); border-left: 1px dashed var(--divider-dashed); }
   .services__addon-title { font-weight: 500; font-size: var(--fs-block-title); line-height: 1.2; }

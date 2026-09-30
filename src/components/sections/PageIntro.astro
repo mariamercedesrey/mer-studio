@@ -3,7 +3,7 @@
 // The copy block is the header's [data-nav-sentinel]: once it leaves the viewport the header turns into the dark bar.
 import DecodeTitle from '../primitives/DecodeTitle.astro';
 import SignatureDot from '../primitives/SignatureDot.astro';
-interface Props { eyebrow: string; title: string; note: string; id: string }
+interface Props { eyebrow: string; title: string; note?: string; id: string } // `note` = plain text; the named slot "note" replaces it when the copy carries a link
 const { eyebrow, title, note, id } = Astro.props;
 ---
 <section class="intro" aria-labelledby={id}>
@@ -13,7 +13,7 @@ const { eyebrow, title, note, id } = Astro.props;
   </div>
   <div class="intro__note" data-reveal="rise">
     <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true"><path d="M9.9178 9.9178L24.0822 24.0822M9.9178 24.0822H24.0822V9.9178" stroke="var(--accent-primary)" stroke-width="2" stroke-linecap="round"/></svg>
-    <p>{note}</p>
+    <p><slot name="note">{note}</slot></p>
   </div>
 </section>
 
