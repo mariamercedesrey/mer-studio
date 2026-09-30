@@ -1,4 +1,4 @@
-// Project Detail overlay: opens from Selected Work, mirrors /work/<slug> in the URL,
+// Project Detail overlay: opens from Selected Work, mirrors the project's URL (/work/<slug>/ or /es/proyectos/<slug>/, data-project-url),
 // closes on the close button, Esc or browser Back. Without JS the links go to the prerendered page.
 import { replayDecode } from './decode-title';
 
@@ -18,7 +18,7 @@ export function initProjectOverlay() {
     dialog.scrollTop = 0;
     dialog.showModal();
     replayDecode(dialog);
-    if (push) history.pushState({ project: id }, '', `/work/${id}/`);
+    if (push) history.pushState({ project: id }, '', dialog.dataset.projectUrl ?? `/work/${id}/`);
   };
 
   const close = (dialog: HTMLDialogElement, fromHistory: boolean) => {

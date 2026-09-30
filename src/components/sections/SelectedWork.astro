@@ -5,8 +5,8 @@
 // with the shared fade + rise, no sticky, no canvas, no rain.
 // Images are Figma's own 2× exports of each project block (src/assets/work-cover, AVIF/WebP via astro:assets).
 import { getImage } from 'astro:assets';
-import { projects } from '../../data/projects';
-import { copy } from '../../i18n';
+import { getProjects } from '../../data/projects';
+import { getCopy, localeOf, workPath, anchorHash } from '../../i18n';
 import SectionHeading from '../primitives/SectionHeading.astro';
 import Button from '../primitives/Button.astro';
 import RoleChip from '../primitives/RoleChip.astro';
@@ -26,8 +26,9 @@ const covers: Record<string, ImageMetadata> = {
   'agente-mama': agenteMama, 'american-padel-systems': americanPadel, 'hifi-hub': hifiHub,
 };
 
-const { work, buttons } = copy;
-const visible = projects.filter((p) => !p.hidden);
+const locale = localeOf(Astro.url);
+const { work, buttons } = getCopy(locale);
+const visible = getProjects(locale).filter((p) => !p.hidden);
 const items = await Promise.all(visible.map(async (p) => {
   const src = covers[p.slug];
   const [avif, webp] = await Promise.all(
@@ -70,7 +71,7 @@ const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
       <ol role="list" class="work__list" data-work-list>
         {items.map((p, i) => (
           <li class="work-item" id={`work-${p.id}`} data-work-item={p.id} data-pos={i === 0 ? 'current' : 'after'} data-active={i === 0 ? '' : undefined} style={`--img-top:${p.imgTop}%`}>
-            <a class="work-item__link" href={`/work/${p.slug}/`} data-project-open={p.slug} data-reveal="rise">
+            <a class="work-item__link" href={workPath(p.slug, locale)} data-project-open={p.slug} data-reveal="rise">
               <div class="work-item__caption">
                 <h3 class="work-item__title">{p.title}</h3>
                 <p class="work-item__meta">{p.meta}</p>
@@ -89,11 +90,11 @@ const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
       </ol>
 
       <div class="work__next" style={`--cur-img-top:${items[0].imgTop}%`}>
-        <Button variant="ghost-primary" size="sm" icon="arrow-down" href={items[1] ? `#work-${items[1].id}` : '#services'} data-work-next data-label-next={buttons.nextProject} data-label-last={buttons.nextSection}><span data-work-next-label>{buttons.nextProject}</span></Button>
+        <Button variant="ghost-primary" size="sm" icon="arrow-down" href={items[1] ? `#work-${items[1].id}` : anchorHash('services', locale)} data-work-next data-href-last={anchorHash('services', locale)} data-label-next={buttons.nextProject} data-label-last={buttons.nextSection}><span data-work-next-label>{buttons.nextProject}</span></Button>
       </div>
 
       <div class="work__stage" data-work-stage>
-        <a class="work__stage-link" href={`/work/${items[0].slug}/`} data-project-open={items[0].slug} data-work-stage-link tabindex="-1" aria-hidden="true">
+        <a class="work__stage-link" href={workPath(items[0].slug, locale)} data-project-open={items[0].slug} data-work-stage-link tabindex="-1" aria-hidden="true">
           <div class="work__frame">
             {items.map((p, i) => (
               <picture class="stage-pic" data-stage-pic data-on={i === 0 ? '' : undefined}>

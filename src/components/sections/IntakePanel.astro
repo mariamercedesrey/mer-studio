@@ -3,7 +3,7 @@
 // (the inquiry form, or the four-part method).
 import SectionHeading from '../primitives/SectionHeading.astro';
 import { EMAIL } from '../../data/contact';
-import { copy } from '../../i18n';
+import { getCopy, localeOf } from '../../i18n';
 interface Props { eyebrow: string; title: string; lede: string; id: string }
 const { eyebrow, title, lede, id } = Astro.props;
 ---
@@ -12,7 +12,7 @@ const { eyebrow, title, lede, id } = Astro.props;
     <SectionHeading eyebrow={eyebrow} title={title} id={id} tone="dark" dot={false} class="intake__heading" />
     <p class="intake__lede" data-reveal="rise">{lede}</p>
     <div class="intake__fallback" data-reveal="rise">
-      <p class="intake__fallback-label">{copy.intake.preferEmail}</p>
+      <p class="intake__fallback-label">{getCopy(localeOf(Astro.url)).intake.preferEmail}</p>
       <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
     </div>
   </div>

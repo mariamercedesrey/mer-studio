@@ -1,0 +1,30 @@
+---
+// Project Detail page (R2-E): one per project → /work/<slug>/ (EN) and /es/proyectos/<slug>/ (ES). The routes live in src/pages.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectDetail from '../components/work/ProjectDetail.astro';
+import { getProjectDetails, detailBlocks } from '../data/project-details';
+import { projectSchema } from '../data/schema';
+import { hiddenSlugs } from '../data/projects';
+import { getCopy, localeOf, pagePath, anchorHash, fmt } from '../i18n';
+
+interface Props { slug: string }
+const { slug } = Astro.props;
+const locale = localeOf(Astro.url);
+const p = getProjectDetails(locale)[slug];
+const url = new URL(Astro.url.pathname, Astro.site).href;
+const hidden = hiddenSlugs.includes(p.id); // card hidden (no media yet): keep the page out of search
+// <title> ≤ 70 characters (Bing, scripts/check-site.mjs): when "client — title | MER Studio" is longer, the brand suffix goes (og:site_name carries it).
+const caseTitle = getCopy(locale).site.caseStudyTitle;
+const full = fmt(caseTitle, { client: p.client, title: p.seoTitle ?? p.title });
+const title = full.length <= 70 ? full : full.replace(/\s*\|[^|]*$/, '');
+---
+<BaseLayout
+  title={title}
+  description={detailBlocks(p)[0].body}
+  schema={hidden ? undefined : projectSchema(p, url, locale)}
+  noindex={hidden}
+>
+  <main id="main">
+    <ProjectDetail project={p} headingLevel="h1" closeHref={`${pagePath('home', locale)}${anchorHash('work', locale)}`} />
+  </main>
+</BaseLayout>

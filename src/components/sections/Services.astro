@@ -8,14 +8,16 @@
 import SectionHeading from '../primitives/SectionHeading.astro';
 import Button from '../primitives/Button.astro';
 import StepSnap from '../primitives/StepSnap.astro';
-import { offer } from '../../data/offer';
-import { copy } from '../../i18n';
+import { getOffer } from '../../data/offer';
+import { getCopy, localeOf, pagePath } from '../../i18n';
 
-const { services: svc, buttons, faqCta } = copy;
+const locale = localeOf(Astro.url);
+const offer = getOffer(locale);
+const { services: svc, buttons, faqCta } = getCopy(locale);
 const { diagram } = svc;
 
 const included = svc.included.items;
-const AI_HREF = '/ai-visibility/';
+const AI_HREF = pagePath('aiVisibility', locale);
 // Row titles = diagram pills, exactly (one list, one vocabulary).
 const services = [
   { ...svc.rows.branding },
@@ -221,7 +223,7 @@ const chips = [
     </div>
     <div class="services__faq svc-r svc-r--lift" style={`--r:${6 + addons.length}`} data-reveal="rise">
       <p>{faqCta.prompt}</p>
-      <Button href="/faq/" variant="secondary" size="sm" minWidth={100}>{buttons.faq}</Button>
+      <Button href={pagePath('faq', locale)} variant="secondary" size="sm" minWidth={100}>{buttons.faq}</Button>
     </div>
   </div>
 </section>

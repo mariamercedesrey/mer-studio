@@ -4,9 +4,10 @@ import Button from '../primitives/Button.astro';
 import SignatureDot from '../primitives/SignatureDot.astro';
 import DecodeTitle from '../primitives/DecodeTitle.astro';
 import { BOOKING_URL } from '../../data/contact';
-import { copy } from '../../i18n';
+import { getCopy, localeOf, pagePath } from '../../i18n';
 interface Props { eyebrow?: string; title?: string; faqLink?: boolean }
-const { finalCta, buttons, faqCta } = copy;
+const locale = localeOf(Astro.url);
+const { finalCta, buttons, faqCta } = getCopy(locale);
 const { eyebrow = finalCta.eyebrow, title = finalCta.title, faqLink = false } = Astro.props;
 ---
 <section class="cta" aria-labelledby="cta-title">
@@ -16,9 +17,9 @@ const { eyebrow = finalCta.eyebrow, title = finalCta.title, faqLink = false } = 
   </div>
   <div class="cta__action" data-reveal="rise">
     <Button href={BOOKING_URL} variant="outline-primary" target="_blank" rel="noopener">{buttons.letsTalk}<span class="visually-hidden"> {finalCta.letsTalkSr}</span></Button>
-    <Button href="/start-a-project/" variant="negative">{buttons.startProject}</Button>
+    <Button href={pagePath('startProject', locale)} variant="negative">{buttons.startProject}</Button>
   </div>
-  {faqLink && <p class="cta__faq" data-reveal="rise">{faqCta.questionsFirst} <a href="/faq/">{faqCta.readFaq}</a></p>}
+  {faqLink && <p class="cta__faq" data-reveal="rise">{faqCta.questionsFirst} <a href={pagePath('faq', locale)}>{faqCta.readFaq}</a></p>}
 </section>
 
 <style>

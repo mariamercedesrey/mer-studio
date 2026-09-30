@@ -3,7 +3,7 @@ import '../styles/global.css';
 import SiteHeader from '../components/sections/SiteHeader.astro';
 // Preload the one font every screen needs first (Outfit, latin subset); the rest load on demand.
 import { offer } from '../data/offer';
-import { copy } from '../i18n';
+import { getCopy, localeOf, pathIn, pageOf, LOCALES } from '../i18n';
 import outfitLatin from '@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2?url';
 
 interface Props {
@@ -16,7 +16,9 @@ interface Props {
   header?: boolean; // fixed top bar (logo + nav); the 404 has its own
 }
 
-const { site } = copy;
+const locale = localeOf(Astro.url);
+const { site } = getCopy(locale);
+const OG_LOCALE = { en: 'en_US', es: 'es_LA' } as const;
 
 const {
   title = site.defaultTitle,
@@ -29,6 +31,9 @@ const {
 } = Astro.props;
 
 const canonical = new URL(path, Astro.site);
+// hreflang: every indexable page that exists in both languages (src/i18n/routes.ts); x-default = English. Canonical stays per language.
+const known = !noindex && pageOf(path);
+const alternates = known ? LOCALES.map((l) => ({ lang: l, href: new URL(pathIn(path, l), Astro.site).href })) : [];
 const ogImage = new URL(image, Astro.site);
 ---
 <!doctype html>
@@ -41,6 +46,8 @@ const ogImage = new URL(image, Astro.site);
     <title>{title}</title>
     <meta name="description" content={description} />
     {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+    {alternates.map((a) => <link rel="alternate" hreflang={a.lang} href={a.href} />)}
+    {alternates.length > 0 && <link rel="alternate" hreflang="x-default" href={alternates.find((a) => a.lang === 'en')!.href} />}
 
     <link rel="preload" href={outfitLatin} as="font" type="font/woff2" crossorigin />
 
@@ -50,6 +57,8 @@ const ogImage = new URL(image, Astro.site);
     <meta name="theme-color" content="#f5f3f3" />
 
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content={OG_LOCALE[locale]} />
+    {LOCALES.filter((l) => l !== locale).map((l) => <meta property="og:locale:alternate" content={OG_LOCALE[l]} />)}
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />

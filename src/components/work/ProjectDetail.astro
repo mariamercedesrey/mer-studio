@@ -7,7 +7,7 @@ import type { ProjectDetailData, DetailItem, DetailSection } from '../../data/pr
 import DetailImage from './DetailImage.astro';
 import Button from '../primitives/Button.astro';
 import DecodeTitle from '../primitives/DecodeTitle.astro';
-import { copy } from '../../i18n';
+import { getCopy, localeOf } from '../../i18n';
 
 interface Props {
   project: ProjectDetailData;
@@ -16,7 +16,7 @@ interface Props {
 }
 const { project: p, headingLevel = 'h2', closeHref } = Astro.props;
 const Title = headingLevel;
-const { projectDetail, a11y } = copy;
+const { projectDetail, a11y } = getCopy(localeOf(Astro.url));
 const pct = (n: number, of: number) => `${(n / of) * 100}%`;
 ---
 <article class="pd" aria-labelledby={`pd-title-${p.id}`}>

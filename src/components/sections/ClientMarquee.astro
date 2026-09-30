@@ -1,7 +1,7 @@
 ---
 // Figma 149:5176 Client Marquee — logos on ink at 55 %, looping to the right at ~64 px/s (D2, D11).
 // Order, sizes, crops and blend modes follow Figma 149:5180. The duplicate raster L'Oréal was removed (Mer, review round 1).
-import { copy, fmt } from '../../i18n';
+import { getCopy, localeOf, fmt } from '../../i18n';
 type Logo = {
   name: string; src: string; w: number; h: number;
   blend?: 'luminosity' | 'color-dodge';
@@ -27,7 +27,7 @@ const logos: Logo[] = [
   { name: 'Optimarine', src: 'optimarine.svg', w: 169.105, h: 33.873 },
 ];
 const copies = [false, true];
-const { marquee } = copy;
+const { marquee } = getCopy(localeOf(Astro.url));
 ---
 <section class="marquee" aria-label={marquee.ariaLabel}>
   <div class="marquee__viewport" data-marquee>

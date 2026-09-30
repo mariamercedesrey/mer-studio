@@ -60,6 +60,9 @@ export const en = {
     openMenu: 'Open menu',
     closeMenu: 'Close menu',
     menuLabel: 'Menu',
+    language: 'Language',
+    languageEnglish: 'English',
+    languageSpanish: 'Español',
   },
 
   footer: {

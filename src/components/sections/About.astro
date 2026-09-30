@@ -7,8 +7,8 @@ import WordReveal from '../primitives/WordReveal.astro';
 import { BOOKING_URL } from '../../data/contact';
 import { getImage } from 'astro:assets';
 import portrait from '../../assets/mer-card.png';
-import { copy } from '../../i18n';
-const { about, buttons, a11y } = copy;
+import { getCopy, localeOf } from '../../i18n';
+const { about, buttons, a11y } = getCopy(localeOf(Astro.url));
 const [avif, webp] = await Promise.all(
   (['avif', 'webp'] as const).map((format) => getImage({ src: portrait, widths: [98, 196], format })),
 );

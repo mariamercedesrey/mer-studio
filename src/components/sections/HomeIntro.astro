@@ -5,8 +5,8 @@
 // The whole timeline is CSS (it completes even if JS fails); scripts/home-intro.ts lifts the curtain on the first scroll gesture.
 // While html[data-intro] is set the page does not scroll (exception in CLAUDE.md §22).
 // The gate lives in the inline <head> script in pages/index.astro (sets html[data-intro]).
-import { copy } from '../../i18n';
-const { home, site } = copy;
+import { getCopy, localeOf } from '../../i18n';
+const { home, site } = getCopy(localeOf(Astro.url));
 ---
 <div class="home-intro" aria-hidden="true" data-home-intro>
   <div class="home-intro__stack">

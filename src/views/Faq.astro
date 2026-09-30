@@ -1,0 +1,68 @@
+---
+// Figma 2268:647 FAQ — page. Intro (PageIntro), three labelled groups of accordion questions (FaqList), the Final CTA, the ink footer.
+// The FAQPage JSON-LD comes from the same data as the visible list (src/data/faq.ts), offer questions included only while offer.active.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/sections/PageIntro.astro';
+import FinalCTA from '../components/sections/FinalCTA.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import FaqList from '../components/primitives/FaqList.astro';
+import { faqGroups, faqSchema, live } from '../data/faq';
+import { BOOKING_URL } from '../data/contact';
+import { getCopy, localeOf, pagePath } from '../i18n';
+
+const locale = localeOf(Astro.url);
+const copy = getCopy(locale);
+const page = copy.faqPage;
+const allGroups = faqGroups(locale);
+
+const groups = allGroups.map((g) => ({ ...g, items: live(g.items) })).filter((g) => g.items.length);
+const schema = faqSchema(allGroups.flatMap((g) => g.items), `https://mer.studio${pagePath('faq', locale)}`, locale);
+---
+<BaseLayout
+  title={page.meta.title}
+  description={page.meta.description}
+  schema={schema}
+>
+  <main id="main">
+    <PageIntro id="faq-title" eyebrow={page.eyebrow} title={page.title}>
+      <Fragment slot="note">{page.noteBefore}<a class="faq-note-link" href={BOOKING_URL} target="_blank" rel="noopener">{page.noteLink}<span class="visually-hidden"> {copy.a11y.opensInNewTab}</span></a>{page.noteAfter}</Fragment>
+    </PageIntro>
+
+    <section class="faq" aria-label={page.listAriaLabel}>
+      {groups.map((g) => (
+        <div class="faq__group">
+          <div class="faq__label" aria-hidden="true"><p class="faq__num">{g.num}</p><p class="faq__name">{g.label}</p></div>
+          <div class="faq__questions">
+            <h2 class="visually-hidden">{g.label}</h2>
+            <FaqList items={g.items} prefix={`faq-${g.num}`} />
+            {g.id === 'aiVisibility' && <p class="faq__more"><a href={`${pagePath('aiVisibility', locale)}#faq`}>{page.moreAiVisibility}</a></p>}
+          </div>
+        </div>
+      ))}
+    </section>
+
+    <FinalCTA eyebrow={page.cta.eyebrow} title={page.cta.title} />
+  </main>
+  <SiteFooter />
+</BaseLayout>
+
+<style>
+  :global(body) { background: var(--surface-soft); }
+  main { background: var(--surface-soft); }
+  main :global(.faq-note-link) { text-decoration: underline; text-underline-offset: 0.2em; }
+
+  .faq { display: flex; flex-direction: column; gap: 96px; padding: var(--sp-24) var(--page-gutter) var(--sp-120); }
+  .faq__group { display: flex; gap: var(--sp-48); align-items: flex-start; }
+  .faq__label { flex: 0 0 300px; display: flex; flex-direction: column; gap: var(--sp-8); font-family: var(--font-technical); letter-spacing: 0.06em; }
+  .faq__num { font-size: var(--fs-caption); color: var(--text-secondary); }
+  .faq__name { font-size: var(--fs-eyebrow); }
+  .faq__questions { flex: 1 1 0; min-width: 0; }
+  .faq__more { padding-top: var(--sp-24); font-weight: 500; }
+  .faq__more a { display: inline-flex; align-items: center; min-height: 24px; text-decoration: underline; text-underline-offset: 0.2em; }
+  @media (max-width: 1199px) { .faq__label { flex-basis: 180px; } .faq { gap: var(--sp-80); } }
+  @media (max-width: 767px) {
+    .faq { gap: var(--sp-64); padding-bottom: var(--sp-80); }
+    .faq__group { flex-direction: column; gap: var(--sp-16); }
+    .faq__label { flex: none; flex-direction: row; align-items: baseline; gap: var(--sp-12); }
+  }
+</style>

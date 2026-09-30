@@ -6,8 +6,8 @@
 import { getImage } from 'astro:assets';
 import banner from '../../assets/pixel-banner.png';
 import WordReveal from '../primitives/WordReveal.astro';
-import { copy } from '../../i18n';
-const { banner: bannerCopy } = copy;
+import { getCopy, localeOf } from '../../i18n';
+const { banner: bannerCopy } = getCopy(localeOf(Astro.url));
 // Decorative texture: a CSS background (no <img>, so no alt to get wrong). 1× = 1436 px, 2× = 2872 px.
 const [a1, a2, w1, w2] = await Promise.all(
   [[1436, 'avif'], [2872, 'avif'], [1436, 'webp'], [2872, 'webp']].map(([width, format]) => getImage({ src: banner, width: width as number, format: format as 'avif' | 'webp' })),

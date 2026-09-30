@@ -14,3 +14,9 @@
   for = "/video/*"
   [headers.values]
     Cache-Control = "public, max-age=604800"
+
+# Spanish 404 for anything missing under /es/ (the root 404.html stays English).
+[[redirects]]
+  from = "/es/*"
+  to = "/es/404/index.html"
+  status = 404

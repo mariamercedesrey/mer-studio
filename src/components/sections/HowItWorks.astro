@@ -5,8 +5,9 @@ import Button from '../primitives/Button.astro';
 import { getImage } from 'astro:assets';
 // brand/assets/img/how-it-works.png with the copy icon painted out (Mer, PR #7 review).
 import ascii from '../../assets/how-it-works-ascii.png';
-import { copy } from '../../i18n';
-const { howItWorks: hiw, buttons, faqCta } = copy;
+import { getCopy, localeOf, pagePath } from '../../i18n';
+const locale = localeOf(Astro.url);
+const { howItWorks: hiw, buttons, faqCta } = getCopy(locale);
 const [avif, webp] = await Promise.all(
   (['avif', 'webp'] as const).map((format) => getImage({ src: ascii, widths: [517, 1034], format })),
 );
@@ -46,7 +47,7 @@ const [avif, webp] = await Promise.all(
 
   <div class="hiw__faq" data-reveal="rise">
     <p>{faqCta.prompt}</p>
-    <Button href="/faq/" variant="primary" size="sm" minWidth={100} onDark>{buttons.faq}</Button>
+    <Button href={pagePath('faq', locale)} variant="primary" size="sm" minWidth={100} onDark>{buttons.faq}</Button>
   </div>
 </section>
 

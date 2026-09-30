@@ -3,9 +3,11 @@
 // AJAX submit with a fallback to /start-a-project/thanks/. ?service=<slug> preselects a service chip. Script at the bottom.
 import Button from '../primitives/Button.astro';
 import { EMAIL } from '../../data/contact';
-import { copy, fmt } from '../../i18n';
+import { getCopy, localeOf, pagePath, fmt } from '../../i18n';
 
-const { form: f, buttons, faqCta } = copy;
+const locale = localeOf(Astro.url);
+const { form: f, buttons, faqCta } = getCopy(locale);
+const thanksPath = pagePath('thanks', locale);
 // Labels come from the copy (form.services / form.timing, same order). The submitted `value`s are NOT copy: they stay English
 // so the inbox is uniform in every language, and the ?service=<slug> deep link keeps matching (slug of the value).
 const serviceValues = ['Branding', 'Website', 'Digital product', 'AI visibility', 'ai-automation', 'Design system', 'Something else'];
@@ -29,13 +31,14 @@ const msgs = {
     class="inquiry__form"
     name="project-inquiry"
     method="POST"
-    action="/start-a-project/thanks/"
+    action={thanksPath}
     data-netlify="true"
     data-netlify-honeypot="bot-field"
     aria-label={f.ariaLabel}
     data-inquiry-form
   >
     <input type="hidden" name="form-name" value="project-inquiry" />
+    <input type="hidden" name="lang" value={locale} />
     <p class="visually-hidden" aria-hidden="true"><label>{f.honeypot} <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
 
     <section class="fsec" data-reveal="rise" aria-labelledby="fs-1">
@@ -102,7 +105,7 @@ const msgs = {
       <Button class="submit__btn" type="submit" size="lg" onDark data-submit>{buttons.sendInquiry}</Button>
     </div>
     <p class="submit__msg" role="status" aria-live="polite" data-status></p>
-    <p class="submit__faq">{faqCta.questionsFirst} <a href="/faq/">{faqCta.readFaq}</a></p>
+    <p class="submit__faq">{faqCta.questionsFirst} <a href={pagePath('faq', locale)}>{faqCta.readFaq}</a></p>
   </form>
 
   <div class="inquiry__done" data-done tabindex="-1" hidden>
@@ -160,7 +163,7 @@ const msgs = {
         const params = new URLSearchParams();
         data.forEach((v, k) => { if (typeof v === 'string') params.append(k, v); });
         if (!params.has('form-name')) params.set('form-name', 'project-inquiry');
-        const res = await fetch(form.getAttribute('action') || '/start-a-project/thanks/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: params.toString() });
+        const res = await fetch(form.getAttribute('action') || location.pathname, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: params.toString() });
         if (!res.ok) throw new Error(String(res.status));
         form.hidden = true;
         done.hidden = false;

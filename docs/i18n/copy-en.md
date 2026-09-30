@@ -9,7 +9,7 @@ Generated from `src/i18n/en.ts` by `npm run i18n:export` — do not edit by hand
 - Not in this file on purpose: URLs, e-mail, phone, and the `value` of form fields (they stay English so the inbox is uniform).
 - Also still in English outside `en.ts`: `public/llms.txt` (the launch-offer line must match `offer.llms`; `scripts/check-site.mjs` enforces it).
 
-Strings: 565.
+Strings: 568.
 
 ## Global (every page)
 
@@ -47,6 +47,9 @@ Strings: 565.
 - `nav.openMenu` → Open menu
 - `nav.closeMenu` → Close menu
 - `nav.menuLabel` → Menu
+- `nav.language` → Language
+- `nav.languageEnglish` → English
+- `nav.languageSpanish` → Español
 - `footer.ariaLabel` → Footer
 - `footer.links.work` → Selected Works
 - `footer.links.services` → Services

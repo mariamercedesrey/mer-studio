@@ -4,32 +4,33 @@
 // rendered item carries `data-offer`, so an expired offer also hides them without a redeploy (html[data-offer-ended]).
 // /faq/ 9–10 are deliberately shorter than the /ai-visibility/ answers: two pages must never carry the same FAQPage text.
 import { offer } from './offer';
-import { copy } from '../i18n';
+import { getCopy, type Locale } from '../i18n';
 
 export interface FaqItem { q: string; a: string; offer?: boolean }
 export interface FaqGroup { id: FaqGroupId; num: string; label: string; items: FaqItem[] }
 
-// Copy: src/i18n/en.ts → `faq`. Structure stays here: group ids, and which entries belong to the launch offer.
+// Copy: src/i18n/{en,es}.ts → `faq`. Structure stays here: group ids, and which entries belong to the launch offer.
 const GROUP_IDS = ['process', 'services', 'aiVisibility'] as const;
 export type FaqGroupId = (typeof GROUP_IDS)[number];
 const OFFER_GROUP_ITEM = { group: 'aiVisibility', index: 1 }; // "Is AI Visibility free in October?"
 const OFFER_AIV_ITEM = 3; // "What's free for projects started in October?"
 
-export const faqGroups: FaqGroup[] = copy.faq.groups.map((g, gi) => ({
+export const faqGroups = (locale: Locale): FaqGroup[] => getCopy(locale).faq.groups.map((g, gi) => ({
   id: GROUP_IDS[gi],
   ...g,
   items: g.items.map((it, i): FaqItem => (GROUP_IDS[gi] === OFFER_GROUP_ITEM.group && i === OFFER_GROUP_ITEM.index ? { ...it, offer: true } : it)),
 }));
 
-export const aiVisibilityFaq: FaqItem[] = copy.faq.aiVisibility.map((it, i): FaqItem => (i === OFFER_AIV_ITEM ? { ...it, offer: true } : it));
+export const aiVisibilityFaq = (locale: Locale): FaqItem[] => getCopy(locale).faq.aiVisibility.map((it, i): FaqItem => (i === OFFER_AIV_ITEM ? { ...it, offer: true } : it));
 
 /** Items that should exist in the build: offer items drop out when the offer is off. */
 export const live = (items: FaqItem[]) => items.filter((i) => !i.offer || offer.active);
 
-export function faqSchema(items: FaqItem[], url: string) {
+export function faqSchema(items: FaqItem[], url: string, locale: Locale) {
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
+    inLanguage: getCopy(locale).site.lang,
     '@id': `${url}#faq`,
     url,
     mainEntity: live(items).map((i) => ({ '@type': 'Question', name: i.q, acceptedAnswer: { '@type': 'Answer', text: i.a } })),

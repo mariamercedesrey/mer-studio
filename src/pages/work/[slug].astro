@@ -1,27 +1,10 @@
 ---
-// Prerendered Project Detail pages (R2-E): one per entry in data/project-details.ts → /work/<slug>/.
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import ProjectDetail from '../../components/work/ProjectDetail.astro';
-import { projectDetails, detailBlocks } from '../../data/project-details';
-import { projectSchema } from '../../data/schema';
-import { hiddenSlugs } from '../../data/projects';
-import { copy, fmt } from '../../i18n';
+// Prerendered Project Detail pages (R2-E): one per project → /work/<slug>/. The page itself: src/views/CaseStudy.astro.
+import CaseStudy from '../../views/CaseStudy.astro';
+import { getProjectDetails } from '../../data/project-details';
 
 export function getStaticPaths() {
-  return Object.keys(projectDetails).map((slug) => ({ params: { slug } }));
+  return Object.keys(getProjectDetails('en')).map((slug) => ({ params: { slug }, props: { slug } }));
 }
-const { slug } = Astro.params;
-const p = projectDetails[slug as keyof typeof projectDetails];
-const url = new URL(Astro.url.pathname, Astro.site).href;
-const hidden = hiddenSlugs.includes(p.id); // card hidden (no media yet): keep the page out of search
 ---
-<BaseLayout
-  title={fmt(copy.site.caseStudyTitle, { client: p.client, title: p.seoTitle ?? p.title })}
-  description={detailBlocks(p)[0].body}
-  schema={hidden ? undefined : projectSchema(p, url)}
-  noindex={hidden}
->
-  <main id="main">
-    <ProjectDetail project={p} headingLevel="h1" closeHref="/#work" />
-  </main>
-</BaseLayout>
+<CaseStudy slug={Astro.props.slug} />

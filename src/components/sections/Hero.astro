@@ -6,9 +6,12 @@ import DecodeTitle from '../primitives/DecodeTitle.astro';
 import { getImage } from 'astro:assets';
 import heroPoster from '../../assets/hero-poster.webp';
 import { BOOKING_URL } from '../../data/contact';
-import { offer } from '../../data/offer';
-import { copy } from '../../i18n';
+import { getOffer } from '../../data/offer';
+import { getCopy, localeOf, pagePath, anchorHash } from '../../i18n';
 
+const locale = localeOf(Astro.url);
+const copy = getCopy(locale);
+const offer = getOffer(locale);
 const { hero, buttons, a11y } = copy;
 
 // Responsive poster under the video: it is the LCP element, so mobile gets a small file.
@@ -24,7 +27,7 @@ const poster = await getImage({ src: heroPoster, widths: [480, 800, 1218], forma
       <!-- Figma 2255:1517. The rotator reuses the DecodeTitle effect (scripts/hero-rotator.ts); screen readers get the full list once. -->
       <p class="hero__offer">
         <span class="visually-hidden">{hero.offerSr}</span>
-        <span aria-hidden="true">{hero.offerPrefix} <span class="hero__rot" data-hero-rot data-words={JSON.stringify(hero.engines)}><span class="hero__rot-b">[</span><span class="hero__rot-w"><span class="decode hero__rot-word" data-decode="rotate"><span class="decode__t" data-rot-text>{hero.engines[0]}</span></span></span><span class="hero__rot-b">]</span></span></span>{offer.active && <span data-offer> — {offer.hero}</span>}. <a class="hero__more" href="/ai-visibility/">{hero.readMore}</a>
+        <span aria-hidden="true">{hero.offerPrefix} <span class="hero__rot" data-hero-rot data-words={JSON.stringify(hero.engines)}><span class="hero__rot-b">[</span><span class="hero__rot-w"><span class="decode hero__rot-word" data-decode="rotate"><span class="decode__t" data-rot-text>{hero.engines[0]}</span></span></span><span class="hero__rot-b">]</span></span></span>{offer.active && <span data-offer> — {offer.hero}</span>}. <a class="hero__more" href={pagePath('aiVisibility', locale)}>{hero.readMore}</a>
       </p>
       <Button href={BOOKING_URL} width={183} target="_blank" rel="noopener" data-nav-sentinel>{buttons.bookCall}<span class="visually-hidden"> {a11y.opensInNewTab}</span></Button>
     </div>
@@ -73,12 +76,12 @@ const poster = await getImage({ src: heroPoster, widths: [480, 800, 1218], forma
         <SignatureDot class="hero__dot" tone="dark" motion="hero-path" />
       </div>
       <p class="hero__summary">{hero.summary}</p>
-      <Button href="/start-a-project/" variant="secondary" width={185}>{buttons.startProject}</Button>
+      <Button href={pagePath('startProject', locale)} variant="secondary" width={185}>{buttons.startProject}</Button>
     </div>
   </div>
 
   <!-- Figma 149:5103: the yellow arrow sits under the tags, centred, right before the logo marquee. Straight to Selected Work. -->
-  <div class="hero__scroll"><a class="hero__scroll-link" href="#work" aria-label={hero.scrollLabel}></a></div>
+  <div class="hero__scroll"><a class="hero__scroll-link" href={anchorHash('work', locale)} aria-label={hero.scrollLabel}></a></div>
 </section>
 
 <style>

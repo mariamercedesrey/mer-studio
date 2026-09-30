@@ -1,0 +1,10 @@
+---
+// Prerendered Project Detail pages (R2-E): one per project → /es/proyectos/<slug>/. The page itself: src/views/CaseStudy.astro.
+import CaseStudy from '../../../views/CaseStudy.astro';
+import { getProjectDetails } from '../../../data/project-details';
+
+export function getStaticPaths() {
+  return Object.keys(getProjectDetails('es')).map((slug) => ({ params: { slug }, props: { slug } }));
+}
+---
+<CaseStudy slug={Astro.props.slug} />

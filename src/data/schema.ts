@@ -2,28 +2,31 @@
 // Services (149:5756), About (149:6015), Contact (149:6087), Footer (149:6099), project-details.ts.
 import { detailBlocks, type ProjectDetailData } from './project-details';
 import { EMAIL, WHATSAPP } from './contact';
-import { offer } from './offer';
-import { copy } from '../i18n';
-
-const j = copy.jsonld;
+import { getOffer } from './offer';
+import { getCopy, pagePath, anchorHash, type Locale } from '../i18n';
 
 const SITE = 'https://mer.studio';
 const ORG_ID = `${SITE}/#studio`;
 const MER_ID = `${SITE}/#mer`;
 
-// Names and descriptions are the site's own copy: rows / add-ons of the Services section (src/i18n/en.ts → `services`).
-const svc = copy.services;
-const services = [
-  { name: svc.rows.branding.name, description: svc.rows.branding.body },
-  { name: svc.rows.websites.name, description: svc.rows.websites.body },
-  { name: svc.rows.digitalProduct.name, description: svc.rows.digitalProduct.body },
-  { name: copy.jsonld.home.aiVisibilityService.name, description: copy.jsonld.home.aiVisibilityService.description, offer: true },
-  { name: svc.addons.designSystem.title, description: svc.addons.designSystem.body },
-  { name: svc.addons.aiAssistants.title, description: svc.addons.aiAssistants.body },
-  { name: svc.addons.maintenance.title, description: svc.addons.maintenance.body },
-];
+// Names and descriptions are the site's own copy: rows / add-ons of the Services section (src/i18n → `services`).
+const servicesOf = (locale: Locale) => {
+  const svc = getCopy(locale).services;
+  return [
+    { name: svc.rows.branding.name, description: svc.rows.branding.body },
+    { name: svc.rows.websites.name, description: svc.rows.websites.body },
+    { name: svc.rows.digitalProduct.name, description: svc.rows.digitalProduct.body },
+    { name: getCopy(locale).jsonld.home.aiVisibilityService.name, description: getCopy(locale).jsonld.home.aiVisibilityService.description, offer: true },
+    { name: svc.addons.designSystem.title, description: svc.addons.designSystem.body },
+    { name: svc.addons.aiAssistants.title, description: svc.addons.aiAssistants.body },
+    { name: svc.addons.maintenance.title, description: svc.addons.maintenance.body },
+  ];
+};
 
-export function homeSchema() {
+export function homeSchema(locale: Locale = 'en') {
+  const copy = getCopy(locale);
+  const j = copy.jsonld;
+  const offer = getOffer(locale);
   return {
     '@context': 'https://schema.org',
     '@graph': [
@@ -31,7 +34,7 @@ export function homeSchema() {
         '@type': 'ProfessionalService',
         '@id': ORG_ID,
         name: copy.site.name,
-        url: `${SITE}/`,
+        url: `${SITE}${pagePath('home', locale)}`,
         logo: `${SITE}/logo.svg`,
         image: `${SITE}/og.png`,
         description: j.home.description,
@@ -40,12 +43,12 @@ export function homeSchema() {
         telephone: WHATSAPP.tel,
         address: { '@type': 'PostalAddress', addressCountry: 'AR' },
         areaServed: j.areaServed,
-        contactPoint: { '@type': 'ContactPoint', contactType: 'sales', email: EMAIL, telephone: WHATSAPP.tel, url: WHATSAPP.href },
+        contactPoint: { '@type': 'ContactPoint', contactType: 'sales', email: EMAIL, telephone: WHATSAPP.tel, url: WHATSAPP.href, availableLanguage: ['en', 'es'] },
         founder: { '@id': MER_ID },
         hasOfferCatalog: {
           '@type': 'OfferCatalog',
           name: j.home.catalogName,
-          itemListElement: services.map(({ offer: isOffer, ...s }) => ({
+          itemListElement: servicesOf(locale).map(({ offer: isOffer, ...s }) => ({
             '@type': 'Offer',
             itemOffered: { '@type': 'Service', ...s, provider: { '@id': ORG_ID } },
             // Launch offer (src/data/offer.ts): the AI Visibility setup is free for projects started in October 2026. Setup only.
@@ -60,15 +63,17 @@ export function homeSchema() {
         alternateName: 'Mercedes Rey',
         jobTitle: j.home.founderJobTitle,
         worksFor: { '@id': ORG_ID },
-        url: `${SITE}/#about`,
+        url: `${SITE}${pagePath('home', locale)}${anchorHash('about', locale)}`,
         description: j.home.founderDescription,
       },
     ],
   };
 }
 
-export function aiVisibilitySchema() {
-  const url = `${SITE}/ai-visibility/`;
+export function aiVisibilitySchema(locale: Locale = 'en') {
+  const copy = getCopy(locale);
+  const j = copy.jsonld;
+  const url = `${SITE}${pagePath('aiVisibility', locale)}`;
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
@@ -88,7 +93,8 @@ export function aiVisibilitySchema() {
   };
 }
 
-export function projectSchema(p: ProjectDetailData, url: string) {
+export function projectSchema(p: ProjectDetailData, url: string, locale: Locale = 'en') {
+  const copy = getCopy(locale);
   const blocks = detailBlocks(p);
   const neoris = /neoris/i.test(p.credit);
   return {
@@ -105,7 +111,7 @@ export function projectSchema(p: ProjectDetailData, url: string) {
     about: { '@type': 'Organization', name: p.client, ...(p.link && { url: p.link.href }) },
     ...(neoris && { sourceOrganization: { '@type': 'Organization', name: 'Neoris' } }), // credit: "in collaboration with NEORIS"
     creator: { '@type': 'Person', '@id': MER_ID, name: 'Mer' },
-    publisher: { '@type': 'ProfessionalService', '@id': ORG_ID, name: copy.site.name, url: `${SITE}/` },
+    publisher: { '@type': 'ProfessionalService', '@id': ORG_ID, name: copy.site.name, url: `${SITE}${pagePath('home', locale)}` },
     inLanguage: copy.site.lang,
   };
 }
