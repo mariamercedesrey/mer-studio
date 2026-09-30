@@ -99,6 +99,20 @@ Text colour: never use `--color-text-primary` for text. It resolves to navy (`--
 
 Buttons: one Primary button per screen/section. The secondary action uses Secondary (light ground), Negative (dark ground) or Outline. Outline Primary, Negative, Ghost Negative and Ghost Primary are for dark grounds only (yellow/white text on light fails AA). Usage by ground — light: Primary, Secondary, Outline Secondary, Ghost. Dark: Primary, Negative, Outline Primary, Ghost Negative (white text), Ghost Primary (yellow text) (pass `onDark` to Primary so its focus ring turns yellow). Always use `components/primitives/Button` — never a hand-styled `<a>`/`<button>` CTA.
 
+Buttons — labels are always lowercase ("book a call", "start a project", "learn more", "show less", "next project"). The rule lives in `Button.astro` (`text-transform: lowercase`); never lowercase a label by hand. Text links and the nav are NOT affected (the nav stays uppercase).
+
+Colour tokens (Figma "01 Primitives" → "02 Semantic"; semantic always references a primitive, never a hex): `color/brand/yellow` #EEBB0A, `color/brand/yellow-bright` #FCC814, `color/brand/yellow-dark` #A68208, `color/brand/dark` #635834. Semantic: `action/primary/background` → yellow-bright (text neutral/900, 11.8:1) · `accent/primary` → yellow · `accent/bright` → yellow-bright · `accent/dark` → brand/dark · `surface/dark` → brand/dark. `yellow-dark` has no semantic role.
+
+Colour on grounds (contrast matrix):
+
+| Colour | On light ground | On dark ground |
+|---|---|---|
+| `accent/primary`, `accent/bright`, `action/primary` (yellows) | never as text (dots, borders, fills only) | text OK |
+| `accent/dark` #635834 | text OK, 6.4:1 (hero rotating `[ChatGPT]`, accents) | no (too low) |
+| `color/brand/yellow-dark` #A68208 | 3.3:1: borders, icons and large text (≥24px) only, never body text | 5.1:1: text OK |
+
+Body/Large text style (`text/body-lg`: Outfit Regular 20 / 150 %, tokens `--text-body-lg-*`, 18 px on phones via the token): the hero eyebrow, the offer line and the right-hand paragraph. Colour `--text-primary`.
+
 ## 13. ACCESSIBILITY
 
 Maintain semantic HTML, keyboard accessibility, visible focus states, appropriate target sizes, sufficient contrast, reduced-motion behavior and meaningful image alternatives. Motion must never be required to understand or navigate the site.
@@ -162,6 +176,6 @@ Rules for every animation on the site (the concrete motion of each section still
 Exception — Intro de la home: supera los 3 s por decisión de la dueña; siempre salteable con click/scroll.
 Durante la intro de la home el scroll se bloquea y el primer gesto solo sube la cortina; es la única excepción a la regla de no bloquear el scroll.
 
-Exception — Step scroll (Services y Selected Work, desktop ≥1024): un gesto de rueda/trackpad = un paso. El snap nativo (`scroll-snap-stop: always`) no alcanza con la inercia del trackpad de Mac (avanza 2–3 pasos), así que hay un gate chico en JS (`scripts/step-snap.ts`), aprobado por Mer como segunda excepción a "no interceptar el scroll". Reglas: solo actúa dentro de esos dos tracks (el listener `wheel` no pasivo se adjunta solo mientras se está dentro); ignora la inercia hasta que el gesto termina (sin eventos por ~90 ms), umbral de delta acumulado y cooldown de ~700 ms entre pasos; en el primer paso hacia arriba y en el último hacia abajo no actúa (el scroll sale del track en los dos sentidos); el paso es un `scrollTo` suave a un snap point, nunca se frena ni se ralentiza el scroll. No toca teclado, touch, mobile (<1024), reduced motion, ctrl+wheel, wheel horizontal ni diálogos abiertos. Fuera de los tracks no hay scroll-jacking.
+Exception — Step scroll (Services y Selected Work, desktop ≥1024): un gesto de rueda/trackpad = un paso. El snap nativo (`scroll-snap-stop: always`) no alcanza con la inercia del trackpad de Mac (avanza 2–3 pasos), así que hay un gate chico en JS (`scripts/step-snap.ts`), aprobado por Mer como segunda excepción a "no interceptar el scroll". Reglas: solo actúa dentro de esos dos tracks (el listener `wheel` no pasivo se adjunta solo mientras se está dentro); ignora la inercia hasta que el gesto termina (sin eventos por ~90 ms), umbral de delta acumulado y cooldown de ~700 ms entre pasos; en el primer paso hacia arriba y en el último hacia abajo no actúa (el scroll sale del track en los dos sentidos); el paso es un `scrollTo` suave a un snap point, nunca se frena ni se ralentiza el scroll. Services tiene un *hold* en la etapa 3 (diagrama completo): la salida pide un gesto nuevo que haya empezado ≥800 ms después de llegar y 2× el delta acumulado; la salida dura ~800 ms y el texto y la lista entran después. Las anclas (`scripts/anchor-nav.ts`) suspenden el gate y el snap mientras viajan. No toca teclado, touch, mobile (<1024), reduced motion, ctrl+wheel, wheel horizontal ni diálogos abiertos. Fuera de los tracks no hay scroll-jacking.
 
 Tokens live in `src/styles/tokens.ext.css` (proposed extensions of `/brand/tokens/base.css`): `--dur-section`, `--dur-count`, `--dur-signature-max`, `--ease-enter`, `--enter-shift`, `--word-reveal-min`. Reusable pieces: `WordReveal`, `CountUp` (`src/components/primitives`), `scripts/reveal.ts` (one shared IntersectionObserver: `[data-reveal="rise"]` fade + 16 px lift with sibling stagger, `afterIntro`, `tween`), `DecodeTitle` (section/page titles: letters scramble → resolve, ~900 ms, once; not the home h1 or the hero).

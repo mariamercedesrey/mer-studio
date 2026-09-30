@@ -45,6 +45,8 @@ const record = (e: WheelEvent) => {
 export interface StepSnapOptions {
   /** A stop that must rest before it is left: `at` = stop index; leaving it needs a gesture that began ≥ `dwell` ms after arrival. */
   hold?: { at: number; dwell: number; exitFactor: number };
+  /** Smallest wheel delta that can start a NEW flick inside a running gesture (default 20). Browsers coalesce wheel events per frame, so a decaying tail can briefly double; Services asks for more. */
+  flickMin?: number;
 }
 
 export function initStepSnap(track: HTMLElement, steps: number, stepPx: () => number, opts: StepSnapOptions = {}) {
@@ -66,7 +68,7 @@ export function initStepSnap(track: HTMLElement, steps: number, stepPx: () => nu
     const now = e.timeStamp, abs = Math.abs(dy), dir = dy > 0 ? 1 : -1;
     const step = stepPx(), t = travelled();
     const idle = now - wheelSeen.prev > GAP;
-    const flick = !idle && now > lockUntil && abs >= 20 && abs > wheelSeen.prevAbs * ACCEL; // momentum decays; a new flick grows again
+    const flick = !idle && now > lockUntil && abs >= (opts.flickMin ?? 20) && abs > wheelSeen.prevAbs * ACCEL; // momentum decays; a new flick grows again
     const fresh = idle || flick;
     if (fresh) { owned = false; consumed = false; acc = 0; entering = false; gestureStart = now; }
     if (!owned) {
