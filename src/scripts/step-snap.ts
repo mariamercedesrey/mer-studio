@@ -22,15 +22,25 @@ const sync = () => document.documentElement.toggleAttribute('data-step-snap', ac
 const DOWN = new Set(['ArrowDown', 'PageDown', ' ']);
 const UP = new Set(['ArrowUp', 'PageUp']);
 const canGate = () => matchMedia('(min-width: 1024px)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches && !document.querySelector('dialog[open]');
+// Passive, always-on recorder of the wheel stream (timestamps only, never prevents anything): the gate must know whether a
+// gesture was already running before it reached the track (momentum carried in), so `prev*` is the event BEFORE this one.
+const wheelSeen = { prev: -1e9, prevAbs: 0, last: -1e9, lastAbs: 0 };
+let recording = false;
 const wheelPx = (e: WheelEvent) => e.deltaMode === 1 ? e.deltaY * 16 : e.deltaMode === 2 ? e.deltaY * innerHeight : e.deltaY;
 
+const record = (e: WheelEvent) => {
+  wheelSeen.prev = wheelSeen.last; wheelSeen.prevAbs = wheelSeen.lastAbs;
+  wheelSeen.last = e.timeStamp; wheelSeen.lastAbs = Math.abs(wheelPx(e));
+};
+
 export function initStepSnap(track: HTMLElement, steps: number, stepPx: () => number) {
+  if (!recording) { recording = true; addEventListener('wheel', record, { passive: true }); } // registered first: runs before any gate
   let frame = 0;
   const travelled = () => -track.getBoundingClientRect().top;
   const inside = (t: number, step: number) => t > -step + 1 && t < steps * step - 1;
 
   // ── wheel gate ──
-  let owned = false, entering = false, consumed = false, acc = 0, lastAt = -1e9, prevAbs = 0, lockUntil = 0;
+  let owned = false, entering = false, consumed = false, acc = 0, lockUntil = 0;
   const canStep = (t: number, dir: number, step: number) => (dir > 0 && t >= -2 && t < (steps - 1) * step - 2) || (dir < 0 && t > 2 && t <= (steps - 1) * step + 2);
   const onWheel = (e: WheelEvent) => {
     if (e.ctrlKey || e.defaultPrevented || !canGate()) return;
@@ -38,13 +48,14 @@ export function initStepSnap(track: HTMLElement, steps: number, stepPx: () => nu
     if (!dy || Math.abs(e.deltaX) > Math.abs(dy)) return;
     const now = e.timeStamp, abs = Math.abs(dy), dir = dy > 0 ? 1 : -1;
     const step = stepPx(), t = travelled();
-    const idle = now - lastAt > GAP;
-    const flick = !idle && now > lockUntil && abs >= 20 && abs > prevAbs * ACCEL; // momentum decays; a new flick grows again
-    lastAt = now; prevAbs = abs;
-    if (idle || flick) { owned = false; consumed = false; acc = 0; entering = !canStep(t, dir, step); }
+    const idle = now - wheelSeen.prev > GAP;
+    const flick = !idle && now > lockUntil && abs >= 20 && abs > wheelSeen.prevAbs * ACCEL; // momentum decays; a new flick grows again
+    const fresh = idle || flick;
+    if (fresh) { owned = false; consumed = false; acc = 0; entering = false; }
     if (!owned) {
       if (!canStep(t, dir, step)) return;          // first/last stop, or outside: native scroll (free)
       owned = true;
+      entering = !fresh;                           // the gesture was already running before it reached a stop: momentum carried it in
     }
     e.preventDefault();                            // inertia tail of an owned gesture is swallowed
     if (consumed || now < lockUntil) return;
