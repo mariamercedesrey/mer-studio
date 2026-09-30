@@ -63,6 +63,9 @@ const current = (href: string) => (href.startsWith('/') && Astro.url.pathname.st
 </dialog>
 
 <script>
+  import { initAnchorNav } from '../../scripts/anchor-nav';
+  initAnchorNav();
+
   // Scrolled state on the home and /start-a-project/: the sentinel (hero "book a call" button / the h1 block) leaving through the top of the viewport.
   const header = document.querySelector<HTMLElement>('[data-site-header]');
   const sentinel = document.querySelector<HTMLElement>('[data-nav-sentinel]');
@@ -183,11 +186,12 @@ const current = (href: string) => (href.startsWith('/') && Astro.url.pathname.st
     transform: scale(0.4);
     transition: opacity var(--dur-fast) var(--ease-precise), transform var(--dur-fast) var(--ease-bounce);
   }
-  .site-nav a:hover, .site-nav a:focus-visible, .site-nav a[aria-current='page'] { color: var(--text-primary); }
+  .site-nav a:hover, .site-nav a:focus-visible, .site-nav a:is([aria-current='page'], [aria-current='location']) { color: var(--text-primary); }
   /* Current page: ink label + the signature dot, same as hover (Figma 2230:639). */
-  .site-nav a:hover::before, .site-nav a:focus-visible::before, .site-nav a[aria-current='page']::before { opacity: 1; transform: none; }
+  .site-nav a:hover::before, .site-nav a:focus-visible::before, .site-nav a:is([aria-current='page'], [aria-current='location'])::before { opacity: 1; transform: none; }
 
   /* ── Scrolled state (needs JS: without it the header keeps its top look on a soft ground) ── */
+  :global(html.js) .site-header[data-scrolled] { --focus-ring: var(--focus-ring-on-dark); } /* dark bar */
   :global(html.js) .site-header[data-scrolled]::before { opacity: 1; }
   :global(html.js) .site-header[data-scrolled]::after { opacity: 0; visibility: hidden; -webkit-backdrop-filter: none; backdrop-filter: none; transition: opacity var(--dur-nav) var(--ease-enter), visibility 0s linear var(--dur-nav); }
   /* The row is centred on y 44 (28 + 32/2; 20 + 48/2 on mobile); the bar's centre is 25.5 → −18.5 px. */
@@ -196,7 +200,7 @@ const current = (href: string) => (href.startsWith('/') && Astro.url.pathname.st
   :global(html.js) .site-header[data-scrolled] .site-header__logo-neg { opacity: 1; }
   :global(html.js) .site-header[data-scrolled] .site-header__tagline { color: var(--fg-on-ink); transform: translateX(-32px); /* 182 → 150 px logo */ }
   :global(html.js) .site-header[data-scrolled] .site-nav a,
-  :global(html.js) .site-header[data-scrolled] .site-nav a[aria-current='page'],
+  :global(html.js) .site-header[data-scrolled] .site-nav a:is([aria-current='page'], [aria-current='location']),
   :global(html.js) .site-header[data-scrolled] .site-nav a:hover,
   :global(html.js) .site-header[data-scrolled] .site-nav a:focus-visible { color: var(--text-inverse); }
   :global(html.js) .site-header[data-scrolled] .site-header__toggle { color: var(--text-inverse); }
@@ -235,7 +239,7 @@ const current = (href: string) => (href.startsWith('/') && Astro.url.pathname.st
     display: none;
     flex-direction: column;
     gap: var(--sp-64);
-    background: var(--surface-inverse);
+    background: var(--surface-inverse); --focus-ring: var(--focus-ring-on-dark);
     color: var(--text-inverse);
     overflow-y: auto; overscroll-behavior: contain;
     opacity: 0;

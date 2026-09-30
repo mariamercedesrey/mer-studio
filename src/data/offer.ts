@@ -10,6 +10,7 @@ export const offer = {
   active: true,
   tag: 'Free with your project · Oct 2026',
   more: 'read more',
+  pill: 'Free · Oct 2026',            // diagram pill (Figma 2248:9353): "AI Visibility  FREE · OCT 2026 · read more"
   endsAt: '2026-10-31T23:59:59-03:00',
   validThrough: '2026-10-31',
   // Hero line (after the "—"): "Every project ships findable on [ChatGPT] — {hero}. Read more."

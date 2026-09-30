@@ -49,7 +49,6 @@ const copies = [false, true];
       ))}
     </div>
   </div>
-  <a class="marquee__scroll" href="#work" aria-label="Scroll to selected work"></a>
 </section>
 
 <script>
@@ -69,11 +68,8 @@ const copies = [false, true];
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--sp-32);
-    height: 250px;
-    padding-top: var(--sp-80);
-    padding-bottom: var(--sp-8); /* room for the scroll arrow's 3px nudge */
+    --focus-ring: var(--focus-ring-on-dark);
+    padding: var(--sp-80) 0 var(--sp-24); /* the scroll arrow now lives in the hero, under "where we've worked" (Figma 149:5103) */
     background: var(--surface-inverse);
     overflow: hidden;
   }
@@ -104,29 +100,8 @@ const copies = [false, true];
   .marquee__logo--crop { overflow: hidden; }
   .marquee__logo--crop img { position: absolute; max-width: none; object-fit: fill; }
 
-  .marquee__scroll {
-    position: relative;
-    display: block;
-    /* Icon: brand/assets/icons/circle-arrow-down.svg (24 box, ring r=10). 60px box → 50px ring, as in Figma.
-       The public copy uses stroke 0.8 → 2px drawn, matching the previous arrow (Mer, review round 10). */
-    width: 60px;
-    height: 60px;
-    flex-shrink: 0;
-    background: var(--accent-primary);
-    -webkit-mask: url(/icons/circle-arrow-down.svg) center / contain no-repeat;
-    mask: url(/icons/circle-arrow-down.svg) center / contain no-repeat;
-    transition: background-color var(--dur-fast) var(--ease-precise);
-    /* Every 3 s a 3px nudge down and back, inviting the scroll (Mer, review round 9). */
-    animation: scroll-nudge 3s var(--ease-precise) infinite;
-  }
-  .marquee__scroll:hover { background: var(--accent-bright); }
-  @keyframes scroll-nudge {
-    0%, 80%, 100% { translate: 0 0; }
-    88% { translate: 0 3px; }
-  }
-
   @media (max-width: 767px) {
-    .marquee { height: auto; gap: var(--sp-32); padding: var(--sp-48) 0 var(--sp-24); }
+    .marquee { padding: var(--sp-48) 0 var(--sp-24); }
     /* Logos keep their Figma proportions at 80 %. */
     .marquee__set { gap: 44px; padding-left: 44px; zoom: 0.8; }
   }
@@ -137,6 +112,5 @@ const copies = [false, true];
   }
   @media (prefers-reduced-motion: reduce) {
     .marquee__track { animation: none; transform: translateX(-25%); }
-    .marquee__scroll { animation: none; }
   }
 </style>

@@ -9,7 +9,7 @@ export function initProjectOverlay() {
   });
   if (!dialogs.size) return;
 
-  const homeUrl = location.pathname + location.search;
+  const homeUrl = location.pathname + location.search + location.hash; // the fragment must survive: it drives the first scroll (/#about)
   let opener: HTMLElement | null = null;
 
   const open = (id: string, push: boolean) => {

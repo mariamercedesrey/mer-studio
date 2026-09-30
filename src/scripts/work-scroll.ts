@@ -8,6 +8,7 @@
 import { createPixelTransition } from './pixel-transition';
 import { prefersReducedMotion } from './reveal';
 import { initStepSnap } from './step-snap';
+import { scrollToAnchor } from './anchor-nav';
 
 const DESKTOP = '(min-width: 1024px)';
 
@@ -148,7 +149,7 @@ function setup(section: HTMLElement) {
   if (nextBtn) on(nextBtn, 'click', (e: Event) => {
     e.preventDefault();
     if (current < items.length - 1) goTo(current + 1);
-    else document.getElementById('services')?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+    else { const s = document.getElementById('services'); if (s) scrollToAnchor(s); }
   });
   links.forEach((a, i) => on(a, 'click', (e: Event) => { e.preventDefault(); goTo(i); }));
   on(window, 'scroll', onScroll, { passive: true });
