@@ -1,0 +1,630 @@
+# MER Studio — English copy (source for translation)
+
+Generated from `src/i18n/en.ts` by `npm run i18n:export` — do not edit by hand. Each line is `key` → text.
+
+- `{placeholder}` tokens (`{client}`, `{title}`, `{name}`, `{code}`, `{email}`) must be kept verbatim.
+- `\n` inside a title is a line break.
+- Array items are written `key[0]`, `key[1]`… and keep their order.
+- Proper names (MER Studio, Shopify, Tiendanube, ChatGPT, client and product names) are copy too but are expected to stay as they are.
+- Not in this file on purpose: URLs, e-mail, phone, and the `value` of form fields (they stay English so the inbox is uniform).
+- Also still in English outside `en.ts`: `public/llms.txt` (the launch-offer line must match `offer.llms`; `scripts/check-site.mjs` enforces it).
+
+Strings: 565.
+
+## Global (every page)
+
+- `site.lang` → en
+- `site.name` → MER Studio
+- `site.defaultTitle` → MER Studio — Strategy, design and build, end to end
+- `site.defaultDescription` → Independent design-and-build studio. Strategy, design and code, handled end to end by one team — a brand, a website, an online store, a full platform.
+- `site.ogImageAlt` → MER Studio — Strategy, design and build, end to end.
+- `site.skipLink` → Skip to content
+- `site.logoAlt` → MER Studio
+- `site.caseStudyTitle` → {client} — {title} | MER Studio
+- `a11y.opensInNewTab` → (opens in a new tab)
+- `a11y.whatsapp` → WhatsApp
+- `buttons.bookCall` → book a call
+- `buttons.startProject` → start a project
+- `buttons.letsTalk` → let's talk
+- `buttons.backToHome` → back to home
+- `buttons.faq` → faq
+- `buttons.showLess` → show less
+- `buttons.nextProject` → next project
+- `buttons.nextSection` → next section
+- `buttons.nextStep` → Next step
+- `buttons.sendInquiry` → send inquiry
+- `buttons.sending` → sending…
+- `buttons.checkMyBrand` → check my brand
+- `faqCta.prompt` → Questions about how we work?
+- `faqCta.questionsFirst` → Questions first?
+- `faqCta.readFaq` → Read the faq
+- `nav.ariaLabel` → Primary
+- `nav.tagline` → Design and build, end to end
+- `nav.items.work` → Work
+- `nav.items.services` → Services
+- `nav.items.howItWorks` → How it works
+- `nav.items.about` → About
+- `nav.openMenu` → Open menu
+- `nav.closeMenu` → Close menu
+- `nav.menuLabel` → Menu
+- `footer.ariaLabel` → Footer
+- `footer.links.work` → Selected Works
+- `footer.links.services` → Services
+- `footer.links.howItWorks` → How it works
+- `footer.links.aiVisibility` → AI Visibility
+- `footer.links.about` → About Us
+- `footer.links.faq` → FAQ
+- `footer.copyright` → ©2026 mer.studio™ All Rights Reserved
+- `footer.workingFrom` → Working Worldwide from
+- `footer.country` → argentina
+- `intake.preferEmail` → PREFER EMAIL?
+- `projectDetail.close` → Close project
+
+## Home (/)
+
+- `home.intro.line1` → “From the first decision to the last detail.
+- `home.intro.line2` → Strategy, design & build, end to end.”
+- `hero.lead` → From the first decision to the last detail.
+- `hero.title` → Strategy, design and build, end to end.
+- `hero.offerPrefix` → Every project ships findable on
+- `hero.offerSr` → Every project ships findable on ChatGPT, Perplexity, Gemini and Google AI
+- `hero.engines[0]` → ChatGPT
+- `hero.engines[1]` → Perplexity
+- `hero.engines[2]` → Gemini
+- `hero.engines[3]` → Google AI
+- `hero.readMore` → Read more.
+- `hero.posterAlt` → Smartphone tied with a red cord to raw concrete blocks
+- `hero.workedTitle` → WHERE WE'VE WORKED
+- `hero.industries[0]` → Ecommerce
+- `hero.industries[1]` → Agribusiness
+- `hero.industries[2]` → Fashion
+- `hero.industries[3]` → Insurance
+- `hero.industries[4]` → Finance
+- `hero.industries[5]` → Foreign Trade
+- `hero.industries[6]` → Startups
+- `hero.industries[7]` → Enterprise
+- `hero.industries[8]` → Healthcare
+- `hero.summary` → Strategy, design and code, handled end to end by one team. Twenty-five years across enterprise products and US startups, applied at any size — a brand, a website, an online store, a full platform.
+- `hero.scrollLabel` → Go to selected work
+- `marquee.ariaLabel` → Clients we've worked with
+- `marquee.logoAlt` → {name} logo
+- `work.eyebrow` → selected work
+- `work.title` → What we've built
+- `work.indexAriaLabel` → Selected projects
+- `work.mosaicAlt` → Mosaic of MER Studio project thumbnails
+- `work.projects.asociart.title` → Reengineering a 13-module legacy platform
+- `work.projects.asociart.meta` → [Insurance & Finance] AT NEORIS
+- `work.projects.asociart.roles[0]` → UX Research
+- `work.projects.asociart.roles[1]` → Design System
+- `work.projects.asociart.roles[2]` → Product Designer
+- `work.projects.asociart.roles[3]` → Front-End
+- `work.projects.asociart.index` → Reengineering Core
+- `work.projects.asociart.alt` → Asociart claims-management screen on a laptop, over sheets of the Asociart design-system colours and type
+- `work.projects.the-mile.title` → Turning creators into storefronts
+- `work.projects.the-mile.meta` → [Ecommerce & Fashion] AT ORCHARDMILE
+- `work.projects.the-mile.roles[0]` → UX/UI
+- `work.projects.the-mile.roles[1]` → Design System
+- `work.projects.the-mile.roles[2]` → PRODUCT DESIGN
+- `work.projects.the-mile.roles[3]` → Prototyping
+- `work.projects.the-mile.index` → Live Shoppable App
+- `work.projects.the-mile.alt` → The Mile Fashion app on phones: the welcome screen with a model in black, surrounded by other app screens
+- `work.projects.orchard-mile.title` → 250 brands, one storefront
+- `work.projects.orchard-mile.meta` → [Ecommerce & Fashion]
+- `work.projects.orchard-mile.roles[0]` → UX/UI
+- `work.projects.orchard-mile.roles[1]` → Front-End
+- `work.projects.orchard-mile.roles[2]` → Growth Design
+- `work.projects.orchard-mile.index` → Luxury Website
+- `work.projects.orchard-mile.alt` → The Orchard Mile homepage on a laptop, surrounded by tilted editorial fashion pages
+- `work.projects.quilmes.title` → A coupon that works one-handed, in a crowd
+- `work.projects.quilmes.meta` → [Consumer Brands]
+- `work.projects.quilmes.roles[0]` → Product Concept
+- `work.projects.quilmes.roles[1]` → UX/UI
+- `work.projects.quilmes.roles[2]` → Mobile
+- `work.projects.quilmes.index` → Special Promotion App
+- `work.projects.quilmes.alt` → Pasaporte Quilmes app screens on phones: venue map, venue pages and a discount coupon with a QR code
+- `work.projects.carbon-optimum.title` → Making an industrial process legible
+- `work.projects.carbon-optimum.meta` → [Agrobusiness] [Enterprise]
+- `work.projects.carbon-optimum.roles[0]` → Web design
+- `work.projects.carbon-optimum.roles[1]` → branding
+- `work.projects.carbon-optimum.roles[2]` → Brand System
+- `work.projects.carbon-optimum.roles[3]` → Web Development
+- `work.projects.carbon-optimum.index` → Climate Tech Brand
+- `work.projects.carbon-optimum.alt` → The Carbon Optimum website on a desktop monitor over an ocean photograph, next to the brand colour palette
+- `work.projects.agente-mama.title` → A safety net, not a productivity app
+- `work.projects.agente-mama.meta` → [Startups]
+- `work.projects.agente-mama.roles[0]` → Product Strategy
+- `work.projects.agente-mama.roles[1]` → UX Research
+- `work.projects.agente-mama.roles[2]` → Design System
+- `work.projects.agente-mama.roles[3]` → AI-Assisted Build
+- `work.projects.agente-mama.index` → AI Family Assistant
+- `work.projects.agente-mama.alt` → Agente Mamá AI on phones: the daily dashboard and agenda, fed by WhatsApp group and school platform messages
+- `work.projects.american-padel-systems.title` → A site that answers "does it pay for itself?"
+- `work.projects.american-padel-systems.meta` → [Enterprise]
+- `work.projects.american-padel-systems.roles[0]` → branding
+- `work.projects.american-padel-systems.roles[1]` → Web Design
+- `work.projects.american-padel-systems.roles[2]` → Interactive Tool
+- `work.projects.american-padel-systems.roles[3]` → Web Development
+- `work.projects.american-padel-systems.index` → Empowering Padel
+- `work.projects.american-padel-systems.alt` → The American Padel Systems website on a tilted laptop, on a navy background crossed by orange lines
+- `work.projects.hifi-hub.title` → Six business units, one product
+- `work.projects.hifi-hub.meta` → [Startups] [Ecommerce]
+- `work.projects.hifi-hub.roles[0]` → branding
+- `work.projects.hifi-hub.roles[1]` → Product Design
+- `work.projects.hifi-hub.roles[2]` → Design System
+- `work.projects.hifi-hub.roles[3]` → Information Architecture
+- `work.projects.hifi-hub.index` → Audiophile Directory
+- `work.projects.hifi-hub.alt` → HiFi Hub — project preview
+- `banner.ariaLabel` → Design, for us
+- `banner.quote` → [For us, design isn't decoration. It's a transformation. It evolves what's stuck, strengthens what matters, and makes space for something better.]
+- `services.eyebrow` → services
+- `services.title` → Strategy, Design & Build, end to end
+- `services.diagramLabel` → Services diagram: Brand and Product, connected by Strategy, Design and Build — one connected practice, 25+ years of experience.
+- `services.diagram.brand` → Brand
+- `services.diagram.product` → Product
+- `services.diagram.mer` → MER
+- `services.diagram.years` → 25+ years of experience
+- `services.diagram.coreTitleLines[0]` → Strategy
+- `services.diagram.coreTitleLines[1]` → Design
+- `services.diagram.coreTitleLines[2]` → Build
+- `services.diagram.coreDescLines[0]` → One connected
+- `services.diagram.coreDescLines[1]` → practice
+- `services.diagram.coreDescLines[2]` → MER Studio
+- `services.rows.branding.name` → Branding
+- `services.rows.branding.body` → Identity, and the system to keep it consistent.
+- `services.rows.websites.name` → Websites
+- `services.rows.websites.body` → A landing, a full site, or an online store — on Shopify, Tiendanube or WooCommerce.
+- `services.rows.digitalProduct.name` → Digital Product
+- `services.rows.digitalProduct.body` → An app or a platform that doesn't exist yet.
+- `services.rows.aiVisibility.name` → AI Visibility
+- `services.rows.aiVisibility.body` → GEO / AEO — so people find you when they ask an AI, not just Google.
+- `services.caption` → Set of services that complement each other and allow us to design, develop, implement, maintain, and extend a consistent experience
+- `services.included.title` → EVERY PROJECT INCLUDES
+- `services.included.items[0]` → Fixed scope and price
+- `services.included.items[1]` → Two rounds of revisions
+- `services.included.items[2]` → Responsive, mobile & desktop
+- `services.included.items[3]` → Files & accounts in your name
+- `services.addonsLead` → Added to any project — or contracted on their own.
+- `services.addonFor` → For:
+- `services.addons.designSystem.title` → Design System
+- `services.addons.designSystem.cta` → what's included
+- `services.addons.designSystem.body` → Exported tokens, a documented component library, and a usage guide — so your team, or an AI agent, can keep building on it without breaking the system.
+- `services.addons.designSystem.more[0]` → Design tokens (color, type, spacing) exported to code
+- `services.addons.designSystem.more[1]` → Component library in Figma + code, with states and variants
+- `services.addons.designSystem.more[2]` → Usage guide and do/don't rules
+- `services.addons.designSystem.more[3]` → Handover session with your team
+- `services.addons.designSystem.for` → products that will keep growing after launch.
+- `services.addons.aiAssistants.title` → AI Assistants & Automation
+- `services.addons.aiAssistants.cta` → how it works
+- `services.addons.aiAssistants.body` → AI assistants and automations that take repetitive work off your team — built into your site, store or product.
+- `services.addons.aiAssistants.more[0]` → Assistants that answer customers with your own content
+- `services.addons.aiAssistants.more[1]` → Automated flows: leads, orders, follow-ups, reports (n8n / API)
+- `services.addons.aiAssistants.more[2]` → Connected to the tools you already use
+- `services.addons.aiAssistants.more[3]` → Measured: what it saves, what it handles, what it escalates
+- `services.addons.aiAssistants.for` → teams answering the same questions or doing the same steps every day.
+- `services.addons.maintenance.title` → Maintenance
+- `services.addons.maintenance.cta` → learn more
+- `services.addons.maintenance.body` → Optional, after handover. Changes, updates, backups and priority response.
+- `services.addons.maintenance.more[0]` → Changes and content updates
+- `services.addons.maintenance.more[1]` → Platform and plugin updates
+- `services.addons.maintenance.more[2]` → Backups
+- `services.addons.maintenance.more[3]` → Priority response
+- `services.addons.maintenance.for` → sites and stores that need to stay current after launch.
+- `howItWorks.eyebrow` → How it works
+- `howItWorks.title` → Four steps, no surprises
+- `howItWorks.lead` → Every project starts with a 20-minute call. You get back a proposal with a fixed scope, a final price and a delivery date.
+- `howItWorks.asciiAlt` → ASCII-style illustration of the four-step process
+- `howItWorks.steps[0].n` → 01
+- `howItWorks.steps[0].title` → Call
+- `howItWorks.steps[0].body` → Twenty minutes. You tell us what you need, by when, and what budget you have.
+- `howItWorks.steps[1].n` → 02
+- `howItWorks.steps[1].title` → Proposal
+- `howItWorks.steps[1].body` → Within 48 hours you get scope, final price, delivery date and what is out of scope. If it does not work for you, we stop there.
+- `howItWorks.steps[2].n` → 03
+- `howItWorks.steps[2].title` → Design and build
+- `howItWorks.steps[2].body` → We work in blocks and show you progress along the way. Two rounds of revisions included.
+- `howItWorks.steps[3].n` → 04
+- `howItWorks.steps[3].title` → Handover
+- `howItWorks.steps[3].body` → Launch, files and accounts in your name. Thirty days of support in case anything breaks.
+- `about.eyebrow` → About us
+- `about.title` → We partner with early-stage founders who treat design as a must, not a nice-to-have. From seed to Series A and beyond, we help them validate ideas, win over investors and build brands and products that last.
+- `about.body` → We treat every project as our own — founders deserve a partner, not a vendor. We've been in that room enough times to know what's at stake. We use AI to move faster, not to cut corners, so the time goes where it matters most: strategy and craft.
+- `about.portraitAlt` → Mer Rey, founder of MER Studio
+- `about.name` → Mer Rey
+- `about.role` → Founder · Design Lead
+- `about.quote` → For more than 25 years I've designed digital products for companies in the US and Latin America — enterprises and startups, often working directly with founders and CEOs.
+- `about.stats[0].value` → 25+
+- `about.stats[0].label` → years of experience designing products, brands and websites
+- `about.stats[1].value` → 35+
+- `about.stats[1].label` → websites and digital products delivered directly to clients
+- `about.stats[2].value` → 1:1
+- `about.stats[2].label` → Direct access to the senior designer, from first call to final files
+- `about.stats[3].value` → +300%
+- `about.stats[3].label` → orders in The Mile's first year after launch
+- `finalCta.eyebrow` → That's all for now.
+- `finalCta.title` → Got a project in mind?\nLet’s talk
+- `finalCta.letsTalkSr` → (book a 20-minute call, opens in a new tab)
+
+## Launch offer (hero line, Services, /ai-visibility/, JSON-LD, llms.txt)
+
+- `offer.tag` → Free with your project · Oct 2026
+- `offer.more` → read more
+- `offer.pill` → Free · Oct 2026
+- `offer.hero` → AI Visibility free for projects started in October 2026
+- `offer.free.title` → Included free
+- `offer.free.items[0]` → Base setup: schema / JSON-LD, llms.txt, AI-bot access in robots.txt, semantic content structure
+- `offer.free.items[1]` → An initial visibility check in ChatGPT, Perplexity, Gemini and Google AI
+- `offer.paid.title` → Still paid
+- `offer.paid.items[0]` → AI content strategy
+- `offer.paid.items[1]` → Full audit
+- `offer.paid.items[2]` → Monthly measurement
+- `offer.intro` → Launch offer: every project that starts in October 2026 includes the AI Visibility setup at no cost.
+- `offer.llms` → Launch offer: projects started in October 2026 include AI Visibility setup free (schema, llms.txt, AI crawler access, semantic structure, and an initial AI visibility check). Content strategy, full audit and monthly measurement are paid.
+
+## /faq/
+
+- `faqPage.meta.title` → FAQ — Process, Timing & Platforms | MER Studio
+- `faqPage.meta.description` → Answers on cost, timing, revisions, handover, e-commerce platforms (Shopify, Tiendanube, WooCommerce) and AI visibility — from a design-and-build studio.
+- `faqPage.eyebrow` → faq
+- `faqPage.title` → Questions, answered.
+- `faqPage.noteBefore` → Process, timing, platforms and AI visibility — everything worth knowing before we start. If something is missing, ask us on a 
+- `faqPage.noteLink` → 20-min call
+- `faqPage.noteAfter` → .
+- `faqPage.listAriaLabel` → Frequently asked questions
+- `faqPage.moreAiVisibility` → All AI Visibility questions → read more
+- `faqPage.cta.eyebrow` → Didn’t find it?
+- `faqPage.cta.title` → Still have\na question?
+- `faq.groups[0].num` → 01
+- `faq.groups[0].label` → process
+- `faq.groups[0].items[0].q` → How much does a project cost?
+- `faq.groups[0].items[0].a` → Every project is quoted after a 20-minute call. You get a fixed scope and price before we start — no surprises.
+- `faq.groups[0].items[1].q` → How long does a project take?
+- `faq.groups[0].items[1].a` → From one week, depending on scope. A landing moves faster than a full store or product, and we agree on dates before we start.
+- `faq.groups[0].items[2].q` → How many rounds of revisions are included?
+- `faq.groups[0].items[2].a` → Two rounds of revisions, built into every project.
+- `faq.groups[0].items[3].q` → What do I get at handover?
+- `faq.groups[0].items[3].a` → Your files and accounts, all in your name.
+- `faq.groups[1].num` → 02
+- `faq.groups[1].label` → services
+- `faq.groups[1].items[0].q` → Which e-commerce platforms do you work with?
+- `faq.groups[1].items[0].a` → Shopify, Tiendanube and WooCommerce. We recommend one based on your market, your catalog and how you sell.
+- `faq.groups[1].items[1].q` → Can you work with my existing brand or site?
+- `faq.groups[1].items[1].a` → Yes. We can evolve what you already have or start from scratch.
+- `faq.groups[1].items[2].q` → Do you work with clients outside Argentina?
+- `faq.groups[1].items[2].a` → Yes. We're based in Buenos Aires and work remotely, in English or Spanish.
+- `faq.groups[1].items[3].q` → Can you add AI assistants or automations?
+- `faq.groups[1].items[3].a` → Yes, as an add-on: assistants that answer with your own content, and automated flows connected to the tools you already use.
+- `faq.groups[2].num` → 03
+- `faq.groups[2].label` → ai visibility
+- `faq.groups[2].items[0].q` → What is AI Visibility (GEO / AEO)?
+- `faq.groups[2].items[0].a` → Making your brand easy for AI to find, understand and cite — not just to rank on Google.
+- `faq.groups[2].items[1].q` → Is AI Visibility free in October?
+- `faq.groups[2].items[1].a` → Yes, the setup is free for projects started in October 2026. The rest is paid.
+
+## /ai-visibility/
+
+- `aiVisibility.meta.title` → AI Visibility — Generative Engine Optimization (GEO & AEO)
+- `aiVisibility.meta.description` → Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO): we make your brand readable and quotable by ChatGPT, Perplexity and Google AI.
+- `aiVisibility.intro.eyebrow` → ai visibility · geo / aeo
+- `aiVisibility.intro.title` → When people ask an AI, does it name you?
+- `aiVisibility.intro.note` → Search is moving from a list of links to a single answer. With Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO), we make your brand readable, understood and quotable by ChatGPT, Perplexity, Gemini and Google’s AI Overviews.
+- `aiVisibility.method.eyebrow` → the method
+- `aiVisibility.method.title` → Four things an AI needs before it recommends you.
+- `aiVisibility.method.lede` → Ranking still matters. But an AI only names what it can read, understand and verify somewhere else.
+- `aiVisibility.method.items[0].t` → Readable
+- `aiVisibility.method.items[0].d` → Crawlers can reach and parse your site: fast pages, clean HTML, an llms.txt, and a robots.txt that lets AI search bots in instead of blocking them.
+- `aiVisibility.method.items[1].t` → Understood
+- `aiVisibility.method.items[1].d` → Structured data (JSON-LD) and consistent entity details, so a model knows who you are, what you sell, where you work and who you work for — without guessing.
+- `aiVisibility.method.items[2].t` → Quotable
+- `aiVisibility.method.items[2].d` → Pages that answer the real questions your clients ask, in a format a model can lift and cite: clear FAQs, comparisons, scope and pricing ranges.
+- `aiVisibility.method.items[3].t` → Present
+- `aiVisibility.method.items[3].d` → Being named in the places models use to double-check you: Google Business Profile, directories, reviews, press and partner sites.
+- `aiVisibility.method.note` → No one can guarantee an AI will name you. We make sure it can — and we measure which questions mention you, before and after.
+- `aiVisibility.proof.eyebrow` → proof, not promises
+- `aiVisibility.proof.title` → This site is built the same way.
+- `aiVisibility.proof.steps[0].t` → An llms.txt
+- `aiVisibility.proof.steps[0].d` → A plain-language summary of who we are and what we do, written for AI crawlers.
+- `aiVisibility.proof.steps[1].t` → Structured data
+- `aiVisibility.proof.steps[1].d` → JSON-LD tells machines our name, services and location — no guessing.
+- `aiVisibility.proof.steps[2].t` → Open to AI crawlers
+- `aiVisibility.proof.steps[2].d` → Our robots.txt welcomes GPTBot, ClaudeBot, PerplexityBot and Google-Extended instead of blocking them.
+- `aiVisibility.proof.snippetLabel` → mer.studio/llms.txt
+- `aiVisibility.faq.eyebrow` → faq
+- `aiVisibility.faq.title` → Questions about AI Visibility.
+- `aiVisibility.cta.eyebrow` → One question to start.
+- `aiVisibility.cta.title` → What does AI say\nabout your brand?
+- `faq.aiVisibility[0].q` → What is Generative Engine Optimization (GEO)?
+- `faq.aiVisibility[0].a` → Making your brand easy for AI engines like ChatGPT, Perplexity and Google AI to find, understand and cite when people ask them questions — not just ranking in Google's list of links.
+- `faq.aiVisibility[1].q` → What is Answer Engine Optimization (AEO)?
+- `faq.aiVisibility[1].a` → Structuring your content so it becomes the direct answer: clear questions and answers, structured data, and pages AI crawlers can read.
+- `faq.aiVisibility[2].q` → How is GEO different from SEO?
+- `faq.aiVisibility[2].a` → SEO gets you ranked; GEO and AEO get you mentioned. They work together — a solid technical base helps both.
+- `faq.aiVisibility[3].q` → What's free for projects started in October?
+- `faq.aiVisibility[3].a` → The setup: schema, llms.txt, AI crawler access, semantic structure and an initial visibility check. Content strategy, full audit and monthly tracking are paid.
+- `faq.aiVisibility[4].q` → Do you guarantee AI mentions?
+- `faq.aiVisibility[4].a` → No one can. We build the conditions for AI engines to find and trust you, and we measure what changes.
+
+## /start-a-project/ and its form
+
+- `startProject.meta.title` → Start a project — MER Studio
+- `startProject.meta.description` → Tell us what you’re ready to build. Share a few details about your project and we’ll reply within 2 business days with a focused next step.
+- `startProject.intro.eyebrow` → start a project
+- `startProject.intro.title` → Tell us what you’re ready to build.
+- `startProject.intro.note` → A few thoughtful details help us bring the right people to the first conversation. It takes about 4 minutes.
+- `startProject.brief.eyebrow` → the brief
+- `startProject.brief.title` → Good work starts with a clear conversation.
+- `startProject.brief.lede` → Not every answer needs to be final. Share what you know and we’ll shape the rest together.
+- `startProject.next.eyebrow` → what happens next
+- `startProject.next.title` → Simple, transparent, human.
+- `startProject.next.steps[0].t` → We read every brief
+- `startProject.next.steps[0].d` → A senior team member reviews your goals, fit, and timing.
+- `startProject.next.steps[1].t` → We meet for 20 minutes
+- `startProject.next.steps[1].d` → No sales script — just context, questions, and useful next steps.
+- `startProject.next.steps[2].t` → You get a clear plan
+- `startProject.next.steps[2].d` → If it’s a fit, we’ll outline scope, team, timing, and investment.
+- `form.ariaLabel` → Project inquiry
+- `form.honeypot` → Leave this empty
+- `form.sections.who` → First, who are you?
+- `form.sections.together` → What can we make together?
+- `form.sections.timing` → Timing
+- `form.fields.name.label` → YOUR NAME *
+- `form.fields.name.placeholder` → Name and surname
+- `form.fields.email.label` → WORK EMAIL *
+- `form.fields.email.placeholder` → you@company.com
+- `form.fields.company.label` → COMPANY / ORGANIZATION
+- `form.fields.company.placeholder` → Where do you work?
+- `form.fields.phone.label` → PHONE / WHATSAPP
+- `form.fields.phone.placeholder` → Country code + number
+- `form.fields.message.label` → TELL US ABOUT THE PROJECT *
+- `form.fields.message.placeholder` → What are you building, changing, or trying to solve? A link is welcome, too.
+- `form.servicesLegend` → Services (choose any)
+- `form.services[0]` → Branding
+- `form.services[1]` → Website
+- `form.services[2]` → Digital product
+- `form.services[3]` → AI visibility
+- `form.services[4]` → AI Assistants & Automation
+- `form.services[5]` → Design system
+- `form.services[6]` → Something else
+- `form.idealStart` → IDEAL START
+- `form.timing[0]` → As soon as possible
+- `form.timing[1]` → Within 1–3 months
+- `form.timing[2]` → 3–6 months
+- `form.timing[3]` → Just exploring
+- `form.submitNote` → We’ll review your note and reply within 2 business days with a focused next step — usually a 20-minute introduction call.
+- `form.errors.name` → Please tell us your name.
+- `form.errors.emailMissing` → Please add your email so we can reply.
+- `form.errors.emailInvalid` → That email doesn’t look right — try you@company.com.
+- `form.errors.message` → Tell us a little about the project.
+- `form.errors.localOnly` → Forms only work on the Netlify deploy (Netlify handles the POST); this local server can’t receive them.
+- `form.errors.generic` → Something went wrong sending your note. Try again, or write to {email}.
+- `form.errors.withCode` → Something went wrong sending your note (error {code}). Try again, or write to {email}.
+- `form.doneText` → Thanks — we'll reply within 2 business days.
+
+## /start-a-project/thanks/
+
+- `thanks.meta.title` → Thanks — MER Studio
+- `thanks.eyebrow` → inquiry sent
+- `thanks.title` → Thanks — we'll reply within 2 business days.
+
+## 404
+
+- `notFound.meta.title` → Page not found — MER Studio
+- `notFound.eyebrow` → Error 404
+- `notFound.title` → This page doesn't exist
+
+## JSON-LD (textual fields)
+
+- `jsonld.areaServed` → Worldwide
+- `jsonld.home.description` → Strategy, design and code, handled end to end by one team. Twenty-five years across enterprise products and US startups, applied at any size — a brand, a website, an online store, a full platform.
+- `jsonld.home.slogan` → Strategy, design and build, end to end.
+- `jsonld.home.catalogName` → Services
+- `jsonld.home.aiVisibilityService.name` → AI Visibility · GEO / AEO
+- `jsonld.home.aiVisibilityService.description` → So people find you when they ask an AI, not just Google.
+- `jsonld.home.founderJobTitle` → Founder
+- `jsonld.home.founderDescription` → I've been designing digital products for more than 25 years. Eight of those years went into complex enterprise products, and seven into working with US startups, often directly with founders and CEOs.
+- `jsonld.aiVisibility.name` → AI Visibility (GEO / AEO)
+- `jsonld.aiVisibility.serviceType` → Generative engine optimization (GEO) and answer engine optimization (AEO)
+- `jsonld.aiVisibility.description` → We make your brand readable, understood and quotable by ChatGPT, Perplexity, Gemini and Google’s AI Overviews: crawlable pages, structured data, citable answers and a presence in the places models use to verify you.
+- `jsonld.aiVisibility.catalogName` → Four things an AI needs before it recommends you
+
+## Case studies (/work/<slug>/ and the Project Detail overlay)
+
+### Asociart — `asociart`
+
+- `caseStudies.asociart.client` → Asociart
+- `caseStudies.asociart.credit` → in collaboration with NEORIS
+- `caseStudies.asociart.linkLabel` → asociart.com
+- `caseStudies.asociart.title` → Reengineering a 13-module legacy platform
+- `caseStudies.asociart.meta` → [Insurance & Finance]
+- `caseStudies.asociart.roles[0]` → UX Research
+- `caseStudies.asociart.roles[1]` → Design System
+- `caseStudies.asociart.roles[2]` → PRODUCT DESIGN
+- `caseStudies.asociart.roles[3]` → Front-End
+- `caseStudies.asociart.blocks.startingPoint.heading` → Starting point
+- `caseStudies.asociart.blocks.startingPoint.body` → Asociart brought Neoris in to replace a monolithic legacy system running claims, legal, medical and financial operations across ten-plus departments. There was no UX practice on the product and no shared visual system. As part of Neoris' team, I was brought in to build that foundation while the platform was reengineered.
+- `caseStudies.asociart.blocks.theWork.heading` → The work
+- `caseStudies.asociart.blocks.theWork.body` → I led research with internal users and stakeholders, mapped service blueprints for thirteen interconnected modules and built the Core Design System underneath all of them — 71+ components, token architecture for colour, type and spacing, documented in Storybook. I specified component states and interaction behaviour against WCAG contrast, and worked hands-on in Angular to keep the specs and the production UI aligned.
+- `caseStudies.asociart.blocks.criticalityFirst.heading` → Criticality first
+- `caseStudies.asociart.blocks.criticalityFirst.body` → The Recoveries module was the first one I reengineered, replacing a heavy legacy screen. A daily process pulls every claim eligible for recovery, scores its criticality and assigns it to a case manager. The tray opens sorted by that score, and a quick-view panel shows the key data without leaving the list — fewer screens between a manager and the next case that matters.
+- `caseStudies.asociart.blocks.outcome.heading` → Outcome
+- `caseStudies.asociart.blocks.outcome.body` → One shared foundation across thirteen modules and multiple teams, serving 500+ internal users. Five years on the account, 130+ sprints, a 98% successful build rate across active modules.
+- `caseStudies.asociart.images.legacy.alt` → The legacy Asociart system: a dense, form-heavy screen from the provider interconnection platform
+- `caseStudies.asociart.images.recoveriesA.alt` → Asociart Core Design System: colour and typography foundations
+- `caseStudies.asociart.images.recoveriesB.alt` → Asociart Storybook documentation for the aso-button component
+- `caseStudies.asociart.images.outcome.alt` → The reengineered Asociart claims management screen on a laptop
+- `caseStudies.asociart.images.workflow.alt` → AI-Assisted Design System Workflow: a diagram from user story, few-shot examples and rules through Claude and the Figma MCP to an editable Figma interface built from the Design System
+- `caseStudies.asociart.images.workflow.desc` → From user stories to design-system-driven interfaces. I built a Proof of Concept to test whether an AI-assisted workflow could translate product requirements into editable Figma interfaces while preserving an existing enterprise Design System as the source of truth. I curated pairs of previous user stories and their approved Figma outcomes as few-shot / in-context examples, giving the model concrete references for how requirements had historically translated into UX patterns, components and layouts. The workflow combined that contextual guidance with explicit UX rules and structured Design System information — components, variants, variables, tokens and interaction patterns — reaching the system through an MCP-based context layer instead of inventing UI from scratch. What I tested: running a real user story through the pipeline, the agent produced editable Figma views built from existing Design System components — not generic UI. The translation held: component reuse and UX intent survived, and the output was reviewable and editable rather than a flat mockup. Status: validated POC. Not taken to production — the goal was to prove the translation layer worked, not to automate design decisions. The designer retains validation and final judgment. Domain: Design System Automation. Length: POC · 2026. Role: Design & Execution. Human-in-the-loop: AI accelerates translation and component mapping; the designer retains validation and final design decisions.
+- `caseStudies.asociart.images.workflow.label` → AI-Assisted Design System Workflow
+
+### The Mile — `the-mile`
+
+- `caseStudies.the-mile.client` → The Mile
+- `caseStudies.the-mile.credit` → contract · in-house team
+- `caseStudies.the-mile.linkLabel` → orchardmile.com/the-mile
+- `caseStudies.the-mile.title` → Turning creators into storefronts
+- `caseStudies.the-mile.meta` → [Ecommerce & Fashion] AT THE MILE
+- `caseStudies.the-mile.roles[0]` → Branding
+- `caseStudies.the-mile.roles[1]` → Product Design
+- `caseStudies.the-mile.roles[2]` → Design System
+- `caseStudies.the-mile.roles[3]` → Prototyping
+- `caseStudies.the-mile.blocks.startingPoint.heading` → Starting point
+- `caseStudies.the-mile.blocks.startingPoint.body` → Orchard Mile had built a strong luxury marketplace, but paid acquisition and catalogue competition were capping growth. The answer was to become The Mile: the site was adapted to the new model and a mobile app was built from scratch, turning creators into distributed storefronts that sell the marketplace's brands to their own audiences and earn commission on every sale.
+- `caseStudies.the-mile.blocks.theWork.heading` → The work
+- `caseStudies.the-mile.blocks.theWork.body` → I started with the brand — logo, brand guide and brand system. Then the app, designed from zero with the CEO and the marketing team after a short round of research, covering consumer and creator journeys end to end: onboarding, live and pre-recorded shoppable shows, reels, creator storefronts, affiliate links, discovery and checkout. I also redesigned the Orchard Mile site to match, with a new Reels section, built navigable prototypes to pitch investors and recruit influencers before development, and supported the React Native developer on selected components.
+- `caseStudies.the-mile.blocks.checkoutInsideTheApp.heading` → Checkout inside the app
+- `caseStudies.the-mile.blocks.checkoutInsideTheApp.body` → Most creator-commerce apps send buyers somewhere else to pay. Here the whole purchase happened in the app: products came from Orchard Mile as the retailer, so discovery, trust in the creator and checkout stayed in one loop.
+- `caseStudies.the-mile.blocks.outcome.heading` → Outcome
+- `caseStudies.the-mile.blocks.outcome.body` → First year after launch (Apr–Oct 2023): creator community +200%, show viewership 2×, orders +300%, items per order from 1.7 to 2.7.
+- `caseStudies.the-mile.blocks.academy.heading` → Academy
+- `caseStudies.the-mile.blocks.academy.body` → The business depended on how well creators could sell, so I built The Mile Academy: documentation and video lessons to help them plan, shoot and present products more professionally — turning creator skill into something the product supports, instead of something it hopes for.
+- `caseStudies.the-mile.images.flow.alt` → The Mile app user flow: onboarding, sign-up, verification and the creator storefront journey
+- `caseStudies.the-mile.images.brand.alt` → The Mile brand system: colours, logotypes and brand fonts
+- `caseStudies.the-mile.images.checkout.alt` → The Mile on desktop and mobile, above the connected onboarding and account screens of the navigable prototype
+- `caseStudies.the-mile.images.checkout.desc` → Navigable prototypes used with investors and creators to validate each journey before development.
+- `caseStudies.the-mile.images.checkout.label` → Navigable prototypes
+- `caseStudies.the-mile.images.outcomeHero.alt` → The Mile app on a phone: a creator hosting a shoppable show
+- `caseStudies.the-mile.images.outcomePhone.alt` → The Mile app welcome screen on a phone
+- `caseStudies.the-mile.images.academyBoard.alt` → The Mile Academy flow: lesson screens and their connections
+- `caseStudies.the-mile.images.academyLogo.alt` → The Mile Academy identity
+
+### Orchard Mile — `orchard-mile`
+
+- `caseStudies.orchard-mile.client` → Orchard Mile
+- `caseStudies.orchard-mile.credit` → contract · in-house team
+- `caseStudies.orchard-mile.linkLabel` → orchardmile.com
+- `caseStudies.orchard-mile.title` → 250 brands, one storefront
+- `caseStudies.orchard-mile.meta` → [Ecommerce & Fashion]
+- `caseStudies.orchard-mile.roles[0]` → UX/UI
+- `caseStudies.orchard-mile.roles[1]` → Front-End
+- `caseStudies.orchard-mile.roles[2]` → Editorial
+- `caseStudies.orchard-mile.roles[3]` → Growth Design
+- `caseStudies.orchard-mile.blocks.startingPoint.heading` → Starting point
+- `caseStudies.orchard-mile.blocks.startingPoint.body` → Launched in New York in 2015 by a former Bergdorf Goodman executive, Orchard Mile brought designer fashion, beauty and home from independent boutiques and major retailers into one shop-by-brand storefront. It grew from 30 brands at launch to 120 in under two years — and its founders named the risk themselves: choice paralysis. By the time I joined, the catalogue had scaled to 250+ brands and ~80,000 SKUs, sourced from stores with inconsistent data.
+- `caseStudies.orchard-mile.blocks.theWork.heading` → The work
+- `caseStudies.orchard-mile.blocks.theWork.body` → Five years designing and building the pages that sold the catalogue: landings, editorial stories, influencer pages and e-commerce pages, which I implemented in Angular alongside the front-end team. I took seasonal campaigns — Black Friday, Father's Day and every drop in between — from brief to live page, along with content for on-site modals, email campaigns in Klaviyo and marketing pieces, with A/B testing in AB Tasty. I also worked with the back-end team on the scrapers that pulled product data from each brand's store.
+- `caseStudies.orchard-mile.blocks.outcome.heading` → Outcome
+- `caseStudies.orchard-mile.blocks.outcome.body` → A steady pipeline of campaign and editorial pages that kept 250+ brands visible across a constantly changing catalogue, lifecycle campaigns across a 200K+ subscriber base — and the groundwork for what became The Mile.
+- `caseStudies.orchard-mile.images.start.alt` → Orchard Mile editorial: a model in a knit set beside a shoppable collection page
+- `caseStudies.orchard-mile.images.storefront.alt` → The Orchard Mile storefront sign outside a boutique
+- `caseStudies.orchard-mile.images.campaigns.alt` → Three Orchard Mile editorial pages shown side by side: influencer interviews with shoppable products
+- `caseStudies.orchard-mile.images.site.alt` → The Orchard Mile homepage on a laptop
+
+### Quilmes — `quilmes`
+
+- `caseStudies.quilmes.client` → Quilmes
+- `caseStudies.quilmes.credit` → studio client
+- `caseStudies.quilmes.title` → A coupon that works one-handed, in a crowd
+- `caseStudies.quilmes.meta` → [Consumer Brands]
+- `caseStudies.quilmes.note` → 35,000 visitors a week
+- `caseStudies.quilmes.roles[0]` → Product Concept
+- `caseStudies.quilmes.roles[1]` → UX/UI
+- `caseStudies.quilmes.roles[2]` → Mobile
+- `caseStudies.quilmes.blocks.startingPoint.heading` → Starting point
+- `caseStudies.quilmes.blocks.startingPoint.body` → Every visitor to Puerto Iguazú ends up at the Falls — around 35,000 tourists a week, 1.6 million a year — and Cabaña Quilmes is the only refuge inside the national park. But hotels, attractions and venues in town worked in isolation. Quilmes wanted a digital ecosystem that connected them and brought those visitors to its points of sale.
+- `caseStudies.quilmes.blocks.theWork.heading` → The work
+- `caseStudies.quilmes.blocks.theWork.body` → Pasaporte Quilmes, a benefits platform for visitors. Quilmes defined the need; I designed and developed the product — a web app, no download required. Visitors register, pick a venue and a deal, scan a QR and redeem it with the waiter. Discovery by category and proximity, venue pages and QR redemption were all designed around one constraint: the journey had to work fast, one-handed, in a noisy real-world setting.
+- `caseStudies.quilmes.blocks.outcome.heading` → Outcome
+- `caseStudies.quilmes.blocks.outcome.body` → Launched in 2022 as an MVP exclusively for visitors at Iguazú Falls. What venue owners said: “It would make the Cabaña known to every visitor to the park.” · “It would bring new customers and more table turnover.” · “The app is very simple and easy to use.”
+- `caseStudies.quilmes.images.falls.alt` → Iguazú Falls
+- `caseStudies.quilmes.images.cheers.alt` → Friends toasting with glasses of Quilmes beer
+- `caseStudies.quilmes.images.screens.alt` → Pasaporte Quilmes: onboarding, language, login, dashboard, menu, map, coupons, venue page, QR scan, redemption and thank-you screens
+
+### Carbon Optimum — `carbon-optimum`
+
+- `caseStudies.carbon-optimum.client` → Carbon Optimum
+- `caseStudies.carbon-optimum.credit` → studio client
+- `caseStudies.carbon-optimum.linkLabel` → carbonoptimum.com
+- `caseStudies.carbon-optimum.title` → Making an industrial process legible
+- `caseStudies.carbon-optimum.meta` → [Climate Tech] [Enterprise]
+- `caseStudies.carbon-optimum.roles[0]` → Branding
+- `caseStudies.carbon-optimum.roles[1]` → Brand Architecture
+- `caseStudies.carbon-optimum.roles[2]` → Web Design
+- `caseStudies.carbon-optimum.roles[3]` → Web Development
+- `caseStudies.carbon-optimum.blocks.theWork.heading` → The work
+- `caseStudies.carbon-optimum.blocks.theWork.body` → I redesigned the Carbon Optimum logo and built a brand architecture around it: Optimarine, the marine-ingredients line powered by microalgae, and its three product brands — OptiCosmetics, OptiOmega3 and Biomass. Then I designed and developed the site: information architecture and a visual system that turn the process into a clear narrative, built as modular, responsive pages.
+- `caseStudies.carbon-optimum.blocks.outcome.heading` → Outcome
+- `caseStudies.carbon-optimum.blocks.outcome.body` → Brand and site live; I handle ongoing maintenance.
+- `caseStudies.carbon-optimum.images.hero.alt` → The Carbon Optimum process — raw material, microalgae, biomass, organic goods — over an ocean photograph, with the brand palette
+- `caseStudies.carbon-optimum.images.hero.desc` → Carbon Optimum turns captured CO₂ into value: microalgae absorb it, the biomass is harvested in a single day, and it becomes raw material for organic goods. A Miami-based company with a genuinely complex process — and a brand that had to make it easy to understand for partners and buyers.
+- `caseStudies.carbon-optimum.images.hero.label` → Starting point
+- `caseStudies.carbon-optimum.images.logos.alt` → The redesigned Carbon Optimum logo, “Carbon dioxide is the problem. We are the solution.”, and the new Optimarine logo, “Sustainable Marine Ingredients, Powered by Microalgae”
+- `caseStudies.carbon-optimum.images.site.alt` → The Carbon Optimum website on a desktop computer and its modular pages, with the OptiCosmetics, OptiOmega3 and Biomass brands
+
+### Agente Mamá — `agente-mama`
+
+- `caseStudies.agente-mama.client` → Agente Mamá
+- `caseStudies.agente-mama.credit` → own product
+- `caseStudies.agente-mama.linkLabel` → Launch Project → landing
+- `caseStudies.agente-mama.title` → A safety net, not a productivity app
+- `caseStudies.agente-mama.meta` → [Startups]
+- `caseStudies.agente-mama.roles[0]` → Product Strategy
+- `caseStudies.agente-mama.roles[1]` → UX Research
+- `caseStudies.agente-mama.roles[2]` → Design System
+- `caseStudies.agente-mama.roles[3]` → AI-Assisted Build
+- `caseStudies.agente-mama.blocks.startingPoint.heading` → Starting point
+- `caseStudies.agente-mama.blocks.startingPoint.body` → A child's school information lives in four systems that don't talk to each other: the parents' WhatsApp group, the school platform, email and the family calendar. Someone has to read it all, filter it and remember it — usually the mother.
+- `caseStudies.agente-mama.blocks.theWork.heading` → The work
+- `caseStudies.agente-mama.blocks.theWork.body` → I ran ten discovery interviews that redefined the target from the child's age to the child's autonomy, and cut a planned module before it was built. Then product strategy, UX/UI and the Design System — 38 screens designed around one idea: take the mental load off without taking control away.
+- `caseStudies.agente-mama.blocks.trustIsEarnedNotAssumed.heading` → Trust is earned, not assumed
+- `caseStudies.agente-mama.blocks.trustIsEarnedNotAssumed.body` → Clear events — a date, a child, an action — are scheduled automatically with an undo. Ambiguous or high-stakes ones, like payments or schedule changes, go to a review queue that shrinks as the agent proves it gets things right.
+- `caseStudies.agente-mama.blocks.everyEventShowsItsSource.heading` → Every event shows its source
+- `caseStudies.agente-mama.blocks.everyEventShowsItsSource.body` → A badge on each event — school platform, WhatsApp or calendar. When an AI acts on a family's information, being able to trace every item back is what makes it adoptable.
+- `caseStudies.agente-mama.blocks.outcome.heading` → Outcome
+- `caseStudies.agente-mama.blocks.outcome.body` → Functional POC: 38 high-fidelity screens, a complete Design System and the key AI workflows defined and tested. Landing live for early market validation.
+- `caseStudies.agente-mama.images.kids.alt` → Illustration of four children in cut-paper style
+- `caseStudies.agente-mama.images.sources.alt` → Messages from the WhatsApp group and the school platform flowing into one scheduled calendar event
+- `caseStudies.agente-mama.images.landing.alt` → The Agente Mamá landing page on a phone
+- `caseStudies.agente-mama.images.matrix.alt` → What matters most to mothers? A map of needs by importance to mothers and impact on mental load
+- `caseStudies.agente-mama.images.matrix.desc` → An illustrative map of needs and product decisions for Agente Mamá. Core opportunity, high impact and high priority: Unified school agenda, Trust in AI decisions, Visible information source, Child reminders. Deprioritized or reconsidered: Recipes & shopping lists, Automated school messages, Approve every event. Conceptual synthesis of 10 exploratory conversations. Positions are illustrative, not measured scores.
+- `caseStudies.agente-mama.images.matrix.label` → What matters most to mothers?
+- `caseStudies.agente-mama.images.brand.alt` → Agente Mamá AI brand: the house icon in light, dark and accent modes, and the logotype
+- `caseStudies.agente-mama.images.screens.alt` → Four Agente Mamá screens: welcome, child profile, daily dashboard and agenda
+
+### American Padel Systems — `american-padel-systems`
+
+- `caseStudies.american-padel-systems.client` → American Padel Systems
+- `caseStudies.american-padel-systems.credit` → studio client
+- `caseStudies.american-padel-systems.linkLabel` → americanpadelsystems.com
+- `caseStudies.american-padel-systems.title` → A site that answers "does it pay for itself?"
+- `caseStudies.american-padel-systems.seoTitle` → Does it pay for itself?
+- `caseStudies.american-padel-systems.meta` → [Enterprise]
+- `caseStudies.american-padel-systems.roles[0]` → branding
+- `caseStudies.american-padel-systems.roles[1]` → Web Design
+- `caseStudies.american-padel-systems.roles[2]` → Interactive Tool
+- `caseStudies.american-padel-systems.roles[3]` → Web Development
+- `caseStudies.american-padel-systems.blocks.startingPoint.heading` → Starting point
+- `caseStudies.american-padel-systems.blocks.startingPoint.body` → A Miami-based company that manufactures, installs and maintains padel courts for clubs, hotels and tennis-court conversions needed its brand and site built from the ground up.
+- `caseStudies.american-padel-systems.blocks.theWork.heading` → The work
+- `caseStudies.american-padel-systems.blocks.theWork.body` → I started with an analysis with the founder of what the business needed. Then the full brand system — logo, corporate identity and brand guide — followed by web design and development, including an earnings simulator: prospects enter court price, operating hours, occupancy, number of courts and operating days, and see what an installation could earn.
+- `caseStudies.american-padel-systems.blocks.outcome.heading` → Outcome
+- `caseStudies.american-padel-systems.blocks.outcome.body` → Brand and site live, with the simulator answering the buyer's first question — does it pay for itself? — before the first call. I handle ongoing maintenance.
+- `caseStudies.american-padel-systems.images.brand.alt` → American Padel Systems logo on navy
+- `caseStudies.american-padel-systems.images.courts.alt` → Aerial view of four blue padel courts
+- `caseStudies.american-padel-systems.images.site.alt` → The American Padel Systems website on a laptop
+- `caseStudies.american-padel-systems.images.simulator.alt` → The earnings simulator: court price, hours of operation, occupancy, number of courts and operating days
+- `caseStudies.american-padel-systems.images.materials.alt` → A product carousel showing a padel court surface sample
+
+### HiFi Hub — `hifi-hub`
+
+- `caseStudies.hifi-hub.client` → HiFi Hub
+- `caseStudies.hifi-hub.credit` → founding designer
+- `caseStudies.hifi-hub.linkLabel` → hifihub.ai
+- `caseStudies.hifi-hub.title` → Six business units, one product
+- `caseStudies.hifi-hub.meta` → [Startups] [Ecommerce]
+- `caseStudies.hifi-hub.roles[0]` → branding
+- `caseStudies.hifi-hub.roles[1]` → Product Design
+- `caseStudies.hifi-hub.roles[2]` → Design System
+- `caseStudies.hifi-hub.roles[3]` → Information Architecture
+- `caseStudies.hifi-hub.blocks.startingPoint.heading` → Starting point
+- `caseStudies.hifi-hub.blocks.startingPoint.body` → High-end audio is a siloed industry: thousands of brands, dealers, distributors and record stores operate in isolation, so discovery happens by accident. HiFi Hub set out to aggregate them into one discovery layer — the model Zillow ran in real estate and Farfetch in luxury fashion, applied to audio — unifying six business units, each with its own data, rules and commercial goal.
+- `caseStudies.hifi-hub.blocks.theWork.heading` → The work
+- `caseStudies.hifi-hub.blocks.theWork.body` → First and only designer on a ten-person team. I argued the taxonomy should follow the business model, not the data model, and designed one entity model — one card, one detail structure, one comparison grammar — with variable content slots per unit instead of variable layouts. A dealer surfaces its location where a product surfaces specs; the structure stays the same.
+- `caseStudies.hifi-hub.blocks.branding.heading` → Branding
+- `caseStudies.hifi-hub.blocks.branding.body` → A full rebrand from The Audiophile Directory to HiFi Hub. Design tokens for dimension, spacing and radius, 65 colour tokens and a type scale, and a complete component library with every interaction state and light/dark themes — consumed directly by the React front end.
+- `caseStudies.hifi-hub.blocks.outcome.heading` → Outcome
+- `caseStudies.hifi-hub.blocks.outcome.body` → Live at hifihub.ai: 634 brands, 17,923 products, 1,384 dealers, 7,034 record stores and 124,308 used listings. Used gear, promoted to a first-order unit after usage analysis, is now the largest catalogue.
+- `caseStudies.hifi-hub.images.hero.alt` → A laptop opened and shown from two angles
+- `caseStudies.hifi-hub.images.listingA.alt` → HiFi Hub product page for the Bowers & Wilkins 801 Abbey Road Limited Edition
+- `caseStudies.hifi-hub.images.listingB.alt` → HiFi Hub brand page for Bowers & Wilkins
+- `caseStudies.hifi-hub.images.logo.alt` → HiFi Hub logo
+- `caseStudies.hifi-hub.images.brandSystem.alt` → HiFi Hub colour palette, colour-token matrix and design-token documentation
+- `caseStudies.hifi-hub.images.outcome.alt` → The HiFi Hub wishlist on a laptop
