@@ -58,7 +58,7 @@ const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
         </ol>
       </nav>
       <div class="work-rain" data-work-rain aria-hidden="true">
-        <img class="work-rain__static" src={mosaic.src} width="230" height="144.57" alt="" loading="lazy" decoding="async" />
+        <img class="work-rain__static" src={mosaic.src} width="230" height="144.57" alt="Mosaic of MER Studio project thumbnails" loading="lazy" decoding="async" />
         <canvas class="work-rain__canvas"></canvas>
         <span class="work-rain__dot"></span>
       </div>
@@ -95,19 +95,9 @@ const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
           <div class="work__frame">
             {items.map((p, i) => (
               <picture class="stage-pic" data-stage-pic data-on={i === 0 ? '' : undefined}>
-                {i === 0 ? (
-                  <>
-                    <source type="image/avif" srcset={p.avif} sizes={STAGE_SIZES} />
-                    <source type="image/webp" srcset={p.webp} sizes={STAGE_SIZES} />
-                    <img src={p.fallback} width={p.w} height={p.h} alt={p.alt} loading="lazy" decoding="async" />
-                  </>
-                ) : (
-                  <>
-                    <source type="image/avif" data-srcset={p.avif} sizes={STAGE_SIZES} />
-                    <source type="image/webp" data-srcset={p.webp} sizes={STAGE_SIZES} />
-                    <img data-src={p.fallback} width={p.w} height={p.h} alt={p.alt} loading="lazy" decoding="async" />
-                  </>
-                )}
+                <source type="image/avif" srcset={p.avif} sizes={STAGE_SIZES} />
+                <source type="image/webp" srcset={p.webp} sizes={STAGE_SIZES} />
+                <img src={p.fallback} width={p.w} height={p.h} alt={p.alt} loading="lazy" decoding="async" />
               </picture>
             ))}
             <canvas class="work__canvas"></canvas>

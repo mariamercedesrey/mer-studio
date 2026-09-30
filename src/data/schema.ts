@@ -43,8 +43,8 @@ export function homeSchema() {
           itemListElement: services.map((s) => ({
             '@type': 'Offer',
             itemOffered: { '@type': 'Service', ...s, provider: { '@id': ORG_ID } },
-            // Launch offer (src/data/offer.ts): the AI Visibility setup is free for projects started in October 2026. Setup only; no currency invented.
-            ...(offer.active && s.name.startsWith('AI Visibility') ? { price: 0, validThrough: offer.validThrough, description: offer.llms } : {}),
+            // Launch offer (src/data/offer.ts): the AI Visibility setup is free for projects started in October 2026. Setup only.
+            ...(offer.active && s.name.startsWith('AI Visibility') ? { price: 0, priceCurrency: 'USD', validThrough: offer.validThrough, description: offer.llms } : {}),
           })),
         },
       },

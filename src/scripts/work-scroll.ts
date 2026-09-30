@@ -36,16 +36,13 @@ function setup(section: HTMLElement) {
   const pt = !reduced && canvas ? createPixelTransition(canvas) : null;
   const imgs = pics.map((p) => p.querySelector('img') as HTMLImageElement);
 
-  // ── Loading: the first two as the section nears the viewport, the next one as each project activates, the rest lazy.
+  // ── Loading: every stage image ships a real src + native loading="lazy" (crawlers without JS see them). The first two
+  //    are fetched as the section nears the viewport, the next one as each project activates: `load` only forces eager. ──
   const load = (i: number) => {
     const pic = pics[i];
     if (!pic || pic.dataset.loaded) return;
     pic.dataset.loaded = '';
-    pic.querySelectorAll<HTMLSourceElement>('source[data-srcset]').forEach((s) => { s.srcset = s.dataset.srcset!; });
-    const img = imgs[i];
-    img.loading = 'eager';
-    if (img.dataset.srcset) img.srcset = img.dataset.srcset;
-    if (img.dataset.src) img.src = img.dataset.src;
+    imgs[i].loading = 'eager';
   };
 
   // ── Which image is on screen (plain <img>, crossfaded by CSS with reduced motion) ──

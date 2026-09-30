@@ -1,12 +1,13 @@
 # Alt text inventory
 
-Generated from the built site (`dist/**/*.html`, all 13 pages): every <img>, unique file + alt. Enforced by `scripts/check-site.mjs` (runs after `astro build`): the build fails if an <img> has no `alt` attribute (`alt=""` is allowed = decorative).
+Generated from the built site (`dist/**/*.html`, all 13 pages): every <img>, unique file + alt.
 
-Inline SVG (21 on the home, all decorative): icons next to text, hamburger/close, the HowItWorks path and the Services diagram. All carry `aria-hidden="true"`.
+**Rules, enforced by `scripts/check-site.mjs` (runs after `astro build`):** an <img> without `alt` fails the build; an empty alt (`alt=""`) is only allowed together with `data-decorative`; `data-decorative` on an image with alt text fails; every page <title> must be ≤ 70 characters.
 
-Logos: `alt="MER Studio"` once per context (header, mobile menu, contact, 404); the stacked negative logo in the header and the intro logo are `alt=""`.
-
-Ambiguous, not guessed (please confirm): `hifi-hub` cover (a generic laptop render: alt says what it shows, not what it is about), `hero-poster` (poster of the hero video, kept decorative), `work-index-mosaic` and `pixel-banner` (textures).
+- **Decorative images:** none left as <img>. The pixel-banner mosaic is now a CSS background (`.pixel-banner__art`), not an <img>.
+- **Logos:** `alt="MER Studio"` on every logo. Links no longer carry a duplicate `aria-label`; the stacked negative logo in the header is `aria-hidden` so it is not read twice.
+- **Inline SVG:** all decorative (icons next to text, hamburger/close, HowItWorks path, Services diagram), all `aria-hidden="true"`.
+- **Wording to confirm:** `how-it-works-ascii` ("ASCII-style illustration of the four-step process", from the Bing report, not checked against the image).
 
 | File | Type | Alt | Uses |
 |---|---|---|---|
@@ -33,20 +34,19 @@ Ambiguous, not guessed (please confirm): `hifi-hub` cover (a generic laptop rend
 | dasa.webp | content | DASA Digital logo | 2 |
 | falls.webp | content | Iguazú Falls | 2 |
 | flow.webp | content | The Mile app user flow: onboarding, sign-up, verification and the creator storefront journey | 2 |
-| hero-poster.webp | decorative | `` | 1 |
+| hero-poster.webp | content | Smartphone tied with a red cord to raw concrete blocks | 1 |
 | hero.webp | content | The Carbon Optimum process — raw material, microalgae, biomass, organic goods — over an ocean photograph, with the brand palette | 2 |
 | hero.webp | content | A laptop opened and shown from two angles | 2 |
-| hifi-hub.webp | content | The HiFi Hub product on two laptops shown from different angles, on a white background | 2 |
+| hifi-hub.webp | content | HiFi Hub — project preview | 2 |
 | hifihub.webp | content | HiFiHUB logo | 2 |
-| how-it-works-ascii.webp | decorative | `` | 1 |
+| how-it-works-ascii.webp | content | ASCII-style illustration of the four-step process | 1 |
 | kcde.webp | content | Kuwait Concours d'Elegance logo | 2 |
 | kids.webp | content | Illustration of four children in cut-paper style | 2 |
 | landing.webp | content | The Agente Mamá landing page on a phone | 2 |
 | legacy.webp | content | The legacy Asociart system: a dense, form-heavy screen from the provider interconnection platform | 2 |
 | listing-a.webp | content | HiFi Hub product page for the Bowers & Wilkins 801 Abbey Road Limited Edition | 2 |
 | listing-b.webp | content | HiFi Hub brand page for Bowers & Wilkins | 2 |
-| logo-negative.svg | decorative | `` | 13 |
-| logo-negative.svg | content | MER Studio | 13 |
+| logo-negative.svg | content | MER Studio | 26 |
 | logo.svg | content | MER Studio | 13 |
 | logo.webp | content | HiFi Hub logo | 2 |
 | logos.webp | content | The redesigned Carbon Optimum logo, “Carbon dioxide is the problem. We are the solution.”, and the new Optimarine logo, “Sustainable Marine Ingredients, Powered by Microalgae” | 2 |
@@ -61,7 +61,6 @@ Ambiguous, not guessed (please confirm): `hifi-hub` cover (a generic laptop rend
 | outcome-phone.webp | content | The Mile app welcome screen on a phone | 2 |
 | outcome.webp | content | The reengineered Asociart claims management screen on a laptop | 2 |
 | outcome.webp | content | The HiFi Hub wishlist on a laptop | 2 |
-| pixel-banner.webp | decorative | `` | 1 |
 | quilmes.svg | content | Quilmes logo | 2 |
 | quilmes.webp | content | Pasaporte Quilmes app screens on phones: venue map, venue pages and a discount coupon with a QR code | 2 |
 | recoveries-a.webp | content | Asociart Core Design System: colour and typography foundations | 2 |
@@ -80,7 +79,7 @@ Ambiguous, not guessed (please confirm): `hifi-hub` cover (a generic laptop rend
 | the-mile.webp | content | The Mile Fashion app on phones: the welcome screen with a model in black, surrounded by other app screens | 2 |
 | umsa.webp | content | UMSA logo | 2 |
 | valor-ganadero.webp | content | Valor Ganadero logo | 2 |
-| work-index-mosaic.C3-Dc_gh.svg | decorative | `` | 1 |
+| work-index-mosaic.C3-Dc_gh.svg | content | Mosaic of MER Studio project thumbnails | 1 |
 | workflow.webp | content | AI-Assisted Design System Workflow: a diagram from user story, few-shot examples and rules through Claude and the Figma MCP to an editable Figma interface built from the Design System | 2 |
 
-Totals: 72 unique file/alt pairs, 172 <img> in the build, 5 decorative pairs.
+Totals: 70 unique file/alt pairs, 171 <img> in the build, 0 decorative <img>.

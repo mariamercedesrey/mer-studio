@@ -34,7 +34,7 @@ export const projects: Project[] = [
     alt: 'The American Padel Systems website on a tilted laptop, on a navy background crossed by orange lines' },
   { id: 'units', slug: 'hifi-hub', title: 'Six business units, one product', meta: '[Startups] [Ecommerce]',
     roles: ['branding', 'Product Design', 'Design System', 'Information Architecture'], index: 'Audiophile Directory',
-    alt: 'The HiFi Hub product on two laptops shown from different angles, on a white background' },
+    alt: 'HiFi Hub — project preview' },
 ];
 
 /** Project Detail slugs whose card is hidden: no overlay, noindex, not in the sitemap (still reachable by URL). */

@@ -23,9 +23,9 @@ const current = (href: string) => (href.startsWith('/') && Astro.url.pathname.st
 <header class="site-header" data-site-header data-scrolled={lightAtTop ? undefined : ''}>
   <div class="site-header__row">
     <div class="site-header__brand">
-      <a class="site-header__logo" href="/" aria-label="MER Studio, home">
+      <a class="site-header__logo" href="/">
         <img class="site-header__logo-pos" src="/logo.svg" width="182" height="29" alt="MER Studio" />
-        <img class="site-header__logo-neg" src="/logo-negative.svg" width="150" height="24" alt="" />
+        <img class="site-header__logo-neg" src="/logo-negative.svg" width="150" height="24" alt="MER Studio" aria-hidden="true" />
       </a>
       <p class="site-header__tagline">Design and build, end to end</p>
     </div>
@@ -43,7 +43,7 @@ const current = (href: string) => (href.startsWith('/') && Astro.url.pathname.st
 
 <dialog id="mobile-menu" class="mobile-menu" aria-label="Menu" data-menu>
   <div class="mobile-menu__bar">
-    <a class="mobile-menu__logo" href="/" aria-label="MER Studio, home">
+    <a class="mobile-menu__logo" href="/">
       <img src="/logo-negative.svg" width="150" height="24" alt="MER Studio" />
     </a>
     <button class="mobile-menu__close" type="button" data-menu-close autofocus>
