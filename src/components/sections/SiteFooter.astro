@@ -8,6 +8,7 @@ const { tone = 'base' } = Astro.props;
     <div class="site-footer-ink__brand">
       <p class="site-footer-ink__name">mer.studio™</p>
       <p class="site-footer-ink__meta">©2026 mer.studio™ All Rights Reserved</p>
+      <a class="footer-link" href="/faq/">faq</a>
     </div>
     <div class="site-footer-ink__where">
       <p class="site-footer-ink__meta">WORKING WORLDWIDE FROM</p>
@@ -17,11 +18,14 @@ const { tone = 'base' } = Astro.props;
 ) : (
   <footer class="site-footer">
     <p>©2026 mer.studio™ All Rights Reserved</p>
+    <a class="footer-link" href="/faq/">faq</a>
     <p class="site-footer__where">Working Worldwide from <span class="site-footer__tag">argentina</span></p>
   </footer>
 )}
 
 <style>
+  /* Text link (not a button): mono caption, underlined; 24 px min hit area (WCAG 2.5.8). */
+  .footer-link { align-self: flex-start; display: inline-flex; align-items: center; min-height: 24px; font-family: var(--font-technical); font-size: var(--fs-caption); line-height: 1.4; letter-spacing: 0.02em; text-decoration: underline; text-underline-offset: 0.2em; }
   .site-footer-ink {
     display: flex;
     align-items: flex-end;

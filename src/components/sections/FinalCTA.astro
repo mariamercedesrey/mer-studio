@@ -4,8 +4,8 @@ import Button from '../primitives/Button.astro';
 import SignatureDot from '../primitives/SignatureDot.astro';
 import DecodeTitle from '../primitives/DecodeTitle.astro';
 import { BOOKING_URL } from '../../data/contact';
-interface Props { eyebrow?: string; title?: string }
-const { eyebrow = "That's all for now.", title = 'Got a project in mind?\nLet’s talk' } = Astro.props;
+interface Props { eyebrow?: string; title?: string; faqLink?: boolean }
+const { eyebrow = "That's all for now.", title = 'Got a project in mind?\nLet’s talk', faqLink = false } = Astro.props;
 ---
 <section class="cta" aria-labelledby="cta-title">
   <div class="cta__copy">
@@ -16,6 +16,7 @@ const { eyebrow = "That's all for now.", title = 'Got a project in mind?\nLet’
     <Button href={BOOKING_URL} variant="outline-primary" target="_blank" rel="noopener">let's talk<span class="visually-hidden"> (book a 20-minute call, opens in a new tab)</span></Button>
     <Button href="/start-a-project/" variant="negative">start a project</Button>
   </div>
+  {faqLink && <p class="cta__faq" data-reveal="rise">Questions first? <a href="/faq/">Read the faq</a></p>}
 </section>
 
 <style>
@@ -39,10 +40,13 @@ const { eyebrow = "That's all for now.", title = 'Got a project in mind?\nLet’
   }
   .cta :global(.cta__title .cta__dot) { margin-left: 0.25em; vertical-align: -0.04em; }
   .cta__action { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; }
+  .cta__faq { margin: calc(var(--sp-24) * -1) 0 0; text-align: right; font-size: var(--fs-meta); line-height: 1.4; }
+  .cta__faq a { display: inline-flex; align-items: center; min-height: 24px; text-decoration: underline; text-underline-offset: 0.2em; }
 
   @media (max-width: 767px) {
     .cta { padding-top: var(--sp-64); padding-bottom: var(--sp-64); gap: var(--sp-40); }
     .cta__copy { min-height: 0; }
     .cta__action { justify-content: flex-start; }
+    .cta__faq { text-align: left; margin-top: calc(var(--sp-24) * -1); }
   }
 </style>
