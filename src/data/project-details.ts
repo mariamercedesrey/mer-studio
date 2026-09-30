@@ -189,8 +189,8 @@ const build = (cs: Copy['caseStudies']): Record<string, ProjectDetailData> => {
         { kind: 'flow', cw: 1349, cols: [{ w: 1349, items: [steps('carbon-optimum/hero', 1349, carbon.images.hero.alt, carbon.startingPoint, ['carbon-optimum/step-1', 'carbon-optimum/step-2', 'carbon-optimum/step-3', 'carbon-optimum/step-4'])] }] },
         { kind: 'flow', cw: 1349, cols: [{ w: 1349, items: [text(carbon.blocks.theWork)] }] },
         { kind: 'flow', cw: 1349, cols: [{ w: 1349, items: [
-        img('carbon-optimum/logo-carbon', 417, carbon.images.logoCarbon, true),
-        img('carbon-optimum/logo-optimarine', 474, carbon.images.logoOptimarine, true),
+        img('carbon-optimum/logo-carbon', 401, carbon.images.logoCarbon, true),
+        img('carbon-optimum/logo-optimarine', 471, carbon.images.logoOptimarine, true),
       ] }] },
         { kind: 'flow', cw: 1349, cols: [{ w: 1349, items: [text(carbon.blocks.outcome)] }] },
         { kind: 'flow', cw: 1349, cols: [{ w: 1349, items: [img('carbon-optimum/site', 1349, carbon.images.site)] }] },

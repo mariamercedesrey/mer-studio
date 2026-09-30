@@ -2,16 +2,27 @@
 // Asociart "AI-Assisted Design System Workflow" (Figma modal Asociart, 2152:11261 / text column 2152:11241): the copy is real,
 // translatable HTML on the left (title, subtitle, paragraphs, "What I tested", "Status", the Domain / Length / Role card) and only
 // the diagram is an image on the right (its technical labels stay in English). The Human-in-the-loop line is the bar under the block.
-import DetailImage from './DetailImage.astro';
+import type { ImageMetadata } from 'astro';
 import type { DetailPoc } from '../../data/project-details';
+
+// The diagram is Figma's own SVG export (live text in Intel One Mono / Abel, fonts embedded): crisp at any size; its labels stay in English.
+// The faint grid behind the block is Figma's page12 fill (grid.webp), as in the design.
+const assets = import.meta.glob<ImageMetadata>('../../assets/work-detail/**/*.{svg,webp}', { eager: true, import: 'default' });
+const asset = (name: string) => {
+  const m = assets[`../../assets/work-detail/${name}.svg`] ?? assets[`../../assets/work-detail/${name}.webp`];
+  if (!m) throw new Error(`Project Detail image not found: ${name}`);
+  return m;
+};
 
 interface Props { poc: DetailPoc }
 const { poc } = Astro.props;
+const diagram = asset(poc.src);
+const grid = asset('asociart/grid');
 const c = poc.copy;
 const facts = [c.facts.domain, c.facts.length, c.facts.role];
 ---
 <section class="poc" data-reveal="rise">
-  <div class="poc__grid">
+  <div class="poc__grid" style={`--poc-grid:url(${grid.src})`}>
     <div class="poc__text">
       <h3 class="pd__block-title poc__title">{c.title}</h3>
       <p class="poc__sub">{c.subtitle}</p>
@@ -20,7 +31,7 @@ const facts = [c.facts.domain, c.facts.length, c.facts.role];
       <div class="poc__part"><p class="poc__label">{c.status.label}</p><p class="poc__body">{c.status.body}</p></div>
       <dl class="poc__facts">{facts.map((f) => <div><dt>{f.label}</dt><dd>{f.value}</dd></div>)}</dl>
     </div>
-    <DetailImage src={poc.src} width={poc.w} alt={poc.alt} reveal={false} style="--iw:100%" />
+    <figure class="poc__diagram"><img src={diagram.src} width={diagram.width} height={diagram.height} alt={poc.alt} loading="lazy" decoding="async" /></figure>
   </div>
   <p class="poc__bar"><span class="poc__bar-label">{c.humanInLoop.label}:</span> {c.humanInLoop.body}</p>
 </section>
@@ -28,7 +39,9 @@ const facts = [c.facts.domain, c.facts.length, c.facts.role];
 <style>
   .poc { display: flex; flex-direction: column; min-width: 0; }
   /* Figma: 570 px text column (32 px inset) + the diagram on the rest of the 1349 px frame. */
-  .poc__grid { display: grid; grid-template-columns: 570fr 779fr; gap: var(--sp-24); align-items: center; }
+  .poc__grid { display: grid; grid-template-columns: 570fr 779fr; gap: var(--sp-24); align-items: center; background: var(--poc-grid) center / cover no-repeat; }
+  .poc__diagram { margin: 0; min-width: 0; }
+  .poc__diagram img { display: block; width: 100%; height: auto; }
   .poc__text { display: flex; flex-direction: column; gap: var(--sp-12); padding-left: var(--sp-32); min-width: 0; }
   .poc__sub, .poc__label {
     font-family: var(--font-technical); font-size: 13px; line-height: 18px; letter-spacing: 0.13em; text-transform: uppercase;
@@ -58,5 +71,10 @@ const facts = [c.facts.domain, c.facts.length, c.facts.role];
     .poc__facts { grid-template-columns: minmax(0, 1fr); }
     .poc__bar { text-align: left; }
   }
-  @media (max-width: 767px) { .poc__intro, .poc__body { font-size: var(--fs-body); line-height: 1.5; } }
+  @media (max-width: 767px) {
+    .poc__intro, .poc__body { font-size: var(--fs-body); line-height: 1.5; }
+    /* The diagram's labels are 12 px in the design: on a phone it scrolls sideways inside its own box instead of shrinking them to ~5 px (560 px wide = labels at ~8.6 px). */
+    .poc__diagram { overflow-x: auto; overscroll-behavior-x: contain; }
+    .poc__diagram img { width: 560px; max-width: none; }
+  }
 </style>
