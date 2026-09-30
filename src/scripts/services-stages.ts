@@ -71,7 +71,8 @@ function setup(root: HTMLElement) {
   next?.addEventListener('click', onNext);
   addEventListener('scroll', schedule, { passive: true });
   addEventListener('resize', schedule);
-  const stopSnap = initStepSnap(track, STAGES, stepPx);
+  // Stage 3 (stop 2) is the hold: the full diagram waits for a new, deliberate gesture (≥ 800 ms of rest, 2× delta to exit).
+  const stopSnap = initStepSnap(track, STAGES, stepPx, { hold: { at: STAGES - 2, dwell: 800, exitFactor: 2 } });
 
   update();
   return () => {

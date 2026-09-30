@@ -51,8 +51,10 @@ export function initServicesActive() {
     if (entered) return;
     entered = true;
     dot.style.setProperty('--dot-dur', 'var(--dur-section)');
+    // Pinned sequence: the diagram's exit plays first (--svc-exit), the dot travels as the list comes in.
+    if (pinned()) dot.style.setProperty('--dot-delay', 'calc(var(--svc-exit) - 200ms)');
     apply();
-    dot.addEventListener('transitionend', () => dot.style.removeProperty('--dot-dur'), { once: true });
+    dot.addEventListener('transitionend', () => { dot.style.removeProperty('--dot-dur'); dot.style.removeProperty('--dot-delay'); }, { once: true });
   };
   // Free layout: once, when the section comes into view.
   const enter = new IntersectionObserver((entries) => {
