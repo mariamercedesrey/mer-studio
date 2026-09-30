@@ -128,7 +128,10 @@ const pct = (n: number, of: number) => `${(n / of) * 100}%`;
   .pd__roles li {
     padding: 7px 9px; background: var(--surface-raised-dark); color: var(--text-inverse);
     font-size: var(--fs-nav); line-height: 1; letter-spacing: 0.02em; text-transform: uppercase; white-space: nowrap;
+    transition: background-color var(--dur-fast) var(--ease-precise), color var(--dur-fast) var(--ease-precise);
   }
+  .pd__roles li:hover, .pd__roles li:focus-visible { background: var(--accent-primary-dark); color: var(--text-primary); }
+  @media (prefers-reduced-motion: reduce) { .pd__roles li { transition: none; } }
 
   .pd__body { display: flex; flex-direction: column; gap: var(--sp-48); padding-top: 42px; }
 

@@ -5,6 +5,7 @@
   --accent-bright: var(--color-brand-yellow-bright); /* @kind color */
   --accent-dark: var(--color-brand-dark); /* @kind color */
   --accent-primary: var(--color-brand-yellow); /* @kind color */
+  --accent-primary-dark: var(--color-brand-yellow-dark); /* @kind color */
   --action-disabled-background: var(--color-neutral-300); /* @kind color */
   --action-disabled-text: var(--color-neutral-500); /* @kind color */
   --action-ghost-text: var(--color-neutral-900); /* @kind color */

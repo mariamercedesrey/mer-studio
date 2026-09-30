@@ -1,6 +1,7 @@
 ---
 // Figma 149:5990 How It Works — charcoal band, four steps over a dashed path.
 import SectionHeading from '../primitives/SectionHeading.astro';
+import Button from '../primitives/Button.astro';
 import { getImage } from 'astro:assets';
 // brand/assets/img/how-it-works.png with the copy icon painted out (Mer, PR #7 review).
 import ascii from '../../assets/how-it-works-ascii.png';
@@ -46,6 +47,11 @@ const steps = [
       </li>
     ))}
   </ol>
+
+  <div class="hiw__faq" data-reveal="rise">
+    <p>Questions about how we work?</p>
+    <Button href="/faq/" variant="primary" size="sm" minWidth={100} onDark>faq</Button>
+  </div>
 </section>
 
 <style>
@@ -86,6 +92,8 @@ const steps = [
   }
 
   .hiw__steps { position: relative; display: flex; gap: 0.75px; }
+  .hiw__faq { position: relative; display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: var(--sp-16); font-size: var(--fs-body); line-height: 1.4; }
+  .hiw__faq p { margin: 0; }
   .hiw__step { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 14px; padding: 22px var(--sp-12); }
   .hiw__num { font-family: var(--font-technical); font-size: var(--fs-eyebrow); line-height: 1.5; letter-spacing: 0.02em; }
   .hiw__step-title { font-weight: 400; font-size: var(--fs-body); line-height: 1.5; }
@@ -98,6 +106,7 @@ const steps = [
     .hiw__path { display: none; }
     .hiw__ascii { position: relative; top: auto; right: auto; order: 2; width: 100%; max-width: 517px; height: auto; aspect-ratio: 517 / 259; }
       .hiw__intro { order: 1; }
+    .hiw__faq { order: 4; }
     .hiw__steps { order: 3; display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
     .hiw__step { padding-left: 0; padding-right: var(--sp-24); border-top: 1px dashed var(--fills-primary); }
   }
