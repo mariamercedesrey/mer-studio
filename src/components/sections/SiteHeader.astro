@@ -8,57 +8,68 @@
 // a pseudo-element fading in, the row slides up, everything else is colour/opacity — CLS 0. On /work/<slug>/ the in-page
 // anchors point back to the home.
 import { EMAIL, WHATSAPP } from '../../data/contact';
+import { getCopy, localeOf, pagePath, pageOf, anchorHash } from '../../i18n';
+import LangSwitch from './LangSwitch.astro';
+const locale = localeOf(Astro.url);
+const copy = getCopy(locale);
+const { nav: navCopy, site, a11y } = copy;
 const nav = [
-  { label: 'Work', href: '#work' },
-  { label: 'Services', href: '#services' },
-  { label: 'How it works', href: '#how-it-works' },
-  { label: 'About', href: '#about' },
+  { label: navCopy.items.work, href: anchorHash('work', locale) },
+  { label: navCopy.items.services, href: anchorHash('services', locale) },
+  { label: navCopy.items.howItWorks, href: anchorHash('howItWorks', locale) },
+  { label: navCopy.items.about, href: anchorHash('about', locale) },
 ];
-const home = Astro.url.pathname === '/';
+const page = pageOf(Astro.url.pathname);
+const homePath = pagePath('home', locale);
+const home = page?.key === 'home';
 // Light at the top, then scrolled once [data-nav-sentinel] leaves the viewport: the home, /start-a-project/ and /ai-visibility/. Everywhere else (/work/<slug>/) the bar is always on.
-const lightAtTop = home || Astro.url.pathname.startsWith('/start-a-project') || Astro.url.pathname.startsWith('/ai-visibility');
-const link = (href: string) => (href.startsWith('/') || home ? href : `/${href}`);
+const lightAtTop = page?.key === 'home' || page?.key === 'startProject' || page?.key === 'thanks' || page?.key === 'aiVisibility';
+const link = (href: string) => (href.startsWith('/') || home ? href : `${homePath}${href}`);
 const current = (href: string) => (href.startsWith('/') && Astro.url.pathname.startsWith(href) ? 'page' : undefined);
 ---
 <header class="site-header" data-site-header data-scrolled={lightAtTop ? undefined : ''}>
   <div class="site-header__row">
     <div class="site-header__brand">
-      <a class="site-header__logo" href="/">
-        <img class="site-header__logo-pos" src="/logo.svg" width="182" height="29" alt="MER Studio" />
-        <img class="site-header__logo-neg" src="/logo-negative.svg" width="150" height="24" alt="MER Studio" aria-hidden="true" />
+      <a class="site-header__logo" href={homePath}>
+        <img class="site-header__logo-pos" src="/logo.svg" width="182" height="29" alt={site.logoAlt} />
+        <img class="site-header__logo-neg" src="/logo-negative.svg" width="150" height="24" alt={site.logoAlt} aria-hidden="true" />
       </a>
-      <p class="site-header__tagline">Design and build, end to end</p>
+      <p class="site-header__tagline">{navCopy.tagline}</p>
     </div>
-    <nav class="site-nav" aria-label="Primary">
-      <ul role="list" class="site-nav__list">
-        {nav.map((item) => <li><a href={link(item.href)} aria-current={current(item.href)}>{item.label}</a></li>)}
-      </ul>
-    </nav>
+    <div class="site-header__right">
+      <nav class="site-nav" aria-label={navCopy.ariaLabel}>
+        <ul role="list" class="site-nav__list">
+          {nav.map((item) => <li><a href={link(item.href)} aria-current={current(item.href)}>{item.label}</a></li>)}
+        </ul>
+      </nav>
+      <LangSwitch locale={locale} />
+    </div>
     <button class="site-header__toggle" type="button" aria-haspopup="dialog" aria-controls="mobile-menu" data-menu-open>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 6H21M3 12H21M3 18H21" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/></svg>
-      <span class="visually-hidden">Open menu</span>
+      <span class="visually-hidden">{navCopy.openMenu}</span>
     </button>
   </div>
 </header>
 
-<dialog id="mobile-menu" class="mobile-menu" aria-label="Menu" data-menu>
+<dialog id="mobile-menu" class="mobile-menu" aria-label={navCopy.menuLabel} data-menu>
   <div class="mobile-menu__bar">
-    <a class="mobile-menu__logo" href="/">
-      <img src="/logo-negative.svg" width="150" height="24" alt="MER Studio" />
+    <a class="mobile-menu__logo" href={homePath}>
+      <img src="/logo-negative.svg" width="150" height="24" alt={site.logoAlt} />
     </a>
     <button class="mobile-menu__close" type="button" data-menu-close autofocus>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span class="visually-hidden">Close menu</span>
+      <span class="visually-hidden">{navCopy.closeMenu}</span>
     </button>
   </div>
-  <nav aria-label="Primary">
+  <nav aria-label={navCopy.ariaLabel}>
     <ul role="list" class="mobile-menu__list">
       {nav.map((item) => <li><a href={link(item.href)} aria-current={current(item.href)}>{item.label}</a></li>)}
     </ul>
   </nav>
+  <LangSwitch locale={locale} menu />
   <address class="mobile-menu__contact">
     <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-    <a href={WHATSAPP.href} target="_blank" rel="noopener"><span class="visually-hidden">WhatsApp </span>{WHATSAPP.label}<span class="visually-hidden"> (opens in a new tab)</span></a>
+    <a href={WHATSAPP.href} target="_blank" rel="noopener"><span class="visually-hidden">{a11y.whatsapp} </span>{WHATSAPP.label}<span class="visually-hidden"> {a11y.opensInNewTab}</span></a>
   </address>
 </dialog>
 
@@ -142,6 +153,7 @@ const current = (href: string) => (href.startsWith('/') && Astro.url.pathname.st
     color: var(--text-tagline);
     transition: color var(--dur-nav) var(--ease-enter), transform var(--dur-nav) var(--ease-enter);
   }
+  .site-header__right { display: flex; align-items: center; gap: var(--sp-16); }
   .site-nav {
     position: relative;
     display: flex;

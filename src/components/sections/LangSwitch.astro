@@ -1,0 +1,82 @@
+---
+// Language switcher (Figma 2275:4970 NAV ROLLOVER): a dark 32 px chip with the current language; on hover, focus or tap the other
+// language opens beside it (a second 32 px slot, reserved so the nav never shifts). The option is a link to the SAME page in the
+// other language (src/i18n/routes.ts). No automatic redirect by browser language anywhere: the reader chooses.
+// Desktop: disclosure <button aria-expanded aria-controls> + <a hreflang lang>. Esc closes. Mobile menu (`menu`): both options visible.
+import { getCopy, pathIn, LOCALES, type Locale } from '../../i18n';
+
+interface Props { locale: Locale; menu?: boolean }
+const { locale, menu = false } = Astro.props;
+const nav = getCopy(locale).nav;
+const names: Record<Locale, string> = { en: nav.languageEnglish, es: nav.languageSpanish };
+const other = LOCALES.find((l) => l !== locale)!;
+const href = (l: Locale) => pathIn(Astro.url.pathname, l);
+---
+{menu ? (
+  <nav class="lang-menu" aria-label={nav.language}>
+    <ul role="list">
+      {LOCALES.map((l) => (
+        <li><a href={href(l)} hreflang={l} lang={l} aria-current={l === locale ? 'true' : undefined}><span aria-hidden="true">{l.toUpperCase()}</span><span class="visually-hidden">{names[l]}</span></a></li>
+      ))}
+    </ul>
+  </nav>
+) : (
+  <div class="lang" data-lang>
+    <button class="lang__btn" type="button" aria-expanded="false" aria-controls="lang-other" aria-label={`${nav.language}: ${names[locale]}`}>{locale.toUpperCase()}</button>
+    <div class="lang__other" id="lang-other">
+      <a href={href(other)} hreflang={other} lang={other}><span aria-hidden="true">{other.toUpperCase()}</span><span class="visually-hidden">{names[other]}</span></a>
+    </div>
+  </div>
+)}
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-lang]').forEach((root) => {
+    const btn = root.querySelector<HTMLButtonElement>('.lang__btn')!;
+    const set = (open: boolean) => btn.setAttribute('aria-expanded', String(open));
+    const hover = matchMedia('(hover: hover)');
+    btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
+    root.addEventListener('mouseenter', () => { if (hover.matches) set(true); });
+    root.addEventListener('mouseleave', () => { if (hover.matches) set(false); });
+    root.addEventListener('focusout', (e) => { if (!root.contains((e as FocusEvent).relatedTarget as Node | null)) set(false); });
+    root.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape' || btn.getAttribute('aria-expanded') !== 'true') return;
+      set(false);
+      btn.focus();
+    });
+    document.addEventListener('pointerdown', (e) => { if (!root.contains(e.target as Node)) set(false); });
+  });
+</script>
+
+<style>
+  /* 64 px wide always (two 32 px slots): opening never moves the nav. */
+  .lang { position: relative; display: flex; width: 64px; height: 32px; flex: none; }
+  .lang__btn, .lang__other a {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; padding: 0; border: 0;
+    font-family: var(--font-technical); font-size: var(--fs-caption); line-height: 1; letter-spacing: 0.02em; text-transform: uppercase;
+    text-decoration: none; cursor: pointer;
+  }
+  .lang__btn { background: var(--surface-inverse); color: var(--text-inverse); border-radius: 4px; transition: background var(--dur-nav) var(--ease-enter), color var(--dur-nav) var(--ease-enter); }
+  .lang__other { width: 32px; height: 32px; opacity: 0; visibility: hidden; transform: translateX(-4px); transition: opacity var(--dur-fast) var(--ease-enter), transform var(--dur-fast) var(--ease-enter), visibility 0s linear var(--dur-fast); }
+  .lang__other a { position: relative; color: var(--text-primary); background: none; }
+  .lang__other a::after { content: ''; position: absolute; inset: -6px -4px; } /* 44 px hit area */
+  .lang__other a:hover { color: var(--accent-dark); }
+  /* Open: by aria-expanded (JS), and by hover/focus without JS. */
+  .lang:has(.lang__btn[aria-expanded='true']) .lang__other,
+  :global(html:not(.js)) .lang:is(:hover, :focus-within) .lang__other { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+  /* Scrolled bar is dark: the chip inverts, the option reads white. */
+  :global(html.js) :global(.site-header[data-scrolled]) .lang__btn { background: var(--surface-soft); color: var(--text-primary); }
+  :global(html.js) :global(.site-header[data-scrolled]) .lang__other a { color: var(--text-inverse); }
+  @media (max-width: 767px) { :global(.js) .lang { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .lang__btn, .lang__other { transition: none; transform: none; } }
+
+  /* Full-screen menu: both options visible, the current one marked. */
+  .lang-menu ul { display: flex; gap: var(--sp-8); margin: 0; }
+  .lang-menu a {
+    display: inline-flex; align-items: center; justify-content: center; min-width: var(--hit-min); height: var(--hit-min); padding: 0 var(--sp-12);
+    border: 1px solid currentColor; border-radius: 4px;
+    font-family: var(--font-technical); font-size: var(--fs-caption); letter-spacing: 0.02em; text-decoration: none; color: var(--text-inverse);
+  }
+  .lang-menu a[aria-current='true'] { background: var(--surface-soft); color: var(--text-primary); border-color: var(--surface-soft); }
+  .lang-menu a:not([aria-current]):hover { color: var(--accent-primary); }
+</style>

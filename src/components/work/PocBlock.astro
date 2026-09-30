@@ -1,0 +1,99 @@
+---
+// Asociart "AI-Assisted Design System Workflow" (Figma modal Asociart, 2152:11261 / text column 2152:11241): the copy is real,
+// translatable HTML on the left (title, subtitle, paragraphs, "What I tested", "Status", the Domain / Length / Role card) and only
+// the diagram is an image on the right (its technical labels stay in English). The Human-in-the-loop line is the bar under the block.
+import type { ImageMetadata } from 'astro';
+import type { DetailPoc } from '../../data/project-details';
+
+// The diagram is Figma's own SVG export (live text in Intel One Mono / Abel, fonts embedded): crisp at any size; its labels stay in English.
+// The faint grid behind the block is Figma's page12 fill (grid.webp), as in the design.
+const assets = import.meta.glob<ImageMetadata>('../../assets/work-detail/**/*.{svg,webp}', { eager: true, import: 'default' });
+const asset = (name: string) => {
+  const m = assets[`../../assets/work-detail/${name}.svg`] ?? assets[`../../assets/work-detail/${name}.webp`];
+  if (!m) throw new Error(`Project Detail image not found: ${name}`);
+  return m;
+};
+
+interface Props { poc: DetailPoc }
+const { poc } = Astro.props;
+const diagram = asset(poc.src);
+const grid = asset('asociart/grid');
+const c = poc.copy;
+const facts = [c.facts.domain, c.facts.length, c.facts.role];
+---
+<section class="poc" data-reveal="rise">
+  <div class="poc__grid" style={`--poc-grid:url(${grid.src})`}>
+    <div class="poc__text">
+      <h3 class="pd__block-title poc__title">{c.title}</h3>
+      <p class="poc__sub">{c.subtitle}</p>
+      <div class="poc__intro">{c.intro.map((p) => <p>{p}</p>)}</div>
+      <div class="poc__part"><p class="poc__label">{c.tested.label}</p><p class="poc__body">{c.tested.body}</p></div>
+      <div class="poc__part"><p class="poc__label">{c.status.label}</p><p class="poc__body">{c.status.body}</p></div>
+      <dl class="poc__facts">{facts.map((f) => <div><dt>{f.label}</dt><dd>{f.value}</dd></div>)}</dl>
+    </div>
+    <div class="poc__diagram-wrap" data-poc-wrap><figure class="poc__diagram" data-poc-scroll><img src={diagram.src} width={diagram.width} height={diagram.height} alt={poc.alt} loading="lazy" decoding="async" /></figure></div>
+  </div>
+  <p class="poc__bar"><span class="poc__bar-label">{c.humanInLoop.label}:</span> {c.humanInLoop.body}</p>
+</section>
+
+<script>
+  // Phones: the diagram scrolls sideways inside its box; a fade on the right edge says there is more, and goes away at the end.
+  document.querySelectorAll<HTMLElement>('[data-poc-wrap]').forEach((wrap) => {
+    const box = wrap.querySelector<HTMLElement>('[data-poc-scroll]')!;
+    const sync = () => wrap.toggleAttribute('data-end', box.scrollLeft + box.clientWidth >= box.scrollWidth - 2 || box.scrollWidth <= box.clientWidth + 2);
+    box.addEventListener('scroll', sync, { passive: true });
+    new ResizeObserver(sync).observe(box);
+    sync();
+  });
+</script>
+
+<style>
+  .poc { display: flex; flex-direction: column; min-width: 0; }
+  /* Figma: 570 px text column (32 px inset) + the diagram on the rest of the 1349 px frame. */
+  .poc__grid { display: grid; grid-template-columns: 570fr 779fr; gap: var(--sp-24); align-items: center; background: var(--poc-grid) center / cover no-repeat; }
+  .poc__diagram-wrap { position: relative; min-width: 0; }
+  .poc__diagram { margin: 0; min-width: 0; }
+  .poc__diagram img { display: block; width: 100%; height: auto; }
+  .poc__text { display: flex; flex-direction: column; gap: var(--sp-12); padding-left: var(--sp-32); min-width: 0; }
+  .poc__sub, .poc__label {
+    font-family: var(--font-technical); font-size: 13px; line-height: 18px; letter-spacing: 0.13em; text-transform: uppercase;
+    color: var(--text-primary);
+  }
+  .poc__intro { display: flex; flex-direction: column; font-size: var(--fs-body-lg); line-height: normal; opacity: 0.8; }
+  .poc__part { display: flex; flex-direction: column; gap: 5px; }
+  .poc__body { font-size: var(--fs-body-lg); line-height: normal; opacity: 0.75; }
+  /* Domain / Length / Role: a card, as in the diagram it replaces. */
+  .poc__facts {
+    display: grid; grid-template-columns: repeat(3, auto); justify-content: space-between; gap: var(--sp-16) var(--sp-24);
+    margin: var(--sp-8) 0 0; padding: var(--sp-16) var(--sp-24);
+    border: 1px solid var(--border-default); border-radius: 16px;
+  }
+  .poc__facts dt { font-family: var(--font-technical); font-size: 13px; line-height: 18px; letter-spacing: 0.13em; text-transform: uppercase; font-weight: 600; }
+  .poc__facts dd { margin: 4px 0 0; font-size: var(--fs-body); line-height: 1.3; opacity: 0.8; }
+  /* Human-in-the-loop: the dark bar under the block (Figma "Frame 28"). */
+  .poc__bar {
+    margin-top: var(--sp-16); padding: 8px var(--sp-24); text-align: center;
+    background: var(--surface-raised-dark); color: var(--text-inverse);
+    font-family: var(--font-technical); font-size: 13px; line-height: 17px; letter-spacing: 0.02em;
+  }
+  .poc__bar-label { font-weight: 600; }
+  @media (max-width: 1199px) {
+    .poc__grid { grid-template-columns: minmax(0, 1fr); gap: var(--sp-32); }
+    .poc__text { padding-left: 0; max-width: 720px; }
+    .poc__facts { grid-template-columns: minmax(0, 1fr); }
+    .poc__bar { text-align: left; }
+  }
+  @media (max-width: 767px) {
+    .poc__intro, .poc__body { font-size: var(--fs-body); line-height: 1.5; }
+    /* The diagram's labels are 12 px in the design: on a phone it scrolls sideways inside its own box instead of shrinking them to ~5 px (560 px wide = labels at ~8.6 px). */
+    .poc__diagram { overflow-x: auto; overscroll-behavior-x: contain; } /* vertical drags stay with the page / dialog: only horizontal ones scroll the box */
+    .poc__diagram img { width: 560px; max-width: none; }
+    /* Right-edge fade: says "there is more"; gone once the end is reached (no motion under reduced motion). */
+    .poc__diagram-wrap::after {
+      content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 56px; pointer-events: none;
+      background: linear-gradient(to right, transparent, var(--surface-base)); opacity: 1; transition: opacity var(--dur-base) var(--ease-enter);
+    }
+    .poc__diagram-wrap[data-end]::after { opacity: 0; }
+    @media (prefers-reduced-motion: reduce) { .poc__diagram-wrap::after { transition: none; } }
+  }
+</style>

@@ -6,16 +6,18 @@
 import { getImage } from 'astro:assets';
 import banner from '../../assets/pixel-banner.png';
 import WordReveal from '../primitives/WordReveal.astro';
+import { getCopy, localeOf } from '../../i18n';
+const { banner: bannerCopy } = getCopy(localeOf(Astro.url));
 // Decorative texture: a CSS background (no <img>, so no alt to get wrong). 1× = 1436 px, 2× = 2872 px.
 const [a1, a2, w1, w2] = await Promise.all(
   [[1436, 'avif'], [2872, 'avif'], [1436, 'webp'], [2872, 'webp']].map(([width, format]) => getImage({ src: banner, width: width as number, format: format as 'avif' | 'webp' })),
 );
 const art = `--art-avif-1:url(${a1.src});--art-avif-2:url(${a2.src});--art-webp-1:url(${w1.src});--art-webp-2:url(${w2.src})`;
 ---
-<section class="pixel-banner" data-pixel-rain aria-label="Design, for us">
+<section class="pixel-banner" data-pixel-rain aria-label={bannerCopy.ariaLabel}>
   <canvas class="pixel-banner__rain" aria-hidden="true"></canvas>
   <div class="pixel-banner__art" aria-hidden="true" style={art}></div>
-  <WordReveal class="pixel-banner__quote" data-rain-avoid text="[For us, design isn't decoration. It's a transformation. It evolves what's stuck, strengthens what matters, and makes space for something better.]" />
+  <WordReveal class="pixel-banner__quote" data-rain-avoid text={bannerCopy.quote} />
 </section>
 
 <script>

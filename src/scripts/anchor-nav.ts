@@ -8,6 +8,13 @@
 //    height, so once the page has loaded the same landing runs (instant).
 //  · Scrollspy: the nav link of the section under the header gets aria-current="location" (styled like the current page).
 import { suspendStepSnap } from './step-snap';
+import { ANCHOR_IDS } from '../i18n/routes';
+
+// Spanish links carry Spanish hashes (/es/#servicios); the DOM ids stay English (#services): resolve the alias first.
+const byHash = (hash: string) => {
+  const h = decodeURIComponent(hash.replace(/^#/, ''));
+  return document.getElementById(h) ?? document.getElementById(ANCHOR_IDS[h] ?? h);
+};
 
 const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 const marginTop = (el: HTMLElement) => parseFloat(getComputedStyle(el).scrollMarginTop) || 0;
@@ -51,7 +58,7 @@ export function initAnchorNav() {
     if (!a || a.target === '_blank' || a.hasAttribute('download')) return;
     const url = new URL(a.href, location.href);
     if (url.origin !== location.origin || url.pathname !== location.pathname || url.hash.length < 2) return;
-    const el = document.getElementById(decodeURIComponent(url.hash.slice(1)));
+    const el = byHash(url.hash);
     if (!el) return;
     e.preventDefault();
     history.replaceState(history.state, '', url.hash);
@@ -59,10 +66,10 @@ export function initAnchorNav() {
   });
 
   // Direct entry with a fragment (skipped while the home intro holds the page).
-  const hash = decodeURIComponent(location.hash.slice(1));
-  if (hash && !document.documentElement.hasAttribute('data-intro')) {
+  const hash = location.hash;
+  if (hash.length > 1 && !document.documentElement.hasAttribute('data-intro')) {
     const land = () => {
-      const el = document.getElementById(hash);
+      const el = byHash(hash);
       if (el) scrollToAnchor(el, false);
     };
     if (document.readyState === 'complete') land();
@@ -72,7 +79,7 @@ export function initAnchorNav() {
   // Scrollspy.
   const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-site-header] .site-nav a[href^="#"], [data-menu] nav a[href^="#"]'));
   const sections = new Map<string, HTMLElement>();
-  links.forEach((a) => { const el = document.getElementById(a.hash.slice(1)); if (el) sections.set(a.hash, el); });
+  links.forEach((a) => { const el = byHash(a.hash); if (el) sections.set(a.hash, el); });
   if (!sections.size) return;
   let frame = 0;
   const update = () => {

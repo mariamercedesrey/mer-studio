@@ -5,13 +5,15 @@
 // The whole timeline is CSS (it completes even if JS fails); scripts/home-intro.ts lifts the curtain on the first scroll gesture.
 // While html[data-intro] is set the page does not scroll (exception in CLAUDE.md §22).
 // The gate lives in the inline <head> script in pages/index.astro (sets html[data-intro]).
+import { getCopy, localeOf } from '../../i18n';
+const { home, site } = getCopy(localeOf(Astro.url));
 ---
 <div class="home-intro" aria-hidden="true" data-home-intro>
   <div class="home-intro__stack">
-    <img class="home-intro__logo" src="/logo-negative.svg" width="306" height="48" alt="MER Studio" />
+    <img class="home-intro__logo" src="/logo-negative.svg" width="306" height="48" alt={site.logoAlt} />
     <p class="home-intro__quote">
-      <span class="home-intro__line home-intro__line--1">“From the first decision to the last detail.</span>
-      <span class="home-intro__line home-intro__line--2">Strategy, design &amp; build, end to end.”</span>
+      <span class="home-intro__line home-intro__line--1">{home.intro.line1}</span>
+      <span class="home-intro__line home-intro__line--2">{home.intro.line2}</span>
     </p>
   </div>
 </div>

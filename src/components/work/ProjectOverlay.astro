@@ -3,11 +3,15 @@
 // gives focus containment, Esc and inert background; scripts/project-overlay.ts adds the URL sync and fade
 // (R2-D, R2-E). Images inside a closed dialog are lazy, so they only load when the project opens.
 import ProjectDetail from './ProjectDetail.astro';
-import { projectDetails } from '../../data/project-details';
+import { getProjectDetails } from '../../data/project-details';
 import { hiddenSlugs } from '../../data/projects';
+import { localeOf, workPath } from '../../i18n';
+
+const locale = localeOf(Astro.url);
+const projectDetails = getProjectDetails(locale);
 ---
 {Object.values(projectDetails).filter((p) => !hiddenSlugs.includes(p.id)).map((p) => (
-  <dialog class="project-overlay" data-project-dialog={p.id} aria-labelledby={`pd-title-${p.id}`}>
+  <dialog class="project-overlay" data-project-dialog={p.id} data-project-url={workPath(p.id, locale)} aria-labelledby={`pd-title-${p.id}`}>
     <ProjectDetail project={p} />
   </dialog>
 ))}

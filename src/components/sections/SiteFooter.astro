@@ -3,37 +3,42 @@
 // Home links are in-page anchors on the home and "/#…" everywhere else (same rule as the header); direct entry lands via scripts/anchor-nav.ts.
 // The band carries no links.
 import { EMAIL, WHATSAPP } from '../../data/contact';
-const home = Astro.url.pathname === '/';
-const anchor = (h: string) => (home ? h : `/${h}`);
+import { getCopy, localeOf, pagePath, pageOf, anchorHash } from '../../i18n';
+const locale = localeOf(Astro.url);
+const copy = getCopy(locale);
+const { footer, site, a11y } = copy;
+const homePath = pagePath('home', locale);
+const home = pageOf(Astro.url.pathname)?.key === 'home';
+const anchor = (h: string) => (home ? h : `${homePath}${h}`);
 const links = [
-  { label: 'Selected Works', href: anchor('#work') },
-  { label: 'Services', href: anchor('#services') },
-  { label: 'How it works', href: anchor('#how-it-works') },
-  { label: 'AI Visibility', href: '/ai-visibility/' },
-  { label: 'About Us', href: anchor('#about') },
-  { label: 'FAQ', href: '/faq/' },
+  { label: footer.links.work, href: anchor(anchorHash('work', locale)) },
+  { label: footer.links.services, href: anchor(anchorHash('services', locale)) },
+  { label: footer.links.howItWorks, href: anchor(anchorHash('howItWorks', locale)) },
+  { label: footer.links.aiVisibility, href: pagePath('aiVisibility', locale) },
+  { label: footer.links.about, href: anchor(anchorHash('about', locale)) },
+  { label: footer.links.faq, href: pagePath('faq', locale) },
 ];
 ---
 <footer class="site-footer" id="contact">
   <div class="site-footer__main">
     <div class="footer__top">
-      <a class="footer__logo" href="/">
-        <img src="/logo-negative.svg" width="182" height="29" alt="MER Studio" />
+      <a class="footer__logo" href={homePath}>
+        <img src="/logo-negative.svg" width="182" height="29" alt={site.logoAlt} />
       </a>
       <address class="footer__channels">
         <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-        <a href={WHATSAPP.href} target="_blank" rel="noopener"><span class="visually-hidden">WhatsApp </span>{WHATSAPP.label}<span class="visually-hidden"> (opens in a new tab)</span></a>
+        <a href={WHATSAPP.href} target="_blank" rel="noopener"><span class="visually-hidden">{a11y.whatsapp} </span>{WHATSAPP.label}<span class="visually-hidden"> {a11y.opensInNewTab}</span></a>
       </address>
     </div>
-    <nav aria-label="Footer">
+    <nav aria-label={footer.ariaLabel}>
       <ul role="list" class="footer__nav">
         {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
       </ul>
     </nav>
   </div>
   <div class="site-footer__band">
-    <p>©2026 mer.studio™ All Rights Reserved</p>
-    <p class="site-footer__where">Working Worldwide from <span class="site-footer__tag">argentina</span></p>
+    <p>{footer.copyright}</p>
+    <p class="site-footer__where">{footer.workingFrom} <span class="site-footer__tag">{footer.country}</span></p>
   </div>
 </footer>
 

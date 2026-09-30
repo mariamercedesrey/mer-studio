@@ -7,23 +7,20 @@ import WordReveal from '../primitives/WordReveal.astro';
 import { BOOKING_URL } from '../../data/contact';
 import { getImage } from 'astro:assets';
 import portrait from '../../assets/mer-card.png';
+import { getCopy, localeOf } from '../../i18n';
+const { about, buttons, a11y } = getCopy(localeOf(Astro.url));
 const [avif, webp] = await Promise.all(
   (['avif', 'webp'] as const).map((format) => getImage({ src: portrait, widths: [98, 196], format })),
 );
-const stats = [
-  { value: '25+', label: 'years of experience designing products, brands and websites' },
-  { value: '35+', label: 'websites and digital products delivered directly to clients' },
-  { value: '1:1', label: 'Direct access to the senior designer, from first call to final files', count: false },
-  { value: '+300%', label: "orders in The Mile's first year after launch" },
-];
+const stats = about.stats.map((s, i) => ({ ...s, count: i !== 2 })); // "1:1" (third) only fades in
 ---
 <section id="about" class="about" aria-labelledby="about-title">
   <div class="about__copy">
     <div class="about__heading">
-      <p class="about__eyebrow">About us</p>
-      <WordReveal as="h2" id="about-title" class="about__title" text="We partner with early-stage founders who treat design as a must, not a nice-to-have. From seed to Series A and beyond, we help them validate ideas, win over investors and build brands and products that last." />
+      <p class="about__eyebrow">{about.eyebrow}</p>
+      <WordReveal as="h2" id="about-title" class="about__title" text={about.title} />
     </div>
-    <p class="about__body" data-reveal="rise">We treat every project as our own — founders deserve a partner, not a vendor. We've been in that room enough times to know what's at stake. We use AI to move faster, not to cut corners, so the time goes where it matters most: strategy and craft.</p>
+    <p class="about__body" data-reveal="rise">{about.body}</p>
   </div>
 
   <div class="about__card-row">
@@ -31,14 +28,14 @@ const stats = [
       <picture class="about__portrait">
         <source type="image/avif" srcset={avif.srcSet.attribute} sizes="98px" />
         <source type="image/webp" srcset={webp.srcSet.attribute} sizes="98px" />
-        <img src={webp.src} alt="Mer Rey, founder of MER Studio" width={portrait.width} height={portrait.height} loading="lazy" decoding="async" />
+        <img src={webp.src} alt={about.portraitAlt} width={portrait.width} height={portrait.height} loading="lazy" decoding="async" />
       </picture>
       <div class="about__card-copy">
         <figcaption class="about__who">
-          <span class="about__name">Mer Rey</span>
-          <span class="about__role">Founder · Design Lead</span>
+          <span class="about__name">{about.name}</span>
+          <span class="about__role">{about.role}</span>
         </figcaption>
-        <blockquote class="about__quote">For more than 25 years I've designed digital products for companies in the US and Latin America — enterprises and startups, often working directly with founders and CEOs.</blockquote>
+        <blockquote class="about__quote">{about.quote}</blockquote>
       </div>
     </figure>
   </div>
@@ -51,7 +48,7 @@ const stats = [
       </div>
     ))}
   </dl>
-  <div data-reveal="rise"><Button href={BOOKING_URL} width={201} size="lg" onDark target="_blank" rel="noopener">book a call<span class="visually-hidden"> (opens in a new tab)</span></Button></div>
+  <div data-reveal="rise"><Button href={BOOKING_URL} width={201} size="lg" onDark target="_blank" rel="noopener">{buttons.bookCall}<span class="visually-hidden"> {a11y.opensInNewTab}</span></Button></div>
 </section>
 
 <style>

@@ -4,53 +4,33 @@
 // rendered item carries `data-offer`, so an expired offer also hides them without a redeploy (html[data-offer-ended]).
 // /faq/ 9–10 are deliberately shorter than the /ai-visibility/ answers: two pages must never carry the same FAQPage text.
 import { offer } from './offer';
+import { getCopy, type Locale } from '../i18n';
 
 export interface FaqItem { q: string; a: string; offer?: boolean }
-export interface FaqGroup { num: string; label: string; items: FaqItem[] }
+export interface FaqGroup { id: FaqGroupId; num: string; label: string; items: FaqItem[] }
 
-export const faqGroups: FaqGroup[] = [
-  {
-    num: '01', label: 'process',
-    items: [
-      { q: 'How much does a project cost?', a: 'Every project is quoted after a 20-minute call. You get a fixed scope and price before we start — no surprises.' },
-      { q: 'How long does a project take?', a: 'From one week, depending on scope. A landing moves faster than a full store or product, and we agree on dates before we start.' },
-      { q: 'How many rounds of revisions are included?', a: 'Two rounds of revisions, built into every project.' },
-      { q: 'What do I get at handover?', a: 'Your files and accounts, all in your name.' },
-    ],
-  },
-  {
-    num: '02', label: 'services',
-    items: [
-      { q: 'Which e-commerce platforms do you work with?', a: 'Shopify, Tiendanube and WooCommerce. We recommend one based on your market, your catalog and how you sell.' },
-      { q: 'Can you work with my existing brand or site?', a: 'Yes. We can evolve what you already have or start from scratch.' },
-      { q: 'Do you work with clients outside Argentina?', a: "Yes. We're based in Buenos Aires and work remotely, in English or Spanish." },
-      { q: 'Can you add AI assistants or automations?', a: 'Yes, as an add-on: assistants that answer with your own content, and automated flows connected to the tools you already use.' },
-    ],
-  },
-  {
-    num: '03', label: 'ai visibility',
-    items: [
-      { q: 'What is AI Visibility (GEO / AEO)?', a: 'Making your brand easy for AI to find, understand and cite — not just to rank on Google.' },
-      { q: 'Is AI Visibility free in October?', a: 'Yes, the setup is free for projects started in October 2026. The rest is paid.', offer: true },
-    ],
-  },
-];
+// Copy: src/i18n/{en,es}.ts → `faq`. Structure stays here: group ids, and which entries belong to the launch offer.
+const GROUP_IDS = ['process', 'services', 'aiVisibility'] as const;
+export type FaqGroupId = (typeof GROUP_IDS)[number];
+const OFFER_GROUP_ITEM = { group: 'aiVisibility', index: 1 }; // "Is AI Visibility free in October?"
+const OFFER_AIV_ITEM = 3; // "What's free for projects started in October?"
 
-export const aiVisibilityFaq: FaqItem[] = [
-  { q: 'What is Generative Engine Optimization (GEO)?', a: "Making your brand easy for AI engines like ChatGPT, Perplexity and Google AI to find, understand and cite when people ask them questions — not just ranking in Google's list of links." },
-  { q: 'What is Answer Engine Optimization (AEO)?', a: 'Structuring your content so it becomes the direct answer: clear questions and answers, structured data, and pages AI crawlers can read.' },
-  { q: 'How is GEO different from SEO?', a: 'SEO gets you ranked; GEO and AEO get you mentioned. They work together — a solid technical base helps both.' },
-  { q: "What's free for projects started in October?", a: 'The setup: schema, llms.txt, AI crawler access, semantic structure and an initial visibility check. Content strategy, full audit and monthly tracking are paid.', offer: true },
-  { q: 'Do you guarantee AI mentions?', a: 'No one can. We build the conditions for AI engines to find and trust you, and we measure what changes.' },
-];
+export const faqGroups = (locale: Locale): FaqGroup[] => getCopy(locale).faq.groups.map((g, gi) => ({
+  id: GROUP_IDS[gi],
+  ...g,
+  items: g.items.map((it, i): FaqItem => (GROUP_IDS[gi] === OFFER_GROUP_ITEM.group && i === OFFER_GROUP_ITEM.index ? { ...it, offer: true } : it)),
+}));
+
+export const aiVisibilityFaq = (locale: Locale): FaqItem[] => getCopy(locale).faq.aiVisibility.map((it, i): FaqItem => (i === OFFER_AIV_ITEM ? { ...it, offer: true } : it));
 
 /** Items that should exist in the build: offer items drop out when the offer is off. */
 export const live = (items: FaqItem[]) => items.filter((i) => !i.offer || offer.active);
 
-export function faqSchema(items: FaqItem[], url: string) {
+export function faqSchema(items: FaqItem[], url: string, locale: Locale) {
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
+    inLanguage: getCopy(locale).site.lang,
     '@id': `${url}#faq`,
     url,
     mainEntity: live(items).map((i) => ({ '@type': 'Question', name: i.q, acceptedAnswer: { '@type': 'Answer', text: i.a } })),

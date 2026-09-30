@@ -66,6 +66,16 @@ Four steps, no surprises. Every project starts with a 20-minute call. You get ba
 - [FAQ](https://mer.studio/faq/): Cost, timing, revisions, handover, platforms (Shopify, Tiendanube, WooCommerce), working outside Argentina, AI assistants and AI Visibility.
 - [Start a project](https://mer.studio/start-a-project/): Project inquiry form. We reply within 2 business days with a focused next step.
 
+## Spanish version
+
+The whole site is also available in Spanish under https://mer.studio/es/ (same content, translated).
+
+- [Inicio](https://mer.studio/es/): Estrategia, diseño y desarrollo, de principio a fin.
+- [Visibilidad en IA (GEO / AEO)](https://mer.studio/es/visibilidad-ia/): la versión en español de AI Visibility.
+- [Preguntas frecuentes](https://mer.studio/es/preguntas-frecuentes/): costos, plazos, revisiones, entrega, plataformas, asistentes con IA y visibilidad en IA.
+- [Empieza un proyecto](https://mer.studio/es/empezar-proyecto/): formulario de consulta. Respondemos en 2 días hábiles.
+- Proyectos: https://mer.studio/es/proyectos/<slug>/ (mismos slugs que en inglés, por ejemplo https://mer.studio/es/proyectos/asociart/).
+
 ## Contact
 
 - Email: hello@mer.studio

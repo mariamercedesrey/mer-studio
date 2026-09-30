@@ -1,6 +1,7 @@
 ---
 // Project Detail imagery: AVIF/WebP at 1× and 2× of the Figma display width. `src` is "<slug>/<name>",
 // resolved against src/assets/work-detail (WebP masters made by scripts/optimize-detail-images.mjs).
+// A vector export from Figma (<name>.svg, e.g. the Carbon Optimum logos) is served as it is: no raster srcset.
 import type { ImageMetadata } from 'astro';
 import { getImage } from 'astro:assets';
 
@@ -9,28 +10,34 @@ interface Props {
   width: number; // Figma display width in px at 1440
   alt: string;
   desc?: string; // copy baked into the image, exposed as real text
+  caption?: string; // visible caption above the image (HTML text: translated, never baked into the picture)
+  center?: boolean; // centred in its column
+  reveal?: boolean; // the shared fade + rise (off when a parent already reveals)
+  decorative?: boolean; // alt="" (the text next to it says it all)
   style?: string;
 }
-const { src, width, alt, desc, style } = Astro.props;
+const { src, width, alt, desc, caption, center = false, reveal = true, decorative = false, style } = Astro.props;
 
-const files = import.meta.glob<ImageMetadata>('../../assets/work-detail/**/*.webp', { eager: true, import: 'default' });
-const meta = files[`../../assets/work-detail/${src}.webp`];
+const files = import.meta.glob<ImageMetadata>('../../assets/work-detail/**/*.{webp,svg}', { eager: true, import: 'default' });
+const meta = files[`../../assets/work-detail/${src}.webp`] ?? files[`../../assets/work-detail/${src}.svg`];
 if (!meta) throw new Error(`Project Detail image not found: ${src}`);
+const vector = meta.format === 'svg';
 
 const w1 = Math.min(Math.round(width), meta.width);
 const w2 = Math.min(Math.round(width * 2), meta.width);
 const widths = [...new Set([w1, w2])];
-const [avif, webp] = await Promise.all(
+const [avif, webp] = vector ? [] : await Promise.all(
   (['avif', 'webp'] as const).map((format) => getImage({ src: meta, widths, format })),
 );
-const fallback = await getImage({ src: meta, width: w2, format: 'webp' });
+const fallback = vector ? { src: meta.src } : await getImage({ src: meta, width: w2, format: 'webp' });
 const sizes = `(max-width: 1199px) 100vw, ${Math.round(width)}px`;
 ---
-<figure class="pd-img" style={style} data-reveal="rise">
+<figure class:list={['pd-img', center && 'pd-img--center', caption && 'pd-img--captioned']} style={style} data-reveal={reveal ? 'rise' : undefined}>
+  {caption && <figcaption class="pd-img__cap">{caption}</figcaption>}
   <picture>
-    <source type="image/avif" srcset={avif.srcSet.attribute} sizes={sizes} />
-    <source type="image/webp" srcset={webp.srcSet.attribute} sizes={sizes} />
-    <img src={fallback.src} alt={alt} width={meta.width} height={meta.height} loading="lazy" decoding="async" />
+    {avif && <source type="image/avif" srcset={avif.srcSet.attribute} sizes={sizes} />}
+    {webp && <source type="image/webp" srcset={webp.srcSet.attribute} sizes={sizes} />}
+    <img src={fallback.src} alt={decorative ? '' : alt} data-decorative={decorative ? '' : undefined} width={meta.width} height={meta.height} loading="lazy" decoding="async" />
   </picture>
   {desc && <figcaption class="visually-hidden">{desc}</figcaption>}
 </figure>

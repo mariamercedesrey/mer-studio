@@ -1,0 +1,73 @@
+---
+// Carbon Optimum "Starting point" (Figma modal Carbon Optimum 2099:220 › 2134:6547): the ocean photograph + brand palette stay an image;
+// the frosted card over it is HTML — four process steps (icon image without text + label) and "Starting point" + the paragraph.
+// Desktop: the card is laid over the photo from the Figma coordinates (1349 px frame; every size scales with the frame, `--u` = 1 Figma px).
+// Below 1200 the card stacks under the photo (text at 18 px instead of shrinking with the frame).
+import DetailImage from './DetailImage.astro';
+import type { ImageMetadata } from 'astro';
+import type { DetailSteps } from '../../data/project-details';
+
+interface Props { item: DetailSteps; style?: string }
+const { item, style } = Astro.props;
+const icons = import.meta.glob<ImageMetadata>('../../assets/work-detail/**/*.webp', { eager: true, import: 'default' });
+const icon = (name: string) => {
+  const meta = icons[`../../assets/work-detail/${name}.webp`];
+  if (!meta) throw new Error(`Project Detail image not found: ${name}`);
+  return meta;
+};
+---
+<div class="pd-steps" style={style} data-reveal="rise">
+  <DetailImage src={item.src} width={item.w} alt={item.alt} reveal={false} style="--iw:100%" />
+  <div class="pd-steps__card">
+    <ol class="pd-steps__list" role="list">
+      {item.steps.map((label, i) => {
+        const m = icon(item.icons[i]);
+        return (
+          <li class="pd-steps__step" style={`--c:${i % 2};--r:${Math.floor(i / 2)}`}>
+            <img src={m.src} width={m.width} height={m.height} alt="" data-decorative decoding="async" loading="lazy" />
+            <span class="pd-steps__label">{label}</span>
+          </li>
+        );
+      })}
+    </ol>
+    <h3 class="pd-steps__title">{item.heading}</h3>
+    <p class="pd-steps__body">{item.body}</p>
+  </div>
+</div>
+
+<style>
+  .pd-steps { position: relative; container-type: inline-size; width: var(--iw, 100%); max-width: 100%; }
+  .pd-steps :global(.pd-img) { display: block; }
+  .pd-steps__card {
+    --u: calc(100cqw / 1349); /* one Figma px */
+    position: absolute;
+    left: calc(191 * var(--u)); top: calc(232 * var(--u)); width: calc(919 * var(--u)); height: calc(461 * var(--u));
+    border-radius: calc(13 * var(--u)); background: rgba(255, 255, 255, 0.78);
+    color: var(--text-primary);
+  }
+  .pd-steps__list { margin: 0; padding: 0; list-style: none; }
+  .pd-steps__step { position: absolute; left: calc((255 + 260 * var(--c)) * var(--u)); top: calc((62 + 118 * var(--r)) * var(--u)); }
+  .pd-steps__step img { display: block; width: calc(50.5 * var(--u)); height: auto; }
+  .pd-steps__label {
+    position: absolute; left: calc(8 * var(--u)); top: calc(66 * var(--u)); white-space: nowrap;
+    font-weight: 500; font-size: calc(19 * var(--u)); line-height: calc(24 * var(--u)); letter-spacing: -0.01em; color: #1f2230;
+  }
+  .pd-steps__title {
+    position: absolute; left: calc(46 * var(--u)); top: calc(344 * var(--u)); margin: 0; white-space: nowrap;
+    font-weight: 400; font-size: calc(45 * var(--u)); line-height: calc(54 * var(--u)); letter-spacing: -0.02em;
+  }
+  .pd-steps__body {
+    position: absolute; left: calc(336 * var(--u)); bottom: calc(32 * var(--u)); width: calc(538 * var(--u)); margin: 0;
+    font-size: calc(18 * var(--u)); line-height: normal;
+  }
+  @media (max-width: 1199px) {
+    .pd-steps { width: 100%; display: flex; flex-direction: column; }
+    .pd-steps__card { position: static; width: auto; height: auto; padding: var(--sp-24); border-radius: 13px; background: var(--surface-canvas); display: flex; flex-direction: column; gap: var(--sp-24); }
+    .pd-steps__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-24) var(--sp-16); }
+    .pd-steps__step { position: static; display: flex; flex-direction: column; gap: var(--sp-8); }
+    .pd-steps__step img { width: 50px; }
+    .pd-steps__label { position: static; white-space: normal; font-size: var(--fs-body); line-height: 1.3; }
+    .pd-steps__title { position: static; white-space: normal; font-size: var(--fs-pd-block); line-height: 1.2; }
+    .pd-steps__body { position: static; width: auto; font-size: var(--fs-body); line-height: 1.5; max-width: 720px; }
+  }
+</style>
