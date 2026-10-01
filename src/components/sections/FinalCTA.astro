@@ -3,7 +3,7 @@
 import Button from '../primitives/Button.astro';
 import SignatureDot from '../primitives/SignatureDot.astro';
 import DecodeTitle from '../primitives/DecodeTitle.astro';
-import { BOOKING_URL } from '../../data/contact';
+import { WHATSAPP } from '../../data/contact';
 import { getCopy, localeOf, pagePath } from '../../i18n';
 interface Props { eyebrow?: string; title?: string; faqLink?: boolean }
 const locale = localeOf(Astro.url);
@@ -16,7 +16,7 @@ const { eyebrow = finalCta.eyebrow, title = finalCta.title, faqLink = false } = 
     <DecodeTitle as="h2" id="cta-title" class="cta__title" text={title}><SignatureDot class="cta__dot" /></DecodeTitle>
   </div>
   <div class="cta__action" data-reveal="rise">
-    <Button href={BOOKING_URL} variant="outline-primary" target="_blank" rel="noopener">{buttons.letsTalk}<span class="visually-hidden"> {finalCta.letsTalkSr}</span></Button>
+    <Button href={WHATSAPP.href} variant="outline-primary" target="_blank" rel="noopener">{buttons.letsTalk}<span class="visually-hidden"> {finalCta.letsTalkSr}</span></Button>
     <Button href={pagePath('startProject', locale)} variant="negative">{buttons.startProject}</Button>
   </div>
   {faqLink && <p class="cta__faq" data-reveal="rise">{faqCta.questionsFirst} <a href={pagePath('faq', locale)}>{faqCta.readFaq}</a></p>}

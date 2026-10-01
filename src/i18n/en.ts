@@ -210,7 +210,7 @@ export const en = {
   finalCta: {
     eyebrow: "That's all for now.",
     title: 'Got a project in mind?\nLet’s talk',
-    letsTalkSr: '(book a 20-minute call, opens in a new tab)',
+    letsTalkSr: '(message us on WhatsApp, opens in a new tab)',
   },
 
   faqPage: {

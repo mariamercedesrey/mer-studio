@@ -1,7 +1,7 @@
 // JSON-LD (schema.org) for search and AI answer engines. Facts only from the site's own copy:
 // Services (149:5756), About (149:6015), Contact (149:6087), Footer (149:6099), project-details.ts.
 import { detailBlocks, type ProjectDetailData } from './project-details';
-import { EMAIL, WHATSAPP } from './contact';
+import { EMAIL, SOCIAL, WHATSAPP } from './contact';
 import { getOffer } from './offer';
 import { getCopy, pagePath, anchorHash, type Locale } from '../i18n';
 
@@ -34,7 +34,9 @@ export function homeSchema(locale: Locale = 'en') {
         '@type': 'ProfessionalService',
         '@id': ORG_ID,
         name: copy.site.name,
+        alternateName: 'mer.studio',
         url: `${SITE}${pagePath('home', locale)}`,
+        sameAs: SOCIAL,
         logo: `${SITE}/logo.svg`,
         image: `${SITE}/og.png`,
         description: j.home.description,
