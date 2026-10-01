@@ -3,7 +3,7 @@ import { chromium } from 'playwright';
 // on every page, English and Spanish. Usage: npm run build && npx astro preview --port 4322 &  then  npm run qa:overflow [-- http://localhost:4322]
 const base = process.argv[2] || 'http://localhost:4322';
 const b = await chromium.launch(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {}); // CHROME_PATH: optional Chromium binary
-const slugs = ['asociart', 'the-mile', 'orchard-mile', 'quilmes', 'carbon-optimum', 'agente-mama', 'american-padel-systems', 'hifi-hub'];
+const slugs = ['asociart', 'the-mile', 'orchard-mile', 'quilmes', 'carbon-optimum', 'agente-mama', 'american-padel-systems', 'hifi-hub', 'black-duck'];
 const pages = [
   '/', '/faq/', '/ai-visibility/', '/start-a-project/', '/start-a-project/thanks/', '/404.html', ...slugs.map((s) => `/work/${s}/`),
   '/es/', '/es/preguntas-frecuentes/', '/es/visibilidad-ia/', '/es/empezar-proyecto/', '/es/empezar-proyecto/gracias/', '/es/404/', ...slugs.map((s) => `/es/proyectos/${s}/`),

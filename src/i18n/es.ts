@@ -113,6 +113,7 @@ export const es = {
       'agente-mama': { title: 'Una red de contención, no una app de productividad', meta: '[Startups]', roles: ['Estrategia de producto', 'UX Research', 'Design System', 'Desarrollo asistido por IA'], index: 'Asistente familiar con IA', alt: 'Agente Mamá AI en teléfonos: el panel del día y la agenda, alimentados por mensajes del grupo de WhatsApp y de la plataforma escolar' },
       'american-padel-systems': { title: 'Un sitio que responde "¿se paga solo?"', meta: '[Empresas]', roles: ['branding', 'Diseño web', 'Herramienta interactiva', 'Desarrollo web'], index: 'Pádel que rinde', alt: 'El sitio de American Padel Systems en una laptop inclinada, sobre un fondo azul marino cruzado por líneas naranjas' },
       'hifi-hub': { title: 'Seis unidades de negocio, un solo producto', meta: '[Startups] [Ecommerce]', roles: ['branding', 'Diseño de producto', 'Design System', 'Arquitectura de información'], index: 'Directorio audiófilo', alt: 'HiFi Hub — vista previa del proyecto' },
+      'black-duck': { title: 'Todas las técnicas de estampado, una sola tienda', meta: '[Tiendanube] [E-commerce]', roles: ['Diseño web', 'Armado de tienda', 'Automatización con IA'], index: 'Black Duck Tee', alt: 'La tienda de Black Duck en un monitor de escritorio y en un celular, sobre un fondo gris oscuro' },
     },
   },
 
@@ -584,6 +585,24 @@ export const es = {
         logo: { alt: 'Logo de HiFi Hub' },
         brandSystem: { alt: 'Paleta de colores de HiFi Hub, matriz de tokens de color y documentación de design tokens' },
         outcome: { alt: 'La wishlist de HiFi Hub en una laptop' },
+      },
+    },
+    'black-duck': {
+      client: 'Black Duck',
+      credit: 'cliente del estudio',
+      linkLabel: 'blackduck.com.ar',
+      title: 'Todas las técnicas de estampado, una sola tienda',
+      seoTitle: 'Todas las técnicas de estampado, una sola tienda',
+      meta: '[E-commerce] [Tiendanube]',
+      roles: ['Diseño web', 'Armado de tienda', 'Imágenes de producto', 'Automatización con IA'],
+      blocks: {
+        startingPoint: { heading: 'Punto de partida', body: 'Black Duck es una marca argentina de remeras con estampas de música y cultura, hechas con una variedad de técnicas poco común: tintas al agua y plastisol, metalizadas, 3D con relieve, flock, shimmer, glitter y puff. Necesitaba una tienda online que mostrara ese oficio, no solo el producto.' },
+        theWork: { heading: 'El trabajo', body: 'Armé la tienda en Tiendanube de punta a punta: diseño, estructura del catálogo y fichas de producto, medios de pago, envíos y la integración con Meta, que conecta el catálogo con Instagram y Facebook. Las imágenes de producto se produjeron con Midjourney y Photoshop, y una automatización en n8n retoca con IA las fotos nuevas y las guarda ordenadas en carpetas de Google Drive, para que cada lanzamiento salga más rápido.' },
+        outcome: { heading: 'Resultado', body: 'Tienda online vendiendo a todo el país, con tarjetas, efectivo y transferencia, envíos configurados y el catálogo sincronizado con Instagram y Facebook.' },
+      },
+      images: {
+        store: { alt: 'La tienda de Black Duck en un monitor de escritorio y en un celular' },
+        automation: { alt: 'Un flujo de n8n que conecta modelos de IA de imagen y Google Drive con el circuito de fotos de producto' },
       },
     },
   },

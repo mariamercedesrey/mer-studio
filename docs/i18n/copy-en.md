@@ -9,7 +9,7 @@ Generated from `src/i18n/en.ts` by `npm run i18n:export` — do not edit by hand
 - Not in this file on purpose: URLs, e-mail, phone, and the `value` of form fields (they stay English so the inbox is uniform).
 - Also still in English outside `en.ts`: `public/llms.txt` (the launch-offer line must match `offer.llms`; `scripts/check-site.mjs` enforces it).
 
-Strings: 589.
+Strings: 614.
 
 ## Global (every page)
 
@@ -157,6 +157,13 @@ Strings: 589.
 - `work.projects.hifi-hub.roles[3]` → Information Architecture
 - `work.projects.hifi-hub.index` → Audiophile Directory
 - `work.projects.hifi-hub.alt` → HiFi Hub — project preview
+- `work.projects.black-duck.title` → Every print technique, one storefront
+- `work.projects.black-duck.meta` → [Tienda Nube] [Ecommerce]
+- `work.projects.black-duck.roles[0]` → Web Design
+- `work.projects.black-duck.roles[1]` → Store Setup
+- `work.projects.black-duck.roles[2]` → AI Automation
+- `work.projects.black-duck.index` → Black Duck Tee
+- `work.projects.black-duck.alt` → The Black Duck store on a desktop monitor and a phone, on a dark grey background
 - `banner.ariaLabel` → Design, for us
 - `banner.quote` → [For us, design isn't decoration. It's a transformation. It evolves what's stuck, strengthens what matters, and makes space for something better.]
 - `services.eyebrow` → services
@@ -245,7 +252,7 @@ Strings: 589.
 - `about.stats[3].label` → orders in The Mile's first year after launch
 - `finalCta.eyebrow` → That's all for now.
 - `finalCta.title` → Got a project in mind?\nLet’s talk
-- `finalCta.letsTalkSr` → (book a 20-minute call, opens in a new tab)
+- `finalCta.letsTalkSr` → (message us on WhatsApp, opens in a new tab)
 
 ## Launch offer (hero line, Services, /ai-visibility/, JSON-LD, llms.txt)
 
@@ -652,3 +659,24 @@ Strings: 589.
 - `caseStudies.hifi-hub.images.logo.alt` → HiFi Hub logo
 - `caseStudies.hifi-hub.images.brandSystem.alt` → HiFi Hub colour palette, colour-token matrix and design-token documentation
 - `caseStudies.hifi-hub.images.outcome.alt` → The HiFi Hub wishlist on a laptop
+
+### Black Duck — `black-duck`
+
+- `caseStudies.black-duck.client` → Black Duck
+- `caseStudies.black-duck.credit` → studio client
+- `caseStudies.black-duck.linkLabel` → blackduck.com.ar
+- `caseStudies.black-duck.title` → Every print technique, one storefront
+- `caseStudies.black-duck.seoTitle` → Every print technique, one storefront
+- `caseStudies.black-duck.meta` → [E-commerce] [Tiendanube]
+- `caseStudies.black-duck.roles[0]` → Web Design
+- `caseStudies.black-duck.roles[1]` → Store Setup
+- `caseStudies.black-duck.roles[2]` → Product Imagery
+- `caseStudies.black-duck.roles[3]` → AI Automation
+- `caseStudies.black-duck.blocks.startingPoint.heading` → Starting point
+- `caseStudies.black-duck.blocks.startingPoint.body` → Black Duck is an Argentine apparel brand selling tees with music and culture prints, made with an unusually wide range of techniques: water-based and plastisol inks, metallics, raised 3D, flock, shimmer, glitter and puff. It needed an online store that could show that craft, not just the product.
+- `caseStudies.black-duck.blocks.theWork.heading` → The work
+- `caseStudies.black-duck.blocks.theWork.body` → I built the store on Tiendanube end to end: design, catalogue structure and product pages, payments, shipping, and the Meta integration that connects the catalogue to Instagram and Facebook. Product imagery was produced with Midjourney and Photoshop, and an n8n automation retouches new product photos with AI and files them into organised Google Drive folders, so new drops go online faster.
+- `caseStudies.black-duck.blocks.outcome.heading` → Outcome
+- `caseStudies.black-duck.blocks.outcome.body` → Store live and selling nationwide, with cards, cash and bank-transfer payments and shipping configured, and the catalogue synced to Instagram and Facebook.
+- `caseStudies.black-duck.images.store.alt` → The Black Duck store on a desktop monitor and a phone
+- `caseStudies.black-duck.images.automation.alt` → An n8n workflow connecting AI image models and Google Drive to the product-photo pipeline

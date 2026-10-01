@@ -121,6 +121,7 @@ export const en = {
       'agente-mama': { title: 'A safety net, not a productivity app', meta: '[Startups]', roles: ['Product Strategy', 'UX Research', 'Design System', 'AI-Assisted Build'], index: 'AI Family Assistant', alt: 'Agente Mamá AI on phones: the daily dashboard and agenda, fed by WhatsApp group and school platform messages' },
       'american-padel-systems': { title: 'A site that answers "does it pay for itself?"', meta: '[Enterprise]', roles: ['branding', 'Web Design', 'Interactive Tool', 'Web Development'], index: 'Empowering Padel', alt: 'The American Padel Systems website on a tilted laptop, on a navy background crossed by orange lines' },
       'hifi-hub': { title: 'Six business units, one product', meta: '[Startups] [Ecommerce]', roles: ['branding', 'Product Design', 'Design System', 'Information Architecture'], index: 'Audiophile Directory', alt: 'HiFi Hub — project preview' },
+      'black-duck': { title: 'Every print technique, one storefront', meta: '[Tienda Nube] [Ecommerce]', roles: ['Web Design', 'Store Setup', 'AI Automation'], index: 'Black Duck Tee', alt: 'The Black Duck store on a desktop monitor and a phone, on a dark grey background' },
     },
   },
 
@@ -605,6 +606,24 @@ export const en = {
         logo: { alt: 'HiFi Hub logo' },
         brandSystem: { alt: 'HiFi Hub colour palette, colour-token matrix and design-token documentation' },
         outcome: { alt: 'The HiFi Hub wishlist on a laptop' },
+      },
+    },
+    'black-duck': {
+      client: 'Black Duck',
+      credit: 'studio client',
+      linkLabel: 'blackduck.com.ar',
+      title: 'Every print technique, one storefront',
+      seoTitle: 'Every print technique, one storefront',
+      meta: '[E-commerce] [Tiendanube]',
+      roles: ['Web Design', 'Store Setup', 'Product Imagery', 'AI Automation'],
+      blocks: {
+        startingPoint: { heading: 'Starting point', body: 'Black Duck is an Argentine apparel brand selling tees with music and culture prints, made with an unusually wide range of techniques: water-based and plastisol inks, metallics, raised 3D, flock, shimmer, glitter and puff. It needed an online store that could show that craft, not just the product.' },
+        theWork: { heading: 'The work', body: 'I built the store on Tiendanube end to end: design, catalogue structure and product pages, payments, shipping, and the Meta integration that connects the catalogue to Instagram and Facebook. Product imagery was produced with Midjourney and Photoshop, and an n8n automation retouches new product photos with AI and files them into organised Google Drive folders, so new drops go online faster.' },
+        outcome: { heading: 'Outcome', body: 'Store live and selling nationwide, with cards, cash and bank-transfer payments and shipping configured, and the catalogue synced to Instagram and Facebook.' },
+      },
+      images: {
+        store: { alt: 'The Black Duck store on a desktop monitor and a phone' },
+        automation: { alt: 'An n8n workflow connecting AI image models and Google Drive to the product-photo pipeline' },
       },
     },
   },
