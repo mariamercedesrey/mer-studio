@@ -1,0 +1,108 @@
+---
+// Black Duck "Outcome" closer (Figma modal — black duck 2305:1284 › electro-wave 2305:1421, 1252 × 704.25).
+// An n8n automation drawn as an SVG scene: eight rails run from the corners to the n8n pill in the centre, and a pulse travels
+// along each one towards it. Motion data from Figma (get_motion_context): every rail is a path trim, 2 s loop, one cohort,
+// `blue` pulse 0.12 of the path, `blue blur` glow 0.08, travelling end → start (towards the centre).
+// Only stroke-dashoffset moves (§22: transform/opacity/dashoffset), `linear` (continuous loop). The loop sleeps off-screen and in
+// hidden tabs (scripts/automation-wave.ts sets data-live); reduced motion = the static Figma frame (full blue rails, no animation).
+// Rails are the centre line of Figma's outlined ribbons (same curves, exported as strokes so they can be trimmed).
+import chatgpt from '../../assets/work-detail/black-duck/automation/chatgpt.svg';
+import drive from '../../assets/work-detail/black-duck/automation/drive.svg';
+import ring from '../../assets/work-detail/black-duck/automation/json.svg';
+import gemini from '../../assets/work-detail/black-duck/automation/gemini.png';
+import n8n from '../../assets/work-detail/black-duck/automation/n8n.png';
+import type { DetailAutomation } from '../../data/project-details';
+
+interface Props { item: DetailAutomation; style?: string }
+const { item, style } = Astro.props;
+
+const W = 1252, H = 704.25;
+// Centre lines of the two rail shapes (581.46 × 326.69 and 581.66 × 158.31), from Figma's ribbon outlines.
+const LONG = 'M0.01 326.69C0.01 313.87 1.05 301.08 3.14 288.45C19.33 179.64 122.19 92.35 232.26 94.45C238.64 94.45 245.02 94.45 251.41 94.45C329.95 94.45 408.49 94.45 487.02 94.45C523.91 94.91 559.54 71.32 573.79 37.36C578.87 25.6 581.48 12.8 581.47 0';
+const SHORT = 'M0.01 158.31C0 147.1 1.66 135.9 4.96 125.2C18.53 79.07 64.42 45.04 112.55 45.77C165.63 45.77 218.7 45.77 271.77 45.77C359.81 45.77 447.86 45.77 535.9 45.77C548.69 45.84 561.35 40.19 569.88 30.66C577.42 22.37 581.71 11.22 581.66 0';
+type Flip = 'none' | 'x' | 'y' | 'xy';
+const rails: { d: string; x: number; y: number; w: number; h: number; flip: Flip }[] = [
+  { d: LONG, x: 0, y: 0, w: 581.46, h: 326.69, flip: 'x' },
+  { d: LONG, x: 670.34, y: 0, w: 581.46, h: 326.69, flip: 'none' },
+  { d: SHORT, x: 670.34, y: 171.5, w: 581.66, h: 158.31, flip: 'none' },
+  { d: SHORT, x: 670.34, y: 374.69, w: 581.66, h: 158.31, flip: 'y' },
+  { d: SHORT, x: 0, y: 171.5, w: 581.66, h: 158.31, flip: 'x' },
+  { d: SHORT, x: 0, y: 374.69, w: 581.66, h: 158.31, flip: 'xy' },
+  { d: LONG, x: 0, y: 377.56, w: 581.46, h: 326.69, flip: 'xy' },
+  { d: LONG, x: 670.34, y: 377.56, w: 581.46, h: 326.69, flip: 'y' },
+];
+const place = (r: (typeof rails)[number]) => {
+  const fx = r.flip === 'x' || r.flip === 'xy', fy = r.flip === 'y' || r.flip === 'xy';
+  return `translate(${r.x + (fx ? r.w : 0)} ${r.y + (fy ? r.h : 0)}) scale(${fx ? -1 : 1} ${fy ? -1 : 1})`;
+};
+const pct = (n: number, of: number) => `${((n / of) * 100).toFixed(3)}%`;
+const icons = [
+  { src: drive.src, x: 82, y: 423.96, w: 127 },
+  { src: chatgpt.src, x: 201, y: 152.96, w: 144 },
+  { src: ring.src, x: 1036, y: 60.96, w: 92 },
+  { src: gemini.src, x: 988.6, y: 431.3, w: 110 },
+];
+---
+<figure class="n8n" style={style} data-n8n data-reveal="rise" role="img" aria-label={item.alt}>
+  <svg class="n8n__rails" viewBox={`0 0 ${W} ${H}`} aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="n8n-soft" x="-20%" y="-40%" width="140%" height="180%" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="9.78" /></filter>
+    </defs>
+    {rails.map((r) => (
+      <g transform={place(r)}>
+        <path class="n8n__track" d={r.d} />
+        <path class="n8n__glow" d={r.d} pathLength="1" />
+        <path class="n8n__pulse" d={r.d} pathLength="1" />
+      </g>
+    ))}
+    <!-- Figma 2305:1433: a soft black ellipse under the pill, so the rails fade out before it -->
+    <ellipse cx="626" cy="352.5" rx="84.77" ry="51.51" fill="#000" filter="url(#n8n-soft)" />
+    <rect x="516.7" y="311" width="218.59" height="82.91" rx="41.46" fill="#fff" />
+  </svg>
+  <!-- Logo box placed so the mark (not its transparent padding) sits centred on the pill, as in the Figma render. -->
+  <img class="n8n__logo" src={n8n.src} width="1280" height="512" alt="" data-decorative decoding="async" loading="lazy" style={`left:${pct(535.9, W)};top:${pct(319.8, H)};width:${pct(176, W)}`} />
+  {icons.map((i) => (
+    <img class="n8n__icon" src={i.src} alt="" data-decorative decoding="async" loading="lazy" style={`left:${pct(i.x, W)};top:${pct(i.y, H)};width:${pct(i.w, W)}`} />
+  ))}
+</figure>
+
+<script>
+  import { initAutomationWave } from '../../scripts/automation-wave';
+  initAutomationWave();
+</script>
+
+<style>
+  .n8n {
+    /* Artwork colours (Figma electro-wave): n8n blue rails on a black ground. Illustration, not UI. */
+    --n8n-ground: #000; --n8n-track: #383838; --n8n-blue: #078efb;
+    --n8n-dur: 2s;                    /* PROPOSED token: ambient loop (Figma path-trim cohort) */
+    position: relative; width: 100%; aspect-ratio: 1252 / 704.25; margin: 0;
+    background: var(--n8n-ground); overflow: clip;
+  }
+  .n8n__rails { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .n8n__logo, .n8n__icon { position: absolute; display: block; height: auto; pointer-events: none; }
+
+  .n8n__track, .n8n__glow, .n8n__pulse { fill: none; vector-effect: none; }
+  .n8n__track { stroke: var(--n8n-track); stroke-width: 2.4; }
+  .n8n__glow { stroke: var(--n8n-blue); stroke-width: 16; stroke-opacity: 0.3; stroke-linecap: round; --len: 0.08; }
+  .n8n__pulse { stroke: var(--n8n-blue); stroke-width: 2.4; stroke-linecap: butt; --len: 0.12; }
+
+  /* Live: the pulse (0.12 of the rail) and its glow (0.08) run from the outer end to the centre, 2 s, forever, `linear`. */
+  .n8n[data-live] .n8n__glow,
+  .n8n[data-live] .n8n__pulse {
+    stroke-dasharray: var(--len) 1;
+    animation: n8n-run var(--n8n-dur) linear infinite;
+  }
+  @keyframes n8n-run {
+    from { stroke-dashoffset: calc(var(--len) - 1); }
+    to   { stroke-dashoffset: 0; }
+  }
+  /* Asleep (off-screen, hidden tab, no IntersectionObserver) and reduced motion: the static Figma frame — full blue rails, soft glow. */
+  .n8n:not([data-live]) .n8n__glow,
+  .n8n:not([data-live]) .n8n__pulse { stroke-dasharray: none; stroke-dashoffset: 0; }
+  .n8n:not([data-live]) .n8n__glow { stroke-width: 8; stroke-opacity: 0.18; }
+  @media (prefers-reduced-motion: reduce) {
+    .n8n .n8n__glow, .n8n .n8n__pulse { animation: none !important; stroke-dasharray: none !important; stroke-dashoffset: 0 !important; }
+    .n8n .n8n__glow { stroke-width: 8; stroke-opacity: 0.18; }
+  }
+</style>

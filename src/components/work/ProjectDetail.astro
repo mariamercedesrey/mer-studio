@@ -7,6 +7,7 @@ import type { ProjectDetailData, DetailItem, DetailSection } from '../../data/pr
 import DetailImage from './DetailImage.astro';
 import PocBlock from './PocBlock.astro';
 import StepsCard from './StepsCard.astro';
+import AutomationBlock from './AutomationBlock.astro';
 import Button from '../primitives/Button.astro';
 import DecodeTitle from '../primitives/DecodeTitle.astro';
 import { getCopy, localeOf } from '../../i18n';
@@ -65,6 +66,8 @@ const pct = (n: number, of: number) => `${(n / of) * 100}%`;
               <PocBlock poc={i} />
             ) : i.t === 'steps' ? (
               <StepsCard item={i} style={`--iw:${pct(i.w, c.w)}`} />
+            ) : i.t === 'automation' ? (
+              <AutomationBlock item={i} />
             ) : (
               <DetailImage src={i.src} width={i.w} alt={i.alt} desc={i.desc} caption={i.caption} center={i.center} style={`--iw:${pct(i.w, c.w)}`} />
             ))}
