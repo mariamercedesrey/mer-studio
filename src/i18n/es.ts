@@ -200,7 +200,7 @@ export const es = {
   finalCta: {
     eyebrow: 'Por ahora, eso es todo.',
     title: '¿Tienes un proyecto en mente?\nHablemos',
-    letsTalkSr: '(agenda una llamada de 20 minutos, se abre en una pestaña nueva)',
+    letsTalkSr: '(escríbenos por WhatsApp, se abre en una pestaña nueva)',
   },
 
   faqPage: {
