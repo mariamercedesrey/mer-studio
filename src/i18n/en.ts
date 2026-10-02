@@ -121,7 +121,7 @@ export const en = {
       'agente-mama': { title: 'A safety net, not a productivity app', meta: '[Startups]', roles: ['Product Strategy', 'UX Research', 'Design System', 'AI-Assisted Build'], index: 'AI Family Assistant', alt: 'Agente Mamá AI on phones: the daily dashboard and agenda, fed by WhatsApp group and school platform messages' },
       'american-padel-systems': { title: 'A site that answers "does it pay for itself?"', meta: '[Enterprise]', roles: ['branding', 'Web Design', 'Interactive Tool', 'Web Development'], index: 'Empowering Padel', alt: 'The American Padel Systems website on a tilted laptop, on a navy background crossed by orange lines' },
       'hifi-hub': { title: 'Six business units, one product', meta: '[Startups] [Ecommerce]', roles: ['branding', 'Product Design', 'Design System', 'Information Architecture'], index: 'Audiophile Directory', alt: 'HiFi Hub — project preview' },
-      'black-duck': { title: 'Every print technique, one storefront', meta: '[Tienda Nube] [Ecommerce]', roles: ['Web Design', 'Store Setup', 'AI Automation'], index: 'Black Duck Tee', alt: 'The Black Duck store on a desktop monitor and a phone, on a dark grey background' },
+      'black-duck': { title: 'Every print technique, one storefront', meta: '[Tiendanube] [Ecommerce]', roles: ['Web Design', 'Store Setup', 'AI Automation'], index: 'Black Duck Tee', alt: 'The Black Duck store on a desktop monitor and a phone, on a dark grey background' },
     },
   },
 
@@ -614,7 +614,7 @@ export const en = {
       linkLabel: 'blackduck.com.ar',
       title: 'Every print technique, one storefront',
       seoTitle: 'Every print technique, one storefront',
-      meta: '[E-commerce] [Tiendanube]',
+      meta: '[Tiendanube] [Ecommerce]',
       roles: ['Web Design', 'Store Setup', 'Product Imagery', 'AI Automation'],
       blocks: {
         startingPoint: { heading: 'Starting point', body: 'Black Duck is an Argentine apparel brand selling tees with music and culture prints, made with an unusually wide range of techniques: water-based and plastisol inks, metallics, raised 3D, flock, shimmer, glitter and puff. It needed an online store that could show that craft, not just the product.' },

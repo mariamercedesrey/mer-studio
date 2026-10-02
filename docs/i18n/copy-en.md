@@ -158,7 +158,7 @@ Strings: 614.
 - `work.projects.hifi-hub.index` → Audiophile Directory
 - `work.projects.hifi-hub.alt` → HiFi Hub — project preview
 - `work.projects.black-duck.title` → Every print technique, one storefront
-- `work.projects.black-duck.meta` → [Tienda Nube] [Ecommerce]
+- `work.projects.black-duck.meta` → [Tiendanube] [Ecommerce]
 - `work.projects.black-duck.roles[0]` → Web Design
 - `work.projects.black-duck.roles[1]` → Store Setup
 - `work.projects.black-duck.roles[2]` → AI Automation
@@ -667,7 +667,7 @@ Strings: 614.
 - `caseStudies.black-duck.linkLabel` → blackduck.com.ar
 - `caseStudies.black-duck.title` → Every print technique, one storefront
 - `caseStudies.black-duck.seoTitle` → Every print technique, one storefront
-- `caseStudies.black-duck.meta` → [E-commerce] [Tiendanube]
+- `caseStudies.black-duck.meta` → [Tiendanube] [Ecommerce]
 - `caseStudies.black-duck.roles[0]` → Web Design
 - `caseStudies.black-duck.roles[1]` → Store Setup
 - `caseStudies.black-duck.roles[2]` → Product Imagery

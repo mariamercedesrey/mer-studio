@@ -175,6 +175,8 @@ Rules for every animation on the site (the concrete motion of each section still
 7. One protagonist per screen; everything else stays subtle.
 8. `prefers-reduced-motion`: show the final state with no animation (final numbers, text at 100 %, static banner). Animate only `transform` / `opacity` (canvas draws count as opacity/transform-only); exception: `filter: blur` is allowed only in the intro's "ghost" effect. Lighthouse Performance ≥ 90 on mobile.
 
+Exception — Easing de la animación n8n de Black Duck (`AutomationBlock`): el motion está definido en Figma (2305:1421, §4 prioridad 1): path trim de 2 s en loop con `ease-out` por ciclo, así el pulso frena al llegar al pill n8n. No usa `--ease-enter` (`cubic-bezier(.2,.7,.2,1)` ≠ `ease-out`) ni `linear`; solo anima `stroke-dashoffset`, duerme fuera de pantalla y en pestaña oculta, y con reduced motion queda el frame estático de Figma.
+
 Exception — Intro de la home: supera los 3 s por decisión de la dueña; siempre salteable con click/scroll.
 Durante la intro de la home el scroll se bloquea y el primer gesto solo sube la cortina; es la única excepción a la regla de no bloquear el scroll.
 

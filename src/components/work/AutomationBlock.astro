@@ -3,7 +3,8 @@
 // An n8n automation drawn as an SVG scene: eight rails run from the corners to the n8n pill in the centre, and a pulse travels
 // along each one towards it. Motion data from Figma (get_motion_context): every rail is a path trim, 2 s loop, one cohort,
 // `blue` pulse 0.12 of the path, `blue blur` glow 0.08, travelling end → start (towards the centre).
-// Only stroke-dashoffset moves (§22: transform/opacity/dashoffset), `linear` (continuous loop). The loop sleeps off-screen and in
+// Only stroke-dashoffset moves (§22: transform/opacity/dashoffset). Easing is Figma's own: `ease-out` on each cycle, so the pulse
+// slows as it reaches n8n (documented exception in CLAUDE.md §22; not --ease-enter, which is a different curve). The loop sleeps off-screen and in
 // hidden tabs (scripts/automation-wave.ts sets data-live); reduced motion = the static Figma frame (full blue rails, no animation).
 // Rails are the centre line of Figma's outlined ribbons (same curves, exported as strokes so they can be trimmed).
 import chatgpt from '../../assets/work-detail/black-duck/automation/chatgpt.svg';
@@ -87,14 +88,14 @@ const icons = [
   .n8n__glow { stroke: var(--n8n-blue); stroke-width: 16; stroke-opacity: 0.3; stroke-linecap: round; --len: 0.08; }
   .n8n__pulse { stroke: var(--n8n-blue); stroke-width: 2.4; stroke-linecap: butt; --len: 0.12; }
 
-  /* Live: the pulse (0.12 of the rail) and its glow (0.08) run from the outer end to the centre, 2 s, forever, `linear`. */
+  /* Live: the pulse (0.12 of the rail) and its glow (0.08) run from the outer end to the centre, 2 s per cycle, `ease-out` (Figma). */
   .n8n[data-live] .n8n__glow,
   .n8n[data-live] .n8n__pulse {
     stroke-dasharray: var(--len) 1;
-    animation: n8n-run var(--n8n-dur) linear infinite;
+    animation: n8n-run var(--n8n-dur) infinite;
   }
   @keyframes n8n-run {
-    from { stroke-dashoffset: calc(var(--len) - 1); }
+    from { stroke-dashoffset: calc(var(--len) - 1); animation-timing-function: ease-out; }
     to   { stroke-dashoffset: 0; }
   }
   /* Asleep (off-screen, hidden tab, no IntersectionObserver) and reduced motion: the static Figma frame — full blue rails, soft glow. */
