@@ -1,16 +1,16 @@
 ---
-// "What happens next" (Figma 2084:217; 2230:761 on /ai-visibility/): heading + dot, three numbered steps, optional slot below (the llms.txt snippet).
+// "What happens next" (Figma 2084:217; 2230:761 on /ai-visibility/): heading + dot, three numbered steps, optional slot below (the llms.txt snippet; the case cards on /ecommerce/, with no steps).
 import SectionHeading from '../primitives/SectionHeading.astro';
 import SignatureDot from '../primitives/SignatureDot.astro';
-interface Props { eyebrow: string; title: string; id: string; steps: { t: string; d: string }[] }
-const { eyebrow, title, id, steps } = Astro.props;
+interface Props { eyebrow: string; title: string; id: string; steps?: { t: string; d: string }[] }
+const { eyebrow, title, id, steps = [] } = Astro.props;
 ---
 <section class="next" aria-labelledby={id}>
   <div class="next__head">
     <SectionHeading eyebrow={eyebrow} title={title} id={id} dot={false} />
     <SignatureDot size={24} />
   </div>
-  <ol class="next__steps" role="list">
+  {steps.length > 0 && <ol class="next__steps" role="list">
     {steps.map((s, i) => (
       <li class="step" data-reveal="rise">
         <p class="step__num">{String(i + 1).padStart(2, '0')}</p>
@@ -18,7 +18,7 @@ const { eyebrow, title, id, steps } = Astro.props;
         <p class="step__desc">{s.d}</p>
       </li>
     ))}
-  </ol>
+  </ol>}
   <slot />
 </section>
 

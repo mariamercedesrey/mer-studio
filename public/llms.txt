@@ -63,6 +63,7 @@ Four steps, no surprises. Every project starts with a 20-minute call. You get ba
 
 ## Pages
 
+- [Ecommerce website design](https://mer.studio/ecommerce/): Online stores on Shopify, Tiendanube and WooCommerce — catalogue structure and product pages, payments, shipping and Instagram, Facebook and Google integrations. Includes its own FAQ. Case studies: Orchard Mile, The Mile, Black Duck.
 - [AI Visibility (GEO / AEO)](https://mer.studio/ai-visibility/): Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO) — how we make a brand readable, understood and quotable by ChatGPT, Perplexity, Gemini and Google's AI Overviews. Includes its own FAQ.
 - [FAQ](https://mer.studio/faq/): Cost, timing, revisions, handover, platforms (Shopify, Tiendanube, WooCommerce), working outside Argentina, AI assistants and AI Visibility.
 - [Start a project](https://mer.studio/start-a-project/): Project inquiry form. We reply within 2 business days with a focused next step.
@@ -72,6 +73,7 @@ Four steps, no surprises. Every project starts with a 20-minute call. You get ba
 The whole site is also available in Spanish under https://mer.studio/es/ (same content, translated).
 
 - [Inicio](https://mer.studio/es/): Estrategia, diseño y desarrollo, de principio a fin.
+- [Tiendas online](https://mer.studio/es/tiendas-online/): la versión en español de Ecommerce.
 - [Visibilidad en IA (GEO / AEO)](https://mer.studio/es/visibilidad-ia/): la versión en español de AI Visibility.
 - [Preguntas frecuentes](https://mer.studio/es/preguntas-frecuentes/): costos, plazos, revisiones, entrega, plataformas, asistentes con IA y visibilidad en IA.
 - [Empieza un proyecto](https://mer.studio/es/empezar-proyecto/): formulario de consulta. Respondemos en 2 días hábiles.

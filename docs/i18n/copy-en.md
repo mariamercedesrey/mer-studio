@@ -9,7 +9,7 @@ Generated from `src/i18n/en.ts` by `npm run i18n:export` — do not edit by hand
 - Not in this file on purpose: URLs, e-mail, phone, and the `value` of form fields (they stay English so the inbox is uniform).
 - Also still in English outside `en.ts`: `public/llms.txt` (the launch-offer line must match `offer.llms`; `scripts/check-site.mjs` enforces it).
 
-Strings: 614.
+Strings: 662.
 
 ## Global (every page)
 
@@ -54,6 +54,7 @@ Strings: 614.
 - `footer.links.work` → Selected Works
 - `footer.links.services` → Services
 - `footer.links.howItWorks` → How it works
+- `footer.links.ecommerce` → Ecommerce
 - `footer.links.aiVisibility` → AI Visibility
 - `footer.links.about` → About Us
 - `footer.links.faq` → FAQ
@@ -62,6 +63,7 @@ Strings: 614.
 - `footer.country` → argentina
 - `intake.preferEmail` → PREFER EMAIL?
 - `projectDetail.close` → Close project
+- `projectDetail.moreEcommerce` → More about ecommerce →
 
 ## Home (/)
 
@@ -167,6 +169,7 @@ Strings: 614.
 - `banner.ariaLabel` → Design, for us
 - `banner.quote` → [For us, design isn't decoration. It's a transformation. It evolves what's stuck, strengthens what matters, and makes space for something better.]
 - `services.eyebrow` → services
+- `services.learnMore` → learn more
 - `services.title` → Strategy, Design & Build, end to end
 - `services.diagramLabel` → Services diagram: Brand and Product, connected by Strategy, Design and Build — one connected practice, 25+ years of experience.
 - `services.diagram.brand` → Brand
@@ -310,6 +313,50 @@ Strings: 614.
 - `faq.groups[2].items[1].q` → Is AI Visibility free in October?
 - `faq.groups[2].items[1].a` → Yes, the setup is free for projects started in October 2026. The rest is paid.
 
+## /ecommerce/
+
+- `ecommerce.meta.title` → Ecommerce Website Design — Shopify, Tiendanube & WooCommerce
+- `ecommerce.meta.description` → Ecommerce website design and build on Shopify, Tiendanube and WooCommerce: an online store that sells, with payments, shipping and Instagram, Facebook and Google integrations.
+- `ecommerce.intro.eyebrow` → ecommerce · shopify / tiendanube / woocommerce
+- `ecommerce.intro.title` → An online store that sells, not just one that looks good.
+- `ecommerce.intro.note` → We design and build ecommerce websites on Shopify, Tiendanube and WooCommerce — from catalogue structure and product pages to payments, shipping, and the integrations with Instagram, Facebook and Google that keep a store selling.
+- `ecommerce.method.eyebrow` → the method
+- `ecommerce.method.title` → Four things a store needs before it sells.
+- `ecommerce.method.lede` → Traffic is expensive. A store has to turn the visits it gets into orders.
+- `ecommerce.method.items[0].t` → Findable
+- `ecommerce.method.items[0].d` → Product and category pages built for Google and AI search: clean URLs, structured data and fast loading on mobile.
+- `ecommerce.method.items[1].t` → Clear
+- `ecommerce.method.items[1].d` → A catalogue people can navigate in seconds: categories, filters and product pages that answer size, material, shipping and returns before anyone asks.
+- `ecommerce.method.items[2].t` → Trustworthy
+- `ecommerce.method.items[2].d` → A brand that looks like it will deliver: consistent identity, real or well-made product imagery, reviews and visible contact.
+- `ecommerce.method.items[3].t` → Frictionless
+- `ecommerce.method.items[3].d` → Checkout, payments and shipping set up for your market, and the catalogue connected to Instagram, Facebook and Google.
+- `ecommerce.method.note` → We recommend the platform after looking at your market, your catalogue and how you sell — not the other way around.
+- `ecommerce.proof.eyebrow` → proof, not promises
+- `ecommerce.proof.title` → Stores we've designed and built.
+- `ecommerce.proof.cases[0].slug` → orchard-mile
+- `ecommerce.proof.cases[0].line` → 250+ brands and ~80,000 products in one shop-by-brand storefront.
+- `ecommerce.proof.cases[1].slug` → the-mile
+- `ecommerce.proof.cases[1].line` → A creator-led fashion store and app, with in-app checkout.
+- `ecommerce.proof.cases[2].slug` → black-duck
+- `ecommerce.proof.cases[2].line` → A Tiendanube store for print tees, with an AI product-photo pipeline.
+- `ecommerce.faq.eyebrow` → faq
+- `ecommerce.faq.title` → Questions about ecommerce.
+- `ecommerce.cta.eyebrow` → One question to start.
+- `ecommerce.cta.title` → What are you\nready to sell?
+- `faq.ecommerce[0].q` → Shopify, Tiendanube or WooCommerce — which one should I use?
+- `faq.ecommerce[0].a` → It depends on where and how you sell. Tiendanube fits Argentina and Latin America best, with local payments and shipping; Shopify scales best internationally; WooCommerce makes sense if you already run on WordPress. We recommend one after a short call.
+- `faq.ecommerce[1].q` → Do you set up payments and shipping?
+- `faq.ecommerce[1].a` → Yes. Payment methods and shipping rules for your market, tested end to end before launch.
+- `faq.ecommerce[2].q` → Can you connect my store to Instagram and Facebook?
+- `faq.ecommerce[2].a` → Yes. We connect your catalogue to Meta so products can be tagged and sold from Instagram and Facebook.
+- `faq.ecommerce[3].q` → How long does an online store take?
+- `faq.ecommerce[3].a` → From one week for a simple store. Larger catalogues and integrations take longer, and we agree on dates before we start.
+- `faq.ecommerce[4].q` → How much does an online store cost?
+- `faq.ecommerce[4].a` → Every project is quoted after a 20-minute call. You get a fixed scope and price before we start.
+- `faq.ecommerce[5].q` → Is AI Visibility included?
+- `faq.ecommerce[5].a` → For projects started in October 2026, the AI Visibility setup is free, so your store can be found and recommended by ChatGPT, Perplexity and Google AI.
+
 ## /ai-visibility/
 
 - `aiVisibility.meta.title` → AI Visibility — Generative Engine Optimization (GEO & AEO)
@@ -435,6 +482,10 @@ Strings: 614.
 - `jsonld.aiVisibility.serviceType` → Generative engine optimization (GEO) and answer engine optimization (AEO)
 - `jsonld.aiVisibility.description` → We make your brand readable, understood and quotable by ChatGPT, Perplexity, Gemini and Google’s AI Overviews: crawlable pages, structured data, citable answers and a presence in the places models use to verify you.
 - `jsonld.aiVisibility.catalogName` → Four things an AI needs before it recommends you
+- `jsonld.ecommerce.name` → Ecommerce website design
+- `jsonld.ecommerce.serviceType` → Ecommerce website design and development
+- `jsonld.ecommerce.description` → We design and build online stores on Shopify, Tiendanube and WooCommerce: catalogue structure and product pages, payments, shipping, and the integrations with Instagram, Facebook and Google that keep a store selling.
+- `jsonld.ecommerce.catalogName` → Four things a store needs before it sells
 
 ## Case studies (/work/<slug>/ and the Project Detail overlay)
 

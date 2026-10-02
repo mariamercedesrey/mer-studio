@@ -1,0 +1,45 @@
+---
+// /ecommerce/ and /es/tiendas-online/ — same skeleton as /ai-visibility/: intro → launch offer → method → proof → FAQ → final CTA.
+// The proof is three case cards (Selected Work cover + title + one line) instead of the llms.txt snippet.
+// One Primary per section: "start a project" (dark method panel); the final CTA is Outline Primary + Negative.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/sections/PageIntro.astro';
+import OfferNotice from '../components/sections/OfferNotice.astro';
+import MethodPanel from '../components/sections/MethodPanel.astro';
+import NextSteps from '../components/sections/NextSteps.astro';
+import CaseCards from '../components/sections/CaseCards.astro';
+import FaqSection from '../components/sections/FaqSection.astro';
+import FinalCTA from '../components/sections/FinalCTA.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import { ecommerceSchema } from '../data/schema';
+import { ecommerceFaq, faqSchema } from '../data/faq';
+import { getCopy, localeOf, pagePath } from '../i18n';
+
+const locale = localeOf(Astro.url);
+const copy = getCopy(locale);
+const faq = ecommerceFaq(locale);
+const page = copy.ecommerce;
+const { buttons } = copy;
+---
+<BaseLayout
+  title={page.meta.title}
+  description={page.meta.description}
+  schema={[ecommerceSchema(locale), faqSchema(faq, `https://mer.studio${pagePath('ecommerce', locale)}`, locale)]}
+>
+  <main id="main">
+    <PageIntro id="ecom-title" eyebrow={page.intro.eyebrow} title={page.intro.title} note={page.intro.note} />
+    <OfferNotice />
+    <MethodPanel id="method-title" method={page.method} ctaHref={`${pagePath('startProject', locale)}?service=website`} ctaLabel={buttons.startProject} />
+    <NextSteps id="proof-title" eyebrow={page.proof.eyebrow} title={page.proof.title}>
+      <CaseCards cases={page.proof.cases} />
+    </NextSteps>
+    <FaqSection eyebrow={page.faq.eyebrow} title={page.faq.title} items={faq} prefix="ecom-faq" />
+    <FinalCTA eyebrow={page.cta.eyebrow} title={page.cta.title} />
+  </main>
+  <SiteFooter />
+</BaseLayout>
+
+<style>
+  :global(body) { background: var(--surface-soft); }
+  main { background: var(--surface-soft); }
+</style>

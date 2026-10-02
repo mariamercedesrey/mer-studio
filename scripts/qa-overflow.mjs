@@ -5,8 +5,8 @@ const base = process.argv[2] || 'http://localhost:4322';
 const b = await chromium.launch(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {}); // CHROME_PATH: optional Chromium binary
 const slugs = ['asociart', 'the-mile', 'orchard-mile', 'quilmes', 'carbon-optimum', 'agente-mama', 'american-padel-systems', 'hifi-hub', 'black-duck'];
 const pages = [
-  '/', '/faq/', '/ai-visibility/', '/start-a-project/', '/start-a-project/thanks/', '/404.html', ...slugs.map((s) => `/work/${s}/`),
-  '/es/', '/es/preguntas-frecuentes/', '/es/visibilidad-ia/', '/es/empezar-proyecto/', '/es/empezar-proyecto/gracias/', '/es/404/', ...slugs.map((s) => `/es/proyectos/${s}/`),
+  '/', '/faq/', '/ai-visibility/', '/ecommerce/', '/start-a-project/', '/start-a-project/thanks/', '/404.html', ...slugs.map((s) => `/work/${s}/`),
+  '/es/', '/es/preguntas-frecuentes/', '/es/visibilidad-ia/', '/es/tiendas-online/', '/es/empezar-proyecto/', '/es/empezar-proyecto/gracias/', '/es/404/', ...slugs.map((s) => `/es/proyectos/${s}/`),
 ];
 let bad = 0;
 for (const w of [360, 390]) {

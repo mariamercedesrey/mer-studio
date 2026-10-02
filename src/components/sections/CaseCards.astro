@@ -1,0 +1,45 @@
+---
+// Proof on /ecommerce/: three case cards (the Selected Work cover + project title + one line) linking to their case study.
+// Goes in the slot of NextSteps (heading + dot, no steps). The cover is the same Figma export the home uses.
+import { getImage } from 'astro:assets';
+import { covers } from '../../data/work-covers';
+import { getCopy, localeOf, workPath } from '../../i18n';
+interface Props { cases: readonly { slug: string; line: string }[] }
+const { cases } = Astro.props;
+const locale = localeOf(Astro.url);
+const { work } = getCopy(locale);
+const SIZES = '(min-width: 1200px) 30vw, (min-width: 768px) 45vw, calc(100vw - 40px)';
+const items = await Promise.all(cases.map(async (c) => {
+  const src = covers[c.slug];
+  const project = (work.projects as Record<string, { title: string; alt: string }>)[c.slug];
+  const [avif, webp] = await Promise.all((['avif', 'webp'] as const).map((format) => getImage({ src, widths: [420, 840], format })));
+  return { ...c, ...project, w: src.width, h: src.height, avif: avif.srcSet.attribute, webp: webp.srcSet.attribute, fallback: webp.src };
+}));
+---
+<ul class="cases" role="list">
+  {items.map((c) => (
+    <li class="case" data-reveal="rise">
+      <a class="case__link" href={workPath(c.slug, locale)}>
+        <picture class="case__thumb">
+          <source type="image/avif" srcset={c.avif} sizes={SIZES} />
+          <source type="image/webp" srcset={c.webp} sizes={SIZES} />
+          <img src={c.fallback} width={c.w} height={c.h} alt={c.alt} loading="lazy" decoding="async" />
+        </picture>
+        <h3 class="case__title">{c.title}</h3>
+        <p class="case__line">{c.line}</p>
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .cases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-24); margin: 0; }
+  .case__link { display: flex; flex-direction: column; gap: var(--sp-8); height: 100%; color: inherit; text-decoration: none; }
+  .case__thumb { display: block; margin-bottom: var(--sp-8); aspect-ratio: 722 / 540; overflow: hidden; background: var(--surface-inverse); }
+  .case__thumb :global(img) { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .case__title { font-weight: 500; font-size: var(--fs-lead-sm); line-height: 1.2; }
+  .case__line { color: var(--text-secondary); }
+  .case__link:hover .case__title, .case__link:focus-visible .case__title { text-decoration: underline; text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+  @media (max-width: 1199px) { .cases { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 767px) { .cases { grid-template-columns: minmax(0, 1fr); gap: var(--sp-40); } }
+</style>

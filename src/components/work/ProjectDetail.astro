@@ -89,6 +89,7 @@ const pct = (n: number, of: number) => `${(n / of) * 100}%`;
         })}
       </div>
     ))}
+    {p.more && <p class="pd__more" data-reveal="rise"><a href={p.more.href}>{p.more.label}</a></p>}
   </div>
 </article>
 
@@ -145,6 +146,11 @@ const pct = (n: number, of: number) => `${(n / of) * 100}%`;
   @media (prefers-reduced-motion: reduce) { .pd__roles li { transition: none; } }
 
   .pd__body { display: flex; flex-direction: column; gap: var(--sp-48); padding-top: 42px; }
+
+  /* Closing text link of the ecommerce case studies → /ecommerce/. */
+  .pd__more { font-size: var(--fs-body-lg); }
+  .pd__more a { color: inherit; text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+  .pd__more a:hover, .pd__more a:focus-visible { text-decoration-thickness: 2px; }
 
   /* Text blocks: Figma "Title" 45/54 + body 18 */
   .pd__block { display: flex; flex-direction: column; gap: var(--sp-12); min-width: 0; }

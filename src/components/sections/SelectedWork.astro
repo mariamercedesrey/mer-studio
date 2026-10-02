@@ -12,20 +12,7 @@ import Button from '../primitives/Button.astro';
 import RoleChip from '../primitives/RoleChip.astro';
 import StepSnap from '../primitives/StepSnap.astro';
 import mosaic from '../../assets/work-index-mosaic.svg';
-import asociart from '../../assets/work-cover/asociart.png';
-import theMile from '../../assets/work-cover/the-mile.png';
-import orchardMile from '../../assets/work-cover/orchard-mile.png';
-import quilmes from '../../assets/work-cover/quilmes.png';
-import carbonOptimum from '../../assets/work-cover/carbon-optimum.png';
-import agenteMama from '../../assets/work-cover/agente-mama.png';
-import americanPadel from '../../assets/work-cover/american-padel-systems.png';
-import hifiHub from '../../assets/work-cover/hifi-hub.png';
-import blackDuck from '../../assets/work-cover/black-duck.png';
-
-const covers: Record<string, ImageMetadata> = {
-  asociart, 'the-mile': theMile, 'orchard-mile': orchardMile, quilmes, 'carbon-optimum': carbonOptimum,
-  'agente-mama': agenteMama, 'american-padel-systems': americanPadel, 'hifi-hub': hifiHub, 'black-duck': blackDuck,
-};
+import { covers } from '../../data/work-covers';
 
 const locale = localeOf(Astro.url);
 const { work, buttons } = getCopy(locale);
