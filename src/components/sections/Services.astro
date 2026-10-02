@@ -18,10 +18,11 @@ const { diagram } = svc;
 
 const included = svc.included.items;
 const AI_HREF = pagePath('aiVisibility', locale);
+const ECOM_HREF = pagePath('ecommerce', locale);
 // Row titles = diagram pills, exactly (one list, one vocabulary).
 const services = [
   { ...svc.rows.branding },
-  { ...svc.rows.websites },
+  { ...svc.rows.websites, href: ECOM_HREF, learn: true },
   { ...svc.rows.digitalProduct },
   { ...svc.rows.aiVisibility, href: AI_HREF, offer: true },
 ];
@@ -185,6 +186,7 @@ const chips = [
             <span class="services__slot" aria-hidden="true" data-services-slot></span>
             <h3 class="services__item-title">{s.href ? <a class="services__link" href={s.href}>{s.name}</a> : s.name}</h3>
             <p class="services__note">{s.body}</p>
+            {s.learn && <span class="services__learn">{svc.learnMore}</span>}
             {s.offer && offer.active && <span class="offer-tag" data-offer><span class="offer-tag__free">{offer.tag}</span> · <span class="offer-tag__more">{offer.more}</span></span>}
             <span class="services__index">[{i + 1}]</span>
           </div>
@@ -443,6 +445,8 @@ const chips = [
     white-space: normal; /* wraps below desktop: never wider than its row */
   }
   @media (min-width: 1200px) { .offer-tag { flex: none; white-space: nowrap; border-radius: var(--r-pill); } }
+  /* "learn more" on the Websites row: visual only (the title link covers the row), same type as the offer tag, no outline. */
+  .services__learn { flex: none; margin-left: var(--sp-16); font-family: var(--font-technical); font-size: var(--fs-nav); line-height: 1.4; letter-spacing: 0.04em; text-decoration: underline; text-underline-offset: 0.18em; white-space: nowrap; }
   .offer-tag__more { text-transform: none; text-decoration: underline; text-underline-offset: 0.18em; }
 
   .services__addons { display: flex; justify-content: center; align-items: flex-start; gap: 54px; }
@@ -556,7 +560,7 @@ const chips = [
     .services__slot { top: 9px; }
     .services__addons-list { grid-template-columns: minmax(0, 1fr); gap: var(--sp-16); }
     .services__addons-lead { min-height: 0; }
-    .offer-tag { margin-left: 0; }
+    .offer-tag, .services__learn { margin-left: 0; }
     .services__addons-lead { font-size: var(--fs-lead-sm); line-height: 1.3; }
     .services__included { align-items: flex-start; flex-direction: column; gap: var(--sp-8); }
   }

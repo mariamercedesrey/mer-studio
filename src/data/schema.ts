@@ -72,28 +72,31 @@ export function homeSchema(locale: Locale = 'en') {
   };
 }
 
-export function aiVisibilitySchema(locale: Locale = 'en') {
+// A service page (/ai-visibility/, /ecommerce/): Service + the page's four method rows as its offer catalogue.
+function serviceSchema(key: 'aiVisibility' | 'ecommerce', locale: Locale) {
   const copy = getCopy(locale);
   const j = copy.jsonld;
-  const url = `${SITE}${pagePath('aiVisibility', locale)}`;
+  const url = `${SITE}${pagePath(key, locale)}`;
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
     '@id': `${url}#service`,
-    name: j.aiVisibility.name,
-    serviceType: j.aiVisibility.serviceType,
+    name: j[key].name,
+    serviceType: j[key].serviceType,
     url,
-    description: j.aiVisibility.description,
+    description: j[key].description,
     provider: { '@id': ORG_ID },
     areaServed: j.areaServed,
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
-      name: j.aiVisibility.catalogName,
-      // The four "things an AI needs" are the method rows of the page itself.
-      itemListElement: copy.aiVisibility.method.items.map((m) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: m.t, description: m.d } })),
+      name: j[key].catalogName,
+      itemListElement: copy[key].method.items.map((m) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: m.t, description: m.d } })),
     },
   };
 }
+
+export const aiVisibilitySchema = (locale: Locale = 'en') => serviceSchema('aiVisibility', locale);
+export const ecommerceSchema = (locale: Locale = 'en') => serviceSchema('ecommerce', locale);
 
 export function projectSchema(p: ProjectDetailData, url: string, locale: Locale = 'en') {
   const copy = getCopy(locale);

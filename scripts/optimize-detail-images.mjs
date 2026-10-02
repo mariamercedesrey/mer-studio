@@ -12,7 +12,7 @@ const out = new URL('../src/assets/work-detail/', import.meta.url).pathname;
 
 const prefixes = {
   'asociart-': 'asociart', 'the-mile-': 'the-mile', 'orchard-mile-': 'orchard-mile', 'quilmes-': 'quilmes',
-  'carbon-optimum-': 'carbon-optimum', 'agente-mama-': 'agente-mama', 'aps-': 'american-padel-systems', 'hifi-hub-': 'hifi-hub',
+  'carbon-optimum-': 'carbon-optimum', 'agente-mama-': 'agente-mama', 'aps-': 'american-padel-systems', 'hifi-hub-': 'hifi-hub', 'black-duck-': 'black-duck',
 };
 const MAX_W = 2400;
 // Flattened Figma frames that also contain live text: crop the media part only (2× px).

@@ -1,15 +1,15 @@
 import { chromium } from 'playwright';
-// QA: no element may make the page wider than the viewport (document.scrollingElement.scrollWidth === clientWidth) at 360 and 390 px,
+// QA: no element may make the page wider than the viewport (document.scrollingElement.scrollWidth === clientWidth) at 360, 390 and 1440 px,
 // on every page, English and Spanish. Usage: npm run build && npx astro preview --port 4322 &  then  npm run qa:overflow [-- http://localhost:4322]
 const base = process.argv[2] || 'http://localhost:4322';
 const b = await chromium.launch(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {}); // CHROME_PATH: optional Chromium binary
-const slugs = ['asociart', 'the-mile', 'orchard-mile', 'quilmes', 'carbon-optimum', 'agente-mama', 'american-padel-systems', 'hifi-hub'];
+const slugs = ['asociart', 'the-mile', 'orchard-mile', 'quilmes', 'carbon-optimum', 'agente-mama', 'american-padel-systems', 'hifi-hub', 'black-duck'];
 const pages = [
-  '/', '/faq/', '/ai-visibility/', '/start-a-project/', '/start-a-project/thanks/', '/404.html', ...slugs.map((s) => `/work/${s}/`),
-  '/es/', '/es/preguntas-frecuentes/', '/es/visibilidad-ia/', '/es/empezar-proyecto/', '/es/empezar-proyecto/gracias/', '/es/404/', ...slugs.map((s) => `/es/proyectos/${s}/`),
+  '/', '/faq/', '/ai-visibility/', '/ecommerce/', '/start-a-project/', '/start-a-project/thanks/', '/404.html', ...slugs.map((s) => `/work/${s}/`),
+  '/es/', '/es/preguntas-frecuentes/', '/es/visibilidad-ia/', '/es/tiendas-online/', '/es/empezar-proyecto/', '/es/empezar-proyecto/gracias/', '/es/404/', ...slugs.map((s) => `/es/proyectos/${s}/`),
 ];
 let bad = 0;
-for (const w of [360, 390]) {
+for (const w of [360, 390, 1440]) {
   const ctx = await b.newContext({ viewport: { width: w, height: 800 } });
   const p = await ctx.newPage();
   await p.addInitScript(() => { try { sessionStorage.setItem('mer-intro','1'); } catch {} });

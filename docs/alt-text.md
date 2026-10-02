@@ -37,7 +37,10 @@ Generated from the built site (`dist/**/*.html`, all 13 pages): every <img>, uni
 | hero-poster.webp | content | Smartphone tied with a red cord to raw concrete blocks | 1 |
 | hero.webp | content | The Carbon Optimum process — raw material, microalgae, biomass, organic goods — over an ocean photograph, with the brand palette | 2 |
 | hero.webp | content | A laptop opened and shown from two angles | 2 |
+| black-duck.webp (work cover) | content | The Black Duck store on a desktop monitor and a phone, on a dark grey background | 2 |
 | hifi-hub.webp | content | HiFi Hub — project preview | 2 |
+| black-duck/store.webp | content | The Black Duck store on a desktop monitor and a phone | 2 |
+| black-duck automation (SVG scene, role=img) | content | An n8n workflow connecting AI image models and Google Drive to the product-photo pipeline | 2 |
 | hifihub.webp | content | HiFiHUB logo | 2 |
 | how-it-works-ascii.webp | content | ASCII-style illustration of the four-step process | 1 |
 | kcde.webp | content | Kuwait Concours d'Elegance logo | 2 |

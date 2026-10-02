@@ -7,7 +7,7 @@
 //   stage — free composition; every item has Figma x/y/w inside a `w`×`h` frame (overlaps, offsets)
 // Images live in src/assets/work-detail/<slug>/<name>.webp (see scripts/optimize-detail-images.mjs).
 // Copy is NOT written here: it comes from src/i18n/{en,es}.ts (`caseStudies`).
-import { getCopy, type Copy, type Locale } from '../i18n';
+import { getCopy, pagePath, type Copy, type Locale } from '../i18n';
 
 export type DetailText = { t: 'text'; heading: string; body: string; panel?: boolean };
 export type DetailImage = {
@@ -25,7 +25,9 @@ export type PocCopy = Copy['caseStudies']['asociart']['poc'];
 export type DetailPoc = { t: 'poc'; src: string; w: number; alt: string; copy: PocCopy };
 // Carbon Optimum "Starting point": ocean photo + palette as image; the card over it (steps, heading, paragraph) is HTML (components/work/StepsCard.astro).
 export type DetailSteps = { t: 'steps'; src: string; w: number; alt: string; heading: string; steps: readonly string[]; icons: readonly string[]; body: string };
-export type DetailItem = DetailText | DetailImage | DetailPoc | DetailSteps;
+// Black Duck "Outcome" closer: the n8n automation as an animated SVG scene (components/work/AutomationBlock.astro), Figma electro-wave 2305:1421.
+export type DetailAutomation = { t: 'automation'; alt: string };
+export type DetailItem = DetailText | DetailImage | DetailPoc | DetailSteps | DetailAutomation;
 export type Placed = DetailItem & { x: number; y: number; tw?: number; back?: boolean }; // tw: width of a text block (Figma px)
 
 export type FlowSection = {
@@ -48,6 +50,7 @@ export type ProjectDetailData = {
   note?: string; // extra meta line under the title (same style as meta)
   roles: readonly string[];
   sections: DetailSection[];
+  more?: { label: string; href: string }; // closing text link (ecommerce case studies → /ecommerce/)
 };
 
 type Block = { heading: string; body: string };
@@ -56,11 +59,13 @@ const text = (b: Block, panel = false): DetailText => ({ t: 'text', heading: b.h
 const img = (src: string, w: number, i: ImageCopy & { caption?: string }, center = false): DetailImage => ({ t: 'img', src, w, alt: i.alt, desc: i.desc, label: i.label, caption: i.caption, center });
 const poc = (src: string, w: number, alt: string, copy: PocCopy): DetailPoc => ({ t: 'poc', src, w, alt, copy });
 const steps = (src: string, w: number, alt: string, sp: { heading: string; steps: readonly string[]; body: string }, icons: readonly string[]): DetailSteps => ({ t: 'steps', src, w, alt, icons, ...sp });
+const automation = (alt: string): DetailAutomation => ({ t: 'automation', alt });
 const at = (x: number, y: number, item: DetailItem, tw?: number): Placed => ({ ...item, x, y, tw });
 
 // All copy (client, credit, titles, meta, roles, text blocks, alt texts, baked-in image copy) is in src/i18n/{en,es}.ts → `caseStudies[slug]`.
 // This file keeps what is not language: URLs, the Figma layout (widths, positions), image files and reading order.
-const build = (cs: Copy['caseStudies']): Record<string, ProjectDetailData> => {
+const build = (cs: Copy['caseStudies'], locale: Locale): Record<string, ProjectDetailData> => {
+  const ecommerceMore = { label: getCopy(locale).projectDetail.moreEcommerce, href: pagePath('ecommerce', locale) };
   const asociart = cs.asociart;
   const theMile = cs['the-mile'];
   const orchardMile = cs['orchard-mile'];
@@ -69,6 +74,7 @@ const build = (cs: Copy['caseStudies']): Record<string, ProjectDetailData> => {
   const agenteMama = cs['agente-mama'];
   const padel = cs['american-padel-systems'];
   const hifi = cs['hifi-hub'];
+  const duck = cs['black-duck'];
 
   return {
     asociart: {
@@ -100,6 +106,7 @@ const build = (cs: Copy['caseStudies']): Record<string, ProjectDetailData> => {
 
     'the-mile': {
       id: 'the-mile',
+      more: ecommerceMore,
       client: theMile.client,
       credit: theMile.credit,
       link: { label: theMile.linkLabel, href: 'https://orchardmile.com/the-mile' },
@@ -134,6 +141,7 @@ const build = (cs: Copy['caseStudies']): Record<string, ProjectDetailData> => {
 
     'orchard-mile': {
       id: 'orchard-mile',
+      more: ecommerceMore,
       client: orchardMile.client,
       credit: orchardMile.credit,
       link: { label: orchardMile.linkLabel, href: 'https://orchardmile.com' },
@@ -279,12 +287,31 @@ const build = (cs: Copy['caseStudies']): Record<string, ProjectDetailData> => {
         ] },
       ],
     },
+
+    'black-duck': {
+      id: 'black-duck',
+      more: ecommerceMore,
+      client: duck.client,
+      credit: duck.credit,
+      link: { label: duck.linkLabel, href: 'https://www.blackduck.com.ar' },
+      title: duck.title,
+      seoTitle: duck.seoTitle,
+      meta: duck.meta,
+      roles: duck.roles,
+      sections: [
+        { kind: 'flow', cols: [{ w: 1312, items: [text(duck.blocks.startingPoint)] }] },
+        { kind: 'flow', cols: [{ w: 1312, items: [text(duck.blocks.theWork)] }] },
+        { kind: 'flow', cols: [{ w: 1312, items: [img('black-duck/store', 1312, duck.images.store)] }] },
+        { kind: 'flow', cols: [{ w: 1312, items: [text(duck.blocks.outcome)] }] },
+        { kind: 'flow', cols: [{ w: 1312, items: [automation(duck.images.automation.alt)] }] },
+      ],
+    },
   };
 };
 
 const cache: Partial<Record<Locale, Record<string, ProjectDetailData>>> = {};
 /** The project details in a language (same structure and layout; only the copy changes). */
-export const getProjectDetails = (locale: Locale) => (cache[locale] ??= build(getCopy(locale).caseStudies));
+export const getProjectDetails = (locale: Locale) => (cache[locale] ??= build(getCopy(locale).caseStudies, locale));
 
 /** Every text block of a project (headings + bodies, incl. copy that lives in a composed block or is baked into an image), for JSON-LD and meta. */
 export function detailBlocks(p: ProjectDetailData): { heading: string; body: string }[] {
@@ -299,7 +326,7 @@ export function detailBlocks(p: ProjectDetailData): { heading: string; body: str
         body: [`${c.subtitle}.`, ...c.intro, `${c.tested.label}: ${c.tested.body}`, `${c.status.label}: ${c.status.body}`, `${f.domain.label}: ${f.domain.value}.`, `${f.length.label}: ${f.length.value}.`, `${f.role.label}: ${f.role.value}.`, `${c.humanInLoop.label}: ${c.humanInLoop.body}`].join(' '),
       });
     } else if (i.t === 'steps') out.push({ heading: i.heading, body: i.body });
-    else if (i.desc) out.push({ heading: i.label ?? i.alt, body: i.desc });
+    else if (i.t === 'img' && i.desc) out.push({ heading: i.label ?? i.alt, body: i.desc });
   };
   for (const s of p.sections) {
     if (s.kind === 'flow') s.cols.forEach((c) => c.items.forEach(visit));

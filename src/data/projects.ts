@@ -22,6 +22,7 @@ const defs: { id: string; slug: keyof Copy['work']['projects']; hidden?: boolean
   { id: 'safety', slug: 'agente-mama' },
   { id: 'aps', slug: 'american-padel-systems' },
   { id: 'units', slug: 'hifi-hub' },
+  { id: 'tee', slug: 'black-duck' },
 ];
 
 export const getProjects = (locale: Locale): Project[] => defs.map((d) => ({ ...d, ...getCopy(locale).work.projects[d.slug] }));

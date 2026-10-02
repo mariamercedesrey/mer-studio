@@ -64,6 +64,7 @@ export const es = {
       work: 'Proyectos',
       services: 'Servicios',
       howItWorks: 'Cómo trabajamos',
+      ecommerce: 'Tiendas online',
       aiVisibility: 'Visibilidad en IA',
       about: 'Nosotros',
       faq: 'Preguntas frecuentes',
@@ -113,6 +114,7 @@ export const es = {
       'agente-mama': { title: 'Una red de contención, no una app de productividad', meta: '[Startups]', roles: ['Estrategia de producto', 'UX Research', 'Design System', 'Desarrollo asistido por IA'], index: 'Asistente familiar con IA', alt: 'Agente Mamá AI en teléfonos: el panel del día y la agenda, alimentados por mensajes del grupo de WhatsApp y de la plataforma escolar' },
       'american-padel-systems': { title: 'Un sitio que responde "¿se paga solo?"', meta: '[Empresas]', roles: ['branding', 'Diseño web', 'Herramienta interactiva', 'Desarrollo web'], index: 'Pádel que rinde', alt: 'El sitio de American Padel Systems en una laptop inclinada, sobre un fondo azul marino cruzado por líneas naranjas' },
       'hifi-hub': { title: 'Seis unidades de negocio, un solo producto', meta: '[Startups] [Ecommerce]', roles: ['branding', 'Diseño de producto', 'Design System', 'Arquitectura de información'], index: 'Directorio audiófilo', alt: 'HiFi Hub — vista previa del proyecto' },
+      'black-duck': { title: 'Todas las técnicas de estampado, una sola tienda', meta: '[Tiendanube] [Ecommerce]', roles: ['Diseño web', 'Armado de tienda', 'Automatización con IA'], index: 'Black Duck Tee', alt: 'La tienda de Black Duck en un monitor de escritorio y en un celular, sobre un fondo gris oscuro' },
     },
   },
 
@@ -123,6 +125,7 @@ export const es = {
 
   services: {
     eyebrow: 'servicios',
+    learnMore: 'ver más', // link on the Websites row → the ecommerce page
     title: 'Estrategia, diseño y desarrollo, de principio a fin',
     diagramLabel: 'Diagrama de servicios: Marca y Producto, conectados por Estrategia, Diseño y Desarrollo — una sola práctica conectada, más de 25 años de experiencia.',
     diagram: {
@@ -244,6 +247,14 @@ export const es = {
       { q: '¿Qué es gratis en los proyectos que empiezan en octubre?', a: 'La configuración: schema, llms.txt, acceso de los rastreadores de IA, estructura semántica y un chequeo inicial de visibilidad. La estrategia de contenido, la auditoría completa y el seguimiento mensual son pagos.' },
       { q: '¿Garantizan que la IA los mencione?', a: 'Nadie puede garantizarlo. Creamos las condiciones para que los motores de IA te encuentren y confíen en ti, y medimos qué cambia.' },
     ],
+    ecommerce: [
+      { q: '¿Tiendanube, Shopify o WooCommerce? ¿Cuál me conviene?', a: 'Depende de dónde y cómo vendes. Tiendanube es la mejor opción para Argentina y Latinoamérica, con pagos y envíos locales; Shopify escala mejor a nivel internacional; WooCommerce conviene si ya trabajas con WordPress. Te recomendamos una después de una llamada corta.' },
+      { q: '¿Configuran los medios de pago y los envíos?', a: 'Sí. Medios de pago y reglas de envío para tu mercado, probados de punta a punta antes del lanzamiento.' },
+      { q: '¿Pueden conectar mi tienda con Instagram y Facebook?', a: 'Sí. Conectamos tu catálogo con Meta para que los productos se puedan etiquetar y vender desde Instagram y Facebook.' },
+      { q: '¿Cuánto tarda una tienda online?', a: 'Desde una semana para una tienda simple. Los catálogos grandes y las integraciones llevan más tiempo, y acordamos las fechas antes de empezar.' },
+      { q: '¿Cuánto cuesta una tienda online?', a: 'Cada proyecto se cotiza después de una llamada de 20 minutos. Tienes un alcance y un precio cerrados antes de empezar.' },
+      { q: '¿Incluye visibilidad en IA?', a: 'En los proyectos que empiezan en octubre de 2026, la configuración de visibilidad en IA es gratis, para que ChatGPT, Perplexity y Google te encuentren y recomienden tu tienda.' },
+    ],
   },
 
   aiVisibility: {
@@ -280,6 +291,47 @@ export const es = {
     },
     faq: { eyebrow: 'preguntas frecuentes', title: 'Preguntas sobre visibilidad en IA.' },
     cta: { eyebrow: 'Una pregunta para empezar.', title: '¿Qué dice la IA\nsobre tu marca?' },
+  },
+
+  ecommerce: {
+    meta: {
+      title: 'Diseño de tiendas online — Tiendanube, Shopify y WooCommerce',
+      description: 'Diseño y desarrollo de tiendas online en Tiendanube, Shopify y WooCommerce: una tienda que vende, con medios de pago, envíos e integración con Instagram, Facebook y Google.',
+    },
+    intro: {
+      eyebrow: 'tiendas online · tiendanube / shopify / woocommerce',
+      title: 'Una tienda online que vende, no solo que se ve bien.',
+      note: 'Diseñamos y construimos tiendas online en Tiendanube, Shopify y WooCommerce: desde la estructura del catálogo y las fichas de producto hasta los medios de pago, los envíos y la integración con Instagram, Facebook y Google que mantiene una tienda vendiendo.',
+    },
+    method: {
+      eyebrow: 'el método',
+      title: 'Cuatro cosas que una tienda necesita antes de vender.',
+      lede: 'El tráfico cuesta caro. Una tienda tiene que convertir en pedidos las visitas que recibe.',
+      items: [
+        { t: 'Encontrable', d: 'Páginas de producto y categoría pensadas para Google y para la búsqueda con IA: URLs limpias, datos estructurados y carga rápida en el celular.' },
+        { t: 'Clara', d: 'Un catálogo que se recorre en segundos: categorías, filtros y fichas que responden talle, material, envío y cambios antes de que alguien pregunte.' },
+        { t: 'Confiable', d: 'Una marca que transmite que va a cumplir: identidad coherente, imágenes de producto reales o bien producidas, reseñas y contacto visible.' },
+        { t: 'Sin fricción', d: 'Checkout, medios de pago y envíos configurados para tu mercado, y el catálogo conectado con Instagram, Facebook y Google.' },
+      ],
+      note: 'Recomendamos la plataforma después de mirar tu mercado, tu catálogo y cómo vendes, no al revés.',
+    },
+    proof: {
+      eyebrow: 'pruebas, no promesas',
+      title: 'Tiendas que diseñamos y construimos.',
+      cases: [
+        { slug: 'black-duck', line: 'Una tienda en Tiendanube de remeras estampadas, con un circuito de fotos de producto con IA.' },
+        { slug: 'orchard-mile', line: 'Más de 250 marcas y ~80.000 productos en una sola tienda por marca.' },
+        { slug: 'the-mile', line: 'Una tienda y app de moda impulsada por creadores, con checkout dentro de la app.' },
+      ],
+    },
+    faq: {
+      eyebrow: 'preguntas frecuentes',
+      title: 'Preguntas sobre tiendas online.',
+    },
+    cta: {
+      eyebrow: 'Una pregunta para empezar.',
+      title: '¿Qué quieres\nempezar a vender?',
+    },
   },
 
   offer: {
@@ -378,6 +430,7 @@ export const es = {
 
   projectDetail: {
     close: 'Cerrar proyecto',
+    moreEcommerce: 'Más sobre tiendas online →', // end of the Orchard Mile, The Mile and Black Duck case studies
   },
 
   jsonld: {
@@ -395,6 +448,12 @@ export const es = {
       serviceType: 'Generative engine optimization (GEO) y answer engine optimization (AEO)',
       description: 'Hacemos que tu marca sea legible, se entienda y pueda citarse en ChatGPT, Perplexity, Gemini y los resúmenes con IA de Google: páginas rastreables, datos estructurados, respuestas citables y presencia en los lugares que los modelos usan para verificarte.',
       catalogName: 'Cuatro cosas que una IA necesita antes de recomendarte',
+    },
+    ecommerce: {
+      name: 'Diseño de tiendas online',
+      serviceType: 'Diseño y desarrollo de tiendas online',
+      description: 'Diseñamos y construimos tiendas online en Tiendanube, Shopify y WooCommerce: estructura del catálogo y fichas de producto, medios de pago, envíos y la integración con Instagram, Facebook y Google que mantiene una tienda vendiendo.',
+      catalogName: 'Cuatro cosas que una tienda necesita antes de vender',
     },
   },
 
@@ -584,6 +643,24 @@ export const es = {
         logo: { alt: 'Logo de HiFi Hub' },
         brandSystem: { alt: 'Paleta de colores de HiFi Hub, matriz de tokens de color y documentación de design tokens' },
         outcome: { alt: 'La wishlist de HiFi Hub en una laptop' },
+      },
+    },
+    'black-duck': {
+      client: 'Black Duck',
+      credit: 'cliente del estudio',
+      linkLabel: 'blackduck.com.ar',
+      title: 'Todas las técnicas de estampado, una sola tienda',
+      seoTitle: 'Todas las técnicas de estampado, una sola tienda',
+      meta: '[Tiendanube] [Ecommerce]',
+      roles: ['Diseño web', 'Armado de tienda', 'Imágenes de producto', 'Automatización con IA'],
+      blocks: {
+        startingPoint: { heading: 'Punto de partida', body: 'Black Duck es una marca argentina de remeras con estampas de música y cultura, hechas con una variedad de técnicas poco común: tintas al agua y plastisol, metalizadas, 3D con relieve, flock, shimmer, glitter y puff. Necesitaba una tienda online que mostrara ese oficio, no solo el producto.' },
+        theWork: { heading: 'El trabajo', body: 'Armé la tienda en Tiendanube de punta a punta: diseño, estructura del catálogo y fichas de producto, medios de pago, envíos y la integración con Meta, que conecta el catálogo con Instagram y Facebook. Las imágenes de producto se produjeron con Midjourney y Photoshop, y una automatización en n8n retoca con IA las fotos nuevas y las guarda ordenadas en carpetas de Google Drive, para que cada lanzamiento salga más rápido.' },
+        outcome: { heading: 'Resultado', body: 'Tienda online vendiendo a todo el país, con tarjetas, efectivo y transferencia, envíos configurados y el catálogo sincronizado con Instagram y Facebook.' },
+      },
+      images: {
+        store: { alt: 'La tienda de Black Duck en un monitor de escritorio y en un celular' },
+        automation: { alt: 'Un flujo de n8n que conecta modelos de IA de imagen y Google Drive con el circuito de fotos de producto' },
       },
     },
   },

@@ -71,6 +71,7 @@ export const en = {
       work: 'Selected Works',
       services: 'Services',
       howItWorks: 'How it works',
+      ecommerce: 'Ecommerce',
       aiVisibility: 'AI Visibility',
       about: 'About Us',
       faq: 'FAQ',
@@ -121,6 +122,7 @@ export const en = {
       'agente-mama': { title: 'A safety net, not a productivity app', meta: '[Startups]', roles: ['Product Strategy', 'UX Research', 'Design System', 'AI-Assisted Build'], index: 'AI Family Assistant', alt: 'Agente Mamá AI on phones: the daily dashboard and agenda, fed by WhatsApp group and school platform messages' },
       'american-padel-systems': { title: 'A site that answers "does it pay for itself?"', meta: '[Enterprise]', roles: ['branding', 'Web Design', 'Interactive Tool', 'Web Development'], index: 'Empowering Padel', alt: 'The American Padel Systems website on a tilted laptop, on a navy background crossed by orange lines' },
       'hifi-hub': { title: 'Six business units, one product', meta: '[Startups] [Ecommerce]', roles: ['branding', 'Product Design', 'Design System', 'Information Architecture'], index: 'Audiophile Directory', alt: 'HiFi Hub — project preview' },
+      'black-duck': { title: 'Every print technique, one storefront', meta: '[Tiendanube] [Ecommerce]', roles: ['Web Design', 'Store Setup', 'AI Automation'], index: 'Black Duck Tee', alt: 'The Black Duck store on a desktop monitor and a phone, on a dark grey background' },
     },
   },
 
@@ -131,6 +133,7 @@ export const en = {
 
   services: {
     eyebrow: 'services',
+    learnMore: 'learn more', // link on the Websites row → the ecommerce page
     title: 'Strategy, Design & Build, end to end',
     diagramLabel: 'Services diagram: Brand and Product, connected by Strategy, Design and Build — one connected practice, 25+ years of experience.',
     diagram: {
@@ -256,6 +259,14 @@ export const en = {
       { q: "What's free for projects started in October?", a: 'The setup: schema, llms.txt, AI crawler access, semantic structure and an initial visibility check. Content strategy, full audit and monthly tracking are paid.' },
       { q: 'Do you guarantee AI mentions?', a: 'No one can. We build the conditions for AI engines to find and trust you, and we measure what changes.' },
     ],
+    ecommerce: [
+      { q: 'Shopify, Tiendanube or WooCommerce — which one should I use?', a: 'It depends on where and how you sell. Tiendanube fits Argentina and Latin America best, with local payments and shipping; Shopify scales best internationally; WooCommerce makes sense if you already run on WordPress. We recommend one after a short call.' },
+      { q: 'Do you set up payments and shipping?', a: 'Yes. Payment methods and shipping rules for your market, tested end to end before launch.' },
+      { q: 'Can you connect my store to Instagram and Facebook?', a: 'Yes. We connect your catalogue to Meta so products can be tagged and sold from Instagram and Facebook.' },
+      { q: 'How long does an online store take?', a: 'From one week for a simple store. Larger catalogues and integrations take longer, and we agree on dates before we start.' },
+      { q: 'How much does an online store cost?', a: 'Every project is quoted after a 20-minute call. You get a fixed scope and price before we start.' },
+      { q: 'Is AI Visibility included?', a: 'For projects started in October 2026, the AI Visibility setup is free, so your store can be found and recommended by ChatGPT, Perplexity and Google AI.' },
+    ],
   },
 
   aiVisibility: {
@@ -292,6 +303,47 @@ export const en = {
     },
     faq: { eyebrow: 'faq', title: 'Questions about AI Visibility.' },
     cta: { eyebrow: 'One question to start.', title: 'What does AI say\nabout your brand?' },
+  },
+
+  ecommerce: {
+    meta: {
+      title: 'Ecommerce Website Design — Shopify, Tiendanube & WooCommerce',
+      description: 'Ecommerce website design and build on Shopify, Tiendanube and WooCommerce: an online store that sells, with payments, shipping and Instagram, Facebook and Google integrations.',
+    },
+    intro: {
+      eyebrow: 'ecommerce · shopify / tiendanube / woocommerce',
+      title: 'An online store that sells, not just one that looks good.',
+      note: 'We design and build ecommerce websites on Shopify, Tiendanube and WooCommerce — from catalogue structure and product pages to payments, shipping, and the integrations with Instagram, Facebook and Google that keep a store selling.',
+    },
+    method: {
+      eyebrow: 'the method',
+      title: 'Four things a store needs before it sells.',
+      lede: 'Traffic is expensive. A store has to turn the visits it gets into orders.',
+      items: [
+        { t: 'Findable', d: 'Product and category pages built for Google and AI search: clean URLs, structured data and fast loading on mobile.' },
+        { t: 'Clear', d: 'A catalogue people can navigate in seconds: categories, filters and product pages that answer size, material, shipping and returns before anyone asks.' },
+        { t: 'Trustworthy', d: 'A brand that looks like it will deliver: consistent identity, real or well-made product imagery, reviews and visible contact.' },
+        { t: 'Frictionless', d: 'Checkout, payments and shipping set up for your market, and the catalogue connected to Instagram, Facebook and Google.' },
+      ],
+      note: 'We recommend the platform after looking at your market, your catalogue and how you sell — not the other way around.',
+    },
+    proof: {
+      eyebrow: 'proof, not promises',
+      title: "Stores we've designed and built.",
+      cases: [
+        { slug: 'orchard-mile', line: '250+ brands and ~80,000 products in one shop-by-brand storefront.' },
+        { slug: 'the-mile', line: 'A creator-led fashion store and app, with in-app checkout.' },
+        { slug: 'black-duck', line: 'A Tiendanube store for print tees, with an AI product-photo pipeline.' },
+      ],
+    },
+    faq: {
+      eyebrow: 'faq',
+      title: 'Questions about ecommerce.',
+    },
+    cta: {
+      eyebrow: 'One question to start.',
+      title: 'What are you\nready to sell?',
+    },
   },
 
   // Launch offer (flags and dates: src/data/offer.ts). Every offer text of the site comes from here.
@@ -397,6 +449,7 @@ export const en = {
   // Project Detail chrome (the content of each project is in `caseStudies`).
   projectDetail: {
     close: 'Close project',
+    moreEcommerce: 'More about ecommerce →', // end of the Orchard Mile, The Mile and Black Duck case studies
   },
 
   // Textual JSON-LD fields (src/data/schema.ts). Service names/descriptions are reused from `services`.
@@ -415,6 +468,12 @@ export const en = {
       serviceType: 'Generative engine optimization (GEO) and answer engine optimization (AEO)',
       description: 'We make your brand readable, understood and quotable by ChatGPT, Perplexity, Gemini and Google’s AI Overviews: crawlable pages, structured data, citable answers and a presence in the places models use to verify you.',
       catalogName: 'Four things an AI needs before it recommends you',
+    },
+    ecommerce: {
+      name: 'Ecommerce website design',
+      serviceType: 'Ecommerce website design and development',
+      description: 'We design and build online stores on Shopify, Tiendanube and WooCommerce: catalogue structure and product pages, payments, shipping, and the integrations with Instagram, Facebook and Google that keep a store selling.',
+      catalogName: 'Four things a store needs before it sells',
     },
   },
 
@@ -605,6 +664,24 @@ export const en = {
         logo: { alt: 'HiFi Hub logo' },
         brandSystem: { alt: 'HiFi Hub colour palette, colour-token matrix and design-token documentation' },
         outcome: { alt: 'The HiFi Hub wishlist on a laptop' },
+      },
+    },
+    'black-duck': {
+      client: 'Black Duck',
+      credit: 'studio client',
+      linkLabel: 'blackduck.com.ar',
+      title: 'Every print technique, one storefront',
+      seoTitle: 'Every print technique, one storefront',
+      meta: '[Tiendanube] [Ecommerce]',
+      roles: ['Web Design', 'Store Setup', 'Product Imagery', 'AI Automation'],
+      blocks: {
+        startingPoint: { heading: 'Starting point', body: 'Black Duck is an Argentine apparel brand selling tees with music and culture prints, made with an unusually wide range of techniques: water-based and plastisol inks, metallics, raised 3D, flock, shimmer, glitter and puff. It needed an online store that could show that craft, not just the product.' },
+        theWork: { heading: 'The work', body: 'I built the store on Tiendanube end to end: design, catalogue structure and product pages, payments, shipping, and the Meta integration that connects the catalogue to Instagram and Facebook. Product imagery was produced with Midjourney and Photoshop, and an n8n automation retouches new product photos with AI and files them into organised Google Drive folders, so new drops go online faster.' },
+        outcome: { heading: 'Outcome', body: 'Store live and selling nationwide, with cards, cash and bank-transfer payments and shipping configured, and the catalogue synced to Instagram and Facebook.' },
+      },
+      images: {
+        store: { alt: 'The Black Duck store on a desktop monitor and a phone' },
+        automation: { alt: 'An n8n workflow connecting AI image models and Google Drive to the product-photo pipeline' },
       },
     },
   },

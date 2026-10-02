@@ -22,8 +22,8 @@ const nav = [
 const page = pageOf(Astro.url.pathname);
 const homePath = pagePath('home', locale);
 const home = page?.key === 'home';
-// Light at the top, then scrolled once [data-nav-sentinel] leaves the viewport: the home, /start-a-project/ and /ai-visibility/. Everywhere else (/work/<slug>/) the bar is always on.
-const lightAtTop = page?.key === 'home' || page?.key === 'startProject' || page?.key === 'thanks' || page?.key === 'aiVisibility';
+// Light at the top, then scrolled once [data-nav-sentinel] leaves the viewport: the home, /start-a-project/, /ai-visibility/ and /ecommerce/. Everywhere else (/work/<slug>/) the bar is always on.
+const lightAtTop = page?.key === 'home' || page?.key === 'startProject' || page?.key === 'thanks' || page?.key === 'aiVisibility' || page?.key === 'ecommerce';
 const link = (href: string) => (href.startsWith('/') || home ? href : `${homePath}${href}`);
 const current = (href: string) => (href.startsWith('/') && Astro.url.pathname.startsWith(href) ? 'page' : undefined);
 ---
