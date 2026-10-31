@@ -4,7 +4,8 @@
 //  2. any page <title> is longer than 70 characters (Bing);
 //  3. GA4: every page carries the measurement ID and exactly one gtag loader / config (src/data/analytics.ts);
 //  4. stale copy: no "Not taken to production" / "No se llevó a producción" in any HTML or in llms.txt;
-//  5. the launch offer (src/data/offer.ts) and public/llms.txt disagree: `active` needs the "Launch offer" line, and
+//  5. IndexNow: plugins/indexnow/key.json is a 32-hex key and public/<key>.txt (and dist/<key>.txt) exists with exactly that content;
+//  6. the launch offer (src/data/offer.ts) and public/llms.txt disagree: `active` needs the "Launch offer" line, and
 //     an inactive offer must not leave it behind.
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
@@ -42,6 +43,15 @@ for (const file of walk(dist)) {
   if (/Not taken to production|No se llevó a producción/.test(decode(html))) errors.push(`${rel}: stale "not taken to production" copy`);
   const title = html.match(/<title>([^<]*)<\/title>/i)?.[1];
   if (title && decode(title).length > 70) errors.push(`${rel}: <title> is ${decode(title).length} characters (max 70) → ${decode(title)}`);
+}
+
+const { key: indexNowKey } = JSON.parse(readFileSync(new URL('../plugins/indexnow/key.json', import.meta.url), 'utf8'));
+if (!/^[a-f0-9]{32}$/.test(indexNowKey)) errors.push('plugins/indexnow/key.json: the IndexNow key must be 32 hex characters.');
+for (const [label, path] of [['public', new URL(`../public/${indexNowKey}.txt`, import.meta.url)], ['dist', new URL(`../dist/${indexNowKey}.txt`, import.meta.url)]]) {
+  let content = null;
+  try { content = readFileSync(path, 'utf8'); } catch {}
+  if (content === null) errors.push(`IndexNow: ${label}/${indexNowKey}.txt is missing.`);
+  else if (content.trim() !== indexNowKey) errors.push(`IndexNow: ${label}/${indexNowKey}.txt does not contain the key.`);
 }
 
 const llms = readFileSync(new URL('../public/llms.txt', import.meta.url), 'utf8');

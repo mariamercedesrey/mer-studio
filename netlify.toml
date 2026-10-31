@@ -20,3 +20,7 @@
   from = "/es/*"
   to = "/es/404/index.html"
   status = 404
+
+# IndexNow: after each production deploy (hook onSuccess, CONTEXT=production only) submit the sitemap URLs. Never fails the build.
+[[plugins]]
+  package = "./plugins/indexnow"
