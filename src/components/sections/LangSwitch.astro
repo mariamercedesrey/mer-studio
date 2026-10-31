@@ -1,7 +1,8 @@
 ---
 // Language switcher (Figma 2275:4970 NAV ROLLOVER): a dark 32 px chip with the current language; on hover, focus or tap the other
 // language opens beside it (a second 32 px slot, reserved so the nav never shifts). The option is a link to the SAME page in the
-// other language (src/i18n/routes.ts). No automatic redirect by browser language anywhere: the reader chooses.
+// other language (src/i18n/routes.ts). The first visit to "/" is redirected by netlify/edge-functions/default-language.ts; choosing a language here saves it
+// (cookie `mer_lang`, 1 year), and that choice wins over the detection on later visits to "/".
 // Desktop: disclosure <button aria-expanded aria-controls> + <a hreflang lang>. Esc closes. Mobile menu (`menu`): both options visible.
 import { getCopy, pathIn, LOCALES, type Locale } from '../../i18n';
 
@@ -30,6 +31,10 @@ const href = (l: Locale) => pathIn(Astro.url.pathname, l);
 )}
 
 <script>
+  document.addEventListener('click', (e) => {
+    const a = (e.target as Element).closest<HTMLAnchorElement>('[data-lang] a[hreflang], .lang-menu a[hreflang]');
+    if (a) document.cookie = `mer_lang=${a.hreflang}; Max-Age=31536000; Path=/; SameSite=Lax`;
+  });
   document.querySelectorAll<HTMLElement>('[data-lang]').forEach((root) => {
     const btn = root.querySelector<HTMLButtonElement>('.lang__btn')!;
     const set = (open: boolean) => btn.setAttribute('aria-expanded', String(open));

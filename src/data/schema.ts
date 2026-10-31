@@ -53,7 +53,7 @@ export function homeSchema(locale: Locale = 'en') {
           itemListElement: servicesOf(locale).map(({ offer: isOffer, ...s }) => ({
             '@type': 'Offer',
             itemOffered: { '@type': 'Service', ...s, provider: { '@id': ORG_ID } },
-            // Launch offer (src/data/offer.ts): the AI Visibility setup is free for projects started in October 2026. Setup only.
+            // Launch offer (src/data/offer.ts): the AI Visibility setup is free for projects started in November 2026. Setup only.
             ...(offer.active && isOffer ? { price: 0, priceCurrency: 'USD', validThrough: offer.validThrough, description: offer.llms } : {}),
           })),
         },

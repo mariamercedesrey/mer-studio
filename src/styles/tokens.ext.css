@@ -12,8 +12,8 @@
   --btn-h-lg: 56px;                               /* Button Large (18px label) */
   --blur-nav: 3.611px;                            /* header light-ground backdrop blur (Figma 149:5116 / 2126:243) */
   --dot-muted: rgb(126, 126, 126);             /* grey dot on the How it works path (Figma 2003:39; DS SignatureDot tone="muted") */
-  --opacity-step-pending: 0.6;                    /* How it works step not yet reached by the dot — same 60 % as --text-tertiary (dark), keeps AA on charcoal */
-  --ascii-bg: rgb(16, 16, 25);                    /* How it works ASCII panel ground, sampled from brand/assets/img/how-it-works.png */
+  --opacity-step-pending: 0.6;                    /* How it works step not yet reached by the dot — same 60 % as --text-tertiary (dark), keeps AA on the ink ground */
+  --ascii-bg: var(--surface-inverse);/* How it works ASCII panel ground — same as .hiw (surface-inverse) so there is no seam */
   --ascii-ink: rgb(202, 203, 209);                /* How it works ASCII glyphs, sampled from the same asset */
   /* Body/Large — Figma text style text/body-lg: Outfit Regular 20 / 150 %. (--fs-body-lg is the older 18 px step; this style is separate.)
      The hero eyebrow, offer line and summary use it. Scales down with the token on phones, never with loose values. */

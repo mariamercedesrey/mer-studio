@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';
 import SiteHeader from '../components/sections/SiteHeader.astro';
+import Analytics from '../components/primitives/Analytics.astro';
+import ConsentBanner from '../components/primitives/ConsentBanner.astro';
 // Preload the one font every screen needs first (Outfit, latin subset); the rest load on demand.
 import { offer } from '../data/offer';
 import { getCopy, localeOf, pathIn, pageOf, LOCALES } from '../i18n';
@@ -76,12 +78,14 @@ const ogImage = new URL(image, Astro.site);
     <meta name="twitter:image" content={ogImage} />
 
     {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
+    <Analytics />
     <slot name="head" />
   </head>
   <body>
     <a class="skip-link" href="#main">{site.skipLink}</a>
     {header && <SiteHeader />}
     <slot />
+    <ConsentBanner />
     <script>
       // Entrance motion (CLAUDE.md §22): decode titles + [data-reveal], one shared IntersectionObserver.
       import { initReveals } from '../scripts/reveal';

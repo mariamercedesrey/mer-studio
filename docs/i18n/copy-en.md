@@ -9,7 +9,7 @@ Generated from `src/i18n/en.ts` by `npm run i18n:export` — do not edit by hand
 - Not in this file on purpose: URLs, e-mail, phone, and the `value` of form fields (they stay English so the inbox is uniform).
 - Also still in English outside `en.ts`: `public/llms.txt` (the launch-offer line must match `offer.llms`; `scripts/check-site.mjs` enforces it).
 
-Strings: 662.
+Strings: 663.
 
 ## Global (every page)
 
@@ -35,6 +35,10 @@ Strings: 662.
 - `buttons.sendInquiry` → send inquiry
 - `buttons.sending` → sending…
 - `buttons.checkMyBrand` → check my brand
+- `consent.label` → Analytics consent
+- `consent.text` → We use Google Analytics to understand how the site is used. Accept or reject: either way the site works the same.
+- `consent.accept` → accept
+- `consent.reject` → reject
 - `faqCta.prompt` → Want to know more?
 - `faqCta.questionsFirst` → Questions before you start?
 - `faqCta.readFaq` → Read the faq
@@ -89,7 +93,8 @@ Strings: 662.
 - `hero.industries[6]` → Startups
 - `hero.industries[7]` → Enterprise
 - `hero.industries[8]` → Healthcare
-- `hero.summary` → Strategy, design and code, handled end to end by one team. Twenty-five years across enterprise products and US startups, applied at any size — a brand, a website, an online store, a full platform.
+- `hero.summaryTitle` → Great work happens when everything works together.
+- `hero.summary` → We bring strategy, design and development into one connected process — from brand identities and websites to ecommerce experiences and complex digital products. Built on 25 years of experience across enterprise and US startups.
 - `hero.scrollLabel` → Go to selected work
 - `marquee.ariaLabel` → Clients we've worked with
 - `marquee.logoAlt` → {name} logo
@@ -179,9 +184,6 @@ Strings: 662.
 - `services.diagram.coreTitleLines[0]` → Strategy
 - `services.diagram.coreTitleLines[1]` → Design
 - `services.diagram.coreTitleLines[2]` → Build
-- `services.diagram.coreDescLines[0]` → One connected
-- `services.diagram.coreDescLines[1]` → practice
-- `services.diagram.coreDescLines[2]` → MER Studio
 - `services.rows.branding.name` → Branding
 - `services.rows.branding.body` → Identity, and the system to keep it consistent.
 - `services.rows.websites.name` → Websites
@@ -259,10 +261,10 @@ Strings: 662.
 
 ## Launch offer (hero line, Services, /ai-visibility/, JSON-LD, llms.txt)
 
-- `offer.tag` → Free with your project · Oct 2026
+- `offer.tag` → Free with your project · Nov 2026
 - `offer.more` → read more
-- `offer.pill` → Free · Oct 2026
-- `offer.hero` → AI Visibility free for projects started in October 2026
+- `offer.pill` → Free · Nov 2026
+- `offer.hero` → AI Visibility free for projects started in November 2026
 - `offer.free.title` → Included free
 - `offer.free.items[0]` → Base setup: schema / JSON-LD, llms.txt, AI-bot access in robots.txt, semantic content structure
 - `offer.free.items[1]` → An initial visibility check in ChatGPT, Perplexity, Gemini and Google AI
@@ -270,8 +272,8 @@ Strings: 662.
 - `offer.paid.items[0]` → AI content strategy
 - `offer.paid.items[1]` → Full audit
 - `offer.paid.items[2]` → Monthly measurement
-- `offer.intro` → Launch offer: every project that starts in October 2026 includes the AI Visibility setup at no cost.
-- `offer.llms` → Launch offer: projects started in October 2026 include AI Visibility setup free (schema, llms.txt, AI crawler access, semantic structure, and an initial AI visibility check). Content strategy, full audit and monthly measurement are paid.
+- `offer.intro` → Launch offer: every project that starts in November 2026 includes the AI Visibility setup at no cost.
+- `offer.llms` → Launch offer: projects started in November 2026 include AI Visibility setup free (schema, llms.txt, AI crawler access, semantic structure, and an initial AI visibility check). Content strategy, full audit and monthly measurement are paid.
 
 ## /faq/
 
@@ -310,8 +312,8 @@ Strings: 662.
 - `faq.groups[2].label` → ai visibility
 - `faq.groups[2].items[0].q` → What is AI Visibility (GEO / AEO)?
 - `faq.groups[2].items[0].a` → Making your brand easy for AI to find, understand and cite — not just to rank on Google.
-- `faq.groups[2].items[1].q` → Is AI Visibility free in October?
-- `faq.groups[2].items[1].a` → Yes, the setup is free for projects started in October 2026. The rest is paid.
+- `faq.groups[2].items[1].q` → Is AI Visibility free in November?
+- `faq.groups[2].items[1].a` → Yes, the setup is free for projects started in November 2026. The rest is paid.
 
 ## /ecommerce/
 
@@ -355,7 +357,7 @@ Strings: 662.
 - `faq.ecommerce[4].q` → How much does an online store cost?
 - `faq.ecommerce[4].a` → Every project is quoted after a 20-minute call. You get a fixed scope and price before we start.
 - `faq.ecommerce[5].q` → Is AI Visibility included?
-- `faq.ecommerce[5].a` → For projects started in October 2026, the AI Visibility setup is free, so your store can be found and recommended by ChatGPT, Perplexity and Google AI.
+- `faq.ecommerce[5].a` → For projects started in November 2026, the AI Visibility setup is free, so your store can be found and recommended by ChatGPT, Perplexity and Google AI.
 
 ## /ai-visibility/
 
@@ -395,7 +397,7 @@ Strings: 662.
 - `faq.aiVisibility[1].a` → Structuring your content so it becomes the direct answer: clear questions and answers, structured data, and pages AI crawlers can read.
 - `faq.aiVisibility[2].q` → How is GEO different from SEO?
 - `faq.aiVisibility[2].a` → SEO gets you ranked; GEO and AEO get you mentioned. They work together — a solid technical base helps both.
-- `faq.aiVisibility[3].q` → What's free for projects started in October?
+- `faq.aiVisibility[3].q` → What's free for projects started in November?
 - `faq.aiVisibility[3].a` → The setup: schema, llms.txt, AI crawler access, semantic structure and an initial visibility check. Content strategy, full audit and monthly tracking are paid.
 - `faq.aiVisibility[4].q` → Do you guarantee AI mentions?
 - `faq.aiVisibility[4].a` → No one can. We build the conditions for AI engines to find and trust you, and we measure what changes.
@@ -471,7 +473,7 @@ Strings: 662.
 ## JSON-LD (textual fields)
 
 - `jsonld.areaServed` → Worldwide
-- `jsonld.home.description` → Strategy, design and code, handled end to end by one team. Twenty-five years across enterprise products and US startups, applied at any size — a brand, a website, an online store, a full platform.
+- `jsonld.home.description` → We bring strategy, design and development into one connected process — from brand identities and websites to ecommerce experiences and complex digital products. Built on 25 years of experience across enterprise and US startups.
 - `jsonld.home.slogan` → Strategy, design and build, end to end.
 - `jsonld.home.catalogName` → Services
 - `jsonld.home.aiVisibilityService.name` → AI Visibility · GEO / AEO
@@ -502,20 +504,20 @@ Strings: 662.
 - `caseStudies.asociart.roles[3]` → Front-End
 - `caseStudies.asociart.poc.title` → AI-Assisted Design System Workflow
 - `caseStudies.asociart.poc.subtitle` → From user stories to design-system-driven interfaces
-- `caseStudies.asociart.poc.intro[0]` → I built a Proof of Concept to test whether an AI-assisted workflow could translate product requirements into editable Figma interfaces while preserving an existing enterprise Design System as the source of truth.
-- `caseStudies.asociart.poc.intro[1]` → I curated pairs of previous user stories and their approved Figma outcomes as few-shot / in-context examples, giving the model concrete references for how requirements had historically translated into UX patterns, components and layouts. The workflow combined that contextual guidance with explicit UX rules and structured Design System information — components, variants, variables, tokens and interaction patterns — reaching the system through an MCP-based context layer instead of inventing UI from scratch.
+- `caseStudies.asociart.poc.intro[0]` → I led a proof of concept to test whether an AI-assisted workflow could translate user stories into editable Figma interfaces, with an existing enterprise Design System as the source of truth.
+- `caseStudies.asociart.poc.intro[1]` → I used the Users management flow — already designed and approved — as the reference, so the model could carry that pattern over to Applications management. I standardised the structure of the user stories (role, goal, acceptance criteria and business rules), since they were the model's main input. The workflow combined those stories with explicit UX rules, mock data and structured Design System information — components, variants, tokens and states — instead of inventing UI from scratch.
 - `caseStudies.asociart.poc.tested.label` → What I tested
-- `caseStudies.asociart.poc.tested.body` → Running a real user story through the pipeline, the agent produced editable Figma views built from existing Design System components — not generic UI. The translation held: component reuse and UX intent survived, and the output was reviewable and editable rather than a flat mockup.
+- `caseStudies.asociart.poc.tested.body` → The first screens met the story but failed on composition and hierarchy. I tightened the UX rules and added context on states and flow behaviour. With that, the agent generated the Users and Applications tables and their create and edit modals directly in Figma through the Figma MCP — editable, built from Design System components and faithful to the reference pattern. Design review caught data inconsistencies across screens, which I fixed before handoff.
 - `caseStudies.asociart.poc.status.label` → Status
-- `caseStudies.asociart.poc.status.body` → Validated POC. Not taken to production — the goal was to prove the translation layer worked, not to automate design decisions. The designer retains validation and final judgment.
+- `caseStudies.asociart.poc.status.body` → POC validated on a real epic. The flows served as the handoff guide for development, and the stories shipped to production. The generation workflow wasn't automated as a process: the goal was to prove the translation layer, not to replace design decisions.
 - `caseStudies.asociart.poc.facts.domain.label` → Domain
 - `caseStudies.asociart.poc.facts.domain.value` → Design System Automation
 - `caseStudies.asociart.poc.facts.length.label` → Length
 - `caseStudies.asociart.poc.facts.length.value` → POC · 2026
 - `caseStudies.asociart.poc.facts.role.label` → Role
-- `caseStudies.asociart.poc.facts.role.value` → Design & Execution
+- `caseStudies.asociart.poc.facts.role.value` → Leadership, design and execution
 - `caseStudies.asociart.poc.humanInLoop.label` → Human-in-the-loop
-- `caseStudies.asociart.poc.humanInLoop.body` → AI accelerates translation and component mapping; the designer retains validation and final design decisions.
+- `caseStudies.asociart.poc.humanInLoop.body` → AI speeds up translation and component mapping; I keep validation and final design decisions.
 - `caseStudies.asociart.blocks.startingPoint.heading` → Starting point
 - `caseStudies.asociart.blocks.startingPoint.body` → Asociart brought Neoris in to replace a monolithic legacy system running claims, legal, medical and financial operations across ten-plus departments. There was no UX practice on the product and no shared visual system. As part of Neoris' team, I was brought in to build that foundation while the platform was reengineered.
 - `caseStudies.asociart.blocks.theWork.heading` → The work
@@ -528,7 +530,7 @@ Strings: 662.
 - `caseStudies.asociart.images.recoveriesA.alt` → Asociart Core Design System: colour and typography foundations
 - `caseStudies.asociart.images.recoveriesB.alt` → Asociart Storybook documentation for the aso-button component
 - `caseStudies.asociart.images.outcome.alt` → The reengineered Asociart claims management screen on a laptop
-- `caseStudies.asociart.images.workflow.alt` → AI-Assisted Design System Workflow: a diagram from user story, few-shot examples and rules through Claude and the Figma MCP to an editable Figma interface built from the Design System
+- `caseStudies.asociart.images.workflow.alt` → AI-Assisted Design System Workflow: a diagram from user story, reference designs and rules through Claude and the Figma MCP to an editable Figma interface built from the Design System
 
 ### The Mile — `the-mile`
 
@@ -544,20 +546,19 @@ Strings: 662.
 - `caseStudies.the-mile.blocks.startingPoint.heading` → Starting point
 - `caseStudies.the-mile.blocks.startingPoint.body` → Orchard Mile had built a strong luxury marketplace, but paid acquisition and catalogue competition were capping growth. The answer was to become The Mile: the site was adapted to the new model and a mobile app was built from scratch, turning creators into distributed storefronts that sell the marketplace's brands to their own audiences and earn commission on every sale.
 - `caseStudies.the-mile.blocks.theWork.heading` → The work
-- `caseStudies.the-mile.blocks.theWork.body` → I started with the brand — logo, brand guide and brand system. Then the app, designed from zero with the CEO and the marketing team after a short round of research, covering consumer and creator journeys end to end: onboarding, live and pre-recorded shoppable shows, reels, creator storefronts, affiliate links, discovery and checkout. I also redesigned the Orchard Mile site to match, with a new Reels section, built navigable prototypes to pitch investors and recruit influencers before development, and supported the React Native developer on selected components.
+- `caseStudies.the-mile.blocks.theWork.body` → I started with the brand — logo, brand guide and brand system. Then the app, designed from zero with the CEO, the CTO and the marketing team after research across the whole experience, covering consumer and creator journeys end to end: onboarding, live and pre-recorded shoppable shows, reels, creator storefronts, affiliate links, discovery and checkout. I also redesigned the Orchard Mile site to match, with a new Reels section, built navigable prototypes to pitch investors and recruit influencers before development, and supported the React Native developer on selected components.
 - `caseStudies.the-mile.blocks.checkoutInsideTheApp.heading` → Checkout inside the app
 - `caseStudies.the-mile.blocks.checkoutInsideTheApp.body` → Most creator-commerce apps send buyers somewhere else to pay. Here the whole purchase happened in the app: products came from Orchard Mile as the retailer, so discovery, trust in the creator and checkout stayed in one loop.
 - `caseStudies.the-mile.blocks.outcome.heading` → Outcome
 - `caseStudies.the-mile.blocks.outcome.body` → First year after launch (Apr–Oct 2023): creator community +200%, show viewership 2×, orders +300%, items per order from 1.7 to 2.7.
 - `caseStudies.the-mile.blocks.academy.heading` → Academy
-- `caseStudies.the-mile.blocks.academy.body` → The business depended on how well creators could sell, so I built The Mile Academy: documentation and video lessons to help them plan, shoot and present products more professionally — turning creator skill into something the product supports, instead of something it hopes for.
+- `caseStudies.the-mile.blocks.academy.body` → The business depended on how well creators could sell, so we built The Mile Academy: documentation and video lessons to help them plan, shoot and present products more professionally — turning creator skill into something the product supports, instead of something it hopes for.
 - `caseStudies.the-mile.images.flow.alt` → The Mile app user flow: onboarding, sign-up, verification and the creator storefront journey
 - `caseStudies.the-mile.images.brand.alt` → The Mile brand system: colours, logotypes and brand fonts
 - `caseStudies.the-mile.images.checkout.alt` → The Mile on desktop and mobile, above the connected onboarding and account screens of the navigable prototype
 - `caseStudies.the-mile.images.checkout.desc` → Navigable prototypes used with investors and creators to validate each journey before development.
 - `caseStudies.the-mile.images.checkout.label` → Navigable prototypes
 - `caseStudies.the-mile.images.outcomeHero.alt` → The Mile app on a phone: a creator hosting a shoppable show
-- `caseStudies.the-mile.images.outcomePhone.alt` → The Mile app welcome screen on a phone
 - `caseStudies.the-mile.images.academyBoard.alt` → The Mile Academy flow: lesson screens and their connections
 - `caseStudies.the-mile.images.academyLogo.alt` → The Mile Academy identity
 

@@ -26,6 +26,12 @@ export const en = {
     whatsapp: 'WhatsApp',
   },
 
+  consent: {
+    label: 'Analytics consent',
+    text: 'We use Google Analytics to understand how the site is used. Accept or reject: either way the site works the same.',
+    accept: 'accept',
+    reject: 'reject',
+  },
   buttons: {
     bookCall: 'book a call',
     startProject: 'start a project',
@@ -98,7 +104,8 @@ export const en = {
     posterAlt: 'Smartphone tied with a red cord to raw concrete blocks',
     workedTitle: "WHERE WE'VE WORKED",
     industries: ['Ecommerce', 'Agribusiness', 'Fashion', 'Insurance', 'Finance', 'Foreign Trade', 'Startups', 'Enterprise', 'Healthcare'],
-    summary: 'Strategy, design and code, handled end to end by one team. Twenty-five years across enterprise products and US startups, applied at any size — a brand, a website, an online store, a full platform.',
+    summaryTitle: 'Great work happens when everything works together.',
+    summary: 'We bring strategy, design and development into one connected process — from brand identities and websites to ecommerce experiences and complex digital products. Built on 25 years of experience across enterprise and US startups.',
     scrollLabel: 'Go to selected work',
   },
 
@@ -142,7 +149,6 @@ export const en = {
       mer: 'MER',
       years: '25+ years of experience',
       coreTitleLines: ['Strategy', 'Design', 'Build'],
-      coreDescLines: ['One connected', 'practice', 'MER Studio'],
     },
     // Row titles = diagram pills, exactly (one list, one vocabulary).
     rows: {
@@ -249,14 +255,14 @@ export const en = {
       ] },
       { num: '03', label: 'ai visibility', items: [
         { q: 'What is AI Visibility (GEO / AEO)?', a: 'Making your brand easy for AI to find, understand and cite — not just to rank on Google.' },
-        { q: 'Is AI Visibility free in October?', a: 'Yes, the setup is free for projects started in October 2026. The rest is paid.' },
+        { q: 'Is AI Visibility free in November?', a: 'Yes, the setup is free for projects started in November 2026. The rest is paid.' },
       ] },
     ],
     aiVisibility: [
       { q: 'What is Generative Engine Optimization (GEO)?', a: "Making your brand easy for AI engines like ChatGPT, Perplexity and Google AI to find, understand and cite when people ask them questions — not just ranking in Google's list of links." },
       { q: 'What is Answer Engine Optimization (AEO)?', a: 'Structuring your content so it becomes the direct answer: clear questions and answers, structured data, and pages AI crawlers can read.' },
       { q: 'How is GEO different from SEO?', a: 'SEO gets you ranked; GEO and AEO get you mentioned. They work together — a solid technical base helps both.' },
-      { q: "What's free for projects started in October?", a: 'The setup: schema, llms.txt, AI crawler access, semantic structure and an initial visibility check. Content strategy, full audit and monthly tracking are paid.' },
+      { q: "What's free for projects started in November?", a: 'The setup: schema, llms.txt, AI crawler access, semantic structure and an initial visibility check. Content strategy, full audit and monthly tracking are paid.' },
       { q: 'Do you guarantee AI mentions?', a: 'No one can. We build the conditions for AI engines to find and trust you, and we measure what changes.' },
     ],
     ecommerce: [
@@ -265,7 +271,7 @@ export const en = {
       { q: 'Can you connect my store to Instagram and Facebook?', a: 'Yes. We connect your catalogue to Meta so products can be tagged and sold from Instagram and Facebook.' },
       { q: 'How long does an online store take?', a: 'From one week for a simple store. Larger catalogues and integrations take longer, and we agree on dates before we start.' },
       { q: 'How much does an online store cost?', a: 'Every project is quoted after a 20-minute call. You get a fixed scope and price before we start.' },
-      { q: 'Is AI Visibility included?', a: 'For projects started in October 2026, the AI Visibility setup is free, so your store can be found and recommended by ChatGPT, Perplexity and Google AI.' },
+      { q: 'Is AI Visibility included?', a: 'For projects started in November 2026, the AI Visibility setup is free, so your store can be found and recommended by ChatGPT, Perplexity and Google AI.' },
     ],
   },
 
@@ -348,10 +354,10 @@ export const en = {
 
   // Launch offer (flags and dates: src/data/offer.ts). Every offer text of the site comes from here.
   offer: {
-    tag: 'Free with your project · Oct 2026',
+    tag: 'Free with your project · Nov 2026',
     more: 'read more',
-    pill: 'Free · Oct 2026', // diagram pill: "AI Visibility  FREE · OCT 2026 · read more"
-    hero: 'AI Visibility free for projects started in October 2026', // hero line, after the "—"
+    pill: 'Free · Nov 2026', // diagram pill: "AI Visibility  FREE · NOV 2026 · read more"
+    hero: 'AI Visibility free for projects started in November 2026', // hero line, after the "—"
     free: {
       title: 'Included free',
       items: [
@@ -363,9 +369,9 @@ export const en = {
       title: 'Still paid',
       items: ['AI content strategy', 'Full audit', 'Monthly measurement'],
     },
-    intro: 'Launch offer: every project that starts in October 2026 includes the AI Visibility setup at no cost.',
+    intro: 'Launch offer: every project that starts in November 2026 includes the AI Visibility setup at no cost.',
     // Also the JSON-LD description of the offer, and the line that public/llms.txt must carry (scripts/check-site.mjs).
-    llms: 'Launch offer: projects started in October 2026 include AI Visibility setup free (schema, llms.txt, AI crawler access, semantic structure, and an initial AI visibility check). Content strategy, full audit and monthly measurement are paid.',
+    llms: 'Launch offer: projects started in November 2026 include AI Visibility setup free (schema, llms.txt, AI crawler access, semantic structure, and an initial AI visibility check). Content strategy, full audit and monthly measurement are paid.',
   },
 
   // Left column of the dark intake panel (start a project, AI Visibility).
@@ -456,7 +462,7 @@ export const en = {
   jsonld: {
     areaServed: 'Worldwide',
     home: {
-      description: 'Strategy, design and code, handled end to end by one team. Twenty-five years across enterprise products and US startups, applied at any size — a brand, a website, an online store, a full platform.',
+      description: 'We bring strategy, design and development into one connected process — from brand identities and websites to ecommerce experiences and complex digital products. Built on 25 years of experience across enterprise and US startups.',
       slogan: 'Strategy, design and build, end to end.',
       catalogName: 'Services',
       aiVisibilityService: { name: 'AI Visibility · GEO / AEO', description: 'So people find you when they ask an AI, not just Google.' },
@@ -490,17 +496,17 @@ export const en = {
         title: 'AI-Assisted Design System Workflow',
         subtitle: 'From user stories to design-system-driven interfaces',
         intro: [
-          'I built a Proof of Concept to test whether an AI-assisted workflow could translate product requirements into editable Figma interfaces while preserving an existing enterprise Design System as the source of truth.',
-          'I curated pairs of previous user stories and their approved Figma outcomes as few-shot / in-context examples, giving the model concrete references for how requirements had historically translated into UX patterns, components and layouts. The workflow combined that contextual guidance with explicit UX rules and structured Design System information — components, variants, variables, tokens and interaction patterns — reaching the system through an MCP-based context layer instead of inventing UI from scratch.',
+          'I led a proof of concept to test whether an AI-assisted workflow could translate user stories into editable Figma interfaces, with an existing enterprise Design System as the source of truth.',
+          'I used the Users management flow — already designed and approved — as the reference, so the model could carry that pattern over to Applications management. I standardised the structure of the user stories (role, goal, acceptance criteria and business rules), since they were the model\'s main input. The workflow combined those stories with explicit UX rules, mock data and structured Design System information — components, variants, tokens and states — instead of inventing UI from scratch.',
         ],
-        tested: { label: 'What I tested', body: 'Running a real user story through the pipeline, the agent produced editable Figma views built from existing Design System components — not generic UI. The translation held: component reuse and UX intent survived, and the output was reviewable and editable rather than a flat mockup.' },
-        status: { label: 'Status', body: 'Validated POC. Not taken to production — the goal was to prove the translation layer worked, not to automate design decisions. The designer retains validation and final judgment.' },
+        tested: { label: 'What I tested', body: 'The first screens met the story but failed on composition and hierarchy. I tightened the UX rules and added context on states and flow behaviour. With that, the agent generated the Users and Applications tables and their create and edit modals directly in Figma through the Figma MCP — editable, built from Design System components and faithful to the reference pattern. Design review caught data inconsistencies across screens, which I fixed before handoff.' },
+        status: { label: 'Status', body: 'POC validated on a real epic. The flows served as the handoff guide for development, and the stories shipped to production. The generation workflow wasn\'t automated as a process: the goal was to prove the translation layer, not to replace design decisions.' },
         facts: {
           domain: { label: 'Domain', value: 'Design System Automation' },
           length: { label: 'Length', value: 'POC · 2026' },
-          role: { label: 'Role', value: 'Design & Execution' },
+          role: { label: 'Role', value: 'Leadership, design and execution' },
         },
-        humanInLoop: { label: 'Human-in-the-loop', body: 'AI accelerates translation and component mapping; the designer retains validation and final design decisions.' },
+        humanInLoop: { label: 'Human-in-the-loop', body: 'AI speeds up translation and component mapping; I keep validation and final design decisions.' },
       },
       blocks: {
         startingPoint: { heading: 'Starting point', body: "Asociart brought Neoris in to replace a monolithic legacy system running claims, legal, medical and financial operations across ten-plus departments. There was no UX practice on the product and no shared visual system. As part of Neoris' team, I was brought in to build that foundation while the platform was reengineered." },
@@ -513,7 +519,7 @@ export const en = {
         recoveriesA: { alt: 'Asociart Core Design System: colour and typography foundations' },
         recoveriesB: { alt: 'Asociart Storybook documentation for the aso-button component' },
         outcome: { alt: 'The reengineered Asociart claims management screen on a laptop' },
-        workflow: { alt: 'AI-Assisted Design System Workflow: a diagram from user story, few-shot examples and rules through Claude and the Figma MCP to an editable Figma interface built from the Design System' },
+        workflow: { alt: 'AI-Assisted Design System Workflow: a diagram from user story, reference designs and rules through Claude and the Figma MCP to an editable Figma interface built from the Design System' },
       },
     },
     'the-mile': {
@@ -525,17 +531,16 @@ export const en = {
       roles: ['Branding', 'Product Design', 'Design System', 'Prototyping'],
       blocks: {
         startingPoint: { heading: 'Starting point', body: "Orchard Mile had built a strong luxury marketplace, but paid acquisition and catalogue competition were capping growth. The answer was to become The Mile: the site was adapted to the new model and a mobile app was built from scratch, turning creators into distributed storefronts that sell the marketplace's brands to their own audiences and earn commission on every sale." },
-        theWork: { heading: 'The work', body: 'I started with the brand — logo, brand guide and brand system. Then the app, designed from zero with the CEO and the marketing team after a short round of research, covering consumer and creator journeys end to end: onboarding, live and pre-recorded shoppable shows, reels, creator storefronts, affiliate links, discovery and checkout. I also redesigned the Orchard Mile site to match, with a new Reels section, built navigable prototypes to pitch investors and recruit influencers before development, and supported the React Native developer on selected components.' },
+        theWork: { heading: 'The work', body: 'I started with the brand — logo, brand guide and brand system. Then the app, designed from zero with the CEO, the CTO and the marketing team after research across the whole experience, covering consumer and creator journeys end to end: onboarding, live and pre-recorded shoppable shows, reels, creator storefronts, affiliate links, discovery and checkout. I also redesigned the Orchard Mile site to match, with a new Reels section, built navigable prototypes to pitch investors and recruit influencers before development, and supported the React Native developer on selected components.' },
         checkoutInsideTheApp: { heading: 'Checkout inside the app', body: 'Most creator-commerce apps send buyers somewhere else to pay. Here the whole purchase happened in the app: products came from Orchard Mile as the retailer, so discovery, trust in the creator and checkout stayed in one loop.' },
         outcome: { heading: 'Outcome', body: 'First year after launch (Apr–Oct 2023): creator community +200%, show viewership 2×, orders +300%, items per order from 1.7 to 2.7.' },
-        academy: { heading: 'Academy', body: 'The business depended on how well creators could sell, so I built The Mile Academy: documentation and video lessons to help them plan, shoot and present products more professionally — turning creator skill into something the product supports, instead of something it hopes for.' },
+        academy: { heading: 'Academy', body: 'The business depended on how well creators could sell, so we built The Mile Academy: documentation and video lessons to help them plan, shoot and present products more professionally — turning creator skill into something the product supports, instead of something it hopes for.' },
       },
       images: {
         flow: { alt: 'The Mile app user flow: onboarding, sign-up, verification and the creator storefront journey' },
         brand: { alt: 'The Mile brand system: colours, logotypes and brand fonts' },
         checkout: { alt: 'The Mile on desktop and mobile, above the connected onboarding and account screens of the navigable prototype', desc: 'Navigable prototypes used with investors and creators to validate each journey before development.', label: 'Navigable prototypes' },
         outcomeHero: { alt: 'The Mile app on a phone: a creator hosting a shoppable show' },
-        outcomePhone: { alt: 'The Mile app welcome screen on a phone' },
         academyBoard: { alt: 'The Mile Academy flow: lesson screens and their connections' },
         academyLogo: { alt: 'The Mile Academy identity' },
       },

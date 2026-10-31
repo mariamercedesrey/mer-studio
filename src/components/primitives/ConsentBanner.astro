@@ -1,0 +1,45 @@
+---
+// Cookie / analytics consent — minimal, fixed (no layout shift), shown only until the visitor chooses. Choice is kept in
+// localStorage `mer_consent` and applied by Analytics.astro on every page via Consent Mode v2 (`consent update`).
+import Button from './Button.astro';
+import { getCopy, localeOf } from '../../i18n';
+const c = getCopy(localeOf(Astro.url)).consent;
+---
+<div class="consent" data-consent role="region" aria-label={c.label} hidden>
+  <p class="consent__text">{c.text}</p>
+  <div class="consent__actions">
+    <Button variant="primary" size="sm" onDark data-consent-choice="granted">{c.accept}</Button>
+    <Button variant="negative" size="sm" data-consent-choice="denied">{c.reject}</Button>
+  </div>
+</div>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-consent]');
+  let chosen: string | null = null;
+  try { chosen = localStorage.getItem('mer_consent'); } catch {}
+  if (root && chosen !== 'granted' && chosen !== 'denied') {
+    root.hidden = false;
+    root.addEventListener('click', (e) => {
+      const b = (e.target as Element).closest<HTMLElement>('[data-consent-choice]');
+      if (!b) return;
+      const value = b.dataset.consentChoice!;
+      try { localStorage.setItem('mer_consent', value); } catch {}
+      (window as any).gtag?.('consent', 'update', { analytics_storage: value });
+      root.hidden = true;
+    });
+  }
+</script>
+
+<style>
+  /* Fixed → takes no space in the flow (no CLS). Above the header (50), below the home intro curtain (200). Dark ground → yellow focus ring. */
+  .consent {
+    position: fixed; z-index: 60; left: var(--sp-16); bottom: var(--sp-16);
+    display: flex; flex-direction: column; gap: var(--sp-16);
+    width: min(400px, calc(100vw - 2 * var(--sp-16))); padding: var(--sp-20);
+    background: var(--surface-inverse); color: var(--text-inverse); border-radius: 8px;
+    --focus-ring: var(--focus-ring-on-dark);
+  }
+  .consent[hidden] { display: none; }
+  .consent__text { margin: 0; font-family: var(--font-technical); font-size: var(--fs-caption); line-height: 1.5; letter-spacing: 0.02em; }
+  .consent__actions { display: flex; gap: var(--sp-8); flex-wrap: wrap; }
+</style>
