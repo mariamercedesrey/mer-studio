@@ -20,6 +20,12 @@ export const es = {
     whatsapp: 'WhatsApp',
   },
 
+  consent: {
+    label: 'Consentimiento de analítica',
+    text: 'Usamos Google Analytics para entender cómo se usa el sitio. Aceptes o rechaces, el sitio funciona igual.',
+    accept: 'aceptar',
+    reject: 'rechazar',
+  },
   buttons: {
     bookCall: 'agenda una llamada',
     startProject: 'empieza un proyecto',
@@ -91,7 +97,8 @@ export const es = {
     posterAlt: 'Un smartphone atado con un cordón rojo a bloques de hormigón',
     workedTitle: 'DÓNDE HEMOS TRABAJADO',
     industries: ['Ecommerce', 'Agronegocios', 'Moda', 'Seguros', 'Finanzas', 'Comercio exterior', 'Startups', 'Empresas', 'Salud'],
-    summary: 'Estrategia, diseño y código en manos de un solo equipo. Veinticinco años entre productos para grandes empresas y startups de Estados Unidos, aplicados a proyectos de cualquier tamaño: una marca, un sitio web, una tienda online, una plataforma completa.',
+    summaryTitle: 'Los mejores resultados llegan cuando todo funciona en conjunto.',
+    summary: 'Integramos estrategia, diseño y desarrollo en un mismo proceso. Desde marcas, sitios web y tiendas online hasta productos digitales complejos. Con 25 años de experiencia en grandes empresas y startups de Estados Unidos.',
     scrollLabel: 'Ir a los proyectos',
   },
 
@@ -134,7 +141,6 @@ export const es = {
       mer: 'MER',
       years: '+25 años de experiencia',
       coreTitleLines: ['Estrategia', 'Diseño', 'Desarrollo'],
-      coreDescLines: ['Una práctica', 'conectada', 'MER Studio'],
     },
     rows: {
       branding: { name: 'Branding', body: 'Identidad, y el sistema para mantenerla coherente.' },
@@ -237,14 +243,14 @@ export const es = {
       ] },
       { num: '03', label: 'visibilidad en ia', items: [
         { q: '¿Qué es la visibilidad en IA (GEO / AEO)?', a: 'Hacer que a la IA le resulte fácil encontrar, entender y citar tu marca, no solo posicionarla en Google.' },
-        { q: '¿La visibilidad en IA es gratis en octubre?', a: 'Sí, la configuración es gratis para los proyectos que empiezan en octubre de 2026. El resto es pago.' },
+        { q: '¿La visibilidad en IA es gratis en noviembre?', a: 'Sí, la configuración es gratis para los proyectos que empiezan en noviembre de 2026. El resto es pago.' },
       ] },
     ],
     aiVisibility: [
       { q: '¿Qué es el GEO (Generative Engine Optimization)?', a: 'Es hacer que motores de IA como ChatGPT, Perplexity y Google AI puedan encontrar, entender y citar tu marca cuando la gente les hace preguntas, además de aparecer en la lista de resultados de Google.' },
       { q: '¿Qué es el AEO (Answer Engine Optimization)?', a: 'Es estructurar tu contenido para que se convierta en la respuesta directa: preguntas y respuestas claras, datos estructurados y páginas que los rastreadores de IA puedan leer.' },
       { q: '¿En qué se diferencia el GEO del SEO?', a: 'El SEO te posiciona; el GEO y el AEO hacen que te mencionen. Funcionan juntos: una buena base técnica ayuda a los dos.' },
-      { q: '¿Qué es gratis en los proyectos que empiezan en octubre?', a: 'La configuración: schema, llms.txt, acceso de los rastreadores de IA, estructura semántica y un chequeo inicial de visibilidad. La estrategia de contenido, la auditoría completa y el seguimiento mensual son pagos.' },
+      { q: '¿Qué es gratis en los proyectos que empiezan en noviembre?', a: 'La configuración: schema, llms.txt, acceso de los rastreadores de IA, estructura semántica y un chequeo inicial de visibilidad. La estrategia de contenido, la auditoría completa y el seguimiento mensual son pagos.' },
       { q: '¿Garantizan que la IA los mencione?', a: 'Nadie puede garantizarlo. Creamos las condiciones para que los motores de IA te encuentren y confíen en ti, y medimos qué cambia.' },
     ],
     ecommerce: [
@@ -253,7 +259,7 @@ export const es = {
       { q: '¿Pueden conectar mi tienda con Instagram y Facebook?', a: 'Sí. Conectamos tu catálogo con Meta para que los productos se puedan etiquetar y vender desde Instagram y Facebook.' },
       { q: '¿Cuánto tarda una tienda online?', a: 'Desde una semana para una tienda simple. Los catálogos grandes y las integraciones llevan más tiempo, y acordamos las fechas antes de empezar.' },
       { q: '¿Cuánto cuesta una tienda online?', a: 'Cada proyecto se cotiza después de una llamada de 20 minutos. Tienes un alcance y un precio cerrados antes de empezar.' },
-      { q: '¿Incluye visibilidad en IA?', a: 'En los proyectos que empiezan en octubre de 2026, la configuración de visibilidad en IA es gratis, para que ChatGPT, Perplexity y Google te encuentren y recomienden tu tienda.' },
+      { q: '¿Incluye visibilidad en IA?', a: 'En los proyectos que empiezan en noviembre de 2026, la configuración de visibilidad en IA es gratis, para que ChatGPT, Perplexity y Google te encuentren y recomienden tu tienda.' },
     ],
   },
 
@@ -335,10 +341,10 @@ export const es = {
   },
 
   offer: {
-    tag: 'Gratis con tu proyecto · Oct 2026',
+    tag: 'Gratis con tu proyecto · Nov 2026',
     more: 'leer más',
-    pill: 'Gratis · Oct 2026',
-    hero: 'Visibilidad en IA gratis para proyectos que empiezan en octubre de 2026',
+    pill: 'Gratis · Nov 2026',
+    hero: 'Visibilidad en IA gratis para proyectos que empiezan en noviembre de 2026',
     free: {
       title: 'Incluido gratis',
       items: [
@@ -350,8 +356,8 @@ export const es = {
       title: 'Sigue siendo pago',
       items: ['Estrategia de contenido para IA', 'Auditoría completa', 'Medición mensual'],
     },
-    intro: 'Oferta de lanzamiento: todo proyecto que empieza en octubre de 2026 incluye sin costo la configuración de visibilidad en IA.',
-    llms: 'Oferta de lanzamiento: los proyectos que empiezan en octubre de 2026 incluyen gratis la configuración de visibilidad en IA (schema, llms.txt, acceso de rastreadores de IA, estructura semántica y un chequeo inicial de visibilidad). La estrategia de contenido, la auditoría completa y la medición mensual son pagas.',
+    intro: 'Oferta de lanzamiento: todo proyecto que empieza en noviembre de 2026 incluye sin costo la configuración de visibilidad en IA.',
+    llms: 'Oferta de lanzamiento: los proyectos que empiezan en noviembre de 2026 incluyen gratis la configuración de visibilidad en IA (schema, llms.txt, acceso de rastreadores de IA, estructura semántica y un chequeo inicial de visibilidad). La estrategia de contenido, la auditoría completa y la medición mensual son pagas.',
   },
 
   intake: {
@@ -436,7 +442,7 @@ export const es = {
   jsonld: {
     areaServed: 'Todo el mundo',
     home: {
-      description: 'Estrategia, diseño y código en manos de un solo equipo. Veinticinco años entre productos para grandes empresas y startups de Estados Unidos, aplicados a proyectos de cualquier tamaño: una marca, un sitio web, una tienda online, una plataforma completa.',
+      description: 'Integramos estrategia, diseño y desarrollo en un mismo proceso. Desde marcas, sitios web y tiendas online hasta productos digitales complejos. Con 25 años de experiencia en grandes empresas y startups de Estados Unidos.',
       slogan: 'Estrategia, diseño y desarrollo, de principio a fin.',
       catalogName: 'Servicios',
       aiVisibilityService: { name: 'Visibilidad en IA · GEO / AEO', description: 'Para que te encuentren cuando le preguntan a una IA, no solo a Google.' },
@@ -469,17 +475,17 @@ export const es = {
         title: 'Flujo de Design System asistido por IA',
         subtitle: 'De historias de usuario a interfaces basadas en el design system',
         intro: [
-          'Construí una prueba de concepto para validar si un flujo asistido por IA podía traducir requerimientos de producto en interfaces editables en Figma, manteniendo como fuente de verdad un Design System empresarial existente.',
-          'Seleccioné pares de historias de usuario anteriores con sus resultados aprobados en Figma como ejemplos few-shot / in-context, para darle al modelo referencias concretas de cómo los requerimientos se habían traducido históricamente en patrones de UX, componentes y layouts. El flujo combinaba esa guía de contexto con reglas explícitas de UX e información estructurada del Design System —componentes, variantes, variables, tokens y patrones de interacción—, que llegaba al sistema a través de una capa de contexto basada en MCP en lugar de inventar UI desde cero.',
+          'Lideré una prueba de concepto para validar si un flujo asistido por IA podía traducir historias de usuario en interfaces editables en Figma, con un Design System empresarial existente como fuente de verdad.',
+          'Usé como referencia la gestión de Usuarios, ya diseñada y aprobada, para que el modelo transfiriera ese patrón a la gestión de Aplicativos. Unifiqué la estructura de las historias de usuario (rol, objetivo, criterios de aceptación y reglas de negocio), porque eran el input principal del modelo. El flujo combinaba esas historias con reglas explícitas de UX, datos simulados e información estructurada del Design System (componentes, variantes, tokens y estados), en lugar de inventar UI desde cero.',
         ],
-        tested: { label: 'Qué probé', body: 'Al pasar una historia de usuario real por el flujo, el agente generó vistas editables en Figma construidas con componentes existentes del Design System, no UI genérica. La traducción funcionó: se mantuvieron la reutilización de componentes y la intención de UX, y el resultado se podía revisar y editar en lugar de ser un mockup plano.' },
-        status: { label: 'Estado', body: 'POC validada. No se llevó a producción: el objetivo era probar que la capa de traducción funcionaba, no automatizar decisiones de diseño. La diseñadora conserva la validación y el criterio final.' },
+        tested: { label: 'Qué probé', body: 'Las primeras pantallas cumplían la historia, pero fallaban en composición y jerarquía. Precisé las reglas de UX y amplié el contexto sobre estados y comportamiento del flujo. Con eso, el agente generó en Figma, vía el MCP de Figma, las bandejas de Usuarios y Aplicativos y sus modales de alta y edición: editables, construidos con componentes del Design System y fieles al patrón de referencia. La revisión de diseño detectó inconsistencias de datos entre pantallas, que corregí antes del handoff.' },
+        status: { label: 'Estado', body: 'POC validada en una épica real. Los flujos se usaron como guía de handoff para desarrollo y las historias llegaron a producción. El flujo de generación no se automatizó como proceso: el objetivo era probar la capa de traducción, no reemplazar decisiones de diseño.' },
         facts: {
           domain: { label: 'Dominio', value: 'Automatización de Design System' },
           length: { label: 'Duración', value: 'POC · 2026' },
-          role: { label: 'Rol', value: 'Diseño y ejecución' },
+          role: { label: 'Rol', value: 'Liderazgo, diseño y ejecución' },
         },
-        humanInLoop: { label: 'Humano en el circuito', body: 'La IA acelera la traducción y el mapeo de componentes; la diseñadora conserva la validación y las decisiones finales de diseño.' },
+        humanInLoop: { label: 'Humano en el circuito', body: 'La IA acelera la traducción y el mapeo de componentes; yo conservo la validación y las decisiones finales de diseño.' },
       },
       blocks: {
         startingPoint: { heading: 'Punto de partida', body: 'Asociart convocó a Neoris para reemplazar un sistema legacy monolítico que manejaba las operaciones de siniestros, legales, médicas y financieras de más de diez áreas. El producto no tenía práctica de UX ni un sistema visual compartido. Como parte del equipo de Neoris, me sumé para construir esa base mientras se rediseñaba la plataforma.' },
@@ -492,7 +498,7 @@ export const es = {
         recoveriesA: { alt: 'Core Design System de Asociart: fundamentos de color y tipografía' },
         recoveriesB: { alt: 'Documentación en Storybook de Asociart para el componente aso-button' },
         outcome: { alt: 'La pantalla rediseñada de gestión de siniestros de Asociart en una laptop' },
-        workflow: { alt: 'Flujo de Design System asistido por IA: un diagrama que va de la historia de usuario, los ejemplos few-shot y las reglas, pasando por Claude y el MCP de Figma, hasta una interfaz editable en Figma construida con el Design System' },
+        workflow: { alt: 'Flujo de Design System asistido por IA: un diagrama que va de la historia de usuario, los diseños de referencia y las reglas, pasando por Claude y el MCP de Figma, hasta una interfaz editable en Figma construida con el Design System' },
       },
     },
     'the-mile': {
@@ -504,17 +510,16 @@ export const es = {
       roles: ['Branding', 'Diseño de producto', 'Design System', 'Prototipado'],
       blocks: {
         startingPoint: { heading: 'Punto de partida', body: 'Orchard Mile había construido un marketplace de lujo sólido, pero la adquisición paga y la competencia de catálogo frenaban su crecimiento. La respuesta fue convertirse en The Mile: el sitio se adaptó al nuevo modelo y se creó una app mobile desde cero que convirtió a los creadores en tiendas distribuidas, que venden las marcas del marketplace a sus propias audiencias y cobran comisión por cada venta.' },
-        theWork: { heading: 'El trabajo', body: 'Empecé por la marca: logo, guía de marca y sistema de marca. Después la app, diseñada desde cero con el CEO y el equipo de marketing tras una breve ronda de investigación, cubriendo de punta a punta los recorridos de consumidores y creadores: onboarding, shows comprables en vivo y grabados, reels, tiendas de creadores, links de afiliados, descubrimiento y checkout. También rediseñé el sitio de Orchard Mile para acompañarlo, con una nueva sección de Reels; armé prototipos navegables para presentar a inversores y sumar influencers antes del desarrollo, y acompañé al desarrollador de React Native en algunos componentes.' },
+        theWork: { heading: 'El trabajo', body: 'Empecé por la marca: logo, guía de marca y sistema de marca. Después la app, diseñada desde cero con el CEO, el CTO y el equipo de marketing tras una investigación de toda la experiencia, cubriendo de punta a punta los recorridos de consumidores y creadores: onboarding, shows comprables en vivo y grabados, reels, tiendas de creadores, links de afiliados, descubrimiento y checkout. También rediseñé el sitio de Orchard Mile para acompañarlo, con una nueva sección de Reels; armé prototipos navegables para presentar a inversores y sumar influencers antes del desarrollo, y acompañé al desarrollador de React Native en algunos componentes.' },
         checkoutInsideTheApp: { heading: 'El checkout dentro de la app', body: 'La mayoría de las apps de creator commerce mandan a los compradores a pagar a otro lado. Acá toda la compra pasaba dentro de la app: los productos venían de Orchard Mile como retailer, así que el descubrimiento, la confianza en el creador y el checkout quedaban en un mismo circuito.' },
         outcome: { heading: 'Resultado', body: 'Primer año después del lanzamiento (abr–oct 2023): comunidad de creadores +200 %, audiencia de los shows ×2, pedidos +300 %, artículos por pedido de 1,7 a 2,7.' },
-        academy: { heading: 'Academy', body: 'El negocio dependía de qué tan bien vendieran los creadores, así que armé The Mile Academy: documentación y clases en video para ayudarlos a planificar, filmar y presentar productos de forma más profesional. Así, la habilidad del creador pasó a ser algo que el producto impulsa, en lugar de algo que solo espera.' },
+        academy: { heading: 'Academy', body: 'El negocio dependía de qué tan bien vendieran los creadores, así que armamos The Mile Academy: documentación y clases en video para ayudarlos a planificar, filmar y presentar productos de forma más profesional. Así, la habilidad del creador pasó a ser algo que el producto impulsa, en lugar de algo que solo espera.' },
       },
       images: {
         flow: { alt: 'Flujo de usuario de la app The Mile: onboarding, registro, verificación y el recorrido de la tienda del creador' },
         brand: { alt: 'Sistema de marca de The Mile: colores, logotipos y tipografías de marca' },
         checkout: { alt: 'The Mile en desktop y mobile, sobre las pantallas conectadas de onboarding y cuenta del prototipo navegable', desc: 'Prototipos navegables usados con inversores y creadores para validar cada recorrido antes del desarrollo.', label: 'Prototipos navegables' },
         outcomeHero: { alt: 'La app The Mile en un teléfono: una creadora conduciendo un show comprable' },
-        outcomePhone: { alt: 'La pantalla de bienvenida de la app The Mile en un teléfono' },
         academyBoard: { alt: 'Flujo de The Mile Academy: pantallas de las clases y sus conexiones' },
         academyLogo: { alt: 'Identidad de The Mile Academy' },
       },

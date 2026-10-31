@@ -4,7 +4,7 @@ import { writeFileSync } from 'node:fs';
 import { en } from '../src/i18n/en.ts';
 
 const GROUPS = [
-  ['Global (every page)', ['site', 'a11y', 'buttons', 'faqCta', 'nav', 'footer', 'intake', 'projectDetail']],
+  ['Global (every page)', ['site', 'a11y', 'buttons', 'consent', 'faqCta', 'nav', 'footer', 'intake', 'projectDetail']],
   ['Home (/)', ['home', 'hero', 'marquee', 'work', 'banner', 'services', 'howItWorks', 'about', 'finalCta']],
   ['Launch offer (hero line, Services, /ai-visibility/, JSON-LD, llms.txt)', ['offer']],
   ['/faq/', ['faqPage', 'faq.groups']],

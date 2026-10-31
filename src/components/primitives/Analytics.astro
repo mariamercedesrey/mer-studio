@@ -1,0 +1,41 @@
+---
+// GA4 + Consent Mode v2 (no Google Ads). Order matters:
+//  1. inline, synchronous: dataLayer + gtag stub, consent defaults (denied in the EEA/GB/CH, granted elsewhere), then the visitor's
+//     saved choice (localStorage `mer_consent`) if there is one — before any Google script exists;
+//  2. gtag.js is injected after `load` + idle, so it never competes with LCP and cannot shift layout;
+//  3. events: whatsapp_click, calendly_click (delegated clicks) and project_form_submit (fired by InquiryForm via window.gtag).
+// ad_* stay denied everywhere: the site runs no ads, so there is nothing to grant. Ad signals are also switched off in config.
+import { GA_ID, CONSENT_DENIED_REGIONS } from '../../data/analytics';
+import { BOOKING_URL, WHATSAPP } from '../../data/contact';
+const cfg = { id: GA_ID, regions: [...CONSENT_DENIED_REGIONS], booking: BOOKING_URL, whatsapp: WHATSAPP.href };
+---
+<script is:inline define:vars={{ cfg }}>
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () { window.dataLayer.push(arguments); };
+  var off = { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' };
+  gtag('consent', 'default', Object.assign({ region: cfg.regions, wait_for_update: 500 }, off));
+  gtag('consent', 'default', { analytics_storage: 'granted', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  try {
+    var saved = localStorage.getItem('mer_consent');
+    if (saved === 'granted' || saved === 'denied') gtag('consent', 'update', { analytics_storage: saved });
+  } catch (e) {}
+  gtag('js', new Date());
+  gtag('config', cfg.id, { allow_google_signals: false, allow_ad_personalization_signals: false });
+
+  var ev = function (name) { gtag('event', name, { page_location: location.href, locale: document.documentElement.lang }); };
+  document.addEventListener('click', function (e) {
+    var a = e.target instanceof Element ? e.target.closest('a[href]') : null;
+    if (!a) return;
+    var href = a.href;
+    if (href.indexOf(cfg.whatsapp) === 0) ev('whatsapp_click');
+    else if (href.indexOf(cfg.booking) === 0) ev('calendly_click');
+  });
+  var load = function () {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + cfg.id;
+    document.head.appendChild(s);
+  };
+  var idle = function () { 'requestIdleCallback' in window ? requestIdleCallback(load, { timeout: 4000 }) : setTimeout(load, 2000); };
+  document.readyState === 'complete' ? idle() : addEventListener('load', idle);
+</script>

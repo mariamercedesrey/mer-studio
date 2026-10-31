@@ -12,8 +12,8 @@ export interface FaqGroup { id: FaqGroupId; num: string; label: string; items: F
 // Copy: src/i18n/{en,es}.ts → `faq`. Structure stays here: group ids, and which entries belong to the launch offer.
 const GROUP_IDS = ['process', 'services', 'aiVisibility'] as const;
 export type FaqGroupId = (typeof GROUP_IDS)[number];
-const OFFER_GROUP_ITEM = { group: 'aiVisibility', index: 1 }; // "Is AI Visibility free in October?"
-const OFFER_AIV_ITEM = 3; // "What's free for projects started in October?"
+const OFFER_GROUP_ITEM = { group: 'aiVisibility', index: 1 }; // "Is AI Visibility free in November?"
+const OFFER_AIV_ITEM = 3; // "What's free for projects started in November?"
 const OFFER_ECOMMERCE_ITEM = 5; // "Is AI Visibility included?"
 
 export const faqGroups = (locale: Locale): FaqGroup[] => getCopy(locale).faq.groups.map((g, gi) => ({

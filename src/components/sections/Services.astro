@@ -123,7 +123,6 @@ const chips = [
             <!-- Etapas 2–3 — core, axis labels -->
             <span class="svc-t svc-core-text" style="--x:0;--y:0">
               <span class="svc-core-text__title">{diagram.coreTitleLines.map((l, i) => <>{i > 0 && <br />}{l}</>)} <i class="svc-core-text__dot" aria-hidden="true"></i></span>
-              <span class="svc-core-text__desc">{diagram.coreDescLines.map((l, i) => <>{i > 0 && <br />}{l}</>)}</span>
             </span>
             <span class="svc-t svc-axis-label svc-axis-label--brand" aria-hidden="true" style="--x:-379;--y:2">{diagram.brand}</span>
             <span class="svc-t svc-axis-label svc-axis-label--product" aria-hidden="true" style="--x:361;--y:2">{diagram.product}</span>
@@ -148,7 +147,6 @@ const chips = [
         <div class="svc-stack">
           <div class="svc-stack__core">
             <span class="svc-stack__core-title">{diagram.coreTitleLines.map((l, i) => <>{i > 0 && <br />}{l}</>)} <i class="svc-core-text__dot" aria-hidden="true"></i></span>
-            <span class="svc-stack__core-desc">{diagram.coreDescLines.map((l, i) => <>{i > 0 && <br />}{l}</>)}</span>
           </div>
           <p class="svc-stack__area">{diagram.years}</p>
           <ul role="list" class="svc-stack__pills svc-stack__pills--center">
@@ -329,9 +327,8 @@ const chips = [
   /* Core text + axis labels (etapa 2 → 3) */
   .svc-core-text { display: flex; flex-direction: column; align-items: center; gap: calc(9 * var(--u)); max-width: calc(150 * var(--u)); color: var(--text-inverse); font-family: var(--font-display); opacity: 0; transition: opacity 400ms var(--ease-enter); }
   [data-s2] .svc-core-text { opacity: 1; transition-delay: 650ms; }
-  .svc-core-text__title { display: block; text-align: left; color: var(--color-neutral-50); font-weight: 600; font-size: calc(18.8 * var(--u)); line-height: 1.1; letter-spacing: calc(-0.6 * var(--u)); }
+  .svc-core-text__title { display: block; text-align: center; color: var(--color-neutral-50); font-weight: 600; font-size: calc(18.8 * var(--u)); line-height: 1.1; letter-spacing: calc(-0.6 * var(--u)); }
   .svc-core-text__dot { display: inline-block; width: 0.83em; height: 0.83em; margin-left: 0.15em; border-radius: 50%; background: var(--accent-primary); vertical-align: -0.05em; }
-  .svc-core-text__desc { display: block; text-align: center; color: var(--color-neutral-50); font-weight: 400; font-size: calc(13 * var(--u)); line-height: 1.1; }
 
   .svc-axis-label { font-family: var(--font-display); font-weight: 600; color: var(--text-secondary); font-size: calc(19 * var(--u)); line-height: 1; opacity: 0; transition: opacity 400ms var(--ease-enter), transform var(--svc-dur) var(--ease-enter), color var(--svc-dur) var(--ease-enter); }
   [data-s2] .svc-axis-label { opacity: 1; transition-delay: 500ms, 0s, 0s; }
@@ -535,8 +532,7 @@ const chips = [
       width: 220px; height: 220px; border-radius: 50%;
       background: var(--surface-inverse); color: var(--text-inverse); font-family: var(--font-display);
     }
-    .svc-stack__core-title { display: block; text-align: left; color: var(--color-neutral-50); font-weight: 600; font-size: 19px; line-height: 1.1; letter-spacing: -0.03em; }
-    .svc-stack__core-desc { color: var(--color-neutral-50); font-weight: 400; font-size: 13px; line-height: 1.1; text-align: center; }
+    .svc-stack__core-title { display: block; text-align: center; color: var(--color-neutral-50); font-weight: 600; font-size: 19px; line-height: 1.1; letter-spacing: -0.03em; }
     .svc-stack__area { font-family: var(--font-display); font-weight: 700; font-size: 15px; letter-spacing: 0.2em; text-align: center; }
     .svc-stack__side { display: flex; flex-direction: column; align-items: flex-start; gap: var(--sp-12); width: 100%; max-width: 420px; padding-left: var(--sp-16); border-left: 1px solid var(--text-primary); }
     .svc-stack__label { font-family: var(--font-display); font-weight: 600; font-size: 19px; line-height: 1; }

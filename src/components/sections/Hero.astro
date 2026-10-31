@@ -75,7 +75,7 @@ const poster = await getImage({ src: heroPoster, widths: [480, 800, 1218], forma
         <span class="hero__m">m</span>
         <SignatureDot class="hero__dot" tone="dark" motion="hero-path" />
       </div>
-      <p class="hero__summary">{hero.summary}</p>
+      <div class="hero__summary"><p class="hero__summary-title">{hero.summaryTitle}</p><p>{hero.summary}</p></div>
       <Button href={pagePath('startProject', locale)} variant="secondary" width={185}>{buttons.startProject}</Button>
     </div>
   </div>
@@ -115,6 +115,8 @@ const poster = await getImage({ src: heroPoster, widths: [480, 800, 1218], forma
     line-height: var(--text-body-lg-line);
     color: var(--text-primary);
   }
+  .hero__summary p { margin: 0; }
+  .hero__summary-title { font-weight: 600; }
   /* :global — the h1 is rendered by DecodeTitle, so it never carries this component's scope attribute. */
   .hero :global(.hero__title) {
     font-weight: 400;

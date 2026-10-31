@@ -128,7 +128,6 @@ const build = (cs: Copy['caseStudies'], locale: Locale): Record<string, ProjectD
         ] }] },
         { kind: 'stage', w: 1312, h: 585, items: [
           at(0, 0, img('the-mile/outcome-hero', 844, theMile.images.outcomeHero)),
-          at(687, 88, img('the-mile/outcome-phone', 220, theMile.images.outcomePhone)),
           at(932, 225, text(theMile.blocks.outcome), 380),
         ] },
         { kind: 'stage', w: 1312, h: 790, items: [

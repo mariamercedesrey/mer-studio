@@ -165,6 +165,7 @@ const msgs = {
         if (!params.has('form-name')) params.set('form-name', 'project-inquiry');
         const res = await fetch(form.getAttribute('action') || location.pathname, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: params.toString() });
         if (!res.ok) throw new Error(String(res.status));
+        (window as any).gtag?.('event', 'project_form_submit', { page_location: location.href, locale: document.documentElement.lang });
         form.hidden = true;
         done.hidden = false;
         done.focus();

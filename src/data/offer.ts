@@ -13,8 +13,8 @@ import { es } from '../i18n/es.ts';
 // Both languages share them: one switch, one expiry.
 const flags = {
   active: true,
-  endsAt: '2026-10-31T23:59:59-03:00',
-  validThrough: '2026-10-31',
+  endsAt: '2026-11-30T23:59:59-03:00',
+  validThrough: '2026-11-30',
 } as const;
 
 /** English offer: what public/llms.txt and scripts/check-site.mjs check against. */
