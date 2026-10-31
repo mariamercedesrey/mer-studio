@@ -14,7 +14,7 @@ export const en = {
     lang: 'en',
     name: 'MER Studio',
     defaultTitle: 'MER Studio — Strategy, design and build, end to end',
-    defaultDescription: 'Independent design-and-build studio. Strategy, design and code, handled end to end by one team — a brand, a website, an online store, a full platform.',
+    metaDescription: 'Independent design-and-build studio. Strategy, design and code, handled end to end by one team — a brand, a website, an online store, a full platform.',
     ogImageAlt: 'MER Studio — Strategy, design and build, end to end.',
     skipLink: 'Skip to content',
     logoAlt: 'MER Studio',
@@ -153,7 +153,7 @@ export const en = {
     // Row titles = diagram pills, exactly (one list, one vocabulary).
     rows: {
       branding: { name: 'Branding', body: 'Identity, and the system to keep it consistent.' },
-      websites: { name: 'Websites', body: 'A landing, a full site, or an online store — on Shopify, Tiendanube or WooCommerce.' },
+      websites: { name: 'Websites', body: 'A landing, a full site, or an online store — {link} on Shopify, Tiendanube or WooCommerce.', link: 'ecommerce website design' }, // {link} → /ecommerce/
       digitalProduct: { name: 'Digital Product', body: "An app or a platform that doesn't exist yet." },
       aiVisibility: { name: 'AI Visibility', body: 'GEO / AEO — so people find you when they ask an AI, not just Google.' },
     },
@@ -225,7 +225,7 @@ export const en = {
   faqPage: {
     meta: {
       title: 'FAQ — Process, Timing & Platforms | MER Studio',
-      description: 'Answers on cost, timing, revisions, handover, e-commerce platforms (Shopify, Tiendanube, WooCommerce) and AI visibility — from a design-and-build studio.',
+      metaDescription: 'Answers on cost, timing, revisions, handover, e-commerce platforms (Shopify, Tiendanube, WooCommerce) and AI visibility — from a design-and-build studio.',
     },
     eyebrow: 'faq',
     title: 'Questions, answered.',
@@ -278,7 +278,7 @@ export const en = {
   aiVisibility: {
     meta: {
       title: 'AI Visibility — Generative Engine Optimization (GEO & AEO)',
-      description: 'Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO): we make your brand readable and quotable by ChatGPT, Perplexity and Google AI.',
+      metaDescription: 'Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO): we make your brand readable and quotable by ChatGPT, Perplexity and Google AI.',
     },
     intro: {
       eyebrow: 'ai visibility · geo / aeo',
@@ -314,7 +314,7 @@ export const en = {
   ecommerce: {
     meta: {
       title: 'Ecommerce Website Design — Shopify, Tiendanube & WooCommerce',
-      description: 'Ecommerce website design and build on Shopify, Tiendanube and WooCommerce: an online store that sells, with payments, shipping and Instagram, Facebook and Google integrations.',
+      metaDescription: 'Ecommerce website design on Shopify, Tiendanube and WooCommerce: an online store that sells, with payments, shipping and social integrations.',
     },
     intro: {
       eyebrow: 'ecommerce · shopify / tiendanube / woocommerce',
@@ -382,7 +382,7 @@ export const en = {
   startProject: {
     meta: {
       title: 'Start a project — MER Studio',
-      description: 'Tell us what you’re ready to build. Share a few details about your project and we’ll reply within 2 business days with a focused next step.',
+      metaDescription: 'Tell us what you’re ready to build. Share a few details about your project and we’ll reply within 2 business days with a focused next step.',
     },
     intro: {
       eyebrow: 'start a project',
@@ -455,6 +455,7 @@ export const en = {
   // Project Detail chrome (the content of each project is in `caseStudies`).
   projectDetail: {
     close: 'Close project',
+    moreWork: 'More work',
     moreEcommerce: 'More about ecommerce →', // end of the Orchard Mile, The Mile and Black Duck case studies
   },
 
@@ -508,6 +509,7 @@ export const en = {
         },
         humanInLoop: { label: 'Human-in-the-loop', body: 'AI speeds up translation and component mapping; I keep validation and final design decisions.' },
       },
+      metaDescription: 'Asociart: UX research and a 71+ component Design System for a 13-module legacy platform reengineered with Neoris. Product design and front-end.',
       blocks: {
         startingPoint: { heading: 'Starting point', body: "Asociart brought Neoris in to replace a monolithic legacy system running claims, legal, medical and financial operations across ten-plus departments. There was no UX practice on the product and no shared visual system. As part of Neoris' team, I was brought in to build that foundation while the platform was reengineered." },
         theWork: { heading: 'The work', body: 'I led research with internal users and stakeholders, mapped service blueprints for thirteen interconnected modules and built the Core Design System underneath all of them — 71+ components, token architecture for colour, type and spacing, documented in Storybook. I specified component states and interaction behaviour against WCAG contrast, and worked hands-on in Angular to keep the specs and the production UI aligned.' },
@@ -529,6 +531,7 @@ export const en = {
       title: 'Turning creators into storefronts',
       meta: '[Ecommerce & Fashion] AT THE MILE',
       roles: ['Branding', 'Product Design', 'Design System', 'Prototyping'],
+      metaDescription: 'The Mile: brand, app design and design system for a creator-led fashion storefront with in-app checkout, built on the Orchard Mile marketplace.',
       blocks: {
         startingPoint: { heading: 'Starting point', body: "Orchard Mile had built a strong luxury marketplace, but paid acquisition and catalogue competition were capping growth. The answer was to become The Mile: the site was adapted to the new model and a mobile app was built from scratch, turning creators into distributed storefronts that sell the marketplace's brands to their own audiences and earn commission on every sale." },
         theWork: { heading: 'The work', body: 'I started with the brand — logo, brand guide and brand system. Then the app, designed from zero with the CEO, the CTO and the marketing team after research across the whole experience, covering consumer and creator journeys end to end: onboarding, live and pre-recorded shoppable shows, reels, creator storefronts, affiliate links, discovery and checkout. I also redesigned the Orchard Mile site to match, with a new Reels section, built navigable prototypes to pitch investors and recruit influencers before development, and supported the React Native developer on selected components.' },
@@ -552,6 +555,7 @@ export const en = {
       title: '250 brands, one storefront',
       meta: '[Ecommerce & Fashion]',
       roles: ['UX/UI', 'Front-End', 'Editorial', 'Growth Design'],
+      metaDescription: 'Orchard Mile ecommerce UX/UI and front-end: making a 250+ brand, ~80,000 SKU luxury fashion storefront easier to browse and shop.',
       blocks: {
         startingPoint: { heading: 'Starting point', body: 'Launched in New York in 2015 by a former Bergdorf Goodman executive, Orchard Mile brought designer fashion, beauty and home from independent boutiques and major retailers into one shop-by-brand storefront. It grew from 30 brands at launch to 120 in under two years — and its founders named the risk themselves: choice paralysis. By the time I joined, the catalogue had scaled to 250+ brands and ~80,000 SKUs, sourced from stores with inconsistent data.' },
         theWork: { heading: 'The work', body: "Five years designing and building the pages that sold the catalogue: landings, editorial stories, influencer pages and e-commerce pages, which I implemented in Angular alongside the front-end team. I took seasonal campaigns — Black Friday, Father's Day and every drop in between — from brief to live page, along with content for on-site modals, email campaigns in Klaviyo and marketing pieces, with A/B testing in AB Tasty. I also worked with the back-end team on the scrapers that pulled product data from each brand's store." },
@@ -571,6 +575,7 @@ export const en = {
       meta: '[Consumer Brands]',
       note: '35,000 visitors a week',
       roles: ['Product Concept', 'UX/UI', 'Mobile'],
+      metaDescription: 'Quilmes in Puerto Iguazú: UX/UI and mobile product concept for a coupon app that connects visitors, local venues and Quilmes points of sale.',
       blocks: {
         startingPoint: { heading: 'Starting point', body: 'Every visitor to Puerto Iguazú ends up at the Falls — around 35,000 tourists a week, 1.6 million a year — and Cabaña Quilmes is the only refuge inside the national park. But hotels, attractions and venues in town worked in isolation. Quilmes wanted a digital ecosystem that connected them and brought those visitors to its points of sale.' },
         theWork: { heading: 'The work', body: 'Pasaporte Quilmes, a benefits platform for visitors. Quilmes defined the need; I designed and developed the product — a web app, no download required. Visitors register, pick a venue and a deal, scan a QR and redeem it with the waiter. Discovery by category and proximity, venue pages and QR redemption were all designed around one constraint: the journey had to work fast, one-handed, in a noisy real-world setting.' },
@@ -594,6 +599,7 @@ export const en = {
         steps: ['Raw material', 'Microalgae', 'Biomass', 'Organic goods'],
         body: 'Carbon Optimum turns captured CO₂ into value: microalgae absorb it, the biomass is harvested in a single day, and it becomes raw material for organic goods. A Miami-based company with a genuinely complex process — and a brand that had to make it easy to understand for partners and buyers.',
       },
+      metaDescription: 'Carbon Optimum: logo, brand architecture and website design and development that make a microalgae marine-ingredients process easy to understand.',
       blocks: {
         theWork: { heading: 'The work', body: 'I redesigned the Carbon Optimum logo and built a brand architecture around it: Optimarine, the marine-ingredients line powered by microalgae, and its three product brands — OptiCosmetics, OptiOmega3 and Biomass. Then I designed and developed the site: information architecture and a visual system that turn the process into a clear narrative, built as modular, responsive pages.' },
         outcome: { heading: 'Outcome', body: 'Brand and site live; I handle ongoing maintenance.' },
@@ -612,6 +618,7 @@ export const en = {
       title: 'A safety net, not a productivity app',
       meta: '[Startups]',
       roles: ['Product Strategy', 'UX Research', 'Design System', 'AI-Assisted Build'],
+      metaDescription: 'Agente Mamá: product strategy, UX research and an AI-assisted build for an assistant that gathers a child\'s school information in one place.',
       blocks: {
         startingPoint: { heading: 'Starting point', body: "A child's school information lives in four systems that don't talk to each other: the parents' WhatsApp group, the school platform, email and the family calendar. Someone has to read it all, filter it and remember it — usually the mother." },
         theWork: { heading: 'The work', body: "I ran ten discovery interviews that redefined the target from the child's age to the child's autonomy, and cut a planned module before it was built. Then product strategy, UX/UI and the Design System — 38 screens designed around one idea: take the mental load off without taking control away." },
@@ -636,6 +643,7 @@ export const en = {
       seoTitle: 'Does it pay for itself?',
       meta: '[Enterprise]',
       roles: ['branding', 'Web Design', 'Interactive Tool', 'Web Development'],
+      metaDescription: 'American Padel Systems: brand, web design and an interactive tool for a Miami padel court builder, made to answer "does it pay for itself?"',
       blocks: {
         startingPoint: { heading: 'Starting point', body: 'A Miami-based company that manufactures, installs and maintains padel courts for clubs, hotels and tennis-court conversions needed its brand and site built from the ground up.' },
         theWork: { heading: 'The work', body: 'I started with an analysis with the founder of what the business needed. Then the full brand system — logo, corporate identity and brand guide — followed by web design and development, including an earnings simulator: prospects enter court price, operating hours, occupancy, number of courts and operating days, and see what an installation could earn.' },
@@ -656,6 +664,7 @@ export const en = {
       title: 'Six business units, one product',
       meta: '[Startups] [Ecommerce]',
       roles: ['branding', 'Product Design', 'Design System', 'Information Architecture'],
+      metaDescription: 'HiFi Hub: branding, product design and a design system that unify six business units into one discovery platform for high-end audio.',
       blocks: {
         startingPoint: { heading: 'Starting point', body: 'High-end audio is a siloed industry: thousands of brands, dealers, distributors and record stores operate in isolation, so discovery happens by accident. HiFi Hub set out to aggregate them into one discovery layer — the model Zillow ran in real estate and Farfetch in luxury fashion, applied to audio — unifying six business units, each with its own data, rules and commercial goal.' },
         theWork: { heading: 'The work', body: 'First and only designer on a ten-person team. I argued the taxonomy should follow the business model, not the data model, and designed one entity model — one card, one detail structure, one comparison grammar — with variable content slots per unit instead of variable layouts. A dealer surfaces its location where a product surfaces specs; the structure stays the same.' },
@@ -679,6 +688,7 @@ export const en = {
       seoTitle: 'Every print technique, one storefront',
       meta: '[Tiendanube] [Ecommerce]',
       roles: ['Web Design', 'Store Setup', 'Product Imagery', 'AI Automation'],
+      metaDescription: 'Black Duck: Tiendanube ecommerce website design for an Argentine tee brand, showing every print technique, plus AI automation.',
       blocks: {
         startingPoint: { heading: 'Starting point', body: 'Black Duck is an Argentine apparel brand selling tees with music and culture prints, made with an unusually wide range of techniques: water-based and plastisol inks, metallics, raised 3D, flock, shimmer, glitter and puff. It needed an online store that could show that craft, not just the product.' },
         theWork: { heading: 'The work', body: 'I built the store on Tiendanube end to end: design, catalogue structure and product pages, payments, shipping, and the Meta integration that connects the catalogue to Instagram and Facebook. Product imagery was produced with Midjourney and Photoshop, and an n8n automation retouches new product photos with AI and files them into organised Google Drive folders, so new drops go online faster.' },

@@ -5,7 +5,8 @@
 //  3. GA4: every page carries the measurement ID and exactly one gtag loader / config (src/data/analytics.ts);
 //  4. stale copy: no "Not taken to production" / "No se llevó a producción" in any HTML or in llms.txt;
 //  5. IndexNow: plugins/indexnow/key.json is a 32-hex key and public/<key>.txt (and dist/<key>.txt) exists with exactly that content;
-//  6. the launch offer (src/data/offer.ts) and public/llms.txt disagree: `active` needs the "Launch offer" line, and
+//  6. every indexable page has a <meta name="description"> of 70–160 characters (Bing);
+//  7. the launch offer (src/data/offer.ts) and public/llms.txt disagree: `active` needs the "Launch offer" line, and
 //     an inactive offer must not leave it behind.
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
@@ -41,6 +42,11 @@ for (const file of walk(dist)) {
   if (count('googletagmanager.com/gtag/js') !== 1) errors.push(`${rel}: ${count('googletagmanager.com/gtag/js')} gtag.js loaders (expected exactly 1)`);
   if (count("gtag('config'") !== 1) errors.push(`${rel}: ${count("gtag('config'")} gtag config calls (expected exactly 1)`);
   if (/Not taken to production|No se llevó a producción/.test(decode(html))) errors.push(`${rel}: stale "not taken to production" copy`);
+  if (!/<meta\s+name="robots"\s+content="noindex"/i.test(html)) {
+    const desc = html.match(/<meta\s+name="description"\s+content="([^"]*)"/i)?.[1];
+    const len = desc === undefined ? 0 : decode(desc).length;
+    if (len < 70 || len > 160) errors.push(`${rel}: meta description is ${len} characters (70–160)${desc ? ` → ${decode(desc)}` : ''}`);
+  }
   const title = html.match(/<title>([^<]*)<\/title>/i)?.[1];
   if (title && decode(title).length > 70) errors.push(`${rel}: <title> is ${decode(title).length} characters (max 70) → ${decode(title)}`);
 }

@@ -14,7 +14,7 @@ const servicesOf = (locale: Locale) => {
   const svc = getCopy(locale).services;
   return [
     { name: svc.rows.branding.name, description: svc.rows.branding.body },
-    { name: svc.rows.websites.name, description: svc.rows.websites.body },
+    { name: svc.rows.websites.name, description: svc.rows.websites.body.replace('{link} ', '') },
     { name: svc.rows.digitalProduct.name, description: svc.rows.digitalProduct.body },
     { name: getCopy(locale).jsonld.home.aiVisibilityService.name, description: getCopy(locale).jsonld.home.aiVisibilityService.description, offer: true },
     { name: svc.addons.designSystem.title, description: svc.addons.designSystem.body },
@@ -47,6 +47,8 @@ export function homeSchema(locale: Locale = 'en') {
         areaServed: j.areaServed,
         contactPoint: { '@type': 'ContactPoint', contactType: 'sales', email: EMAIL, telephone: WHATSAPP.tel, url: WHATSAPP.href, availableLanguage: ['en', 'es'] },
         founder: { '@id': MER_ID },
+        foundingDate: '2026',
+        knowsAbout: ['Branding', 'Web design', 'Ecommerce', 'Shopify', 'Tiendanube', 'Design systems', 'AI visibility', 'Generative Engine Optimization (GEO)', 'Answer Engine Optimization (AEO)'],
         hasOfferCatalog: {
           '@type': 'OfferCatalog',
           name: j.home.catalogName,
@@ -116,7 +118,7 @@ export function projectSchema(p: ProjectDetailData, url: string, locale: Locale 
     about: { '@type': 'Organization', name: p.client, ...(p.link && { url: p.link.href }) },
     ...(neoris && { sourceOrganization: { '@type': 'Organization', name: 'Neoris' } }), // credit: "delivered through NEORIS"
     creator: { '@type': 'Person', '@id': MER_ID, name: 'Mer' },
-    publisher: { '@type': 'ProfessionalService', '@id': ORG_ID, name: copy.site.name, url: `${SITE}${pagePath('home', locale)}` },
+    publisher: { '@type': 'ProfessionalService', '@id': ORG_ID, name: copy.site.name, alternateName: 'mer.studio', url: `${SITE}${pagePath('home', locale)}` },
     inLanguage: copy.site.lang,
   };
 }

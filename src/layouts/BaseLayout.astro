@@ -24,7 +24,7 @@ const OG_LOCALE = { en: 'en_US', es: 'es_LA' } as const;
 
 const {
   title = site.defaultTitle,
-  description = site.defaultDescription,
+  description = site.metaDescription,
   image = '/og.png',
   path = Astro.url.pathname,
   noindex = false,

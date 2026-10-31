@@ -9,14 +9,14 @@ Generated from `src/i18n/en.ts` by `npm run i18n:export` — do not edit by hand
 - Not in this file on purpose: URLs, e-mail, phone, and the `value` of form fields (they stay English so the inbox is uniform).
 - Also still in English outside `en.ts`: `public/llms.txt` (the launch-offer line must match `offer.llms`; `scripts/check-site.mjs` enforces it).
 
-Strings: 663.
+Strings: 674.
 
 ## Global (every page)
 
 - `site.lang` → en
 - `site.name` → MER Studio
 - `site.defaultTitle` → MER Studio — Strategy, design and build, end to end
-- `site.defaultDescription` → Independent design-and-build studio. Strategy, design and code, handled end to end by one team — a brand, a website, an online store, a full platform.
+- `site.metaDescription` → Independent design-and-build studio. Strategy, design and code, handled end to end by one team — a brand, a website, an online store, a full platform.
 - `site.ogImageAlt` → MER Studio — Strategy, design and build, end to end.
 - `site.skipLink` → Skip to content
 - `site.logoAlt` → MER Studio
@@ -67,6 +67,7 @@ Strings: 663.
 - `footer.country` → argentina
 - `intake.preferEmail` → PREFER EMAIL?
 - `projectDetail.close` → Close project
+- `projectDetail.moreWork` → More work
 - `projectDetail.moreEcommerce` → More about ecommerce →
 
 ## Home (/)
@@ -187,7 +188,8 @@ Strings: 663.
 - `services.rows.branding.name` → Branding
 - `services.rows.branding.body` → Identity, and the system to keep it consistent.
 - `services.rows.websites.name` → Websites
-- `services.rows.websites.body` → A landing, a full site, or an online store — on Shopify, Tiendanube or WooCommerce.
+- `services.rows.websites.body` → A landing, a full site, or an online store — {link} on Shopify, Tiendanube or WooCommerce.
+- `services.rows.websites.link` → ecommerce website design
 - `services.rows.digitalProduct.name` → Digital Product
 - `services.rows.digitalProduct.body` → An app or a platform that doesn't exist yet.
 - `services.rows.aiVisibility.name` → AI Visibility
@@ -278,7 +280,7 @@ Strings: 663.
 ## /faq/
 
 - `faqPage.meta.title` → FAQ — Process, Timing & Platforms | MER Studio
-- `faqPage.meta.description` → Answers on cost, timing, revisions, handover, e-commerce platforms (Shopify, Tiendanube, WooCommerce) and AI visibility — from a design-and-build studio.
+- `faqPage.meta.metaDescription` → Answers on cost, timing, revisions, handover, e-commerce platforms (Shopify, Tiendanube, WooCommerce) and AI visibility — from a design-and-build studio.
 - `faqPage.eyebrow` → faq
 - `faqPage.title` → Questions, answered.
 - `faqPage.noteBefore` → Process, timing, platforms and AI visibility — everything worth knowing before we start. If something is missing, ask us on a 
@@ -318,7 +320,7 @@ Strings: 663.
 ## /ecommerce/
 
 - `ecommerce.meta.title` → Ecommerce Website Design — Shopify, Tiendanube & WooCommerce
-- `ecommerce.meta.description` → Ecommerce website design and build on Shopify, Tiendanube and WooCommerce: an online store that sells, with payments, shipping and Instagram, Facebook and Google integrations.
+- `ecommerce.meta.metaDescription` → Ecommerce website design on Shopify, Tiendanube and WooCommerce: an online store that sells, with payments, shipping and social integrations.
 - `ecommerce.intro.eyebrow` → ecommerce · shopify / tiendanube / woocommerce
 - `ecommerce.intro.title` → An online store that sells, not just one that looks good.
 - `ecommerce.intro.note` → We design and build ecommerce websites on Shopify, Tiendanube and WooCommerce — from catalogue structure and product pages to payments, shipping, and the integrations with Instagram, Facebook and Google that keep a store selling.
@@ -362,7 +364,7 @@ Strings: 663.
 ## /ai-visibility/
 
 - `aiVisibility.meta.title` → AI Visibility — Generative Engine Optimization (GEO & AEO)
-- `aiVisibility.meta.description` → Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO): we make your brand readable and quotable by ChatGPT, Perplexity and Google AI.
+- `aiVisibility.meta.metaDescription` → Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO): we make your brand readable and quotable by ChatGPT, Perplexity and Google AI.
 - `aiVisibility.intro.eyebrow` → ai visibility · geo / aeo
 - `aiVisibility.intro.title` → When people ask an AI, does it name you?
 - `aiVisibility.intro.note` → Search is moving from a list of links to a single answer. With Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO), we make your brand readable, understood and quotable by ChatGPT, Perplexity, Gemini and Google’s AI Overviews.
@@ -405,7 +407,7 @@ Strings: 663.
 ## /start-a-project/ and its form
 
 - `startProject.meta.title` → Start a project — MER Studio
-- `startProject.meta.description` → Tell us what you’re ready to build. Share a few details about your project and we’ll reply within 2 business days with a focused next step.
+- `startProject.meta.metaDescription` → Tell us what you’re ready to build. Share a few details about your project and we’ll reply within 2 business days with a focused next step.
 - `startProject.intro.eyebrow` → start a project
 - `startProject.intro.title` → Tell us what you’re ready to build.
 - `startProject.intro.note` → A few thoughtful details help us bring the right people to the first conversation. It takes about 4 minutes.
@@ -518,6 +520,7 @@ Strings: 663.
 - `caseStudies.asociart.poc.facts.role.value` → Leadership, design and execution
 - `caseStudies.asociart.poc.humanInLoop.label` → Human-in-the-loop
 - `caseStudies.asociart.poc.humanInLoop.body` → AI speeds up translation and component mapping; I keep validation and final design decisions.
+- `caseStudies.asociart.metaDescription` → Asociart: UX research and a 71+ component Design System for a 13-module legacy platform reengineered with Neoris. Product design and front-end.
 - `caseStudies.asociart.blocks.startingPoint.heading` → Starting point
 - `caseStudies.asociart.blocks.startingPoint.body` → Asociart brought Neoris in to replace a monolithic legacy system running claims, legal, medical and financial operations across ten-plus departments. There was no UX practice on the product and no shared visual system. As part of Neoris' team, I was brought in to build that foundation while the platform was reengineered.
 - `caseStudies.asociart.blocks.theWork.heading` → The work
@@ -543,6 +546,7 @@ Strings: 663.
 - `caseStudies.the-mile.roles[1]` → Product Design
 - `caseStudies.the-mile.roles[2]` → Design System
 - `caseStudies.the-mile.roles[3]` → Prototyping
+- `caseStudies.the-mile.metaDescription` → The Mile: brand, app design and design system for a creator-led fashion storefront with in-app checkout, built on the Orchard Mile marketplace.
 - `caseStudies.the-mile.blocks.startingPoint.heading` → Starting point
 - `caseStudies.the-mile.blocks.startingPoint.body` → Orchard Mile had built a strong luxury marketplace, but paid acquisition and catalogue competition were capping growth. The answer was to become The Mile: the site was adapted to the new model and a mobile app was built from scratch, turning creators into distributed storefronts that sell the marketplace's brands to their own audiences and earn commission on every sale.
 - `caseStudies.the-mile.blocks.theWork.heading` → The work
@@ -573,6 +577,7 @@ Strings: 663.
 - `caseStudies.orchard-mile.roles[1]` → Front-End
 - `caseStudies.orchard-mile.roles[2]` → Editorial
 - `caseStudies.orchard-mile.roles[3]` → Growth Design
+- `caseStudies.orchard-mile.metaDescription` → Orchard Mile ecommerce UX/UI and front-end: making a 250+ brand, ~80,000 SKU luxury fashion storefront easier to browse and shop.
 - `caseStudies.orchard-mile.blocks.startingPoint.heading` → Starting point
 - `caseStudies.orchard-mile.blocks.startingPoint.body` → Launched in New York in 2015 by a former Bergdorf Goodman executive, Orchard Mile brought designer fashion, beauty and home from independent boutiques and major retailers into one shop-by-brand storefront. It grew from 30 brands at launch to 120 in under two years — and its founders named the risk themselves: choice paralysis. By the time I joined, the catalogue had scaled to 250+ brands and ~80,000 SKUs, sourced from stores with inconsistent data.
 - `caseStudies.orchard-mile.blocks.theWork.heading` → The work
@@ -594,6 +599,7 @@ Strings: 663.
 - `caseStudies.quilmes.roles[0]` → Product Concept
 - `caseStudies.quilmes.roles[1]` → UX/UI
 - `caseStudies.quilmes.roles[2]` → Mobile
+- `caseStudies.quilmes.metaDescription` → Quilmes in Puerto Iguazú: UX/UI and mobile product concept for a coupon app that connects visitors, local venues and Quilmes points of sale.
 - `caseStudies.quilmes.blocks.startingPoint.heading` → Starting point
 - `caseStudies.quilmes.blocks.startingPoint.body` → Every visitor to Puerto Iguazú ends up at the Falls — around 35,000 tourists a week, 1.6 million a year — and Cabaña Quilmes is the only refuge inside the national park. But hotels, attractions and venues in town worked in isolation. Quilmes wanted a digital ecosystem that connected them and brought those visitors to its points of sale.
 - `caseStudies.quilmes.blocks.theWork.heading` → The work
@@ -621,6 +627,7 @@ Strings: 663.
 - `caseStudies.carbon-optimum.startingPoint.steps[2]` → Biomass
 - `caseStudies.carbon-optimum.startingPoint.steps[3]` → Organic goods
 - `caseStudies.carbon-optimum.startingPoint.body` → Carbon Optimum turns captured CO₂ into value: microalgae absorb it, the biomass is harvested in a single day, and it becomes raw material for organic goods. A Miami-based company with a genuinely complex process — and a brand that had to make it easy to understand for partners and buyers.
+- `caseStudies.carbon-optimum.metaDescription` → Carbon Optimum: logo, brand architecture and website design and development that make a microalgae marine-ingredients process easy to understand.
 - `caseStudies.carbon-optimum.blocks.theWork.heading` → The work
 - `caseStudies.carbon-optimum.blocks.theWork.body` → I redesigned the Carbon Optimum logo and built a brand architecture around it: Optimarine, the marine-ingredients line powered by microalgae, and its three product brands — OptiCosmetics, OptiOmega3 and Biomass. Then I designed and developed the site: information architecture and a visual system that turn the process into a clear narrative, built as modular, responsive pages.
 - `caseStudies.carbon-optimum.blocks.outcome.heading` → Outcome
@@ -643,6 +650,7 @@ Strings: 663.
 - `caseStudies.agente-mama.roles[1]` → UX Research
 - `caseStudies.agente-mama.roles[2]` → Design System
 - `caseStudies.agente-mama.roles[3]` → AI-Assisted Build
+- `caseStudies.agente-mama.metaDescription` → Agente Mamá: product strategy, UX research and an AI-assisted build for an assistant that gathers a child's school information in one place.
 - `caseStudies.agente-mama.blocks.startingPoint.heading` → Starting point
 - `caseStudies.agente-mama.blocks.startingPoint.body` → A child's school information lives in four systems that don't talk to each other: the parents' WhatsApp group, the school platform, email and the family calendar. Someone has to read it all, filter it and remember it — usually the mother.
 - `caseStudies.agente-mama.blocks.theWork.heading` → The work
@@ -674,6 +682,7 @@ Strings: 663.
 - `caseStudies.american-padel-systems.roles[1]` → Web Design
 - `caseStudies.american-padel-systems.roles[2]` → Interactive Tool
 - `caseStudies.american-padel-systems.roles[3]` → Web Development
+- `caseStudies.american-padel-systems.metaDescription` → American Padel Systems: brand, web design and an interactive tool for a Miami padel court builder, made to answer "does it pay for itself?"
 - `caseStudies.american-padel-systems.blocks.startingPoint.heading` → Starting point
 - `caseStudies.american-padel-systems.blocks.startingPoint.body` → A Miami-based company that manufactures, installs and maintains padel courts for clubs, hotels and tennis-court conversions needed its brand and site built from the ground up.
 - `caseStudies.american-padel-systems.blocks.theWork.heading` → The work
@@ -697,6 +706,7 @@ Strings: 663.
 - `caseStudies.hifi-hub.roles[1]` → Product Design
 - `caseStudies.hifi-hub.roles[2]` → Design System
 - `caseStudies.hifi-hub.roles[3]` → Information Architecture
+- `caseStudies.hifi-hub.metaDescription` → HiFi Hub: branding, product design and a design system that unify six business units into one discovery platform for high-end audio.
 - `caseStudies.hifi-hub.blocks.startingPoint.heading` → Starting point
 - `caseStudies.hifi-hub.blocks.startingPoint.body` → High-end audio is a siloed industry: thousands of brands, dealers, distributors and record stores operate in isolation, so discovery happens by accident. HiFi Hub set out to aggregate them into one discovery layer — the model Zillow ran in real estate and Farfetch in luxury fashion, applied to audio — unifying six business units, each with its own data, rules and commercial goal.
 - `caseStudies.hifi-hub.blocks.theWork.heading` → The work
@@ -724,6 +734,7 @@ Strings: 663.
 - `caseStudies.black-duck.roles[1]` → Store Setup
 - `caseStudies.black-duck.roles[2]` → Product Imagery
 - `caseStudies.black-duck.roles[3]` → AI Automation
+- `caseStudies.black-duck.metaDescription` → Black Duck: Tiendanube ecommerce website design for an Argentine tee brand, showing every print technique, plus AI automation.
 - `caseStudies.black-duck.blocks.startingPoint.heading` → Starting point
 - `caseStudies.black-duck.blocks.startingPoint.body` → Black Duck is an Argentine apparel brand selling tees with music and culture prints, made with an unusually wide range of techniques: water-based and plastisol inks, metallics, raised 3D, flock, shimmer, glitter and puff. It needed an online store that could show that craft, not just the product.
 - `caseStudies.black-duck.blocks.theWork.heading` → The work

@@ -8,7 +8,7 @@ export const es = {
     lang: 'es',
     name: 'MER Studio',
     defaultTitle: 'MER Studio — Estrategia, diseño y desarrollo, de principio a fin',
-    defaultDescription: 'Estudio independiente de diseño y desarrollo. Estrategia, diseño y código en manos de un solo equipo: una marca, un sitio web, una tienda online, una plataforma completa.',
+    metaDescription: 'Estudio independiente de diseño y desarrollo: estrategia, diseño y código en un solo equipo. Marcas, sitios web, tiendas online y plataformas.',
     ogImageAlt: 'MER Studio — Estrategia, diseño y desarrollo, de principio a fin.',
     skipLink: 'Ir al contenido',
     logoAlt: 'MER Studio',
@@ -144,7 +144,7 @@ export const es = {
     },
     rows: {
       branding: { name: 'Branding', body: 'Identidad, y el sistema para mantenerla coherente.' },
-      websites: { name: 'Sitios web', body: 'Una landing, un sitio completo o una tienda online — en Shopify, Tiendanube o WooCommerce.' },
+      websites: { name: 'Sitios web', body: 'Una landing, un sitio completo o una tienda online — {link} en Shopify, Tiendanube o WooCommerce.', link: 'diseño de tiendas online' }, // {link} → /es/tiendas-online/
       digitalProduct: { name: 'Producto digital', body: 'Una app o una plataforma que todavía no existe.' },
       aiVisibility: { name: 'Visibilidad en IA', body: 'GEO / AEO — para que te encuentren cuando le preguntan a una IA, no solo a Google.' },
     },
@@ -215,7 +215,7 @@ export const es = {
   faqPage: {
     meta: {
       title: 'Preguntas frecuentes — Proceso, plazos y plataformas | MER Studio',
-      description: 'Respuestas sobre costos, plazos, revisiones, entrega, plataformas de ecommerce (Shopify, Tiendanube, WooCommerce) y visibilidad en IA, de un estudio de diseño y desarrollo.',
+      metaDescription: 'Respuestas sobre costos, plazos, entrega, ecommerce (Shopify, Tiendanube, WooCommerce) y visibilidad en IA de un estudio de diseño y desarrollo.',
     },
     eyebrow: 'preguntas frecuentes',
     title: 'Preguntas, respondidas.',
@@ -266,7 +266,7 @@ export const es = {
   aiVisibility: {
     meta: {
       title: 'Visibilidad en IA — Cómo aparecer en ChatGPT (GEO y AEO)',
-      description: 'Posicionamiento en IA con GEO (Generative Engine Optimization) y AEO (Answer Engine Optimization): hacemos que ChatGPT, Perplexity y Google AI lean y citen tu marca.',
+      metaDescription: 'Visibilidad en IA con GEO y AEO: hacemos que ChatGPT, Perplexity y Google AI lean, entiendan y citen tu marca cuando alguien pregunta.',
     },
     intro: {
       eyebrow: 'visibilidad en ia · geo / aeo',
@@ -302,7 +302,7 @@ export const es = {
   ecommerce: {
     meta: {
       title: 'Diseño de tiendas online — Tiendanube, Shopify y WooCommerce',
-      description: 'Diseño y desarrollo de tiendas online en Tiendanube, Shopify y WooCommerce: una tienda que vende, con medios de pago, envíos e integración con Instagram, Facebook y Google.',
+      metaDescription: 'Diseño de tiendas online en Tiendanube, Shopify y WooCommerce: una tienda que vende, con medios de pago, envíos e integración con redes.',
     },
     intro: {
       eyebrow: 'tiendas online · tiendanube / shopify / woocommerce',
@@ -367,7 +367,7 @@ export const es = {
   startProject: {
     meta: {
       title: 'Empieza un proyecto — MER Studio',
-      description: 'Cuéntanos qué quieres construir. Comparte algunos detalles de tu proyecto y te respondemos en 2 días hábiles con un próximo paso concreto.',
+      metaDescription: 'Cuéntanos qué quieres construir. Comparte algunos detalles de tu proyecto y te respondemos en 2 días hábiles con un próximo paso concreto.',
     },
     intro: {
       eyebrow: 'empieza un proyecto',
@@ -436,6 +436,7 @@ export const es = {
 
   projectDetail: {
     close: 'Cerrar proyecto',
+    moreWork: 'Más proyectos',
     moreEcommerce: 'Más sobre tiendas online →', // end of the Orchard Mile, The Mile and Black Duck case studies
   },
 
@@ -487,6 +488,7 @@ export const es = {
         },
         humanInLoop: { label: 'Humano en el circuito', body: 'La IA acelera la traducción y el mapeo de componentes; yo conservo la validación y las decisiones finales de diseño.' },
       },
+      metaDescription: 'Asociart: UX research y Design System de más de 71 componentes para una plataforma legacy de 13 módulos rediseñada con Neoris. Producto y front-end.',
       blocks: {
         startingPoint: { heading: 'Punto de partida', body: 'Asociart convocó a Neoris para reemplazar un sistema legacy monolítico que manejaba las operaciones de siniestros, legales, médicas y financieras de más de diez áreas. El producto no tenía práctica de UX ni un sistema visual compartido. Como parte del equipo de Neoris, me sumé para construir esa base mientras se rediseñaba la plataforma.' },
         theWork: { heading: 'El trabajo', body: 'Lideré la investigación con usuarios internos y stakeholders, mapeé los service blueprints de trece módulos interconectados y construí el Core Design System que los sostiene a todos: más de 71 componentes, una arquitectura de tokens para color, tipografía y espaciado, documentada en Storybook. Especifiqué los estados de los componentes y el comportamiento de las interacciones según el contraste WCAG, y trabajé directamente en Angular para mantener alineadas las especificaciones y la interfaz en producción.' },
@@ -508,6 +510,7 @@ export const es = {
       title: 'Creadores convertidos en tiendas',
       meta: '[Ecommerce y Moda] EN THE MILE',
       roles: ['Branding', 'Diseño de producto', 'Design System', 'Prototipado'],
+      metaDescription: 'The Mile: marca, diseño de app y design system para una tienda de moda impulsada por creadores, con checkout dentro de la app, sobre Orchard Mile.',
       blocks: {
         startingPoint: { heading: 'Punto de partida', body: 'Orchard Mile había construido un marketplace de lujo sólido, pero la adquisición paga y la competencia de catálogo frenaban su crecimiento. La respuesta fue convertirse en The Mile: el sitio se adaptó al nuevo modelo y se creó una app mobile desde cero que convirtió a los creadores en tiendas distribuidas, que venden las marcas del marketplace a sus propias audiencias y cobran comisión por cada venta.' },
         theWork: { heading: 'El trabajo', body: 'Empecé por la marca: logo, guía de marca y sistema de marca. Después la app, diseñada desde cero con el CEO, el CTO y el equipo de marketing tras una investigación de toda la experiencia, cubriendo de punta a punta los recorridos de consumidores y creadores: onboarding, shows comprables en vivo y grabados, reels, tiendas de creadores, links de afiliados, descubrimiento y checkout. También rediseñé el sitio de Orchard Mile para acompañarlo, con una nueva sección de Reels; armé prototipos navegables para presentar a inversores y sumar influencers antes del desarrollo, y acompañé al desarrollador de React Native en algunos componentes.' },
@@ -531,6 +534,7 @@ export const es = {
       title: '250 marcas, una sola tienda',
       meta: '[Ecommerce y Moda]',
       roles: ['UX/UI', 'Front-End', 'Editorial', 'Growth Design'],
+      metaDescription: 'Orchard Mile, diseño UX/UI y front-end de ecommerce: una tienda de moda de lujo con más de 250 marcas y unos 80.000 SKUs, más fácil de recorrer y comprar.',
       blocks: {
         startingPoint: { heading: 'Punto de partida', body: 'Lanzada en Nueva York en 2015 por una ex ejecutiva de Bergdorf Goodman, Orchard Mile reunió moda de diseñador, belleza y hogar de boutiques independientes y grandes retailers en una sola tienda organizada por marca. Pasó de 30 marcas en el lanzamiento a 120 en menos de dos años, y sus propias fundadoras identificaron el riesgo: la parálisis por exceso de opciones. Cuando me sumé, el catálogo ya tenía más de 250 marcas y unos 80.000 SKUs, provenientes de tiendas con datos inconsistentes.' },
         theWork: { heading: 'El trabajo', body: 'Cinco años diseñando y construyendo las páginas que vendían el catálogo: landings, historias editoriales, páginas de influencers y páginas de ecommerce, que implementé en Angular junto al equipo de front-end. Llevé las campañas de temporada —Black Friday, el Día del Padre y cada lanzamiento intermedio— del brief a la página publicada, además del contenido para modales del sitio, campañas de email en Klaviyo y piezas de marketing, con pruebas A/B en AB Tasty. También trabajé con el equipo de back-end en los scrapers que traían los datos de producto de la tienda de cada marca.' },
@@ -550,6 +554,7 @@ export const es = {
       meta: '[Marcas de consumo]',
       note: '35.000 visitantes por semana',
       roles: ['Concepto de producto', 'UX/UI', 'Mobile'],
+      metaDescription: 'Quilmes en Puerto Iguazú: concepto de producto, UX/UI y mobile para una app de cupones que conecta visitantes, locales y puntos de venta de Quilmes.',
       blocks: {
         startingPoint: { heading: 'Punto de partida', body: 'Todo el que visita Puerto Iguazú termina en las Cataratas —unos 35.000 turistas por semana, 1,6 millones al año— y la Cabaña Quilmes es el único refugio dentro del parque nacional. Pero los hoteles, las atracciones y los locales del pueblo funcionaban cada uno por su lado. Quilmes quería un ecosistema digital que los conectara y llevara a esos visitantes a sus puntos de venta.' },
         theWork: { heading: 'El trabajo', body: 'Pasaporte Quilmes, una plataforma de beneficios para visitantes. Quilmes definió la necesidad; yo diseñé y desarrollé el producto: una web app, sin descarga. Los visitantes se registran, eligen un local y una promoción, escanean un QR y lo canjean con el mozo. El descubrimiento por categoría y cercanía, las páginas de los locales y el canje con QR se diseñaron con una sola restricción: el recorrido tenía que funcionar rápido, con una mano y en un entorno real y ruidoso.' },
@@ -573,6 +578,7 @@ export const es = {
         steps: ['Materia prima', 'Microalgas', 'Biomasa', 'Productos orgánicos'],
         body: 'Carbon Optimum convierte el CO₂ capturado en valor: las microalgas lo absorben, la biomasa se cosecha en un solo día y se transforma en materia prima para productos orgánicos. Una empresa de Miami con un proceso realmente complejo, y una marca que tenía que hacerlo fácil de entender para partners y compradores.',
       },
+      metaDescription: 'Carbon Optimum: logo, arquitectura de marca y diseño y desarrollo web que hacen fácil de entender un proceso de ingredientes marinos con microalgas.',
       blocks: {
         theWork: { heading: 'El trabajo', body: 'Rediseñé el logo de Carbon Optimum y construí una arquitectura de marca a su alrededor: Optimarine, la línea de ingredientes marinos basada en microalgas, y sus tres marcas de producto, OptiCosmetics, OptiOmega3 y Biomass. Después diseñé y desarrollé el sitio: arquitectura de información y un sistema visual que convierten el proceso en un relato claro, construido con páginas modulares y responsive.' },
         outcome: { heading: 'Resultado', body: 'Marca y sitio publicados; me ocupo del mantenimiento continuo.' },
@@ -591,6 +597,7 @@ export const es = {
       title: 'Una red de contención, no una app de productividad',
       meta: '[Startups]',
       roles: ['Estrategia de producto', 'UX Research', 'Design System', 'Desarrollo asistido por IA'],
+      metaDescription: 'Agente Mamá: estrategia de producto, UX research y desarrollo asistido por IA para un asistente que reúne la información escolar en un solo lugar.',
       blocks: {
         startingPoint: { heading: 'Punto de partida', body: 'La información escolar de un chico vive en cuatro sistemas que no se hablan entre sí: el grupo de WhatsApp de padres, la plataforma del colegio, el email y el calendario familiar. Alguien tiene que leerlo todo, filtrarlo y recordarlo, y casi siempre es la madre.' },
         theWork: { heading: 'El trabajo', body: 'Hice diez entrevistas de descubrimiento que redefinieron el público: ya no por la edad del hijo, sino por su autonomía. Y eliminé un módulo planificado antes de construirlo. Después vinieron la estrategia de producto, el UX/UI y el Design System: 38 pantallas diseñadas alrededor de una idea, sacar la carga mental sin quitar el control.' },
@@ -615,6 +622,7 @@ export const es = {
       seoTitle: '¿Se paga solo?',
       meta: '[Empresas]',
       roles: ['branding', 'Diseño web', 'Herramienta interactiva', 'Desarrollo web'],
+      metaDescription: 'American Padel Systems: marca, diseño web y herramienta interactiva para un fabricante de canchas de pádel de Miami, que responde «¿se paga solo?»',
       blocks: {
         startingPoint: { heading: 'Punto de partida', body: 'Una empresa de Miami que fabrica, instala y mantiene canchas de pádel para clubes, hoteles y conversiones de canchas de tenis necesitaba construir su marca y su sitio desde cero.' },
         theWork: { heading: 'El trabajo', body: 'Empecé con un análisis, junto al fundador, de lo que necesitaba el negocio. Después, el sistema de marca completo —logo, identidad corporativa y guía de marca— y luego el diseño y desarrollo web, que incluyó un simulador de ganancias: los interesados cargan el precio de la cancha, las horas de uso, la ocupación, la cantidad de canchas y los días de operación, y ven cuánto podría generar una instalación.' },
@@ -635,6 +643,7 @@ export const es = {
       title: 'Seis unidades de negocio, un solo producto',
       meta: '[Startups] [Ecommerce]',
       roles: ['branding', 'Diseño de producto', 'Design System', 'Arquitectura de información'],
+      metaDescription: 'HiFi Hub: branding, diseño de producto y design system que unifican seis unidades de negocio en una plataforma de descubrimiento de audio de alta gama.',
       blocks: {
         startingPoint: { heading: 'Punto de partida', body: 'El audio de alta gama es una industria fragmentada: miles de marcas, distribuidores, revendedores y disquerías operan cada uno por su lado, así que descubrir algo pasa por casualidad. HiFi Hub se propuso reunirlos en una sola capa de descubrimiento —el modelo que Zillow aplicó en bienes raíces y Farfetch en moda de lujo, llevado al audio—, unificando seis unidades de negocio, cada una con sus propios datos, reglas y objetivo comercial.' },
         theWork: { heading: 'El trabajo', body: 'Primera y única diseñadora en un equipo de diez personas. Planteé que la taxonomía tenía que seguir el modelo de negocio, no el modelo de datos, y diseñé un único modelo de entidades —una tarjeta, una estructura de detalle, una misma lógica de comparación— con espacios de contenido variables por unidad en lugar de layouts variables. Un revendedor muestra su ubicación donde un producto muestra sus especificaciones; la estructura es la misma.' },
@@ -658,6 +667,7 @@ export const es = {
       seoTitle: 'Todas las técnicas de estampado, una sola tienda',
       meta: '[Tiendanube] [Ecommerce]',
       roles: ['Diseño web', 'Armado de tienda', 'Imágenes de producto', 'Automatización con IA'],
+      metaDescription: 'Black Duck: diseño de tienda online en Tiendanube para una marca argentina de remeras, que muestra cada técnica de estampado, con automatización con IA.',
       blocks: {
         startingPoint: { heading: 'Punto de partida', body: 'Black Duck es una marca argentina de remeras con estampas de música y cultura, hechas con una variedad de técnicas poco común: tintas al agua y plastisol, metalizadas, 3D con relieve, flock, shimmer, glitter y puff. Necesitaba una tienda online que mostrara ese oficio, no solo el producto.' },
         theWork: { heading: 'El trabajo', body: 'Armé la tienda en Tiendanube de punta a punta: diseño, estructura del catálogo y fichas de producto, medios de pago, envíos y la integración con Meta, que conecta el catálogo con Instagram y Facebook. Las imágenes de producto se produjeron con Midjourney y Photoshop, y una automatización en n8n retoca con IA las fotos nuevas y las guarda ordenadas en carpetas de Google Drive, para que cada lanzamiento salga más rápido.' },
