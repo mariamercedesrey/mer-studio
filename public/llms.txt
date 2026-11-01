@@ -1,14 +1,16 @@
 # MER Studio
 
+MER Studio (mer.studio) is an independent design and development studio founded by Mercedes Rey (Mer) in Buenos Aires, Argentina. Not affiliated with Studio Mer (thestudiomer.com) or any other similarly named studio.
+
 > Independent design-and-build studio. Strategy, design and code, handled end to end by one team — a brand, a website, an online store, a full platform. Working worldwide from Argentina.
 
 From the first decision to the last detail. Twenty-five years across enterprise products and US startups, applied at any size.
 
 ## Who
 
-MER Studio was founded by Mer (Mercedes Rey). We partner with early-stage founders who treat design as a must, not a nice-to-have. From seed to Series A and beyond, we help them validate ideas, win over investors and build brands and products that last. We treat every project as our own — founders deserve a partner, not a vendor. We use AI to move faster, not to cut corners, so the time goes where it matters most: strategy and craft.
+MER Studio was founded by Mercedes Rey (Mer). We partner with early-stage founders who treat design as a must, not a nice-to-have. From seed to Series A and beyond, we help them validate ideas, win over investors and build brands and products that last. We treat every project as our own — founders deserve a partner, not a vendor. We use AI to move faster, not to cut corners, so the time goes where it matters most: strategy and craft.
 
-"For more than 25 years I've designed digital products for companies in the US and Latin America — enterprises and startups, often working directly with founders and CEOs." — Mer Rey, Founder · Design Lead
+"For more than 25 years I've designed digital products for companies in the US and Latin America — enterprises and startups, often working directly with founders and CEOs." — Mercedes Rey (Mer), Founder · Design Lead
 
 - 25+ years of experience designing products, brands and websites
 - 35+ websites and digital products delivered directly to clients
@@ -22,7 +24,7 @@ Industries: Ecommerce, Agribusiness, Fashion, Insurance, Finance, Foreign Trade,
 Strategy, design & build, end to end.
 
 - Branding: Identity, and the system to keep it consistent.
-- Websites: A landing, a full site, or an online store — on Shopify, Tiendanube or WooCommerce.
+- Websites: A landing, a full site, or an online store — [ecommerce website design](https://mer.studio/ecommerce/) on Shopify, Tiendanube or WooCommerce. In Spanish: [diseño de tiendas online](https://mer.studio/es/tiendas-online/).
 - Digital Product: An app or a platform that doesn't exist yet.
 - AI Visibility · GEO / AEO: So people find you when they ask an AI, not just Google.
 

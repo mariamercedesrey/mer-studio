@@ -5,12 +5,18 @@ import ProjectDetail from '../components/work/ProjectDetail.astro';
 import { getProjectDetails, detailBlocks } from '../data/project-details';
 import { projectSchema } from '../data/schema';
 import { hiddenSlugs } from '../data/projects';
+import { relatedWork } from '../data/related-work';
+import CaseCards from '../components/sections/CaseCards.astro';
 import { getCopy, localeOf, pagePath, anchorHash, fmt } from '../i18n';
 
 interface Props { slug: string }
 const { slug } = Astro.props;
 const locale = localeOf(Astro.url);
 const p = getProjectDetails(locale)[slug];
+const copy = getCopy(locale);
+const projects = copy.work.projects as Record<string, { meta: string }>;
+// Meta line = the card's "[Category] AT CLIENT" label; the same text the home shows under each cover.
+const related = (relatedWork[slug] ?? []).map((s) => ({ slug: s, line: projects[s].meta }));
 const url = new URL(Astro.url.pathname, Astro.site).href;
 const hidden = hiddenSlugs.includes(p.id); // card hidden (no media yet): keep the page out of search
 // <title> ≤ 70 characters (Bing, scripts/check-site.mjs): when "client — title | MER Studio" is longer, the brand suffix goes (og:site_name carries it).
@@ -20,11 +26,23 @@ const title = full.length <= 70 ? full : full.replace(/\s*\|[^|]*$/, '');
 ---
 <BaseLayout
   title={title}
-  description={detailBlocks(p)[0].body}
+  description={getCopy(locale).caseStudies[slug as keyof ReturnType<typeof getCopy>['caseStudies']].metaDescription}
   schema={hidden ? undefined : projectSchema(p, url, locale)}
   noindex={hidden}
 >
   <main id="main">
     <ProjectDetail project={p} headingLevel="h1" closeHref={`${pagePath('home', locale)}${anchorHash('work', locale)}`} />
+    {related.length > 0 && (
+      <section class="more-work" aria-labelledby="more-work-title">
+        <h2 id="more-work-title" class="pd__block-title">{copy.projectDetail.moreWork}</h2>
+        <CaseCards cases={related} />
+      </section>
+    )}
   </main>
 </BaseLayout>
+
+<style>
+  /* Same white ground and side padding as the .pd article above, so the block reads as its last section. */
+  .more-work { display: flex; flex-direction: column; gap: var(--sp-32); padding: 0 var(--pd-pad, 64px) 95px; background: var(--surface-base); color: var(--text-primary); --pd-pad: 64px; --fs-pd-block: clamp(32px, 3.125vw, 45px); }
+  @media (max-width: 1199px) { .more-work { --pd-pad: var(--page-gutter); padding-bottom: var(--sp-80); } }
+</style>

@@ -26,7 +26,7 @@ const snippet = llmsSnippet(llms);
 ---
 <BaseLayout
   title={page.meta.title}
-  description={page.meta.description}
+  description={page.meta.metaDescription}
   schema={[aiVisibilitySchema(locale), faqSchema(faq, `https://mer.studio${pagePath('aiVisibility', locale)}`, locale)]}
 >
   <main id="main">
