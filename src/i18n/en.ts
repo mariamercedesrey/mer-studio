@@ -204,8 +204,8 @@ export const en = {
     eyebrow: 'About us',
     title: 'We partner with early-stage founders who treat design as a must, not a nice-to-have. From seed to Series A and beyond, we help them validate ideas, win over investors and build brands and products that last.',
     body: "We treat every project as our own — founders deserve a partner, not a vendor. We've been in that room enough times to know what's at stake. We use AI to move faster, not to cut corners, so the time goes where it matters most: strategy and craft.",
-    portraitAlt: 'Mer Rey, founder of MER Studio',
-    name: 'Mer Rey',
+    portraitAlt: 'Mercedes Rey, founder of MER Studio',
+    name: 'Mercedes Rey (Mer)',
     role: 'Founder · Design Lead',
     quote: "For more than 25 years I've designed digital products for companies in the US and Latin America — enterprises and startups, often working directly with founders and CEOs.",
     stats: [
@@ -575,7 +575,7 @@ export const en = {
       meta: '[Consumer Brands]',
       note: '35,000 visitors a week',
       roles: ['Product Concept', 'UX/UI', 'Mobile'],
-      metaDescription: 'Quilmes in Puerto Iguazú: UX/UI and mobile product concept for a coupon app that connects visitors, local venues and Quilmes points of sale.',
+      metaDescription: 'Pasaporte Quilmes: benefits web app designed and developed for Iguazú visitors — one-handed QR coupons linking local venues and Quilmes points of sale.',
       blocks: {
         startingPoint: { heading: 'Starting point', body: 'Every visitor to Puerto Iguazú ends up at the Falls — around 35,000 tourists a week, 1.6 million a year — and Cabaña Quilmes is the only refuge inside the national park. But hotels, attractions and venues in town worked in isolation. Quilmes wanted a digital ecosystem that connected them and brought those visitors to its points of sale.' },
         theWork: { heading: 'The work', body: 'Pasaporte Quilmes, a benefits platform for visitors. Quilmes defined the need; I designed and developed the product — a web app, no download required. Visitors register, pick a venue and a deal, scan a QR and redeem it with the waiter. Discovery by category and proximity, venue pages and QR redemption were all designed around one constraint: the journey had to work fast, one-handed, in a noisy real-world setting.' },

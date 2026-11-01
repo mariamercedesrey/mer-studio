@@ -63,8 +63,8 @@ export function homeSchema(locale: Locale = 'en') {
       {
         '@type': 'Person',
         '@id': MER_ID,
-        name: 'Mer',
-        alternateName: 'Mercedes Rey',
+        name: 'Mercedes Rey',
+        alternateName: 'Mer',
         jobTitle: j.home.founderJobTitle,
         worksFor: { '@id': ORG_ID },
         url: `${SITE}${pagePath('home', locale)}${anchorHash('about', locale)}`,

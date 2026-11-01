@@ -194,8 +194,8 @@ export const es = {
     eyebrow: 'Nosotros',
     title: 'Trabajamos con founders que ven el diseño como algo imprescindible, no como un extra. Desde la primera inversión hasta cada ronda que sigue, los ayudamos a validar ideas, convencer a inversores y construir marcas y productos que perduran.',
     body: 'Tratamos cada proyecto como si fuera propio: un founder merece un socio, no un proveedor. Estuvimos en esa situación las veces suficientes como para saber lo que está en juego. Usamos la IA para avanzar más rápido, no para recortar calidad, y así el tiempo va a donde más importa: la estrategia y el oficio.',
-    portraitAlt: 'Mer Rey, fundadora de MER Studio',
-    name: 'Mer Rey',
+    portraitAlt: 'Mercedes Rey, fundadora de MER Studio',
+    name: 'Mercedes Rey (Mer)',
     role: 'Fundadora · Design Lead',
     quote: 'Hace más de 25 años que diseño productos digitales para empresas de Estados Unidos y Latinoamérica, grandes compañías y startups, muchas veces trabajando directamente con founders y CEOs.',
     stats: [
@@ -554,7 +554,7 @@ export const es = {
       meta: '[Marcas de consumo]',
       note: '35.000 visitantes por semana',
       roles: ['Concepto de producto', 'UX/UI', 'Mobile'],
-      metaDescription: 'Quilmes en Puerto Iguazú: concepto de producto, UX/UI y mobile para una app de cupones que conecta visitantes, locales y puntos de venta de Quilmes.',
+      metaDescription: 'Pasaporte Quilmes: web app de beneficios diseñada y desarrollada para visitantes de Iguazú, con cupones QR que conectan locales y puntos de venta de Quilmes.',
       blocks: {
         startingPoint: { heading: 'Punto de partida', body: 'Todo el que visita Puerto Iguazú termina en las Cataratas —unos 35.000 turistas por semana, 1,6 millones al año— y la Cabaña Quilmes es el único refugio dentro del parque nacional. Pero los hoteles, las atracciones y los locales del pueblo funcionaban cada uno por su lado. Quilmes quería un ecosistema digital que los conectara y llevara a esos visitantes a sus puntos de venta.' },
         theWork: { heading: 'El trabajo', body: 'Pasaporte Quilmes, una plataforma de beneficios para visitantes. Quilmes definió la necesidad; yo diseñé y desarrollé el producto: una web app, sin descarga. Los visitantes se registran, eligen un local y una promoción, escanean un QR y lo canjean con el mozo. El descubrimiento por categoría y cercanía, las páginas de los locales y el canje con QR se diseñaron con una sola restricción: el recorrido tenía que funcionar rápido, con una mano y en un entorno real y ruidoso.' },

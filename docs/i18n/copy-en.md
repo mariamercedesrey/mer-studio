@@ -245,8 +245,8 @@ Strings: 674.
 - `about.eyebrow` → About us
 - `about.title` → We partner with early-stage founders who treat design as a must, not a nice-to-have. From seed to Series A and beyond, we help them validate ideas, win over investors and build brands and products that last.
 - `about.body` → We treat every project as our own — founders deserve a partner, not a vendor. We've been in that room enough times to know what's at stake. We use AI to move faster, not to cut corners, so the time goes where it matters most: strategy and craft.
-- `about.portraitAlt` → Mer Rey, founder of MER Studio
-- `about.name` → Mer Rey
+- `about.portraitAlt` → Mercedes Rey, founder of MER Studio
+- `about.name` → Mercedes Rey (Mer)
 - `about.role` → Founder · Design Lead
 - `about.quote` → For more than 25 years I've designed digital products for companies in the US and Latin America — enterprises and startups, often working directly with founders and CEOs.
 - `about.stats[0].value` → 25+
@@ -599,7 +599,7 @@ Strings: 674.
 - `caseStudies.quilmes.roles[0]` → Product Concept
 - `caseStudies.quilmes.roles[1]` → UX/UI
 - `caseStudies.quilmes.roles[2]` → Mobile
-- `caseStudies.quilmes.metaDescription` → Quilmes in Puerto Iguazú: UX/UI and mobile product concept for a coupon app that connects visitors, local venues and Quilmes points of sale.
+- `caseStudies.quilmes.metaDescription` → Pasaporte Quilmes: benefits web app designed and developed for Iguazú visitors — one-handed QR coupons linking local venues and Quilmes points of sale.
 - `caseStudies.quilmes.blocks.startingPoint.heading` → Starting point
 - `caseStudies.quilmes.blocks.startingPoint.body` → Every visitor to Puerto Iguazú ends up at the Falls — around 35,000 tourists a week, 1.6 million a year — and Cabaña Quilmes is the only refuge inside the national park. But hotels, attractions and venues in town worked in isolation. Quilmes wanted a digital ecosystem that connected them and brought those visitors to its points of sale.
 - `caseStudies.quilmes.blocks.theWork.heading` → The work
