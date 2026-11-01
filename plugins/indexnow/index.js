@@ -13,8 +13,8 @@ const { key } = JSON.parse(readFileSync(new URL('./key.json', import.meta.url), 
 
 const locs = (xml) => [...xml.matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map((m) => m[1]);
 
-/** Every URL of the built sitemap (index → child sitemaps), EN + ES. */
-export function sitemapUrls(publishDir) {
+/** Internal helper — NOT exported: Netlify treats every named export of a plugin as an event handler, so `onSuccess` must be the only one. Every URL of the built sitemap (index → child sitemaps), EN + ES. */
+function sitemapUrls(publishDir) {
   const index = join(publishDir, 'sitemap-index.xml');
   if (!existsSync(index)) return [];
   const files = locs(readFileSync(index, 'utf8')).map((u) => join(publishDir, new URL(u).pathname));
