@@ -572,7 +572,7 @@ export const es = {
       linkLabel: 'carbonoptimum.com',
       title: 'Un proceso industrial, fácil de entender',
       meta: '[Climate Tech] [Empresas]',
-      roles: ['Branding', 'Arquitectura de marca', 'Diseño web', 'Desarrollo web'],
+      roles: ['Branding', 'Arquitectura de marca', 'Diseño web', 'Prototipos en Figma', 'Desarrollo web'],
       startingPoint: {
         heading: 'Punto de partida',
         steps: ['Materia prima', 'Microalgas', 'Biomasa', 'Productos orgánicos'],
@@ -598,7 +598,7 @@ export const es = {
         products: [
           { role: 'Activo cosmético', strong: 'Opti', light: 'Cosmetics' },
           { role: 'Omega-3 EPA para farma y nutracéutica', strong: 'Opti', light: 'Omega3' },
-          { role: 'Materia prima', strong: '', light: 'BioMass' },
+          { role: 'Materia prima', strong: 'Bio', light: 'Mass' },
         ],
       },
       images: {
@@ -635,7 +635,7 @@ export const es = {
     },
     'american-padel-systems': {
       client: 'American Padel Systems',
-      credit: 'cliente del estudio',
+      credit: '',
       linkLabel: 'americanpadelsystems.com',
       title: 'Un sitio que responde "¿se paga solo?"',
       seoTitle: '¿Se paga solo?',
@@ -680,7 +680,7 @@ export const es = {
     },
     'black-duck': {
       client: 'Black Duck',
-      credit: 'cliente del estudio',
+      credit: '',
       linkLabel: 'blackduck.com.ar',
       title: 'Todas las técnicas de estampado, una sola tienda',
       seoTitle: 'Todas las técnicas de estampado, una sola tienda',

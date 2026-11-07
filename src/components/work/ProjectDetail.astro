@@ -25,7 +25,7 @@ const pct = (n: number, of: number) => `${(n / of) * 100}%`;
 ---
 <article class="pd" aria-labelledby={`pd-title-${p.id}`}>
   <header class="pd__bar">
-    <p class="pd__client">{p.client}<span class="pd__credit">{p.credit}</span></p>
+    <p class="pd__client">{p.client}{p.credit && <span class="pd__credit">{p.credit}</span>}</p>
     <div class="pd__actions">
       {p.link && (
         <Button class="pd__link" href={p.link.href} variant="outline-secondary" target="_blank" rel="noopener">

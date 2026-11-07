@@ -593,7 +593,7 @@ export const en = {
       linkLabel: 'carbonoptimum.com',
       title: 'Making an industrial process legible',
       meta: '[Climate Tech] [Enterprise]',
-      roles: ['Branding', 'Brand Architecture', 'Web Design', 'Web Development'],
+      roles: ['Branding', 'Brand Architecture', 'Web Design', 'Figma Prototyping', 'Web Development'],
       startingPoint: {
         heading: 'Starting point',
         steps: ['Raw material', 'Microalgae', 'Biomass', 'Organic goods'],
@@ -619,7 +619,7 @@ export const en = {
         products: [
           { role: 'Cosmetic active', strong: 'Opti', light: 'Cosmetics' },
           { role: 'EPA Omega-3 for pharma and nutraceuticals', strong: 'Opti', light: 'Omega3' },
-          { role: 'Raw material', strong: '', light: 'BioMass' },
+          { role: 'Raw material', strong: 'Bio', light: 'Mass' },
         ],
       },
       images: {
@@ -656,7 +656,7 @@ export const en = {
     },
     'american-padel-systems': {
       client: 'American Padel Systems',
-      credit: 'studio client',
+      credit: '',
       linkLabel: 'americanpadelsystems.com',
       title: 'A site that answers "does it pay for itself?"',
       seoTitle: 'Does it pay for itself?',
@@ -701,7 +701,7 @@ export const en = {
     },
     'black-duck': {
       client: 'Black Duck',
-      credit: 'studio client',
+      credit: '',
       linkLabel: 'blackduck.com.ar',
       title: 'Every print technique, one storefront',
       seoTitle: 'Every print technique, one storefront',

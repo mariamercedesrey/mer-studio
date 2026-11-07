@@ -9,7 +9,7 @@ Generated from `src/i18n/en.ts` by `npm run i18n:export` — do not edit by hand
 - Not in this file on purpose: URLs, e-mail, phone, and the `value` of form fields (they stay English so the inbox is uniform).
 - Also still in English outside `en.ts`: `public/llms.txt` (the launch-offer line must match `offer.llms`; `scripts/check-site.mjs` enforces it).
 
-Strings: 710.
+Strings: 711.
 
 ## Global (every page)
 
@@ -622,7 +622,8 @@ Strings: 710.
 - `caseStudies.carbon-optimum.roles[0]` → Branding
 - `caseStudies.carbon-optimum.roles[1]` → Brand Architecture
 - `caseStudies.carbon-optimum.roles[2]` → Web Design
-- `caseStudies.carbon-optimum.roles[3]` → Web Development
+- `caseStudies.carbon-optimum.roles[3]` → Figma Prototyping
+- `caseStudies.carbon-optimum.roles[4]` → Web Development
 - `caseStudies.carbon-optimum.startingPoint.heading` → Starting point
 - `caseStudies.carbon-optimum.startingPoint.steps[0]` → Raw material
 - `caseStudies.carbon-optimum.startingPoint.steps[1]` → Microalgae
@@ -664,8 +665,8 @@ Strings: 710.
 - `caseStudies.carbon-optimum.architecture.products[1].strong` → Opti
 - `caseStudies.carbon-optimum.architecture.products[1].light` → Omega3
 - `caseStudies.carbon-optimum.architecture.products[2].role` → Raw material
-- `caseStudies.carbon-optimum.architecture.products[2].strong` → 
-- `caseStudies.carbon-optimum.architecture.products[2].light` → BioMass
+- `caseStudies.carbon-optimum.architecture.products[2].strong` → Bio
+- `caseStudies.carbon-optimum.architecture.products[2].light` → Mass
 - `caseStudies.carbon-optimum.images.hero.alt` → Aerial photograph of dark blue ocean waves, beside the Carbon Optimum brand palette
 - `caseStudies.carbon-optimum.images.logoCarbon.alt` → The redesigned Carbon Optimum logo, with the slogan “Carbon dioxide is the problem. We are the solution.”
 - `caseStudies.carbon-optimum.images.logoCarbon.caption` → Carbon Optimum logo redesign
@@ -709,7 +710,7 @@ Strings: 710.
 ### American Padel Systems — `american-padel-systems`
 
 - `caseStudies.american-padel-systems.client` → American Padel Systems
-- `caseStudies.american-padel-systems.credit` → studio client
+- `caseStudies.american-padel-systems.credit` → 
 - `caseStudies.american-padel-systems.linkLabel` → americanpadelsystems.com
 - `caseStudies.american-padel-systems.title` → A site that answers "does it pay for itself?"
 - `caseStudies.american-padel-systems.seoTitle` → Does it pay for itself?
@@ -761,7 +762,7 @@ Strings: 710.
 ### Black Duck — `black-duck`
 
 - `caseStudies.black-duck.client` → Black Duck
-- `caseStudies.black-duck.credit` → studio client
+- `caseStudies.black-duck.credit` → 
 - `caseStudies.black-duck.linkLabel` → blackduck.com.ar
 - `caseStudies.black-duck.title` → Every print technique, one storefront
 - `caseStudies.black-duck.seoTitle` → Every print technique, one storefront
