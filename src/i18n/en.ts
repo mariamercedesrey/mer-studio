@@ -142,12 +142,11 @@ export const en = {
     eyebrow: 'services',
     learnMore: 'learn more', // link on the Websites row → the ecommerce page
     title: 'Strategy, Design & Build, end to end',
-    diagramLabel: 'Services diagram: Brand and Product, connected by Strategy, Design and Build — one connected practice, 25+ years of experience.',
+    diagramLabel: 'Services diagram: Brand and Product, connected by Strategy, Design and Build — one connected practice.',
     diagram: {
       brand: 'Brand',
       product: 'Product',
       mer: 'MER',
-      years: '25+ years of experience',
       coreTitleLines: ['Strategy', 'Design', 'Build'],
     },
     // Row titles = diagram pills, exactly (one list, one vocabulary).

@@ -12,7 +12,7 @@ import Button from '../primitives/Button.astro';
 import RoleChip from '../primitives/RoleChip.astro';
 import StepSnap from '../primitives/StepSnap.astro';
 import mosaic from '../../assets/work-index-mosaic.svg';
-import { covers } from '../../data/work-covers';
+import { covers, coverVideos } from '../../data/work-covers';
 
 const locale = localeOf(Astro.url);
 const { work, buttons } = getCopy(locale);
@@ -24,7 +24,7 @@ const items = await Promise.all(visible.map(async (p) => {
   );
   // Where the contain-fitted image starts inside the 722 × 600 frame (% of frame height): the text's top edge aligns to it.
   const imgTop = Math.max(0, (1 - (722 * src.height) / (src.width * 600)) / 2) * 100;
-  return { ...p, w: src.width, h: src.height, imgTop: imgTop.toFixed(2), avif: avif.srcSet.attribute, webp: webp.srcSet.attribute, fallback: webp.src };
+  return { ...p, video: coverVideos[p.slug], w: src.width, h: src.height, imgTop: imgTop.toFixed(2), avif: avif.srcSet.attribute, webp: webp.srcSet.attribute, fallback: webp.src };
 }));
 
 const STAGE_SIZES = '(min-width: 1440px) 722px, 45vw';
@@ -67,11 +67,14 @@ const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
                   {p.roles.map((r) => <RoleChip>{r}</RoleChip>)}
                 </ul>
               </div>
-              <picture class="work-item__thumb" style={`aspect-ratio:${p.w}/${p.h}`}>
-                <source type="image/avif" srcset={p.avif} sizes={STACK_SIZES} />
-                <source type="image/webp" srcset={p.webp} sizes={STACK_SIZES} />
-                <img src={p.fallback} width={p.w} height={p.h} alt={p.alt} loading="lazy" decoding="async" />
-              </picture>
+              <div class="work-item__media">
+                <picture class="work-item__thumb" style={`aspect-ratio:${p.w}/${p.h}`}>
+                  <source type="image/avif" srcset={p.avif} sizes={STACK_SIZES} />
+                  <source type="image/webp" srcset={p.webp} sizes={STACK_SIZES} />
+                  <img src={p.fallback} width={p.w} height={p.h} alt={p.alt} loading="lazy" decoding="async" />
+                </picture>
+                {p.video && <video class="work-item__video" src={p.video} width={p.w} height={p.h} muted loop playsinline preload="none" aria-hidden="true" data-inview-video data-reveal-on-play></video>}
+              </div>
             </a>
           </li>
         ))}
@@ -85,11 +88,14 @@ const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
         <a class="work__stage-link" href={workPath(items[0].slug, locale)} data-project-open={items[0].slug} data-work-stage-link tabindex="-1" aria-hidden="true">
           <div class="work__frame">
             {items.map((p, i) => (
+              <>
               <picture class="stage-pic" data-stage-pic data-on={i === 0 ? '' : undefined}>
                 <source type="image/avif" srcset={p.avif} sizes={STAGE_SIZES} />
                 <source type="image/webp" srcset={p.webp} sizes={STAGE_SIZES} />
                 <img src={p.fallback} width={p.w} height={p.h} alt={p.alt} loading="lazy" decoding="async" />
               </picture>
+              {p.video && <video class="stage-video" src={p.video} width={p.w} height={p.h} style={`aspect-ratio:${p.w}/${p.h}`} muted loop playsinline preload="none" aria-hidden="true" data-stage-video></video>}
+              </>
             ))}
             <canvas class="work__canvas"></canvas>
           </div>
@@ -105,6 +111,24 @@ const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
   import { initWorkScroll } from '../../scripts/work-scroll';
   import { initPixelRain } from '../../scripts/pixel-rain';
   initWorkScroll();
+  // Cover videos on the desktop stage: play only while their project is the active one, the stage is on screen and motion is allowed.
+  // (Below 1024 the list thumbnails use the shared scripts/inview-video.ts.) The cover image underneath is the poster and the reduced-motion frame.
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  document.querySelectorAll<HTMLVideoElement>('video[data-stage-video]').forEach((v) => {
+    const pic = v.previousElementSibling as HTMLElement;
+    let inView = false;
+    const update = () => {
+      if (pic.hasAttribute('data-on') && inView && !reduce.matches) {
+        v.preload = 'auto';
+        v.play().catch(() => { /* autoplay refused: the cover image stays */ });
+      } else v.pause();
+    };
+    v.muted = true;
+    v.addEventListener('playing', () => v.setAttribute('data-playing', ''), { once: true });
+    new MutationObserver(update).observe(pic, { attributes: true, attributeFilter: ['data-on'] });
+    new IntersectionObserver((e) => { inView = e[0].isIntersecting; update(); }, { rootMargin: '200px 0px' }).observe(v);
+    reduce.addEventListener('change', update);
+  });
   // Desktop with motion only (the rail is display:none below 1024 and under reduced motion, where the canvas would measure 0).
   if (matchMedia('(min-width: 1024px)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     document.querySelectorAll<HTMLElement>('[data-work-rain]').forEach((el) => initPixelRain(el, 'index'));
@@ -179,13 +203,18 @@ const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
   .stage-pic { position: absolute; inset: 0; display: block; opacity: 0; }
   .stage-pic[data-on] { opacity: 1; }
   .stage-pic :global(img) { display: block; width: 100%; height: 100%; object-fit: contain; }
+  /* Cover video over its still: same contain-fit box as the image, hidden until it plays, and with its project. */
+  .stage-video { position: absolute; left: 0; top: 50%; width: 100%; height: auto; transform: translateY(-50%); object-fit: cover; opacity: 0; pointer-events: none; transition: opacity var(--dur-base) var(--ease-enter); }
+  .stage-pic[data-on] + .stage-video[data-playing] { opacity: 1; }
+  .work__stage:global(.is-swapping) .stage-video { opacity: 0; transition: none; }
   .work__canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
   /* While the canvas transition plays it owns the frame. */
   .work__stage:global(.is-swapping) .stage-pic { opacity: 0; }
 
   .work-item__link { display: flex; flex-direction: column; width: 100%; color: inherit; text-decoration: none; cursor: pointer; }
   .work-item__link:focus-visible { outline-offset: 6px; }
-  .work-item__thumb { display: none; }
+  .work-item__media { display: contents; }
+  .work-item__thumb, .work-item__video { display: none; }
   .work-item__caption { display: flex; flex-direction: column; align-items: flex-start; gap: var(--sp-8); }
   .work-item__roles { display: flex; flex-wrap: wrap; gap: var(--sp-4); margin: 0; padding: 0; }
   .work-item__title {
@@ -256,7 +285,10 @@ const STACK_SIZES = '(min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
     .work__pane { aspect-ratio: auto; max-width: none; }
     .work__list { display: flex; flex-direction: column; gap: var(--sp-64); }
     .work-item__link { gap: var(--sp-24); }
+    .work-item__media { display: block; position: relative; width: 100%; }
     .work-item__thumb { display: block; width: 100%; }
+    .work-item__video { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity var(--dur-base) var(--ease-enter); }
+    .work-item__video[data-playing] { opacity: 1; }
     .work-item__thumb :global(img) { display: block; width: 100%; height: auto; }
     .work-item__title { font-size: 24px; }
   }

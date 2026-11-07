@@ -134,12 +134,11 @@ export const es = {
     eyebrow: 'servicios',
     learnMore: 'ver más', // link on the Websites row → the ecommerce page
     title: 'Estrategia, diseño y desarrollo, de principio a fin',
-    diagramLabel: 'Diagrama de servicios: Marca y Producto, conectados por Estrategia, Diseño y Desarrollo — una sola práctica conectada, más de 25 años de experiencia.',
+    diagramLabel: 'Diagrama de servicios: Marca y Producto, conectados por Estrategia, Diseño y Desarrollo — una sola práctica conectada.',
     diagram: {
       brand: 'Marca',
       product: 'Producto',
       mer: 'MER',
-      years: '+25 años de experiencia',
       coreTitleLines: ['Estrategia', 'Diseño', 'Desarrollo'],
     },
     rows: {

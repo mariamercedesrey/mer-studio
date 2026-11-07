@@ -9,7 +9,7 @@ Generated from `src/i18n/en.ts` by `npm run i18n:export` — do not edit by hand
 - Not in this file on purpose: URLs, e-mail, phone, and the `value` of form fields (they stay English so the inbox is uniform).
 - Also still in English outside `en.ts`: `public/llms.txt` (the launch-offer line must match `offer.llms`; `scripts/check-site.mjs` enforces it).
 
-Strings: 711.
+Strings: 710.
 
 ## Global (every page)
 
@@ -178,11 +178,10 @@ Strings: 711.
 - `services.eyebrow` → services
 - `services.learnMore` → learn more
 - `services.title` → Strategy, Design & Build, end to end
-- `services.diagramLabel` → Services diagram: Brand and Product, connected by Strategy, Design and Build — one connected practice, 25+ years of experience.
+- `services.diagramLabel` → Services diagram: Brand and Product, connected by Strategy, Design and Build — one connected practice.
 - `services.diagram.brand` → Brand
 - `services.diagram.product` → Product
 - `services.diagram.mer` → MER
-- `services.diagram.years` → 25+ years of experience
 - `services.diagram.coreTitleLines[0]` → Strategy
 - `services.diagram.coreTitleLines[1]` → Design
 - `services.diagram.coreTitleLines[2]` → Build
