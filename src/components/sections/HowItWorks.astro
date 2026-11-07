@@ -77,8 +77,9 @@ const [avif, webp] = await Promise.all(
   .hiw__faq { position: relative; display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: var(--sp-16); font-size: var(--fs-body); line-height: 1.4; }
   .hiw__faq p { margin: 0; }
   .hiw__step { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 14px; padding: 22px var(--sp-12); }
-  .hiw__num { font-family: var(--font-technical); font-size: var(--fs-eyebrow); line-height: 1.5; letter-spacing: 0.02em; }
-  .hiw__step-title { font-weight: 400; font-size: var(--fs-body); line-height: 1.5; }
+  /* Step number large and light, step name bold: the two carry the scan (Mer). */
+  .hiw__num { font-family: var(--font-technical); font-weight: 300; font-size: clamp(40px, 3.9vw, 56px); line-height: 1; letter-spacing: 0; }
+  .hiw__step-title { font-weight: 700; font-size: var(--fs-body); line-height: 1.5; }
   .hiw__step-body { font-size: var(--fs-meta); line-height: 1.5; }
 
   /* Below desktop the ASCII panel joins the flow, and the steps go 2 × 2 (tablet) or 1 column (mobile). */
