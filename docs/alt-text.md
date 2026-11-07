@@ -75,7 +75,7 @@ Generated from the built site (`dist/**/*.html`, all 13 pages): every <img>, uni
 | site.webp | content | The Carbon Optimum website on a desktop computer and its modular pages, with the OptiCosmetics, OptiOmega3 and Biomass brands | 2 |
 | site.webp | content | The American Padel Systems website on a laptop | 2 |
 | sni.webp | content | SNI logo | 2 |
-| sources.webp | content | Messages from the WhatsApp group and the school platform flowing into one scheduled calendar event | 2 |
+| sources.webp | content | Messages from the WhatsApp group, email and the school platform flowing into one scheduled calendar event | 2 |
 | start.webp | content | Orchard Mile editorial: a model in a knit set beside a shoppable collection page | 2 |
 | storefront.webp | content | The Orchard Mile storefront sign outside a boutique | 2 |
 | the-mile-fashion.webp | content | The Mile Fashion logo | 2 |

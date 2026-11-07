@@ -73,7 +73,7 @@ const pct = (n: number, of: number) => `${(n / of) * 100}%`;
             ) : i.t === 'automation' ? (
               <AutomationBlock item={i} />
             ) : (
-              <DetailImage src={i.src} width={i.w} alt={i.alt} desc={i.desc} caption={i.caption} center={i.center} style={`--iw:${pct(i.w, c.w)}`} />
+              <DetailImage src={i.src} width={i.w} alt={i.alt} desc={i.desc} caption={i.caption} center={i.center} video={i.video} style={`--iw:${pct(i.w, c.w)}`} />
             ))}
           </div>
         ))}
@@ -81,7 +81,7 @@ const pct = (n: number, of: number) => `${(n / of) * 100}%`;
     ) : (
       <div class="pd-stage" style={`--sw:${s.w};aspect-ratio:${s.w} / ${s.h}`}>
         {s.items.map((i) => {
-          const pos = `${i.blend ? 'mix-blend-mode:multiply;' : ''}z-index:${i.back ? 0 : 1};left:${pct(i.x, s.w)};top:${pct(i.y, s.h)};width:${pct(i.t === 'text' ? (i.tw ?? 470) : i.w, s.w)}`;
+          const pos = `z-index:${i.back ? 0 : 1};left:${pct(i.x, s.w)};top:${pct(i.y, s.h)};width:${pct(i.t === 'text' ? (i.tw ?? 470) : i.w, s.w)}`;
           return i.t === 'text' ? (
             <section class="pd-stage__item pd__block" style={pos} data-reveal="rise">
               <h3 class="pd__block-title">{i.heading}</h3>

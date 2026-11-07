@@ -41,6 +41,11 @@ const title = full.length <= 70 ? full : full.replace(/\s*\|[^|]*$/, '');
   </main>
 </BaseLayout>
 
+<script>
+  import { initInviewVideos } from '../scripts/inview-video';
+  initInviewVideos();
+</script>
+
 <style>
   /* Same white ground and side padding as the .pd article above, so the block reads as its last section. */
   .more-work { display: flex; flex-direction: column; gap: var(--sp-32); padding: 0 var(--pd-pad, 64px) 95px; background: var(--surface-base); color: var(--text-primary); --pd-pad: 64px; --fs-pd-block: clamp(32px, 3.125vw, 45px); }

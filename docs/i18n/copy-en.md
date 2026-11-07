@@ -9,7 +9,7 @@ Generated from `src/i18n/en.ts` by `npm run i18n:export` — do not edit by hand
 - Not in this file on purpose: URLs, e-mail, phone, and the `value` of form fields (they stay English so the inbox is uniform).
 - Also still in English outside `en.ts`: `public/llms.txt` (the launch-offer line must match `offer.llms`; `scripts/check-site.mjs` enforces it).
 
-Strings: 674.
+Strings: 710.
 
 ## Global (every page)
 
@@ -128,9 +128,10 @@ Strings: 674.
 - `work.projects.orchard-mile.alt` → The Orchard Mile homepage on a laptop, surrounded by tilted editorial fashion pages
 - `work.projects.quilmes.title` → A coupon that works one-handed, in a crowd
 - `work.projects.quilmes.meta` → [Consumer Brands]
-- `work.projects.quilmes.roles[0]` → Product Concept
-- `work.projects.quilmes.roles[1]` → UX/UI
-- `work.projects.quilmes.roles[2]` → Mobile
+- `work.projects.quilmes.roles[0]` → Research
+- `work.projects.quilmes.roles[1]` → Brand system
+- `work.projects.quilmes.roles[2]` → UX/UI
+- `work.projects.quilmes.roles[3]` → Handoff
 - `work.projects.quilmes.index` → Special Promotion App
 - `work.projects.quilmes.alt` → Pasaporte Quilmes app screens on phones: venue map, venue pages and a discount coupon with a QR code
 - `work.projects.carbon-optimum.title` → Making an industrial process legible
@@ -592,20 +593,21 @@ Strings: 674.
 ### Quilmes — `quilmes`
 
 - `caseStudies.quilmes.client` → Quilmes
-- `caseStudies.quilmes.credit` → studio client
+- `caseStudies.quilmes.credit` → UX/UI designer
 - `caseStudies.quilmes.title` → A coupon that works one-handed, in a crowd
 - `caseStudies.quilmes.meta` → [Consumer Brands]
 - `caseStudies.quilmes.note` → 35,000 visitors a week
-- `caseStudies.quilmes.roles[0]` → Product Concept
-- `caseStudies.quilmes.roles[1]` → UX/UI
-- `caseStudies.quilmes.roles[2]` → Mobile
-- `caseStudies.quilmes.metaDescription` → Pasaporte Quilmes: benefits web app designed and developed for Iguazú visitors — one-handed QR coupons linking local venues and Quilmes points of sale.
+- `caseStudies.quilmes.roles[0]` → Research
+- `caseStudies.quilmes.roles[1]` → Brand system
+- `caseStudies.quilmes.roles[2]` → UX/UI
+- `caseStudies.quilmes.roles[3]` → Handoff
+- `caseStudies.quilmes.metaDescription` → Pasaporte Quilmes: research, brand system and UX/UI design of a benefits web app with QR coupons for Iguazú visitors and Quilmes venues.
 - `caseStudies.quilmes.blocks.startingPoint.heading` → Starting point
 - `caseStudies.quilmes.blocks.startingPoint.body` → Every visitor to Puerto Iguazú ends up at the Falls — around 35,000 tourists a week, 1.6 million a year — and Cabaña Quilmes is the only refuge inside the national park. But hotels, attractions and venues in town worked in isolation. Quilmes wanted a digital ecosystem that connected them and brought those visitors to its points of sale.
 - `caseStudies.quilmes.blocks.theWork.heading` → The work
-- `caseStudies.quilmes.blocks.theWork.body` → Pasaporte Quilmes, a benefits platform for visitors. Quilmes defined the need; I designed and developed the product — a web app, no download required. Visitors register, pick a venue and a deal, scan a QR and redeem it with the waiter. Discovery by category and proximity, venue pages and QR redemption were all designed around one constraint: the journey had to work fast, one-handed, in a noisy real-world setting.
+- `caseStudies.quilmes.blocks.theWork.body` → Pasaporte Quilmes, a benefits platform for visitors. I did the research and the brand system, and designed the whole flow after several meetings with the client, working alongside the team’s CTO. The design was mine; the CTO, my teammate, did the development, and I collaborated on the handoff. It is a web app, no download required: visitors register, pick a venue and a deal, scan a QR and redeem it with the waiter. Discovery by category and proximity, venue pages and QR redemption were all designed around one constraint: the journey had to work fast, one-handed, in a noisy real-world setting. The MVP launched first at Iguazú Falls, where I took part in the proposal. Quilmes would later adapt it to other areas based on its own analysis, so I designed it to scale and adapt to different cities, provinces or areas.
 - `caseStudies.quilmes.blocks.outcome.heading` → Outcome
-- `caseStudies.quilmes.blocks.outcome.body` → Launched in 2022 as an MVP exclusively for visitors at Iguazú Falls. What venue owners said: “It would make the Cabaña known to every visitor to the park.” · “It would bring new customers and more table turnover.” · “The app is very simple and easy to use.”
+- `caseStudies.quilmes.blocks.outcome.body` → Launched in 2022 as an MVP at Iguazú Falls. A successful result: the client responded well, the campaign launched, and they were happy with the delivered product, which met their expectations.
 - `caseStudies.quilmes.images.falls.alt` → Iguazú Falls
 - `caseStudies.quilmes.images.cheers.alt` → Friends toasting with glasses of Quilmes beer
 - `caseStudies.quilmes.images.screens.alt` → Pasaporte Quilmes: onboarding, language, login, dashboard, menu, map, coupons, venue page, QR scan, redemption and thank-you screens
@@ -613,7 +615,7 @@ Strings: 674.
 ### Carbon Optimum — `carbon-optimum`
 
 - `caseStudies.carbon-optimum.client` → Carbon Optimum
-- `caseStudies.carbon-optimum.credit` → studio client
+- `caseStudies.carbon-optimum.credit` → UX/UI designer
 - `caseStudies.carbon-optimum.linkLabel` → carbonoptimum.com
 - `caseStudies.carbon-optimum.title` → Making an industrial process legible
 - `caseStudies.carbon-optimum.meta` → [Climate Tech] [Enterprise]
@@ -626,16 +628,48 @@ Strings: 674.
 - `caseStudies.carbon-optimum.startingPoint.steps[1]` → Microalgae
 - `caseStudies.carbon-optimum.startingPoint.steps[2]` → Biomass
 - `caseStudies.carbon-optimum.startingPoint.steps[3]` → Organic goods
-- `caseStudies.carbon-optimum.startingPoint.body` → Carbon Optimum turns captured CO₂ into value: microalgae absorb it, the biomass is harvested in a single day, and it becomes raw material for organic goods. A Miami-based company with a genuinely complex process — and a brand that had to make it easy to understand for partners and buyers.
-- `caseStudies.carbon-optimum.metaDescription` → Carbon Optimum: logo, brand architecture and website design and development that make a microalgae marine-ingredients process easy to understand.
+- `caseStudies.carbon-optimum.startingPoint.body` → Carbon Optimum turns captured CO₂ into value: microalgae absorb it, the biomass is harvested in a single day, and it becomes raw material for organic goods. It is a Miami-based company with a complex industrial process that needed a brand able to make it simple for partners and buyers.
+- `caseStudies.carbon-optimum.metaDescription` → Carbon Optimum: a redesigned corporate brand, the OptiMarine business unit and a scalable sub-brand system, plus the design and development of the website.
+- `caseStudies.carbon-optimum.blocks.challenge.heading` → The challenge
+- `caseStudies.carbon-optimum.blocks.challenge.body` → The company had two needs at once. On one side, a corporate brand that communicated technology and purpose. On the other, a business unit to sell its ingredients, with its own identity but without losing the link to the parent company. And that unit had to be able to add new product lines without redesigning the brand each time.
 - `caseStudies.carbon-optimum.blocks.theWork.heading` → The work
-- `caseStudies.carbon-optimum.blocks.theWork.body` → I redesigned the Carbon Optimum logo and built a brand architecture around it: Optimarine, the marine-ingredients line powered by microalgae, and its three product brands — OptiCosmetics, OptiOmega3 and Biomass. Then I designed and developed the site: information architecture and a visual system that turn the process into a clear narrative, built as modular, responsive pages.
+- `caseStudies.carbon-optimum.blocks.theWork.body` → 
+- `caseStudies.carbon-optimum.blocks.rebrand.heading` → 01 — Carbon Optimum redesign
+- `caseStudies.carbon-optimum.blocks.rebrand.body` → I redesigned the corporate logo and defined the foundations of the system: palette, typography and the visual language the whole architecture inherits.
+- `caseStudies.carbon-optimum.blocks.optimarine.heading` → 02 — OptiMarine: the business unit
+- `caseStudies.carbon-optimum.blocks.optimarine.body` → I designed OptiMarine, the division that sells the microalgae-based marine ingredients. It has its own logo, built as a system with Carbon Optimum: it shares the palette and the circular logic of the symbol. That way it works as a commercial brand while still reading as part of the company.
+- `caseStudies.carbon-optimum.blocks.brandArchitecture.heading` → 03 — Brand architecture
+- `caseStudies.carbon-optimum.blocks.brandArchitecture.body` → Under OptiMarine live three product brands, built with a single rule: OPTI + function, with OPTI in bold and the function in light. This rule lets new lines be added without designing new logos: the system scales on its own.
+- `caseStudies.carbon-optimum.blocks.web.heading` → 04 — Web design and development
+- `caseStudies.carbon-optimum.blocks.web.body` → I designed and developed the site: the information architecture, a visual system that turns the process into a clear story, and modular, responsive pages. OptiMarine has its own products section, with navigation by sub-brand.
 - `caseStudies.carbon-optimum.blocks.outcome.heading` → Outcome
-- `caseStudies.carbon-optimum.blocks.outcome.body` → Brand and site live; I handle ongoing maintenance.
+- `caseStudies.carbon-optimum.blocks.outcome.body` → 
+- `caseStudies.carbon-optimum.blocks.outcome.list[0]` → Redesigned corporate brand
+- `caseStudies.carbon-optimum.blocks.outcome.list[1]` → OptiMarine business unit with its own identity
+- `caseStudies.carbon-optimum.blocks.outcome.list[2]` → Scalable sub-brand system
+- `caseStudies.carbon-optimum.blocks.outcome.list[3]` → Site designed, developed and published
+- `caseStudies.carbon-optimum.blocks.outcome.list[4]` → Ongoing maintenance handled by the studio
+- `caseStudies.carbon-optimum.architecture.label` → Carbon Optimum brand architecture
+- `caseStudies.carbon-optimum.architecture.summary` → Carbon Optimum, the parent brand. Under it, OptiMarine, the business unit. Under OptiMarine, three product brands: OptiCosmetics, OptiOmega3 and BioMass.
+- `caseStudies.carbon-optimum.architecture.productsLabel` → OptiMarine product brands
+- `caseStudies.carbon-optimum.architecture.rule` → A single rule: OPTI + function, with OPTI in bold and the function in light. Adding a line does not require designing a new logo.
+- `caseStudies.carbon-optimum.architecture.parent.level` → Parent brand
+- `caseStudies.carbon-optimum.architecture.parent.name` → Carbon Optimum
+- `caseStudies.carbon-optimum.architecture.unit.level` → Business unit
+- `caseStudies.carbon-optimum.architecture.unit.name` → OptiMarine
+- `caseStudies.carbon-optimum.architecture.products[0].role` → Cosmetic active
+- `caseStudies.carbon-optimum.architecture.products[0].strong` → Opti
+- `caseStudies.carbon-optimum.architecture.products[0].light` → Cosmetics
+- `caseStudies.carbon-optimum.architecture.products[1].role` → EPA Omega-3 for pharma and nutraceuticals
+- `caseStudies.carbon-optimum.architecture.products[1].strong` → Opti
+- `caseStudies.carbon-optimum.architecture.products[1].light` → Omega3
+- `caseStudies.carbon-optimum.architecture.products[2].role` → Raw material
+- `caseStudies.carbon-optimum.architecture.products[2].strong` → 
+- `caseStudies.carbon-optimum.architecture.products[2].light` → BioMass
 - `caseStudies.carbon-optimum.images.hero.alt` → Aerial photograph of dark blue ocean waves, beside the Carbon Optimum brand palette
 - `caseStudies.carbon-optimum.images.logoCarbon.alt` → The redesigned Carbon Optimum logo, with the slogan “Carbon dioxide is the problem. We are the solution.”
 - `caseStudies.carbon-optimum.images.logoCarbon.caption` → Carbon Optimum logo redesign
-- `caseStudies.carbon-optimum.images.logoOptimarine.alt` → The new Optimarine logo, with the slogan “Sustainable Marine Ingredients, Powered by Microalgae”
+- `caseStudies.carbon-optimum.images.logoOptimarine.alt` → The new OptiMarine logo, with the slogan “Sustainable Marine Ingredients, Powered by Microalgae”
 - `caseStudies.carbon-optimum.images.logoOptimarine.caption` → Optimarine logo design
 - `caseStudies.carbon-optimum.images.site.alt` → The Carbon Optimum website on a desktop computer and its modular pages, with the OptiCosmetics, OptiOmega3 and Biomass brands
 
@@ -654,15 +688,17 @@ Strings: 674.
 - `caseStudies.agente-mama.blocks.startingPoint.heading` → Starting point
 - `caseStudies.agente-mama.blocks.startingPoint.body` → A child's school information lives in four systems that don't talk to each other: the parents' WhatsApp group, the school platform, email and the family calendar. Someone has to read it all, filter it and remember it — usually the mother.
 - `caseStudies.agente-mama.blocks.theWork.heading` → The work
-- `caseStudies.agente-mama.blocks.theWork.body` → I ran ten discovery interviews that redefined the target from the child's age to the child's autonomy, and cut a planned module before it was built. Then product strategy, UX/UI and the Design System — 38 screens designed around one idea: take the mental load off without taking control away.
+- `caseStudies.agente-mama.blocks.theWork.body` → My role was UX designer: research, investigation, graphic design and development of the whole brand. I planned the process before building: research, low-fidelity prototypes and high-fidelity prototypes, evaluating each stage. I ran ten discovery interviews that redefined the target from the child's age to the child's autonomy, and cut a planned module before it was built. Then product strategy, UX/UI and the Design System — 38 screens designed around one idea: take the mental load off without taking control away.
+- `caseStudies.agente-mama.blocks.testing.heading` → Testing with mothers
+- `caseStudies.agente-mama.blocks.testing.body` → In June I ran a testing round with 10 mothers. Two findings changed the product: they did not trust the agent to schedule important items without their OK first, and the price: very few want to pay for this. I adjusted the product based on those findings.
 - `caseStudies.agente-mama.blocks.trustIsEarnedNotAssumed.heading` → Trust is earned, not assumed
 - `caseStudies.agente-mama.blocks.trustIsEarnedNotAssumed.body` → Clear events — a date, a child, an action — are scheduled automatically with an undo. Ambiguous or high-stakes ones, like payments or schedule changes, go to a review queue that shrinks as the agent proves it gets things right.
 - `caseStudies.agente-mama.blocks.everyEventShowsItsSource.heading` → Every event shows its source
 - `caseStudies.agente-mama.blocks.everyEventShowsItsSource.body` → A badge on each event — school platform, WhatsApp or calendar. When an AI acts on a family's information, being able to trace every item back is what makes it adoptable.
 - `caseStudies.agente-mama.blocks.outcome.heading` → Outcome
-- `caseStudies.agente-mama.blocks.outcome.body` → Functional POC: 38 high-fidelity screens, a complete Design System and the key AI workflows defined and tested. Landing live for early market validation.
+- `caseStudies.agente-mama.blocks.outcome.body` → Functional POC: 38 high-fidelity screens, a complete Design System and the key AI workflows defined and tested. Landing live for early market validation. I built the final product with AI (Claude Code) on top of my own brand system and design system; the app is now in staging, in internal testing and QA, and I keep making changes to it.
 - `caseStudies.agente-mama.images.kids.alt` → Illustration of four children in cut-paper style
-- `caseStudies.agente-mama.images.sources.alt` → Messages from the WhatsApp group and the school platform flowing into one scheduled calendar event
+- `caseStudies.agente-mama.images.sources.alt` → Messages from the WhatsApp group, email and the school platform flowing into one scheduled calendar event
 - `caseStudies.agente-mama.images.landing.alt` → The Agente Mamá landing page on a phone
 - `caseStudies.agente-mama.images.matrix.alt` → What matters most to mothers? A map of needs by importance to mothers and impact on mental load
 - `caseStudies.agente-mama.images.matrix.desc` → An illustrative map of needs and product decisions for Agente Mamá. Core opportunity, high impact and high priority: Unified school agenda, Trust in AI decisions, Visible information source, Child reminders. Deprioritized or reconsidered: Recipes & shopping lists, Automated school messages, Approve every event. Conceptual synthesis of 10 exploratory conversations. Positions are illustrative, not measured scores.
@@ -710,9 +746,9 @@ Strings: 674.
 - `caseStudies.hifi-hub.blocks.startingPoint.heading` → Starting point
 - `caseStudies.hifi-hub.blocks.startingPoint.body` → High-end audio is a siloed industry: thousands of brands, dealers, distributors and record stores operate in isolation, so discovery happens by accident. HiFi Hub set out to aggregate them into one discovery layer — the model Zillow ran in real estate and Farfetch in luxury fashion, applied to audio — unifying six business units, each with its own data, rules and commercial goal.
 - `caseStudies.hifi-hub.blocks.theWork.heading` → The work
-- `caseStudies.hifi-hub.blocks.theWork.body` → First and only designer on a ten-person team. I argued the taxonomy should follow the business model, not the data model, and designed one entity model — one card, one detail structure, one comparison grammar — with variable content slots per unit instead of variable layouts. A dealer surfaces its location where a product surfaces specs; the structure stays the same.
+- `caseStudies.hifi-hub.blocks.theWork.body` → First and only designer on a ten-person team, responding to the needs of the Product Manager, the CTO and the founder. I argued the taxonomy should follow the business model, not the data model, and designed one entity model — one card, one detail structure, one comparison grammar — with variable content slots per unit instead of variable layouts. A dealer surfaces its location where a product surfaces specs; the structure stays the same. I designed the desktop and mobile site, the dashboards and internal pages for brands, distributors and users, and the corporate image.
 - `caseStudies.hifi-hub.blocks.branding.heading` → Branding
-- `caseStudies.hifi-hub.blocks.branding.body` → A full rebrand from The Audiophile Directory to HiFi Hub. Design tokens for dimension, spacing and radius, 65 colour tokens and a type scale, and a complete component library with every interaction state and light/dark themes — consumed directly by the React front end.
+- `caseStudies.hifi-hub.blocks.branding.body` → I did the full branding of The Audiophile Directory, which later became HiFi Hub, and I also did the rebrand. For HiFi Hub I reused the same colours, tokens, variables and type scale from the Audiophile Directory brand system: the system carried over, it was not rebuilt from scratch. It includes design tokens for dimension, spacing and radius, 65 colour tokens, a type scale and a component library with every interaction state. The development was not mine: the front end consumed the system in React.
 - `caseStudies.hifi-hub.blocks.outcome.heading` → Outcome
 - `caseStudies.hifi-hub.blocks.outcome.body` → Live at hifihub.ai: 634 brands, 17,923 products, 1,384 dealers, 7,034 record stores and 124,308 used listings. Used gear, promoted to a first-order unit after usage analysis, is now the largest catalogue.
 - `caseStudies.hifi-hub.images.hero.alt` → A laptop opened and shown from two angles

@@ -19,6 +19,7 @@ export type DetailImage = {
   label?: string;   // heading for `desc` (JSON-LD / meta)
   caption?: string; // visible caption above the image (HTML text)
   center?: boolean; // centred in its column
+  video?: string;   // public/ MP4 played over the image (the image stays as poster / reduced-motion frame)
 };
 // Asociart "AI-Assisted Design System Workflow": the copy is HTML (components/work/PocBlock.astro), the diagram is the image.
 export type PocCopy = Copy['caseStudies']['asociart']['poc'];
@@ -31,7 +32,7 @@ export type DetailAutomation = { t: 'automation'; alt: string };
 export type ArchitectureCopy = Copy['caseStudies']['carbon-optimum']['architecture'];
 export type DetailArchitecture = { t: 'architecture'; copy: ArchitectureCopy };
 export type DetailItem = DetailText | DetailImage | DetailPoc | DetailSteps | DetailAutomation | DetailArchitecture;
-export type Placed = DetailItem & { x: number; y: number; tw?: number; back?: boolean; blend?: boolean }; // blend: multiply, so an export with an opaque white ground does not cover what sits behind it // tw: width of a text block (Figma px)
+export type Placed = DetailItem & { x: number; y: number; tw?: number; back?: boolean }; // tw: width of a text block (Figma px)
 
 export type FlowSection = {
   kind: 'flow';
@@ -227,12 +228,13 @@ const build = (cs: Copy['caseStudies'], locale: Locale): Record<string, ProjectD
         { kind: 'stage', w: 1312, h: 506, items: [
           at(0, 0, text(agenteMama.blocks.startingPoint), 470),
           at(9, 239, img('agente-mama/kids', 452, agenteMama.images.kids)),
-          { ...at(528, 29, img('agente-mama/sources', 414, agenteMama.images.sources)), blend: true },
+          at(528, 25, img('agente-mama/sources', 414, agenteMama.images.sources)),
           // sits behind the rest (its export has an opaque ground) but comes last in reading order
           { ...at(768, -130, img('agente-mama/landing', 611, agenteMama.images.landing)), back: true },
         ] },
         { kind: 'flow', cols: [{ w: 691, items: [
           text(agenteMama.blocks.theWork),
+          text(agenteMama.blocks.testing),
           text(agenteMama.blocks.trustIsEarnedNotAssumed),
           text(agenteMama.blocks.everyEventShowsItsSource),
         ] }] },
@@ -282,7 +284,7 @@ const build = (cs: Copy['caseStudies'], locale: Locale): Record<string, ProjectD
       roles: hifi.roles,
       sections: [
         { kind: 'flow', cols: [{ w: 1312, items: [text(hifi.blocks.startingPoint)] }] },
-        { kind: 'flow', cols: [{ w: 1312, items: [img('hifi-hub/hero', 1312, hifi.images.hero)] }] },
+        { kind: 'flow', cols: [{ w: 1312, items: [{ ...img('hifi-hub/hero', 1312, hifi.images.hero), video: '/video/hifi-hub-hero.mp4' }] }] },
         { kind: 'flow', cols: [{ w: 1312, items: [text(hifi.blocks.theWork)] }] },
         { kind: 'flow', cols: [
           { w: 651, items: [img('hifi-hub/listing-a', 651, hifi.images.listingA)] },
