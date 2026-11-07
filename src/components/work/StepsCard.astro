@@ -53,7 +53,7 @@ const icon = (name: string) => {
     font-weight: 500; font-size: calc(19 * var(--u)); line-height: calc(24 * var(--u)); letter-spacing: -0.01em; color: #1f2230;
   }
   .pd-steps__title {
-    position: absolute; left: calc(46 * var(--u)); top: calc(344 * var(--u)); margin: 0; white-space: nowrap;
+    position: absolute; left: calc(46 * var(--u)); top: calc(300 * var(--u)); width: calc(260 * var(--u)); margin: 0; /* two lines in its own column, left of the paragraph (was nowrap and ran under it) */
     font-weight: 400; font-size: calc(45 * var(--u)); line-height: calc(54 * var(--u)); letter-spacing: -0.02em;
   }
   .pd-steps__body {
@@ -67,7 +67,7 @@ const icon = (name: string) => {
     .pd-steps__step { position: static; display: flex; flex-direction: column; gap: var(--sp-8); }
     .pd-steps__step img { width: 50px; }
     .pd-steps__label { position: static; white-space: normal; font-size: var(--fs-body); line-height: 1.3; }
-    .pd-steps__title { position: static; white-space: normal; font-size: var(--fs-pd-block); line-height: 1.2; }
+    .pd-steps__title { position: static; width: auto; white-space: normal; font-size: var(--fs-pd-block); line-height: 1.2; }
     .pd-steps__body { position: static; width: auto; font-size: var(--fs-body); line-height: 1.5; max-width: 720px; }
   }
 </style>

@@ -9,7 +9,7 @@
 // Copy is NOT written here: it comes from src/i18n/{en,es}.ts (`caseStudies`).
 import { getCopy, pagePath, type Copy, type Locale } from '../i18n';
 
-export type DetailText = { t: 'text'; heading: string; body: string; panel?: boolean };
+export type DetailText = { t: 'text'; heading: string; body: string; panel?: boolean; list?: readonly string[]; sub?: boolean }; // list: bullet items under the body · sub: sub-heading (smaller than a block title)
 export type DetailImage = {
   t: 'img';
   src: string;      // '<slug>/<name>' under src/assets/work-detail
@@ -27,8 +27,11 @@ export type DetailPoc = { t: 'poc'; src: string; w: number; alt: string; copy: P
 export type DetailSteps = { t: 'steps'; src: string; w: number; alt: string; heading: string; steps: readonly string[]; icons: readonly string[]; body: string };
 // Black Duck "Outcome" closer: the n8n automation as an animated SVG scene (components/work/AutomationBlock.astro), Figma electro-wave 2305:1421.
 export type DetailAutomation = { t: 'automation'; alt: string };
-export type DetailItem = DetailText | DetailImage | DetailPoc | DetailSteps | DetailAutomation;
-export type Placed = DetailItem & { x: number; y: number; tw?: number; back?: boolean }; // tw: width of a text block (Figma px)
+// Carbon Optimum brand architecture: Carbon Optimum → OptiMarine → three product brands, as semantic HTML (components/work/ArchitectureDiagram.astro).
+export type ArchitectureCopy = Copy['caseStudies']['carbon-optimum']['architecture'];
+export type DetailArchitecture = { t: 'architecture'; copy: ArchitectureCopy };
+export type DetailItem = DetailText | DetailImage | DetailPoc | DetailSteps | DetailAutomation | DetailArchitecture;
+export type Placed = DetailItem & { x: number; y: number; tw?: number; back?: boolean; blend?: boolean }; // blend: multiply, so an export with an opaque white ground does not cover what sits behind it // tw: width of a text block (Figma px)
 
 export type FlowSection = {
   kind: 'flow';
@@ -53,9 +56,10 @@ export type ProjectDetailData = {
   more?: { label: string; href: string }; // closing text link (ecommerce case studies → /ecommerce/)
 };
 
-type Block = { heading: string; body: string };
+type Block = { heading: string; body: string; list?: readonly string[] };
 type ImageCopy = { alt: string; desc?: string; label?: string };
-const text = (b: Block, panel = false): DetailText => ({ t: 'text', heading: b.heading, body: b.body, panel });
+const text = (b: Block, panel = false, sub = false): DetailText => ({ t: 'text', heading: b.heading, body: b.body, list: b.list, panel, sub });
+const architecture = (copy: ArchitectureCopy): DetailArchitecture => ({ t: 'architecture', copy });
 const img = (src: string, w: number, i: ImageCopy & { caption?: string }, center = false): DetailImage => ({ t: 'img', src, w, alt: i.alt, desc: i.desc, label: i.label, caption: i.caption, center });
 const poc = (src: string, w: number, alt: string, copy: PocCopy): DetailPoc => ({ t: 'poc', src, w, alt, copy });
 const steps = (src: string, w: number, alt: string, sp: { heading: string; steps: readonly string[]; body: string }, icons: readonly string[]): DetailSteps => ({ t: 'steps', src, w, alt, icons, ...sp });
@@ -194,13 +198,20 @@ const build = (cs: Copy['caseStudies'], locale: Locale): Record<string, ProjectD
       roles: carbon.roles,
       sections: [
         { kind: 'flow', cw: 1349, cols: [{ w: 1349, items: [steps('carbon-optimum/hero', 1349, carbon.images.hero.alt, carbon.startingPoint, ['carbon-optimum/step-1', 'carbon-optimum/step-2', 'carbon-optimum/step-3', 'carbon-optimum/step-4'])] }] },
+        { kind: 'flow', cw: 1349, cols: [{ w: 1349, items: [text(carbon.blocks.challenge)] }] },
         { kind: 'flow', cw: 1349, cols: [{ w: 1349, items: [text(carbon.blocks.theWork)] }] },
-        { kind: 'flow', cw: 1349, cols: [{ w: 1349, items: [
-        img('carbon-optimum/logo-carbon', 401, carbon.images.logoCarbon, true),
-        img('carbon-optimum/logo-optimarine', 471, carbon.images.logoOptimarine, true),
-      ] }] },
-        { kind: 'flow', cw: 1349, cols: [{ w: 1349, items: [text(carbon.blocks.outcome)] }] },
+        { kind: 'flow', cw: 1349, align: 'center', cols: [
+          { w: 560, items: [text(carbon.blocks.rebrand, false, true)] },
+          { w: 700, items: [img('carbon-optimum/logo-carbon', 401, carbon.images.logoCarbon, true)] },
+        ] },
+        { kind: 'flow', cw: 1349, align: 'center', cols: [
+          { w: 560, items: [text(carbon.blocks.optimarine, false, true)] },
+          { w: 700, items: [img('carbon-optimum/logo-optimarine', 471, carbon.images.logoOptimarine, true)] },
+        ] },
+        { kind: 'flow', cw: 1349, cols: [{ w: 1349, items: [text(carbon.blocks.brandArchitecture, false, true), architecture(carbon.architecture)] }] },
+        { kind: 'flow', cw: 1349, cols: [{ w: 1349, items: [text(carbon.blocks.web, false, true)] }] },
         { kind: 'flow', cw: 1349, cols: [{ w: 1349, items: [img('carbon-optimum/site', 1349, carbon.images.site)] }] },
+        { kind: 'flow', cw: 1349, cols: [{ w: 1349, items: [text(carbon.blocks.outcome)] }] },
       ],
     },
 
@@ -216,7 +227,7 @@ const build = (cs: Copy['caseStudies'], locale: Locale): Record<string, ProjectD
         { kind: 'stage', w: 1312, h: 506, items: [
           at(0, 0, text(agenteMama.blocks.startingPoint), 470),
           at(9, 239, img('agente-mama/kids', 452, agenteMama.images.kids)),
-          at(528, 29, img('agente-mama/sources', 414, agenteMama.images.sources)),
+          { ...at(528, 29, img('agente-mama/sources', 414, agenteMama.images.sources)), blend: true },
           // sits behind the rest (its export has an opaque ground) but comes last in reading order
           { ...at(768, -130, img('agente-mama/landing', 611, agenteMama.images.landing)), back: true },
         ] },
@@ -316,7 +327,8 @@ export const getProjectDetails = (locale: Locale) => (cache[locale] ??= build(ge
 export function detailBlocks(p: ProjectDetailData): { heading: string; body: string }[] {
   const out: { heading: string; body: string }[] = [];
   const visit = (i: DetailItem) => {
-    if (i.t === 'text') out.push({ heading: i.heading, body: i.body });
+    if (i.t === 'text') out.push({ heading: i.heading, body: [i.body, ...(i.list ?? [])].filter(Boolean).join(' ') });
+    else if (i.t === 'architecture') out.push({ heading: i.copy.label, body: i.copy.summary });
     else if (i.t === 'poc') {
       const c = i.copy;
       const f = c.facts;
