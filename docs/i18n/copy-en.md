@@ -9,7 +9,7 @@ Generated from `src/i18n/en.ts` by `npm run i18n:export` — do not edit by hand
 - Not in this file on purpose: URLs, e-mail, phone, and the `value` of form fields (they stay English so the inbox is uniform).
 - Also still in English outside `en.ts`: `public/llms.txt` (the launch-offer line must match `offer.llms`; `scripts/check-site.mjs` enforces it).
 
-Strings: 710.
+Strings: 711.
 
 ## Global (every page)
 
@@ -134,7 +134,7 @@ Strings: 710.
 - `work.projects.quilmes.roles[3]` → Handoff
 - `work.projects.quilmes.index` → Special Promotion App
 - `work.projects.quilmes.alt` → Pasaporte Quilmes app screens on phones: venue map, venue pages and a discount coupon with a QR code
-- `work.projects.carbon-optimum.title` → Making an industrial process legible
+- `work.projects.carbon-optimum.title` → Making carbon-to-value science easy to understand
 - `work.projects.carbon-optimum.meta` → [Agrobusiness] [Enterprise]
 - `work.projects.carbon-optimum.roles[0]` → Web design
 - `work.projects.carbon-optimum.roles[1]` → branding
@@ -616,30 +616,31 @@ Strings: 710.
 - `caseStudies.carbon-optimum.client` → Carbon Optimum
 - `caseStudies.carbon-optimum.credit` → UX/UI designer
 - `caseStudies.carbon-optimum.linkLabel` → carbonoptimum.com
-- `caseStudies.carbon-optimum.title` → Making an industrial process legible
+- `caseStudies.carbon-optimum.title` → Making carbon-to-value science easy to understand
 - `caseStudies.carbon-optimum.meta` → [Climate Tech] [Enterprise]
 - `caseStudies.carbon-optimum.roles[0]` → Branding
-- `caseStudies.carbon-optimum.roles[1]` → Brand Architecture
-- `caseStudies.carbon-optimum.roles[2]` → Web Design
-- `caseStudies.carbon-optimum.roles[3]` → Figma Prototyping
-- `caseStudies.carbon-optimum.roles[4]` → Web Development
+- `caseStudies.carbon-optimum.roles[1]` → Style Guide
+- `caseStudies.carbon-optimum.roles[2]` → Brand Architecture
+- `caseStudies.carbon-optimum.roles[3]` → Web Design
+- `caseStudies.carbon-optimum.roles[4]` → Figma Prototyping
+- `caseStudies.carbon-optimum.roles[5]` → Web Development
 - `caseStudies.carbon-optimum.startingPoint.heading` → Starting point
 - `caseStudies.carbon-optimum.startingPoint.steps[0]` → Raw material
 - `caseStudies.carbon-optimum.startingPoint.steps[1]` → Microalgae
 - `caseStudies.carbon-optimum.startingPoint.steps[2]` → Biomass
 - `caseStudies.carbon-optimum.startingPoint.steps[3]` → Organic goods
-- `caseStudies.carbon-optimum.startingPoint.body` → Carbon Optimum turns captured CO₂ into value: microalgae absorb it, the biomass is harvested in a single day, and it becomes raw material for organic goods. It is a Miami-based company with a complex industrial process that needed a brand able to make it simple for partners and buyers.
+- `caseStudies.carbon-optimum.startingPoint.body` → Carbon Optimum turns captured CO₂ into value: microalgae absorb it, the biomass is harvested in a single day, and it becomes raw material for organic goods. It is a Miami-based company working on a complex science that needed a brand able to make it simple for partners and buyers.
 - `caseStudies.carbon-optimum.metaDescription` → Carbon Optimum: a redesigned corporate brand, the OptiMarine business unit and a scalable sub-brand system, plus the design and development of the website.
 - `caseStudies.carbon-optimum.blocks.challenge.heading` → The challenge
 - `caseStudies.carbon-optimum.blocks.challenge.body` → The company had two needs at once. On one side, a corporate brand that communicated technology and purpose. On the other, a business unit to sell its ingredients, with its own identity but without losing the link to the parent company. And that unit had to be able to add new product lines without redesigning the brand each time.
 - `caseStudies.carbon-optimum.blocks.theWork.heading` → The work
 - `caseStudies.carbon-optimum.blocks.theWork.body` → 
 - `caseStudies.carbon-optimum.blocks.rebrand.heading` → 01 — Carbon Optimum redesign
-- `caseStudies.carbon-optimum.blocks.rebrand.body` → I redesigned the corporate logo and defined the foundations of the system: palette, typography and the visual language the whole architecture inherits.
+- `caseStudies.carbon-optimum.blocks.rebrand.body` → I redesigned the corporate brand and wrote its style guide: logo, palette, typography and the visual language the whole architecture inherits.
 - `caseStudies.carbon-optimum.blocks.optimarine.heading` → 02 — OptiMarine: the business unit
-- `caseStudies.carbon-optimum.blocks.optimarine.body` → I designed OptiMarine, the division that sells the microalgae-based marine ingredients. It has its own logo, built as a system with Carbon Optimum: it shares the palette and the circular logic of the symbol. That way it works as a commercial brand while still reading as part of the company.
+- `caseStudies.carbon-optimum.blocks.optimarine.body` → I designed OptiMarine, the division that sells the microalgae-based marine ingredients. It has its own logo, built as a system with Carbon Optimum: it shares the palette and the circular logic of the symbol. That way it works as a commercial brand while still reading as part of the company. Its identity is also mine.
 - `caseStudies.carbon-optimum.blocks.brandArchitecture.heading` → 03 — Brand architecture
-- `caseStudies.carbon-optimum.blocks.brandArchitecture.body` → Under OptiMarine live three product brands, built with a single rule: OPTI + function, with OPTI in bold and the function in light. This rule lets new lines be added without designing new logos: the system scales on its own.
+- `caseStudies.carbon-optimum.blocks.brandArchitecture.body` → Under OptiMarine live three product brands, built with a single rule: OPTI + function, with OPTI in bold and the function in light. I designed the logo and branding of each of the three: OptiCosmetics, OptiOmega3 and BioMass. This rule lets new lines be added without designing new logos: the system scales on its own.
 - `caseStudies.carbon-optimum.blocks.web.heading` → 04 — Web design and development
 - `caseStudies.carbon-optimum.blocks.web.body` → I designed and developed the site: the information architecture, a visual system that turns the process into a clear story, and modular, responsive pages. OptiMarine has its own products section, with navigation by sub-brand.
 - `caseStudies.carbon-optimum.blocks.outcome.heading` → Outcome
