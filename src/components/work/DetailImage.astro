@@ -15,8 +15,9 @@ interface Props {
   reveal?: boolean; // the shared fade + rise (off when a parent already reveals)
   decorative?: boolean; // alt="" (the text next to it says it all)
   style?: string;
+  video?: string; // MP4 played over the image (the image is the poster): only while on screen, never under reduced motion (scripts/inview-video.ts)
 }
-const { src, width, alt, desc, caption, center = false, reveal = true, decorative = false, style } = Astro.props;
+const { src, width, alt, desc, caption, center = false, reveal = true, decorative = false, style, video } = Astro.props;
 
 const files = import.meta.glob<ImageMetadata>('../../assets/work-detail/**/*.{webp,svg}', { eager: true, import: 'default' });
 const meta = files[`../../assets/work-detail/${src}.webp`] ?? files[`../../assets/work-detail/${src}.svg`];
@@ -39,5 +40,13 @@ const sizes = `(max-width: 1199px) 100vw, ${Math.round(width)}px`;
     {webp && <source type="image/webp" srcset={webp.srcSet.attribute} sizes={sizes} />}
     <img src={fallback.src} alt={decorative ? '' : alt} data-decorative={decorative ? '' : undefined} width={meta.width} height={meta.height} loading="lazy" decoding="async" />
   </picture>
+  {video && <video class="pd-img__video" src={video} width={meta.width} height={meta.height} muted loop playsinline preload="none" aria-hidden="true" data-inview-video data-reveal-on-play></video>}
   {desc && <figcaption class="visually-hidden">{desc}</figcaption>}
 </figure>
+
+<style is:global>
+  /* Video over its poster: invisible until it is actually playing, so the still image is what shows before autoplay / under reduced motion. */
+  .pd-img:has(.pd-img__video) { position: relative; }
+  .pd-img__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity var(--dur-base) var(--ease-enter); }
+  .pd-img__video[data-playing] { opacity: 1; }
+</style>

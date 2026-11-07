@@ -1,5 +1,5 @@
 ---
-// Figma 149:5990 How It Works — charcoal band, four steps over a dashed path.
+// Figma 149:5990 How It Works — charcoal band, four steps.
 import SectionHeading from '../primitives/SectionHeading.astro';
 import Button from '../primitives/Button.astro';
 import { getImage } from 'astro:assets';
@@ -12,13 +12,7 @@ const [avif, webp] = await Promise.all(
   (['avif', 'webp'] as const).map((format) => getImage({ src: ascii, widths: [517, 1034], format })),
 );
 ---
-<section id="how-it-works" class="hiw" aria-labelledby="hiw-title" data-hiw-timeline>
-  <div class="hiw__path" aria-hidden="true">
-    <!-- Inline (was /img/process-line.svg) so the dot can sample the path geometry. -->
-    <svg viewBox="0 0 1472.79 148.843" preserveAspectRatio="none" fill="none" aria-hidden="true" focusable="false">
-      <path d="M0.425151 49.7426C10.0624 65.3129 57.6502 97.596 170.904 102.166C312.471 107.879 353.346 13.7854 418.148 36.6367C482.95 59.488 621.028 216.087 700.784 114.264C780.54 12.4413 872.758 -1.67278 941.05 8.07264C1009.34 17.8181 1118.51 116.952 1253.1 103.51C1360.77 92.7568 1444.18 30.2517 1472.43 0.343313" stroke="#706F6F" stroke-dasharray="3.25 3.25" />
-    </svg>
-  </div>
+<section id="how-it-works" class="hiw" aria-labelledby="hiw-title">
   <!-- Canvas re-draws the same asset as live glyphs (scripts/ascii-panel.ts); the picture is the
        no-JS / reduced-motion rendering and is never fetched when the canvas takes over. -->
   <div class="hiw__ascii" data-ascii-panel>
@@ -31,7 +25,7 @@ const [avif, webp] = await Promise.all(
   </div>
 
   <div class="hiw__intro">
-    <SectionHeading eyebrow={hiw.eyebrow} id="hiw-title" tone="dark" dotMotion="scroll-path" title={hiw.title} />
+    <SectionHeading eyebrow={hiw.eyebrow} id="hiw-title" tone="dark" title={hiw.title} />
     <p class="hiw__lead" data-reveal="rise">{hiw.lead}</p>
   </div>
 
@@ -66,15 +60,6 @@ const [avif, webp] = await Promise.all(
   .hiw__intro { position: relative; display: flex; flex-direction: column; gap: 22px; max-width: 810px; }
   .hiw__lead { max-width: 739px; font-size: var(--fs-body); line-height: 1.5; }
 
-  /* Figma 2003:38 — path flipped vertically, bleeding 16px past both edges. */
-  .hiw__path { position: absolute; left: -16px; top: 397.26px; width: calc(100% + 32px); height: 148px; }
-  .hiw__path svg { display: block; width: 100%; height: 100%; overflow: visible; transform: scaleY(-1); }
-  /* The headline's dot is the traveller (scripts/hiw-timeline.ts): it stays on the title at rest
-     (no JS, reduced motion, below desktop) and is moved by transform only. */
-  .hiw[data-timeline] :global(.section-heading__dot) { will-change: transform; }
-  .hiw[data-timeline] .hiw__step { opacity: var(--opacity-step-pending); transition: opacity 500ms var(--ease-precise); }
-  .hiw[data-timeline] .hiw__step[data-reached] { opacity: 1; }
-
   /* Figma draws the panel at 517×259 from y 125, over the "04" label. Per Mer (review round 1) it must not
      cover it: aligned to the eyebrow and scaled to 92 % (same crop), ending 12px above the steps row. */
   .hiw__ascii { position: absolute; right: 0; top: 95.25px; width: 476px; height: 238px; }
@@ -92,15 +77,14 @@ const [avif, webp] = await Promise.all(
   .hiw__faq { position: relative; display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: var(--sp-16); font-size: var(--fs-body); line-height: 1.4; }
   .hiw__faq p { margin: 0; }
   .hiw__step { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 14px; padding: 22px var(--sp-12); }
-  .hiw__num { font-family: var(--font-technical); font-size: var(--fs-eyebrow); line-height: 1.5; letter-spacing: 0.02em; }
-  .hiw__step-title { font-weight: 400; font-size: var(--fs-body); line-height: 1.5; }
+  /* Step number large and light, step name bold: the two carry the scan (Mer). */
+  .hiw__num { font-family: var(--font-technical); font-weight: 300; font-size: clamp(40px, 3.9vw, 56px); line-height: 1; letter-spacing: 0; }
+  .hiw__step-title { font-weight: 700; font-size: var(--fs-body); line-height: 1.5; }
   .hiw__step-body { font-size: var(--fs-meta); line-height: 1.5; }
 
-  /* Below desktop the dashed path no longer reads as a route through four columns: it is hidden,
-     the ASCII panel joins the flow, and the steps go 2 × 2 (tablet) or 1 column (mobile). */
+  /* Below desktop the ASCII panel joins the flow, and the steps go 2 × 2 (tablet) or 1 column (mobile). */
   @media (max-width: 1199px) {
     .hiw { gap: var(--sp-48); padding-top: var(--sp-80); padding-bottom: var(--sp-80); }
-    .hiw__path { display: none; }
     .hiw__ascii { position: relative; top: auto; right: auto; order: 2; width: 100%; max-width: 517px; height: auto; aspect-ratio: 517 / 259; }
       .hiw__intro { order: 1; }
     .hiw__faq { order: 4; }
@@ -115,7 +99,5 @@ const [avif, webp] = await Promise.all(
 
 <script>
   import { initAsciiPanel } from '../../scripts/ascii-panel';
-  import { initHiwTimeline } from '../../scripts/hiw-timeline';
   initAsciiPanel();
-  initHiwTimeline();
 </script>

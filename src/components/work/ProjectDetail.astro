@@ -5,6 +5,7 @@
 // the body of the prerendered /work/<slug> page (R2-E).
 import type { ProjectDetailData, DetailItem, DetailSection } from '../../data/project-details';
 import DetailImage from './DetailImage.astro';
+import ArchitectureDiagram from './ArchitectureDiagram.astro';
 import PocBlock from './PocBlock.astro';
 import StepsCard from './StepsCard.astro';
 import AutomationBlock from './AutomationBlock.astro';
@@ -24,7 +25,7 @@ const pct = (n: number, of: number) => `${(n / of) * 100}%`;
 ---
 <article class="pd" aria-labelledby={`pd-title-${p.id}`}>
   <header class="pd__bar">
-    <p class="pd__client">{p.client}<span class="pd__credit">{p.credit}</span></p>
+    <p class="pd__client">{p.client}{p.credit && <span class="pd__credit">{p.credit}</span>}</p>
     <div class="pd__actions">
       {p.link && (
         <Button class="pd__link" href={p.link.href} variant="outline-secondary" target="_blank" rel="noopener">
@@ -58,10 +59,13 @@ const pct = (n: number, of: number) => `${(n / of) * 100}%`;
         {s.cols.map((c) => (
           <div class="pd-col" style={`--w:${c.w};--j:${{ start: 'flex-start', center: 'center', end: 'flex-end' }[c.justify ?? 'start']}`}>
             {c.items.map((i: DetailItem) => i.t === 'text' ? (
-              <section class:list={['pd__block', i.panel && 'pd__block--panel']} data-reveal="rise">
+              <section class:list={['pd__block', i.panel && 'pd__block--panel', i.sub && 'pd__block--sub']} data-reveal="rise">
                 <h3 class="pd__block-title">{i.heading}</h3>
-                <p class="pd__block-body">{i.body}</p>
+                {i.body && <p class="pd__block-body">{i.body}</p>}
+                {i.list && <ul class="pd__block-list" role="list">{i.list.map((li) => <li>{li}</li>)}</ul>}
               </section>
+            ) : i.t === 'architecture' ? (
+              <ArchitectureDiagram copy={i.copy} />
             ) : i.t === 'poc' ? (
               <PocBlock poc={i} />
             ) : i.t === 'steps' ? (
@@ -69,7 +73,7 @@ const pct = (n: number, of: number) => `${(n / of) * 100}%`;
             ) : i.t === 'automation' ? (
               <AutomationBlock item={i} />
             ) : (
-              <DetailImage src={i.src} width={i.w} alt={i.alt} desc={i.desc} caption={i.caption} center={i.center} style={`--iw:${pct(i.w, c.w)}`} />
+              <DetailImage src={i.src} width={i.w} alt={i.alt} desc={i.desc} caption={i.caption} center={i.center} video={i.video} style={`--iw:${pct(i.w, c.w)}`} />
             ))}
           </div>
         ))}
@@ -156,6 +160,10 @@ const pct = (n: number, of: number) => `${(n / of) * 100}%`;
   .pd__block { display: flex; flex-direction: column; gap: var(--sp-12); min-width: 0; }
   .pd__block-title { font-weight: 400; font-size: var(--fs-pd-block); line-height: 1.2; letter-spacing: -0.02em; }
   .pd__block-body { font-size: var(--fs-body-lg); line-height: normal; }
+  .pd__block--sub .pd__block-title { font-size: clamp(24px, 2.2vw, 32px); }
+  .pd__block-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: var(--sp-8); font-size: var(--fs-body-lg); }
+  .pd__block-list li { position: relative; padding-left: var(--sp-24); }
+  .pd__block-list li::before { content: ''; position: absolute; left: 0; top: 0.6em; width: 8px; height: 8px; border-radius: 50%; background: var(--accent-primary); }
   .pd__block--panel { background: var(--surface-canvas); padding: clamp(24px, 5vw, 66px); }
 
   /* Images: display width = Figma width / column width */

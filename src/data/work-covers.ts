@@ -14,3 +14,8 @@ export const covers: Record<string, ImageMetadata> = {
   asociart, 'the-mile': theMile, 'orchard-mile': orchardMile, quilmes, 'carbon-optimum': carbonOptimum,
   'agente-mama': agenteMama, 'american-padel-systems': americanPadel, 'hifi-hub': hifiHub, 'black-duck': blackDuck,
 };
+
+/** Cover videos, by project slug: played over the cover image (the image stays as poster and as the reduced-motion frame). Same MP4 as the project's detail hero. */
+export const coverVideos: Record<string, string> = {
+  'hifi-hub': '/video/hifi-hub-hero.mp4',
+};

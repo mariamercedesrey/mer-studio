@@ -1,0 +1,71 @@
+---
+// Carbon Optimum brand architecture (case study "El trabajo › 03"): Carbon Optimum → OptiMarine → OptiCosmetics · OptiOmega3 · BioMass.
+// Plain HTML/CSS (no raster): nested semantic lists. Horizontal on desktop (≥1200), vertical below. Tokens only.
+import type { ArchitectureCopy } from '../../data/project-details';
+
+interface Props { copy: ArchitectureCopy }
+const { copy } = Astro.props;
+---
+<figure class="arch" data-reveal="rise">
+  <ul class="arch__tree" role="list" aria-label={copy.label}>
+    <li class="arch__node arch__node--root">
+      <div class="arch__card">
+        <span class="arch__level">{copy.parent.level}</span>
+        <strong class="arch__name">{copy.parent.name}</strong>
+      </div>
+      <ul class="arch__tree" role="list" aria-label={copy.unit.name}>
+        <li class="arch__node">
+          <div class="arch__card">
+            <span class="arch__level">{copy.unit.level}</span>
+            <strong class="arch__name">{copy.unit.name}</strong>
+          </div>
+          <ul class="arch__tree arch__tree--leaves" role="list" aria-label={copy.productsLabel}>
+            {copy.products.map((p) => (
+              <li class="arch__node arch__node--leaf">
+                <div class="arch__card">
+                  <span class="arch__level">{p.role}</span>
+                  <strong class="arch__name">{p.strong ? <><b>{p.strong}</b><span>{p.light}</span></> : p.light}</strong>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <figcaption class="arch__rule">{copy.rule}</figcaption>
+</figure>
+
+<style>
+  .arch { margin: 0; display: flex; flex-direction: column; gap: var(--sp-24); color: var(--text-primary); }
+  .arch__tree { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: var(--sp-48); }
+  .arch__tree--leaves { flex-direction: column; align-items: stretch; gap: var(--sp-16); }
+  .arch__node { display: flex; align-items: center; gap: var(--sp-48); position: relative; }
+  .arch__node--leaf { gap: 0; }
+  .arch__card {
+    display: flex; flex-direction: column; gap: var(--sp-4); min-width: 200px;
+    padding: var(--sp-16) var(--sp-24); background: var(--surface-canvas); border: 1px solid var(--border-subtle); border-radius: 13px;
+  }
+  .arch__level { font-family: var(--font-technical); font-size: 12px; line-height: 1.4; letter-spacing: 0.02em; text-transform: uppercase; color: var(--text-secondary); }
+  .arch__name { font-family: var(--font-display); font-size: clamp(20px, 1.9vw, 26px); font-weight: 500; line-height: 1.2; letter-spacing: -0.01em; }
+  .arch__name b { font-weight: 700; }
+  .arch__name span { font-weight: 300; }
+  .arch__rule { max-width: 720px; font-size: var(--fs-body); line-height: 1.5; color: var(--text-secondary); }
+
+  /* connectors: a short rule from each node to its children (horizontal layout) */
+  .arch__node:has(> .arch__tree) > .arch__card::after { content: none; }
+  .arch__node > .arch__tree { position: relative; }
+  .arch__node > .arch__tree::before { content: ''; position: absolute; left: calc(var(--sp-48) * -1); top: 50%; width: var(--sp-48); border-top: 1px solid var(--border-subtle); }
+  .arch__tree--leaves > .arch__node::before { content: ''; position: absolute; left: calc(var(--sp-24) * -1); top: 50%; width: var(--sp-24); border-top: 1px solid var(--border-subtle); }
+  .arch__tree--leaves { padding-left: var(--sp-24); border-left: 1px solid var(--border-subtle); }
+  .arch__node > .arch__tree--leaves::before { content: ''; position: absolute; left: calc(var(--sp-48) * -1 - 1px); top: 50%; width: var(--sp-48); border-top: 1px solid var(--border-subtle); }
+
+  @media (max-width: 1199px) {
+    .arch__tree, .arch__node { flex-direction: column; align-items: stretch; gap: var(--sp-24); }
+    .arch__card { min-width: 0; }
+    .arch__node > .arch__tree::before, .arch__tree--leaves > .arch__node::before, .arch__node > .arch__tree--leaves::before { content: none; }
+    /* vertical: children indent under the parent with a left rule */
+    .arch__node > .arch__tree { padding-left: var(--sp-24); border-left: 1px solid var(--border-subtle); }
+    .arch__tree--leaves { gap: var(--sp-12); }
+  }
+</style>

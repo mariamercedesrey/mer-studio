@@ -287,7 +287,7 @@ Principles:
 | Client marquee (12 logos) | `brand/assets/clients/client-01…12` + Agente Mamá `Icon`/`Logotypo` | ✅ Needs resizing: `client-06.png` is 4096 px wide and `client-07` is 1774 px, both shown at about 75–120 px. |
 | Scroll arrow | `brand/assets/icons/scroll-arrow.svg` | ✅ |
 | Pixel banner 2045:2485 | `brand/assets/img/pixel-banner.png` (3022×898, 824 KB) | ✅ Convert to AVIF/WebP. |
-| How it works | `img/how-it-works.png`, `img/process-line.svg` | ✅ |
+| How it works | `img/how-it-works.png` | ✅ |
 | About portrait | `img/mer-portrait.png` (1435×1096, **3.7 MB**) | ✅ Must be converted to AVIF/WebP (display is 334×297). |
 
 ### Selected Work (Figma → files)
