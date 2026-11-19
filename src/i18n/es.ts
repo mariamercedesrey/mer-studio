@@ -7,8 +7,8 @@ export const es = {
   site: {
     lang: 'es',
     name: 'MER Studio',
-    defaultTitle: 'MER Studio — Estrategia, diseño y desarrollo, de principio a fin',
-    metaDescription: 'Estudio independiente de diseño y desarrollo: estrategia, diseño y código en un solo equipo. Marcas, sitios web, tiendas online y plataformas.',
+    defaultTitle: 'MER Studio — Diseño web, tiendas online y branding',
+    metaDescription: 'Estudio de diseño y desarrollo: sitios web, tiendas online en Tiendanube y Shopify, y marcas. Desde Buenos Aires.',
     ogImageAlt: 'MER Studio — Estrategia, diseño y desarrollo, de principio a fin.',
     skipLink: 'Ir al contenido',
     logoAlt: 'MER Studio',

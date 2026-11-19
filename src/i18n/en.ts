@@ -13,8 +13,8 @@ export const en = {
   site: {
     lang: 'en',
     name: 'MER Studio',
-    defaultTitle: 'MER Studio — Strategy, design and build, end to end',
-    metaDescription: 'Independent design-and-build studio. Strategy, design and code, handled end to end by one team — a brand, a website, an online store, a full platform.',
+    defaultTitle: 'MER Studio — Web design, ecommerce and branding',
+    metaDescription: 'Design-and-build studio: websites, Shopify stores and brand systems, from strategy to code. Remote, in English and Spanish.',
     ogImageAlt: 'MER Studio — Strategy, design and build, end to end.',
     skipLink: 'Skip to content',
     logoAlt: 'MER Studio',
