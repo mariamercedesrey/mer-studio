@@ -71,6 +71,7 @@ export const es = {
       services: 'Servicios',
       howItWorks: 'Cómo trabajamos',
       ecommerce: 'Tiendas online',
+      webDesign: 'Diseño web',
       aiVisibility: 'Visibilidad en IA',
       about: 'Nosotros',
       faq: 'Preguntas frecuentes',
@@ -242,14 +243,14 @@ export const es = {
       ] },
       { num: '03', label: 'visibilidad en ia', items: [
         { q: '¿Qué es la visibilidad en IA (GEO / AEO)?', a: 'Hacer que a la IA le resulte fácil encontrar, entender y citar tu marca, no solo posicionarla en Google.' },
-        { q: '¿La visibilidad en IA es gratis en noviembre?', a: 'Sí, la configuración es gratis para los proyectos que empiezan en noviembre de 2026. El resto es pago.' },
+        { q: '¿La visibilidad en IA es gratis en diciembre?', a: 'Sí, la configuración es gratis para los proyectos que empiezan en diciembre de 2026. El resto es pago.' },
       ] },
     ],
     aiVisibility: [
       { q: '¿Qué es el GEO (Generative Engine Optimization)?', a: 'Es hacer que motores de IA como ChatGPT, Perplexity y Google AI puedan encontrar, entender y citar tu marca cuando la gente les hace preguntas, además de aparecer en la lista de resultados de Google.' },
       { q: '¿Qué es el AEO (Answer Engine Optimization)?', a: 'Es estructurar tu contenido para que se convierta en la respuesta directa: preguntas y respuestas claras, datos estructurados y páginas que los rastreadores de IA puedan leer.' },
       { q: '¿En qué se diferencia el GEO del SEO?', a: 'El SEO te posiciona; el GEO y el AEO hacen que te mencionen. Funcionan juntos: una buena base técnica ayuda a los dos.' },
-      { q: '¿Qué es gratis en los proyectos que empiezan en noviembre?', a: 'La configuración: schema, llms.txt, acceso de los rastreadores de IA, estructura semántica y un chequeo inicial de visibilidad. La estrategia de contenido, la auditoría completa y el seguimiento mensual son pagos.' },
+      { q: '¿Qué es gratis en los proyectos que empiezan en diciembre?', a: 'La configuración: schema, llms.txt, acceso de los rastreadores de IA, estructura semántica y un chequeo inicial de visibilidad. La estrategia de contenido, la auditoría completa y el seguimiento mensual son pagos.' },
       { q: '¿Garantizan que la IA los mencione?', a: 'Nadie puede garantizarlo. Creamos las condiciones para que los motores de IA te encuentren y confíen en ti, y medimos qué cambia.' },
     ],
     ecommerce: [
@@ -258,7 +259,15 @@ export const es = {
       { q: '¿Pueden conectar mi tienda con Instagram y Facebook?', a: 'Sí. Conectamos tu catálogo con Meta para que los productos se puedan etiquetar y vender desde Instagram y Facebook.' },
       { q: '¿Cuánto tarda una tienda online?', a: 'Desde una semana para una tienda simple. Los catálogos grandes y las integraciones llevan más tiempo, y acordamos las fechas antes de empezar.' },
       { q: '¿Cuánto cuesta una tienda online?', a: 'Cada proyecto se cotiza después de una llamada de 20 minutos. Tienes un alcance y un precio cerrados antes de empezar.' },
-      { q: '¿Incluye visibilidad en IA?', a: 'En los proyectos que empiezan en noviembre de 2026, la configuración de visibilidad en IA es gratis, para que ChatGPT, Perplexity y Google te encuentren y recomienden tu tienda.' },
+      { q: '¿Incluye visibilidad en IA?', a: 'En los proyectos que empiezan en diciembre de 2026, la configuración de visibilidad en IA es gratis, para que ChatGPT, Perplexity y Google te encuentren y recomienden tu tienda.' },
+    ],
+    webDesign: [
+      { q: '¿Cuánto tarda un sitio web?', a: 'Desde una semana para una landing. Un sitio completo lleva más tiempo, y definimos las fechas juntos antes de empezar.' },
+      { q: '¿Cuánto cuesta el diseño de una página web?', a: 'Cotizamos cada sitio después de una llamada de 20 minutos, con el alcance y el precio cerrados antes de comenzar el trabajo.' },
+      { q: '¿Diseñan el sitio, lo desarrollan o las dos cosas?', a: 'Las dos. Un mismo equipo se ocupa de la estrategia, el diseño y el código, así lo que apruebas es lo que se publica.' },
+      { q: '¿Pueden rediseñar mi sitio web actual?', a: 'Sí. Podemos rediseñar el sitio que ya tienes o crear uno nuevo, conservando lo que ya funciona.' },
+      { q: '¿Trabajan con clientes fuera de Buenos Aires?', a: 'Sí. Estamos en Buenos Aires y trabajamos en remoto, en español o en inglés, también con startups de Estados Unidos.' },
+      { q: '¿El sitio incluye visibilidad en IA?', a: 'Los sitios que empiezan en diciembre de 2026 reciben gratis la configuración de visibilidad en IA: schema, llms.txt y acceso de los rastreadores de IA.' },
     ],
   },
 
@@ -339,11 +348,52 @@ export const es = {
     },
   },
 
+  webDesign: {
+    meta: {
+      title: 'Diseño web para emprendedores y startups — Estudio de diseño web',
+      metaDescription: 'Estudio de diseño web: diseño de páginas web de principio a fin, de la estrategia y el UX al código. Trabajamos en remoto desde Buenos Aires.',
+    },
+    intro: {
+      eyebrow: 'diseño web · landing / sitio completo / rediseño',
+      title: 'Un sitio web que explica lo que haces y consigue la llamada.',
+      note: 'Somos un estudio de diseño web: diseñamos y desarrollamos páginas web de principio a fin, desde la estrategia y la estructura hasta el UX, el diseño visual y el código. Las mismas manos lo diseñan y lo publican, así nada se pierde en el camino.',
+    },
+    method: {
+      eyebrow: 'el método',
+      title: 'Cuatro cosas que un sitio web necesita antes de funcionar.',
+      lede: 'Un sitio tiene pocos segundos para explicar qué haces y por qué importa.',
+      items: [
+        { t: 'Claro', d: 'Un mensaje que se entiende en segundos: qué haces, para quién es y cuál es el siguiente paso.' },
+        { t: 'Encontrable', d: 'Páginas pensadas para Google y para la búsqueda con IA: estructura limpia, datos estructurados y contenido que responde preguntas reales.' },
+        { t: 'Rápido', d: 'Páginas livianas que cargan rápido en cualquier celular, sin nada que se interponga entre la visita y el contenido.' },
+        { t: 'Tuyo', d: 'Archivos y cuentas entregados a tu nombre, en un sitio que puedes seguir haciendo crecer.' },
+      ],
+      note: 'Empezamos por la decisión de negocio que el sitio tiene que apoyar y después diseñamos las pantallas.',
+    },
+    proof: {
+      eyebrow: 'pruebas, no promesas',
+      title: 'Sitios web que diseñamos y desarrollamos.',
+      cases: [
+        { slug: 'carbon-optimum', line: 'Un sitio corporativo que vuelve fácil de seguir la ciencia de convertir carbono en valor.' },
+        { slug: 'american-padel-systems', line: 'Un sitio y una herramienta interactiva para un fabricante de canchas de pádel de Miami.' },
+        { slug: 'quilmes', line: 'Una web app de beneficios con cupones QR para visitantes de Iguazú.' },
+      ],
+    },
+    faq: {
+      eyebrow: 'preguntas frecuentes',
+      title: 'Preguntas sobre diseño web.',
+    },
+    cta: {
+      eyebrow: 'Una pregunta para empezar.',
+      title: '¿Qué debería hacer\ntu sitio web?',
+    },
+  },
+
   offer: {
-    tag: 'Gratis con tu proyecto · Nov 2026',
+    tag: 'Gratis con tu proyecto · Dic 2026',
     more: 'leer más',
-    pill: 'Gratis · Nov 2026',
-    hero: 'Visibilidad en IA gratis para proyectos que empiezan en noviembre de 2026',
+    pill: 'Gratis · Dic 2026',
+    hero: 'Visibilidad en IA gratis para proyectos que empiezan en diciembre de 2026',
     free: {
       title: 'Incluido gratis',
       items: [
@@ -355,8 +405,8 @@ export const es = {
       title: 'Sigue siendo pago',
       items: ['Estrategia de contenido para IA', 'Auditoría completa', 'Medición mensual'],
     },
-    intro: 'Oferta de lanzamiento: todo proyecto que empieza en noviembre de 2026 incluye sin costo la configuración de visibilidad en IA.',
-    llms: 'Oferta de lanzamiento: los proyectos que empiezan en noviembre de 2026 incluyen gratis la configuración de visibilidad en IA (schema, llms.txt, acceso de rastreadores de IA, estructura semántica y un chequeo inicial de visibilidad). La estrategia de contenido, la auditoría completa y la medición mensual son pagas.',
+    intro: 'Oferta de lanzamiento: todo proyecto que empieza en diciembre de 2026 incluye sin costo la configuración de visibilidad en IA.',
+    llms: 'Oferta de lanzamiento: los proyectos que empiezan en diciembre de 2026 incluyen gratis la configuración de visibilidad en IA (schema, llms.txt, acceso de rastreadores de IA, estructura semántica y un chequeo inicial de visibilidad). La estrategia de contenido, la auditoría completa y la medición mensual son pagas.',
   },
 
   intake: {
@@ -436,6 +486,7 @@ export const es = {
   projectDetail: {
     close: 'Cerrar proyecto',
     moreWork: 'Más proyectos',
+    moreWebDesign: 'Más sobre diseño web →', // final de los casos Carbon Optimum y American Padel Systems
     moreEcommerce: 'Más sobre tiendas online →', // end of the Orchard Mile, The Mile and Black Duck case studies
   },
 
@@ -460,6 +511,12 @@ export const es = {
       serviceType: 'Diseño y desarrollo de tiendas online',
       description: 'Diseñamos y construimos tiendas online en Tiendanube, Shopify y WooCommerce: estructura del catálogo y fichas de producto, medios de pago, envíos y la integración con Instagram, Facebook y Google que mantiene una tienda vendiendo.',
       catalogName: 'Cuatro cosas que una tienda necesita antes de vender',
+    },
+    webDesign: {
+      name: 'Diseño web',
+      serviceType: 'Diseño y desarrollo de sitios web',
+      description: 'Diseñamos y desarrollamos sitios web de principio a fin para emprendedores y startups: estrategia, estructura, UX, diseño visual y código, entregados a tu nombre.',
+      catalogName: 'Cuatro cosas que un sitio web necesita antes de funcionar',
     },
   },
 
@@ -533,7 +590,7 @@ export const es = {
       title: '250 marcas, una sola tienda',
       meta: '[Ecommerce y Moda]',
       roles: ['UX/UI', 'Front-End', 'Editorial', 'Growth Design'],
-      metaDescription: 'Orchard Mile, diseño UX/UI y front-end de ecommerce: una tienda de moda de lujo con más de 250 marcas y unos 80.000 SKUs, más fácil de recorrer y comprar.',
+      metaDescription: 'Orchard Mile, diseño UX/UI y front-end de ecommerce: una tienda de moda de lujo con más de 250 marcas y unos 80.000 SKUs, más fácil de comprar.',
       blocks: {
         startingPoint: { heading: 'Punto de partida', body: 'Lanzada en Nueva York en 2015 por una ex ejecutiva de Bergdorf Goodman, Orchard Mile reunió moda de diseñador, belleza y hogar de boutiques independientes y grandes retailers en una sola tienda organizada por marca. Pasó de 30 marcas en el lanzamiento a 120 en menos de dos años, y sus propias fundadoras identificaron el riesgo: la parálisis por exceso de opciones. Cuando me sumé, el catálogo ya tenía más de 250 marcas y unos 80.000 SKUs, provenientes de tiendas con datos inconsistentes.' },
         theWork: { heading: 'El trabajo', body: 'Cinco años diseñando y construyendo las páginas que vendían el catálogo: landings, historias editoriales, páginas de influencers y páginas de ecommerce, que implementé en Angular junto al equipo de front-end. Llevé las campañas de temporada —Black Friday, el Día del Padre y cada lanzamiento intermedio— del brief a la página publicada, además del contenido para modales del sitio, campañas de email en Klaviyo y piezas de marketing, con pruebas A/B en AB Tasty. También trabajé con el equipo de back-end en los scrapers que traían los datos de producto de la tienda de cada marca.' },
@@ -577,7 +634,7 @@ export const es = {
         steps: ['Materia prima', 'Microalgas', 'Biomasa', 'Productos orgánicos'],
         body: 'Carbon Optimum convierte el CO₂ capturado en valor: las microalgas lo absorben, la biomasa se cosecha en un solo día y se transforma en materia prima para productos orgánicos. Es una empresa de Miami con una ciencia compleja detrás, que necesitaba una marca capaz de hacerlo simple para partners y compradores.',
       },
-      metaDescription: 'Carbon Optimum: rediseño de la marca corporativa, la unidad de negocio OptiMarine y un sistema de submarcas escalable, más el diseño y desarrollo del sitio.',
+      metaDescription: 'Carbon Optimum: rediseño de la marca corporativa, la unidad de negocio OptiMarine y un sistema de submarcas escalable, más el sitio web.',
       blocks: {
         challenge: { heading: 'El desafío', body: 'La empresa tenía dos necesidades a la vez. Por un lado, una marca corporativa que comunicara tecnología y propósito. Por otro, una unidad de negocio para comercializar sus ingredientes, con identidad propia pero sin perder el vínculo con la casa madre. Y esa unidad tenía que poder sumar nuevas líneas de producto sin rediseñar la marca cada vez.' },
         theWork: { heading: 'El trabajo', body: '' },
@@ -685,7 +742,7 @@ export const es = {
       seoTitle: 'Todas las técnicas de estampado, una sola tienda',
       meta: '[Tiendanube] [Ecommerce]',
       roles: ['Diseño web', 'Armado de tienda', 'Imágenes de producto', 'Automatización con IA'],
-      metaDescription: 'Black Duck: diseño de tienda online en Tiendanube para una marca argentina de remeras, que muestra cada técnica de estampado, con automatización con IA.',
+      metaDescription: 'Black Duck: tienda online en Tiendanube para una marca argentina de remeras, que muestra cada técnica de estampado, con automatización con IA.',
       blocks: {
         startingPoint: { heading: 'Punto de partida', body: 'Black Duck es una marca argentina de remeras con estampas de música y cultura, hechas con una variedad de técnicas poco común: tintas al agua y plastisol, metalizadas, 3D con relieve, flock, shimmer, glitter y puff. Necesitaba una tienda online que mostrara ese oficio, no solo el producto.' },
         theWork: { heading: 'El trabajo', body: 'Armé la tienda en Tiendanube de punta a punta: diseño, estructura del catálogo y fichas de producto, medios de pago, envíos y la integración con Meta, que conecta el catálogo con Instagram y Facebook. Las imágenes de producto se produjeron con Midjourney y Photoshop, y una automatización en n8n retoca con IA las fotos nuevas y las guarda ordenadas en carpetas de Google Drive, para que cada lanzamiento salga más rápido.' },

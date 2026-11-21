@@ -78,6 +78,7 @@ export const en = {
       services: 'Services',
       howItWorks: 'How it works',
       ecommerce: 'Ecommerce',
+      webDesign: 'Web Design',
       aiVisibility: 'AI Visibility',
       about: 'About Us',
       faq: 'FAQ',
@@ -224,7 +225,7 @@ export const en = {
   faqPage: {
     meta: {
       title: 'FAQ — Process, Timing & Platforms | MER Studio',
-      metaDescription: 'Answers on cost, timing, revisions, handover, e-commerce platforms (Shopify, Tiendanube, WooCommerce) and AI visibility — from a design-and-build studio.',
+      metaDescription: 'Answers on cost, timing, revisions, handover, e-commerce platforms (Shopify, Tiendanube, WooCommerce) and AI visibility at MER Studio.',
     },
     eyebrow: 'faq',
     title: 'Questions, answered.',
@@ -254,14 +255,14 @@ export const en = {
       ] },
       { num: '03', label: 'ai visibility', items: [
         { q: 'What is AI Visibility (GEO / AEO)?', a: 'Making your brand easy for AI to find, understand and cite — not just to rank on Google.' },
-        { q: 'Is AI Visibility free in November?', a: 'Yes, the setup is free for projects started in November 2026. The rest is paid.' },
+        { q: 'Is AI Visibility free in December?', a: 'Yes, the setup is free for projects started in December 2026. The rest is paid.' },
       ] },
     ],
     aiVisibility: [
       { q: 'What is Generative Engine Optimization (GEO)?', a: "Making your brand easy for AI engines like ChatGPT, Perplexity and Google AI to find, understand and cite when people ask them questions — not just ranking in Google's list of links." },
       { q: 'What is Answer Engine Optimization (AEO)?', a: 'Structuring your content so it becomes the direct answer: clear questions and answers, structured data, and pages AI crawlers can read.' },
       { q: 'How is GEO different from SEO?', a: 'SEO gets you ranked; GEO and AEO get you mentioned. They work together — a solid technical base helps both.' },
-      { q: "What's free for projects started in November?", a: 'The setup: schema, llms.txt, AI crawler access, semantic structure and an initial visibility check. Content strategy, full audit and monthly tracking are paid.' },
+      { q: "What's free for projects started in December?", a: 'The setup: schema, llms.txt, AI crawler access, semantic structure and an initial visibility check. Content strategy, full audit and monthly tracking are paid.' },
       { q: 'Do you guarantee AI mentions?', a: 'No one can. We build the conditions for AI engines to find and trust you, and we measure what changes.' },
     ],
     ecommerce: [
@@ -270,14 +271,22 @@ export const en = {
       { q: 'Can you connect my store to Instagram and Facebook?', a: 'Yes. We connect your catalogue to Meta so products can be tagged and sold from Instagram and Facebook.' },
       { q: 'How long does an online store take?', a: 'From one week for a simple store. Larger catalogues and integrations take longer, and we agree on dates before we start.' },
       { q: 'How much does an online store cost?', a: 'Every project is quoted after a 20-minute call. You get a fixed scope and price before we start.' },
-      { q: 'Is AI Visibility included?', a: 'For projects started in November 2026, the AI Visibility setup is free, so your store can be found and recommended by ChatGPT, Perplexity and Google AI.' },
+      { q: 'Is AI Visibility included?', a: 'For projects started in December 2026, the AI Visibility setup is free, so your store can be found and recommended by ChatGPT, Perplexity and Google AI.' },
+    ],
+    webDesign: [
+      { q: 'How long does a website take?', a: 'From one week for a landing page. A full site takes longer, and we set the dates together before starting.' },
+      { q: 'How much does a website cost?', a: 'We quote each website after a 20-minute call, with the scope and price fixed before any work begins.' },
+      { q: 'Do you design the site, build it, or both?', a: 'Both. One team handles strategy, design and code, so what you approve is what goes live.' },
+      { q: 'Can you redesign my existing website?', a: 'Yes. We can redesign the site you have or build a new one, keeping what already works.' },
+      { q: 'Do you work with startups outside Argentina?', a: 'Yes. We are based in Buenos Aires and work remotely in English or Spanish, including with US startups.' },
+      { q: 'Is AI Visibility included in a website project?', a: 'Websites started in December 2026 get the AI Visibility setup free: schema, llms.txt and AI crawler access.' },
     ],
   },
 
   aiVisibility: {
     meta: {
       title: 'AI Visibility — Generative Engine Optimization (GEO & AEO)',
-      metaDescription: 'Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO): we make your brand readable and quotable by ChatGPT, Perplexity and Google AI.',
+      metaDescription: 'Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO): we make your brand quotable by ChatGPT, Perplexity and Google AI.',
     },
     intro: {
       eyebrow: 'ai visibility · geo / aeo',
@@ -351,12 +360,53 @@ export const en = {
     },
   },
 
+  webDesign: {
+    meta: {
+      title: 'Website Design for Startups & Founders — Web Design Studio',
+      metaDescription: 'Web design studio for startups and founders: websites designed and built end to end, from strategy and UX to code. Remote, in English and Spanish.',
+    },
+    intro: {
+      eyebrow: 'web design · landing / full site / redesign',
+      title: 'A website that explains what you do, and gets you the call.',
+      note: 'We are a web design studio that designs and builds websites end to end — from strategy and structure to UX, visual design and code. The same hands design it and ship it, so nothing is lost in a handoff.',
+    },
+    method: {
+      eyebrow: 'the method',
+      title: 'Four things a website needs before it works.',
+      lede: 'A website has a few seconds to explain what you do and why it matters.',
+      items: [
+        { t: 'Clear', d: 'A message people understand in seconds: what you do, who it is for and what to do next.' },
+        { t: 'Findable', d: 'Pages built for Google and AI search: clean structure, structured data and content that answers real questions.' },
+        { t: 'Fast', d: 'Light pages that load quickly on any phone, with nothing standing between the visitor and the content.' },
+        { t: 'Yours', d: 'Files and accounts handed over in your name, on a site you can keep growing.' },
+      ],
+      note: 'We start with the business decision the site has to support, then design the screens.',
+    },
+    proof: {
+      eyebrow: 'proof, not promises',
+      title: "Websites we've designed and built.",
+      cases: [
+        { slug: 'carbon-optimum', line: 'A corporate site that makes carbon-to-value science easy to follow.' },
+        { slug: 'american-padel-systems', line: 'A site and an interactive tool for a Miami padel court builder.' },
+        { slug: 'quilmes', line: 'A benefits web app with QR coupons for Iguazú visitors.' },
+      ],
+    },
+    faq: {
+      eyebrow: 'faq',
+      title: 'Questions about web design.',
+    },
+    cta: {
+      eyebrow: 'One question to start.',
+      title: 'What should your\nwebsite do?',
+    },
+  },
+
   // Launch offer (flags and dates: src/data/offer.ts). Every offer text of the site comes from here.
   offer: {
-    tag: 'Free with your project · Nov 2026',
+    tag: 'Free with your project · Dec 2026',
     more: 'read more',
-    pill: 'Free · Nov 2026', // diagram pill: "AI Visibility  FREE · NOV 2026 · read more"
-    hero: 'AI Visibility free for projects started in November 2026', // hero line, after the "—"
+    pill: 'Free · Dec 2026', // diagram pill: "AI Visibility  FREE · DEC 2026 · read more"
+    hero: 'AI Visibility free for projects started in December 2026', // hero line, after the "—"
     free: {
       title: 'Included free',
       items: [
@@ -368,9 +418,9 @@ export const en = {
       title: 'Still paid',
       items: ['AI content strategy', 'Full audit', 'Monthly measurement'],
     },
-    intro: 'Launch offer: every project that starts in November 2026 includes the AI Visibility setup at no cost.',
+    intro: 'Launch offer: every project that starts in December 2026 includes the AI Visibility setup at no cost.',
     // Also the JSON-LD description of the offer, and the line that public/llms.txt must carry (scripts/check-site.mjs).
-    llms: 'Launch offer: projects started in November 2026 include AI Visibility setup free (schema, llms.txt, AI crawler access, semantic structure, and an initial AI visibility check). Content strategy, full audit and monthly measurement are paid.',
+    llms: 'Launch offer: projects started in December 2026 include AI Visibility setup free (schema, llms.txt, AI crawler access, semantic structure, and an initial AI visibility check). Content strategy, full audit and monthly measurement are paid.',
   },
 
   // Left column of the dark intake panel (start a project, AI Visibility).
@@ -455,6 +505,7 @@ export const en = {
   projectDetail: {
     close: 'Close project',
     moreWork: 'More work',
+    moreWebDesign: 'More about web design →', // end of the Carbon Optimum and American Padel Systems case studies
     moreEcommerce: 'More about ecommerce →', // end of the Orchard Mile, The Mile and Black Duck case studies
   },
 
@@ -480,6 +531,12 @@ export const en = {
       serviceType: 'Ecommerce website design and development',
       description: 'We design and build online stores on Shopify, Tiendanube and WooCommerce: catalogue structure and product pages, payments, shipping, and the integrations with Instagram, Facebook and Google that keep a store selling.',
       catalogName: 'Four things a store needs before it sells',
+    },
+    webDesign: {
+      name: 'Website design',
+      serviceType: 'Website design and development',
+      description: 'We design and build websites end to end for startups and founders: strategy, structure, UX, visual design and code, handed over in your name.',
+      catalogName: 'Four things a website needs before it works',
     },
   },
 
@@ -598,7 +655,7 @@ export const en = {
         steps: ['Raw material', 'Microalgae', 'Biomass', 'Organic goods'],
         body: 'Carbon Optimum turns captured CO₂ into value: microalgae absorb it, the biomass is harvested in a single day, and it becomes raw material for organic goods. It is a Miami-based company working on a complex science that needed a brand able to make it simple for partners and buyers.',
       },
-      metaDescription: 'Carbon Optimum: a redesigned corporate brand, the OptiMarine business unit and a scalable sub-brand system, plus the design and development of the website.',
+      metaDescription: 'Carbon Optimum: a redesigned corporate brand, the OptiMarine business unit and a scalable sub-brand system, plus website design and build.',
       blocks: {
         challenge: { heading: 'The challenge', body: 'The company had two needs at once. On one side, a corporate brand that communicated technology and purpose. On the other, a business unit to sell its ingredients, with its own identity but without losing the link to the parent company. And that unit had to be able to add new product lines without redesigning the brand each time.' },
         theWork: { heading: 'The work', body: '' },

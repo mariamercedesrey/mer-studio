@@ -9,6 +9,7 @@ const GROUPS = [
   ['Launch offer (hero line, Services, /ai-visibility/, JSON-LD, llms.txt)', ['offer']],
   ['/faq/', ['faqPage', 'faq.groups']],
   ['/ecommerce/', ['ecommerce', 'faq.ecommerce']],
+  ['/web-design/', ['webDesign', 'faq.webDesign']],
   ['/ai-visibility/', ['aiVisibility', 'faq.aiVisibility']],
   ['/start-a-project/ and its form', ['startProject', 'form']],
   ['/start-a-project/thanks/', ['thanks']],

@@ -12,9 +12,10 @@ export interface FaqGroup { id: FaqGroupId; num: string; label: string; items: F
 // Copy: src/i18n/{en,es}.ts → `faq`. Structure stays here: group ids, and which entries belong to the launch offer.
 const GROUP_IDS = ['process', 'services', 'aiVisibility'] as const;
 export type FaqGroupId = (typeof GROUP_IDS)[number];
-const OFFER_GROUP_ITEM = { group: 'aiVisibility', index: 1 }; // "Is AI Visibility free in November?"
-const OFFER_AIV_ITEM = 3; // "What's free for projects started in November?"
+const OFFER_GROUP_ITEM = { group: 'aiVisibility', index: 1 }; // "Is AI Visibility free in December?"
+const OFFER_AIV_ITEM = 3; // "What's free for projects started in December?"
 const OFFER_ECOMMERCE_ITEM = 5; // "Is AI Visibility included?"
+const OFFER_WEB_DESIGN_ITEM = 5; // "Is AI Visibility included in a website project?"
 
 export const faqGroups = (locale: Locale): FaqGroup[] => getCopy(locale).faq.groups.map((g, gi) => ({
   id: GROUP_IDS[gi],
@@ -25,6 +26,8 @@ export const faqGroups = (locale: Locale): FaqGroup[] => getCopy(locale).faq.gro
 export const aiVisibilityFaq = (locale: Locale): FaqItem[] => getCopy(locale).faq.aiVisibility.map((it, i): FaqItem => (i === OFFER_AIV_ITEM ? { ...it, offer: true } : it));
 
 export const ecommerceFaq = (locale: Locale): FaqItem[] => getCopy(locale).faq.ecommerce.map((it, i): FaqItem => (i === OFFER_ECOMMERCE_ITEM ? { ...it, offer: true } : it));
+
+export const webDesignFaq = (locale: Locale): FaqItem[] => getCopy(locale).faq.webDesign.map((it, i): FaqItem => (i === OFFER_WEB_DESIGN_ITEM ? { ...it, offer: true } : it));
 
 /** Items that should exist in the build: offer items drop out when the offer is off. */
 export const live = (items: FaqItem[]) => items.filter((i) => !i.offer || offer.active);
