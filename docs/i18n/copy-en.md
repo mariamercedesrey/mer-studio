@@ -15,8 +15,8 @@ Strings: 711.
 
 - `site.lang` → en
 - `site.name` → MER Studio
-- `site.defaultTitle` → MER Studio — Strategy, design and build, end to end
-- `site.metaDescription` → Independent design-and-build studio. Strategy, design and code, handled end to end by one team — a brand, a website, an online store, a full platform.
+- `site.defaultTitle` → MER Studio — Web design, ecommerce and branding
+- `site.metaDescription` → Design-and-build studio: websites, Shopify stores and brand systems, from strategy to code. Remote, in English and Spanish.
 - `site.ogImageAlt` → MER Studio — Strategy, design and build, end to end.
 - `site.skipLink` → Skip to content
 - `site.logoAlt` → MER Studio
@@ -266,7 +266,7 @@ Strings: 711.
 - `offer.tag` → Free with your project · Nov 2026
 - `offer.more` → read more
 - `offer.pill` → Free · Nov 2026
-- `offer.hero` → AI Visibility free for projects started in November 2026
+- `offer.hero` → AI Visibility free for projects started in December 2026
 - `offer.free.title` → Included free
 - `offer.free.items[0]` → Base setup: schema / JSON-LD, llms.txt, AI-bot access in robots.txt, semantic content structure
 - `offer.free.items[1]` → An initial visibility check in ChatGPT, Perplexity, Gemini and Google AI
@@ -274,13 +274,13 @@ Strings: 711.
 - `offer.paid.items[0]` → AI content strategy
 - `offer.paid.items[1]` → Full audit
 - `offer.paid.items[2]` → Monthly measurement
-- `offer.intro` → Launch offer: every project that starts in November 2026 includes the AI Visibility setup at no cost.
-- `offer.llms` → Launch offer: projects started in November 2026 include AI Visibility setup free (schema, llms.txt, AI crawler access, semantic structure, and an initial AI visibility check). Content strategy, full audit and monthly measurement are paid.
+- `offer.intro` → Launch offer: every project that starts in December 2026 includes the AI Visibility setup at no cost.
+- `offer.llms` → Launch offer: projects started in December 2026 include AI Visibility setup free (schema, llms.txt, AI crawler access, semantic structure, and an initial AI visibility check). Content strategy, full audit and monthly measurement are paid.
 
 ## /faq/
 
 - `faqPage.meta.title` → FAQ — Process, Timing & Platforms | MER Studio
-- `faqPage.meta.metaDescription` → Answers on cost, timing, revisions, handover, e-commerce platforms (Shopify, Tiendanube, WooCommerce) and AI visibility — from a design-and-build studio.
+- `faqPage.meta.metaDescription` → Answers on cost, timing, revisions, handover, e-commerce platforms (Shopify, Tiendanube, WooCommerce) and AI visibility at MER Studio.
 - `faqPage.eyebrow` → faq
 - `faqPage.title` → Questions, answered.
 - `faqPage.noteBefore` → Process, timing, platforms and AI visibility — everything worth knowing before we start. If something is missing, ask us on a 
@@ -314,8 +314,8 @@ Strings: 711.
 - `faq.groups[2].label` → ai visibility
 - `faq.groups[2].items[0].q` → What is AI Visibility (GEO / AEO)?
 - `faq.groups[2].items[0].a` → Making your brand easy for AI to find, understand and cite — not just to rank on Google.
-- `faq.groups[2].items[1].q` → Is AI Visibility free in November?
-- `faq.groups[2].items[1].a` → Yes, the setup is free for projects started in November 2026. The rest is paid.
+- `faq.groups[2].items[1].q` → Is AI Visibility free in December?
+- `faq.groups[2].items[1].a` → Yes, the setup is free for projects started in December 2026. The rest is paid.
 
 ## /ecommerce/
 
@@ -359,12 +359,12 @@ Strings: 711.
 - `faq.ecommerce[4].q` → How much does an online store cost?
 - `faq.ecommerce[4].a` → Every project is quoted after a 20-minute call. You get a fixed scope and price before we start.
 - `faq.ecommerce[5].q` → Is AI Visibility included?
-- `faq.ecommerce[5].a` → For projects started in November 2026, the AI Visibility setup is free, so your store can be found and recommended by ChatGPT, Perplexity and Google AI.
+- `faq.ecommerce[5].a` → For projects started in December 2026, the AI Visibility setup is free, so your store can be found and recommended by ChatGPT, Perplexity and Google AI.
 
 ## /ai-visibility/
 
 - `aiVisibility.meta.title` → AI Visibility — Generative Engine Optimization (GEO & AEO)
-- `aiVisibility.meta.metaDescription` → Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO): we make your brand readable and quotable by ChatGPT, Perplexity and Google AI.
+- `aiVisibility.meta.metaDescription` → Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO): we make your brand quotable by ChatGPT, Perplexity and Google AI.
 - `aiVisibility.intro.eyebrow` → ai visibility · geo / aeo
 - `aiVisibility.intro.title` → When people ask an AI, does it name you?
 - `aiVisibility.intro.note` → Search is moving from a list of links to a single answer. With Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO), we make your brand readable, understood and quotable by ChatGPT, Perplexity, Gemini and Google’s AI Overviews.
@@ -399,7 +399,7 @@ Strings: 711.
 - `faq.aiVisibility[1].a` → Structuring your content so it becomes the direct answer: clear questions and answers, structured data, and pages AI crawlers can read.
 - `faq.aiVisibility[2].q` → How is GEO different from SEO?
 - `faq.aiVisibility[2].a` → SEO gets you ranked; GEO and AEO get you mentioned. They work together — a solid technical base helps both.
-- `faq.aiVisibility[3].q` → What's free for projects started in November?
+- `faq.aiVisibility[3].q` → What's free for projects started in December?
 - `faq.aiVisibility[3].a` → The setup: schema, llms.txt, AI crawler access, semantic structure and an initial visibility check. Content strategy, full audit and monthly tracking are paid.
 - `faq.aiVisibility[4].q` → Do you guarantee AI mentions?
 - `faq.aiVisibility[4].a` → No one can. We build the conditions for AI engines to find and trust you, and we measure what changes.
@@ -630,7 +630,7 @@ Strings: 711.
 - `caseStudies.carbon-optimum.startingPoint.steps[2]` → Biomass
 - `caseStudies.carbon-optimum.startingPoint.steps[3]` → Organic goods
 - `caseStudies.carbon-optimum.startingPoint.body` → Carbon Optimum turns captured CO₂ into value: microalgae absorb it, the biomass is harvested in a single day, and it becomes raw material for organic goods. It is a Miami-based company working on a complex science that needed a brand able to make it simple for partners and buyers.
-- `caseStudies.carbon-optimum.metaDescription` → Carbon Optimum: a redesigned corporate brand, the OptiMarine business unit and a scalable sub-brand system, plus the design and development of the website.
+- `caseStudies.carbon-optimum.metaDescription` → Carbon Optimum: a redesigned corporate brand, the OptiMarine business unit and a scalable sub-brand system, plus website design and build.
 - `caseStudies.carbon-optimum.blocks.challenge.heading` → The challenge
 - `caseStudies.carbon-optimum.blocks.challenge.body` → The company had two needs at once. On one side, a corporate brand that communicated technology and purpose. On the other, a business unit to sell its ingredients, with its own identity but without losing the link to the parent company. And that unit had to be able to add new product lines without redesigning the brand each time.
 - `caseStudies.carbon-optimum.blocks.theWork.heading` → The work

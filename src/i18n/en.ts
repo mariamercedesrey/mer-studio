@@ -224,7 +224,7 @@ export const en = {
   faqPage: {
     meta: {
       title: 'FAQ — Process, Timing & Platforms | MER Studio',
-      metaDescription: 'Answers on cost, timing, revisions, handover, e-commerce platforms (Shopify, Tiendanube, WooCommerce) and AI visibility — from a design-and-build studio.',
+      metaDescription: 'Answers on cost, timing, revisions, handover, e-commerce platforms (Shopify, Tiendanube, WooCommerce) and AI visibility at MER Studio.',
     },
     eyebrow: 'faq',
     title: 'Questions, answered.',
@@ -254,14 +254,14 @@ export const en = {
       ] },
       { num: '03', label: 'ai visibility', items: [
         { q: 'What is AI Visibility (GEO / AEO)?', a: 'Making your brand easy for AI to find, understand and cite — not just to rank on Google.' },
-        { q: 'Is AI Visibility free in November?', a: 'Yes, the setup is free for projects started in November 2026. The rest is paid.' },
+        { q: 'Is AI Visibility free in December?', a: 'Yes, the setup is free for projects started in December 2026. The rest is paid.' },
       ] },
     ],
     aiVisibility: [
       { q: 'What is Generative Engine Optimization (GEO)?', a: "Making your brand easy for AI engines like ChatGPT, Perplexity and Google AI to find, understand and cite when people ask them questions — not just ranking in Google's list of links." },
       { q: 'What is Answer Engine Optimization (AEO)?', a: 'Structuring your content so it becomes the direct answer: clear questions and answers, structured data, and pages AI crawlers can read.' },
       { q: 'How is GEO different from SEO?', a: 'SEO gets you ranked; GEO and AEO get you mentioned. They work together — a solid technical base helps both.' },
-      { q: "What's free for projects started in November?", a: 'The setup: schema, llms.txt, AI crawler access, semantic structure and an initial visibility check. Content strategy, full audit and monthly tracking are paid.' },
+      { q: "What's free for projects started in December?", a: 'The setup: schema, llms.txt, AI crawler access, semantic structure and an initial visibility check. Content strategy, full audit and monthly tracking are paid.' },
       { q: 'Do you guarantee AI mentions?', a: 'No one can. We build the conditions for AI engines to find and trust you, and we measure what changes.' },
     ],
     ecommerce: [
@@ -270,14 +270,14 @@ export const en = {
       { q: 'Can you connect my store to Instagram and Facebook?', a: 'Yes. We connect your catalogue to Meta so products can be tagged and sold from Instagram and Facebook.' },
       { q: 'How long does an online store take?', a: 'From one week for a simple store. Larger catalogues and integrations take longer, and we agree on dates before we start.' },
       { q: 'How much does an online store cost?', a: 'Every project is quoted after a 20-minute call. You get a fixed scope and price before we start.' },
-      { q: 'Is AI Visibility included?', a: 'For projects started in November 2026, the AI Visibility setup is free, so your store can be found and recommended by ChatGPT, Perplexity and Google AI.' },
+      { q: 'Is AI Visibility included?', a: 'For projects started in December 2026, the AI Visibility setup is free, so your store can be found and recommended by ChatGPT, Perplexity and Google AI.' },
     ],
   },
 
   aiVisibility: {
     meta: {
       title: 'AI Visibility — Generative Engine Optimization (GEO & AEO)',
-      metaDescription: 'Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO): we make your brand readable and quotable by ChatGPT, Perplexity and Google AI.',
+      metaDescription: 'Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO): we make your brand quotable by ChatGPT, Perplexity and Google AI.',
     },
     intro: {
       eyebrow: 'ai visibility · geo / aeo',
@@ -356,7 +356,7 @@ export const en = {
     tag: 'Free with your project · Nov 2026',
     more: 'read more',
     pill: 'Free · Nov 2026', // diagram pill: "AI Visibility  FREE · NOV 2026 · read more"
-    hero: 'AI Visibility free for projects started in November 2026', // hero line, after the "—"
+    hero: 'AI Visibility free for projects started in December 2026', // hero line, after the "—"
     free: {
       title: 'Included free',
       items: [
@@ -368,9 +368,9 @@ export const en = {
       title: 'Still paid',
       items: ['AI content strategy', 'Full audit', 'Monthly measurement'],
     },
-    intro: 'Launch offer: every project that starts in November 2026 includes the AI Visibility setup at no cost.',
+    intro: 'Launch offer: every project that starts in December 2026 includes the AI Visibility setup at no cost.',
     // Also the JSON-LD description of the offer, and the line that public/llms.txt must carry (scripts/check-site.mjs).
-    llms: 'Launch offer: projects started in November 2026 include AI Visibility setup free (schema, llms.txt, AI crawler access, semantic structure, and an initial AI visibility check). Content strategy, full audit and monthly measurement are paid.',
+    llms: 'Launch offer: projects started in December 2026 include AI Visibility setup free (schema, llms.txt, AI crawler access, semantic structure, and an initial AI visibility check). Content strategy, full audit and monthly measurement are paid.',
   },
 
   // Left column of the dark intake panel (start a project, AI Visibility).
@@ -598,7 +598,7 @@ export const en = {
         steps: ['Raw material', 'Microalgae', 'Biomass', 'Organic goods'],
         body: 'Carbon Optimum turns captured CO₂ into value: microalgae absorb it, the biomass is harvested in a single day, and it becomes raw material for organic goods. It is a Miami-based company working on a complex science that needed a brand able to make it simple for partners and buyers.',
       },
-      metaDescription: 'Carbon Optimum: a redesigned corporate brand, the OptiMarine business unit and a scalable sub-brand system, plus the design and development of the website.',
+      metaDescription: 'Carbon Optimum: a redesigned corporate brand, the OptiMarine business unit and a scalable sub-brand system, plus website design and build.',
       blocks: {
         challenge: { heading: 'The challenge', body: 'The company had two needs at once. On one side, a corporate brand that communicated technology and purpose. On the other, a business unit to sell its ingredients, with its own identity but without losing the link to the parent company. And that unit had to be able to add new product lines without redesigning the brand each time.' },
         theWork: { heading: 'The work', body: '' },

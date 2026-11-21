@@ -9,6 +9,9 @@ const SITE = 'https://mer.studio';
 const ORG_ID = `${SITE}/#studio`;
 const MER_ID = `${SITE}/#mer`;
 
+// Markets named for search/AI engines, plus the site's own "Worldwide" copy.
+const areaServedOf = (worldwide: string) => [{ '@type': 'Country', name: 'Argentina' }, { '@type': 'Country', name: 'United States' }, worldwide];
+
 // Names and descriptions are the site's own copy: rows / add-ons of the Services section (src/i18n → `services`).
 const servicesOf = (locale: Locale) => {
   const svc = getCopy(locale).services;
@@ -44,7 +47,7 @@ export function homeSchema(locale: Locale = 'en') {
         email: EMAIL,
         telephone: WHATSAPP.tel,
         address: { '@type': 'PostalAddress', addressCountry: 'AR' },
-        areaServed: j.areaServed,
+        areaServed: areaServedOf(j.areaServed),
         contactPoint: { '@type': 'ContactPoint', contactType: 'sales', email: EMAIL, telephone: WHATSAPP.tel, url: WHATSAPP.href, availableLanguage: ['en', 'es'] },
         founder: { '@id': MER_ID },
         foundingDate: '2026',
@@ -55,7 +58,7 @@ export function homeSchema(locale: Locale = 'en') {
           itemListElement: servicesOf(locale).map(({ offer: isOffer, ...s }) => ({
             '@type': 'Offer',
             itemOffered: { '@type': 'Service', ...s, provider: { '@id': ORG_ID } },
-            // Launch offer (src/data/offer.ts): the AI Visibility setup is free for projects started in November 2026. Setup only.
+            // Launch offer (src/data/offer.ts): the AI Visibility setup is free for projects started in December 2026. Setup only.
             ...(offer.active && isOffer ? { price: 0, priceCurrency: 'USD', validThrough: offer.validThrough, description: offer.llms } : {}),
           })),
         },
@@ -88,7 +91,7 @@ function serviceSchema(key: 'aiVisibility' | 'ecommerce', locale: Locale) {
     url,
     description: j[key].description,
     provider: { '@id': ORG_ID },
-    areaServed: j.areaServed,
+    areaServed: areaServedOf(j.areaServed),
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: j[key].catalogName,
