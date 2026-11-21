@@ -70,6 +70,7 @@ const at = (x: number, y: number, item: DetailItem, tw?: number): Placed => ({ .
 // All copy (client, credit, titles, meta, roles, text blocks, alt texts, baked-in image copy) is in src/i18n/{en,es}.ts → `caseStudies[slug]`.
 // This file keeps what is not language: URLs, the Figma layout (widths, positions), image files and reading order.
 const build = (cs: Copy['caseStudies'], locale: Locale): Record<string, ProjectDetailData> => {
+  const webDesignMore = { label: getCopy(locale).projectDetail.moreWebDesign, href: pagePath('webDesign', locale) };
   const ecommerceMore = { label: getCopy(locale).projectDetail.moreEcommerce, href: pagePath('ecommerce', locale) };
   const asociart = cs.asociart;
   const theMile = cs['the-mile'];
@@ -197,6 +198,7 @@ const build = (cs: Copy['caseStudies'], locale: Locale): Record<string, ProjectD
       title: carbon.title,
       meta: carbon.meta,
       roles: carbon.roles,
+      more: webDesignMore,
       sections: [
         { kind: 'flow', cw: 1349, cols: [{ w: 1349, items: [steps('carbon-optimum/hero', 1349, carbon.images.hero.alt, carbon.startingPoint, ['carbon-optimum/step-1', 'carbon-optimum/step-2', 'carbon-optimum/step-3', 'carbon-optimum/step-4'])] }] },
         { kind: 'flow', cw: 1349, cols: [{ w: 1349, items: [text(carbon.blocks.challenge)] }] },
@@ -254,6 +256,7 @@ const build = (cs: Copy['caseStudies'], locale: Locale): Record<string, ProjectD
       seoTitle: padel.seoTitle,
       meta: padel.meta,
       roles: padel.roles,
+      more: webDesignMore,
       sections: [
         { kind: 'flow', align: 'center', cols: [
           { w: 561, items: [

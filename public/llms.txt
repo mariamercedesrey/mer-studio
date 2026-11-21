@@ -65,6 +65,7 @@ Four steps, no surprises. Every project starts with a 20-minute call. You get ba
 
 ## Pages
 
+- [Website design](https://mer.studio/web-design/): Web design studio for startups and founders — websites designed and built end to end, from strategy and structure to UX, visual design and code. Includes its own FAQ. Case studies: Carbon Optimum, American Padel Systems, Pasaporte Quilmes. In Spanish: [diseño web](https://mer.studio/es/diseno-web/).
 - [Ecommerce website design](https://mer.studio/ecommerce/): Online stores on Shopify, Tiendanube and WooCommerce — catalogue structure and product pages, payments, shipping and Instagram, Facebook and Google integrations. Includes its own FAQ. Case studies: Orchard Mile, The Mile, Black Duck.
 - [AI Visibility (GEO / AEO)](https://mer.studio/ai-visibility/): Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO) — how we make a brand readable, understood and quotable by ChatGPT, Perplexity, Gemini and Google's AI Overviews. Includes its own FAQ.
 - [FAQ](https://mer.studio/faq/): Cost, timing, revisions, handover, platforms (Shopify, Tiendanube, WooCommerce), working outside Argentina, AI assistants and AI Visibility.

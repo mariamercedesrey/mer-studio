@@ -9,7 +9,7 @@ Generated from `src/i18n/en.ts` by `npm run i18n:export` — do not edit by hand
 - Not in this file on purpose: URLs, e-mail, phone, and the `value` of form fields (they stay English so the inbox is uniform).
 - Also still in English outside `en.ts`: `public/llms.txt` (the launch-offer line must match `offer.llms`; `scripts/check-site.mjs` enforces it).
 
-Strings: 711.
+Strings: 758.
 
 ## Global (every page)
 
@@ -59,6 +59,7 @@ Strings: 711.
 - `footer.links.services` → Services
 - `footer.links.howItWorks` → How it works
 - `footer.links.ecommerce` → Ecommerce
+- `footer.links.webDesign` → Web Design
 - `footer.links.aiVisibility` → AI Visibility
 - `footer.links.about` → About Us
 - `footer.links.faq` → FAQ
@@ -68,6 +69,7 @@ Strings: 711.
 - `intake.preferEmail` → PREFER EMAIL?
 - `projectDetail.close` → Close project
 - `projectDetail.moreWork` → More work
+- `projectDetail.moreWebDesign` → More about web design →
 - `projectDetail.moreEcommerce` → More about ecommerce →
 
 ## Home (/)
@@ -263,9 +265,9 @@ Strings: 711.
 
 ## Launch offer (hero line, Services, /ai-visibility/, JSON-LD, llms.txt)
 
-- `offer.tag` → Free with your project · Nov 2026
+- `offer.tag` → Free with your project · Dec 2026
 - `offer.more` → read more
-- `offer.pill` → Free · Nov 2026
+- `offer.pill` → Free · Dec 2026
 - `offer.hero` → AI Visibility free for projects started in December 2026
 - `offer.free.title` → Included free
 - `offer.free.items[0]` → Base setup: schema / JSON-LD, llms.txt, AI-bot access in robots.txt, semantic content structure
@@ -360,6 +362,50 @@ Strings: 711.
 - `faq.ecommerce[4].a` → Every project is quoted after a 20-minute call. You get a fixed scope and price before we start.
 - `faq.ecommerce[5].q` → Is AI Visibility included?
 - `faq.ecommerce[5].a` → For projects started in December 2026, the AI Visibility setup is free, so your store can be found and recommended by ChatGPT, Perplexity and Google AI.
+
+## /web-design/
+
+- `webDesign.meta.title` → Website Design for Startups & Founders — Web Design Studio
+- `webDesign.meta.metaDescription` → Web design studio for startups and founders: websites designed and built end to end, from strategy and UX to code. Remote, in English and Spanish.
+- `webDesign.intro.eyebrow` → web design · landing / full site / redesign
+- `webDesign.intro.title` → A website that explains what you do, and gets you the call.
+- `webDesign.intro.note` → We are a web design studio that designs and builds websites end to end — from strategy and structure to UX, visual design and code. The same hands design it and ship it, so nothing is lost in a handoff.
+- `webDesign.method.eyebrow` → the method
+- `webDesign.method.title` → Four things a website needs before it works.
+- `webDesign.method.lede` → A website has a few seconds to explain what you do and why it matters.
+- `webDesign.method.items[0].t` → Clear
+- `webDesign.method.items[0].d` → A message people understand in seconds: what you do, who it is for and what to do next.
+- `webDesign.method.items[1].t` → Findable
+- `webDesign.method.items[1].d` → Pages built for Google and AI search: clean structure, structured data and content that answers real questions.
+- `webDesign.method.items[2].t` → Fast
+- `webDesign.method.items[2].d` → Light pages that load quickly on any phone, with nothing standing between the visitor and the content.
+- `webDesign.method.items[3].t` → Yours
+- `webDesign.method.items[3].d` → Files and accounts handed over in your name, on a site you can keep growing.
+- `webDesign.method.note` → We start with the business decision the site has to support, then design the screens.
+- `webDesign.proof.eyebrow` → proof, not promises
+- `webDesign.proof.title` → Websites we've designed and built.
+- `webDesign.proof.cases[0].slug` → carbon-optimum
+- `webDesign.proof.cases[0].line` → A corporate site that makes carbon-to-value science easy to follow.
+- `webDesign.proof.cases[1].slug` → american-padel-systems
+- `webDesign.proof.cases[1].line` → A site and an interactive tool for a Miami padel court builder.
+- `webDesign.proof.cases[2].slug` → quilmes
+- `webDesign.proof.cases[2].line` → A benefits web app with QR coupons for Iguazú visitors.
+- `webDesign.faq.eyebrow` → faq
+- `webDesign.faq.title` → Questions about web design.
+- `webDesign.cta.eyebrow` → One question to start.
+- `webDesign.cta.title` → What should your\nwebsite do?
+- `faq.webDesign[0].q` → How long does a website take?
+- `faq.webDesign[0].a` → From one week for a landing page. A full site takes longer, and we set the dates together before starting.
+- `faq.webDesign[1].q` → How much does a website cost?
+- `faq.webDesign[1].a` → We quote each website after a 20-minute call, with the scope and price fixed before any work begins.
+- `faq.webDesign[2].q` → Do you design the site, build it, or both?
+- `faq.webDesign[2].a` → Both. One team handles strategy, design and code, so what you approve is what goes live.
+- `faq.webDesign[3].q` → Can you redesign my existing website?
+- `faq.webDesign[3].a` → Yes. We can redesign the site you have or build a new one, keeping what already works.
+- `faq.webDesign[4].q` → Do you work with startups outside Argentina?
+- `faq.webDesign[4].a` → Yes. We are based in Buenos Aires and work remotely in English or Spanish, including with US startups.
+- `faq.webDesign[5].q` → Is AI Visibility included in a website project?
+- `faq.webDesign[5].a` → Websites started in December 2026 get the AI Visibility setup free: schema, llms.txt and AI crawler access.
 
 ## /ai-visibility/
 
@@ -490,6 +536,10 @@ Strings: 711.
 - `jsonld.ecommerce.serviceType` → Ecommerce website design and development
 - `jsonld.ecommerce.description` → We design and build online stores on Shopify, Tiendanube and WooCommerce: catalogue structure and product pages, payments, shipping, and the integrations with Instagram, Facebook and Google that keep a store selling.
 - `jsonld.ecommerce.catalogName` → Four things a store needs before it sells
+- `jsonld.webDesign.name` → Website design
+- `jsonld.webDesign.serviceType` → Website design and development
+- `jsonld.webDesign.description` → We design and build websites end to end for startups and founders: strategy, structure, UX, visual design and code, handed over in your name.
+- `jsonld.webDesign.catalogName` → Four things a website needs before it works
 
 ## Case studies (/work/<slug>/ and the Project Detail overlay)
 

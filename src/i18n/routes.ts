@@ -5,11 +5,12 @@ export type Locale = 'en' | 'es';
 export const LOCALES: readonly Locale[] = ['en', 'es'];
 export const DEFAULT_LOCALE: Locale = 'en';
 
-export type PageKey = 'home' | 'faq' | 'ecommerce' | 'aiVisibility' | 'startProject' | 'thanks' | 'notFound';
+export type PageKey = 'home' | 'faq' | 'ecommerce' | 'webDesign' | 'aiVisibility' | 'startProject' | 'thanks' | 'notFound';
 export const PAGES: Record<PageKey, Record<Locale, string>> = {
   home: { en: '/', es: '/es/' },
   faq: { en: '/faq/', es: '/es/preguntas-frecuentes/' },
   ecommerce: { en: '/ecommerce/', es: '/es/tiendas-online/' },
+  webDesign: { en: '/web-design/', es: '/es/diseno-web/' },
   aiVisibility: { en: '/ai-visibility/', es: '/es/visibilidad-ia/' },
   startProject: { en: '/start-a-project/', es: '/es/empezar-proyecto/' },
   thanks: { en: '/start-a-project/thanks/', es: '/es/empezar-proyecto/gracias/' },

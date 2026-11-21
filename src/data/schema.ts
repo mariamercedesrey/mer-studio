@@ -78,7 +78,7 @@ export function homeSchema(locale: Locale = 'en') {
 }
 
 // A service page (/ai-visibility/, /ecommerce/): Service + the page's four method rows as its offer catalogue.
-function serviceSchema(key: 'aiVisibility' | 'ecommerce', locale: Locale) {
+function serviceSchema(key: 'aiVisibility' | 'ecommerce' | 'webDesign', locale: Locale) {
   const copy = getCopy(locale);
   const j = copy.jsonld;
   const url = `${SITE}${pagePath(key, locale)}`;
@@ -102,6 +102,7 @@ function serviceSchema(key: 'aiVisibility' | 'ecommerce', locale: Locale) {
 
 export const aiVisibilitySchema = (locale: Locale = 'en') => serviceSchema('aiVisibility', locale);
 export const ecommerceSchema = (locale: Locale = 'en') => serviceSchema('ecommerce', locale);
+export const webDesignSchema = (locale: Locale = 'en') => serviceSchema('webDesign', locale);
 
 export function projectSchema(p: ProjectDetailData, url: string, locale: Locale = 'en') {
   const copy = getCopy(locale);

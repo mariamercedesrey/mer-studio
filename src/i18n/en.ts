@@ -78,6 +78,7 @@ export const en = {
       services: 'Services',
       howItWorks: 'How it works',
       ecommerce: 'Ecommerce',
+      webDesign: 'Web Design',
       aiVisibility: 'AI Visibility',
       about: 'About Us',
       faq: 'FAQ',
@@ -272,6 +273,14 @@ export const en = {
       { q: 'How much does an online store cost?', a: 'Every project is quoted after a 20-minute call. You get a fixed scope and price before we start.' },
       { q: 'Is AI Visibility included?', a: 'For projects started in December 2026, the AI Visibility setup is free, so your store can be found and recommended by ChatGPT, Perplexity and Google AI.' },
     ],
+    webDesign: [
+      { q: 'How long does a website take?', a: 'From one week for a landing page. A full site takes longer, and we set the dates together before starting.' },
+      { q: 'How much does a website cost?', a: 'We quote each website after a 20-minute call, with the scope and price fixed before any work begins.' },
+      { q: 'Do you design the site, build it, or both?', a: 'Both. One team handles strategy, design and code, so what you approve is what goes live.' },
+      { q: 'Can you redesign my existing website?', a: 'Yes. We can redesign the site you have or build a new one, keeping what already works.' },
+      { q: 'Do you work with startups outside Argentina?', a: 'Yes. We are based in Buenos Aires and work remotely in English or Spanish, including with US startups.' },
+      { q: 'Is AI Visibility included in a website project?', a: 'Websites started in December 2026 get the AI Visibility setup free: schema, llms.txt and AI crawler access.' },
+    ],
   },
 
   aiVisibility: {
@@ -351,11 +360,52 @@ export const en = {
     },
   },
 
+  webDesign: {
+    meta: {
+      title: 'Website Design for Startups & Founders — Web Design Studio',
+      metaDescription: 'Web design studio for startups and founders: websites designed and built end to end, from strategy and UX to code. Remote, in English and Spanish.',
+    },
+    intro: {
+      eyebrow: 'web design · landing / full site / redesign',
+      title: 'A website that explains what you do, and gets you the call.',
+      note: 'We are a web design studio that designs and builds websites end to end — from strategy and structure to UX, visual design and code. The same hands design it and ship it, so nothing is lost in a handoff.',
+    },
+    method: {
+      eyebrow: 'the method',
+      title: 'Four things a website needs before it works.',
+      lede: 'A website has a few seconds to explain what you do and why it matters.',
+      items: [
+        { t: 'Clear', d: 'A message people understand in seconds: what you do, who it is for and what to do next.' },
+        { t: 'Findable', d: 'Pages built for Google and AI search: clean structure, structured data and content that answers real questions.' },
+        { t: 'Fast', d: 'Light pages that load quickly on any phone, with nothing standing between the visitor and the content.' },
+        { t: 'Yours', d: 'Files and accounts handed over in your name, on a site you can keep growing.' },
+      ],
+      note: 'We start with the business decision the site has to support, then design the screens.',
+    },
+    proof: {
+      eyebrow: 'proof, not promises',
+      title: "Websites we've designed and built.",
+      cases: [
+        { slug: 'carbon-optimum', line: 'A corporate site that makes carbon-to-value science easy to follow.' },
+        { slug: 'american-padel-systems', line: 'A site and an interactive tool for a Miami padel court builder.' },
+        { slug: 'quilmes', line: 'A benefits web app with QR coupons for Iguazú visitors.' },
+      ],
+    },
+    faq: {
+      eyebrow: 'faq',
+      title: 'Questions about web design.',
+    },
+    cta: {
+      eyebrow: 'One question to start.',
+      title: 'What should your\nwebsite do?',
+    },
+  },
+
   // Launch offer (flags and dates: src/data/offer.ts). Every offer text of the site comes from here.
   offer: {
-    tag: 'Free with your project · Nov 2026',
+    tag: 'Free with your project · Dec 2026',
     more: 'read more',
-    pill: 'Free · Nov 2026', // diagram pill: "AI Visibility  FREE · NOV 2026 · read more"
+    pill: 'Free · Dec 2026', // diagram pill: "AI Visibility  FREE · DEC 2026 · read more"
     hero: 'AI Visibility free for projects started in December 2026', // hero line, after the "—"
     free: {
       title: 'Included free',
@@ -455,6 +505,7 @@ export const en = {
   projectDetail: {
     close: 'Close project',
     moreWork: 'More work',
+    moreWebDesign: 'More about web design →', // end of the Carbon Optimum and American Padel Systems case studies
     moreEcommerce: 'More about ecommerce →', // end of the Orchard Mile, The Mile and Black Duck case studies
   },
 
@@ -480,6 +531,12 @@ export const en = {
       serviceType: 'Ecommerce website design and development',
       description: 'We design and build online stores on Shopify, Tiendanube and WooCommerce: catalogue structure and product pages, payments, shipping, and the integrations with Instagram, Facebook and Google that keep a store selling.',
       catalogName: 'Four things a store needs before it sells',
+    },
+    webDesign: {
+      name: 'Website design',
+      serviceType: 'Website design and development',
+      description: 'We design and build websites end to end for startups and founders: strategy, structure, UX, visual design and code, handed over in your name.',
+      catalogName: 'Four things a website needs before it works',
     },
   },
 

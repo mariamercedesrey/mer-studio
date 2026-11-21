@@ -71,6 +71,7 @@ export const es = {
       services: 'Servicios',
       howItWorks: 'Cómo trabajamos',
       ecommerce: 'Tiendas online',
+      webDesign: 'Diseño web',
       aiVisibility: 'Visibilidad en IA',
       about: 'Nosotros',
       faq: 'Preguntas frecuentes',
@@ -260,6 +261,14 @@ export const es = {
       { q: '¿Cuánto cuesta una tienda online?', a: 'Cada proyecto se cotiza después de una llamada de 20 minutos. Tienes un alcance y un precio cerrados antes de empezar.' },
       { q: '¿Incluye visibilidad en IA?', a: 'En los proyectos que empiezan en diciembre de 2026, la configuración de visibilidad en IA es gratis, para que ChatGPT, Perplexity y Google te encuentren y recomienden tu tienda.' },
     ],
+    webDesign: [
+      { q: '¿Cuánto tarda un sitio web?', a: 'Desde una semana para una landing. Un sitio completo lleva más tiempo, y definimos las fechas juntos antes de empezar.' },
+      { q: '¿Cuánto cuesta el diseño de una página web?', a: 'Cotizamos cada sitio después de una llamada de 20 minutos, con el alcance y el precio cerrados antes de comenzar el trabajo.' },
+      { q: '¿Diseñan el sitio, lo desarrollan o las dos cosas?', a: 'Las dos. Un mismo equipo se ocupa de la estrategia, el diseño y el código, así lo que apruebas es lo que se publica.' },
+      { q: '¿Pueden rediseñar mi sitio web actual?', a: 'Sí. Podemos rediseñar el sitio que ya tienes o crear uno nuevo, conservando lo que ya funciona.' },
+      { q: '¿Trabajan con clientes fuera de Buenos Aires?', a: 'Sí. Estamos en Buenos Aires y trabajamos en remoto, en español o en inglés, también con startups de Estados Unidos.' },
+      { q: '¿El sitio incluye visibilidad en IA?', a: 'Los sitios que empiezan en diciembre de 2026 reciben gratis la configuración de visibilidad en IA: schema, llms.txt y acceso de los rastreadores de IA.' },
+    ],
   },
 
   aiVisibility: {
@@ -339,10 +348,51 @@ export const es = {
     },
   },
 
+  webDesign: {
+    meta: {
+      title: 'Diseño web para emprendedores y startups — Estudio de diseño web',
+      metaDescription: 'Estudio de diseño web: diseño de páginas web de principio a fin, de la estrategia y el UX al código. Trabajamos en remoto desde Buenos Aires.',
+    },
+    intro: {
+      eyebrow: 'diseño web · landing / sitio completo / rediseño',
+      title: 'Un sitio web que explica lo que haces y consigue la llamada.',
+      note: 'Somos un estudio de diseño web: diseñamos y desarrollamos páginas web de principio a fin, desde la estrategia y la estructura hasta el UX, el diseño visual y el código. Las mismas manos lo diseñan y lo publican, así nada se pierde en el camino.',
+    },
+    method: {
+      eyebrow: 'el método',
+      title: 'Cuatro cosas que un sitio web necesita antes de funcionar.',
+      lede: 'Un sitio tiene pocos segundos para explicar qué haces y por qué importa.',
+      items: [
+        { t: 'Claro', d: 'Un mensaje que se entiende en segundos: qué haces, para quién es y cuál es el siguiente paso.' },
+        { t: 'Encontrable', d: 'Páginas pensadas para Google y para la búsqueda con IA: estructura limpia, datos estructurados y contenido que responde preguntas reales.' },
+        { t: 'Rápido', d: 'Páginas livianas que cargan rápido en cualquier celular, sin nada que se interponga entre la visita y el contenido.' },
+        { t: 'Tuyo', d: 'Archivos y cuentas entregados a tu nombre, en un sitio que puedes seguir haciendo crecer.' },
+      ],
+      note: 'Empezamos por la decisión de negocio que el sitio tiene que apoyar y después diseñamos las pantallas.',
+    },
+    proof: {
+      eyebrow: 'pruebas, no promesas',
+      title: 'Sitios web que diseñamos y desarrollamos.',
+      cases: [
+        { slug: 'carbon-optimum', line: 'Un sitio corporativo que vuelve fácil de seguir la ciencia de convertir carbono en valor.' },
+        { slug: 'american-padel-systems', line: 'Un sitio y una herramienta interactiva para un fabricante de canchas de pádel de Miami.' },
+        { slug: 'quilmes', line: 'Una web app de beneficios con cupones QR para visitantes de Iguazú.' },
+      ],
+    },
+    faq: {
+      eyebrow: 'preguntas frecuentes',
+      title: 'Preguntas sobre diseño web.',
+    },
+    cta: {
+      eyebrow: 'Una pregunta para empezar.',
+      title: '¿Qué debería hacer\ntu sitio web?',
+    },
+  },
+
   offer: {
-    tag: 'Gratis con tu proyecto · Nov 2026',
+    tag: 'Gratis con tu proyecto · Dic 2026',
     more: 'leer más',
-    pill: 'Gratis · Nov 2026',
+    pill: 'Gratis · Dic 2026',
     hero: 'Visibilidad en IA gratis para proyectos que empiezan en diciembre de 2026',
     free: {
       title: 'Incluido gratis',
@@ -436,6 +486,7 @@ export const es = {
   projectDetail: {
     close: 'Cerrar proyecto',
     moreWork: 'Más proyectos',
+    moreWebDesign: 'Más sobre diseño web →', // final de los casos Carbon Optimum y American Padel Systems
     moreEcommerce: 'Más sobre tiendas online →', // end of the Orchard Mile, The Mile and Black Duck case studies
   },
 
@@ -460,6 +511,12 @@ export const es = {
       serviceType: 'Diseño y desarrollo de tiendas online',
       description: 'Diseñamos y construimos tiendas online en Tiendanube, Shopify y WooCommerce: estructura del catálogo y fichas de producto, medios de pago, envíos y la integración con Instagram, Facebook y Google que mantiene una tienda vendiendo.',
       catalogName: 'Cuatro cosas que una tienda necesita antes de vender',
+    },
+    webDesign: {
+      name: 'Diseño web',
+      serviceType: 'Diseño y desarrollo de sitios web',
+      description: 'Diseñamos y desarrollamos sitios web de principio a fin para emprendedores y startups: estrategia, estructura, UX, diseño visual y código, entregados a tu nombre.',
+      catalogName: 'Cuatro cosas que un sitio web necesita antes de funcionar',
     },
   },
 
