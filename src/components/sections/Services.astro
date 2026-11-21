@@ -19,10 +19,11 @@ const { diagram } = svc;
 const included = svc.included.items;
 const AI_HREF = pagePath('aiVisibility', locale);
 const ECOM_HREF = pagePath('ecommerce', locale);
+const WEB_HREF = pagePath('webDesign', locale);
 // Row titles = diagram pills, exactly (one list, one vocabulary).
 const services = [
   { ...svc.rows.branding },
-  { ...svc.rows.websites, href: ECOM_HREF, learn: true },
+  { ...svc.rows.websites, href: WEB_HREF, noteHref: ECOM_HREF, learn: true }, // row + "learn more" → /web-design/; in-text link → /ecommerce/
   { ...svc.rows.digitalProduct },
   { ...svc.rows.aiVisibility, href: AI_HREF, offer: true },
 ];
@@ -180,7 +181,7 @@ const chips = [
           <div class="services__row-main">
             <span class="services__slot" aria-hidden="true" data-services-slot></span>
             <h3 class="services__item-title">{s.href ? <a class="services__link" href={s.href}>{s.name}</a> : s.name}</h3>
-            <p class="services__note">{s.link ? <>{s.body.split('{link}')[0]}<a class="services__note-link" href={s.href}>{s.link}</a>{s.body.split('{link}')[1]}</> : s.body}</p>
+            <p class="services__note">{s.link ? <>{s.body.split('{link}')[0]}<a class="services__note-link" href={s.noteHref ?? s.href}>{s.link}</a>{s.body.split('{link}')[1]}</> : s.body}</p>
             {s.learn && <span class="services__learn">{svc.learnMore}</span>}
             {s.offer && offer.active && <span class="offer-tag" data-offer><span class="offer-tag__free">{offer.tag}</span> · <span class="offer-tag__more">{offer.more}</span></span>}
             <span class="services__index">[{i + 1}]</span>
