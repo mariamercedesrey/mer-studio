@@ -3,6 +3,7 @@
 // Home links are in-page anchors on the home and "/#…" everywhere else (same rule as the header); direct entry lands via scripts/anchor-nav.ts.
 // The band carries no links.
 import { EMAIL, WHATSAPP } from '../../data/contact';
+import { CONSENT_TIMEZONE_RE } from '../../data/analytics';
 import { getCopy, localeOf, pagePath, pageOf, anchorHash } from '../../i18n';
 const locale = localeOf(Astro.url);
 const copy = getCopy(locale);
@@ -46,12 +47,12 @@ const links = [
         <div class="clutch-widget" data-url="https://widget.clutch.co" data-widget-type="14" data-height="50" data-nofollow="false" data-expandifr="true" data-scale="100" data-clutchcompany-id="2764624"></div>
       </div>
       <a class="footer__profile" href="https://www.behance.net/mer_studio" target="_blank" rel="noopener" aria-label={footer.behance}>
-        <svg width="28" height="16" viewBox="0 0 28 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M1.5 1.5h5.2a2.7 2.7 0 0 1 0 5.4H1.5zM1.5 6.9h5.9a3.6 3.6 0 0 1 0 7.2H1.5zM15.5 1h8M15.2 9.2h8.6a4 4 0 1 0-1.2 3.4"/></svg>
+        <!-- Behance mark: simple-icons v16.38.1 (CC0-1.0, https://github.com/simple-icons/simple-icons). The mark itself is a Behance/Adobe trademark: used only to link to our own profile. -->
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M16.969 16.927a2.561 2.561 0 0 0 1.901.677 2.501 2.501 0 0 0 1.531-.475c.362-.235.636-.584.779-.99h2.585a5.091 5.091 0 0 1-1.9 2.896 5.292 5.292 0 0 1-3.091.88 5.839 5.839 0 0 1-2.284-.433 4.871 4.871 0 0 1-1.723-1.211 5.657 5.657 0 0 1-1.08-1.874 7.057 7.057 0 0 1-.383-2.393c-.005-.8.129-1.595.396-2.349a5.313 5.313 0 0 1 5.088-3.604 4.87 4.87 0 0 1 2.376.563c.661.362 1.231.87 1.668 1.485a6.2 6.2 0 0 1 .943 2.133c.194.821.263 1.666.205 2.508h-7.699c-.063.79.184 1.574.688 2.187ZM6.947 4.084a8.065 8.065 0 0 1 1.928.198 4.29 4.29 0 0 1 1.49.638c.418.303.748.711.958 1.182.241.579.357 1.203.341 1.83a3.506 3.506 0 0 1-.506 1.961 3.726 3.726 0 0 1-1.503 1.287 3.588 3.588 0 0 1 2.027 1.437c.464.747.697 1.615.67 2.494a4.593 4.593 0 0 1-.423 2.032 3.945 3.945 0 0 1-1.163 1.413 5.114 5.114 0 0 1-1.683.807 7.135 7.135 0 0 1-1.928.259H0V4.084h6.947Zm-.235 12.9c.308.004.616-.029.916-.099a2.18 2.18 0 0 0 .766-.332c.228-.158.411-.371.534-.619.142-.317.208-.663.191-1.009a2.08 2.08 0 0 0-.642-1.715 2.618 2.618 0 0 0-1.696-.505h-3.54v4.279h3.471Zm13.635-5.967a2.13 2.13 0 0 0-1.654-.619 2.336 2.336 0 0 0-1.163.259 2.474 2.474 0 0 0-.738.62 2.359 2.359 0 0 0-.396.792c-.074.239-.12.485-.137.734h4.769a3.239 3.239 0 0 0-.679-1.785l-.002-.001Zm-13.813-.648a2.254 2.254 0 0 0 1.423-.433c.399-.355.607-.88.56-1.413a1.916 1.916 0 0 0-.178-.891 1.298 1.298 0 0 0-.495-.533 1.851 1.851 0 0 0-.711-.274 3.966 3.966 0 0 0-.835-.073H3.241v3.631h3.293v-.014ZM21.62 5.122h-5.976v1.527h5.976V5.122Z"/></svg>
         <span class="visually-hidden">{footer.behance}</span>
       </a>
-      <a class="footer__profile" href="https://www.designrush.com/agency/logo-branding" target="_blank" rel="noopener" aria-label={footer.designrush}>
-        <svg width="28" height="16" viewBox="0 0 28 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M1.5 1.5h4a6.5 6.5 0 0 1 0 13h-4zM16 14.5v-13h5a3.6 3.6 0 0 1 0 7.2h-5M21 8.7l4.5 5.8"/></svg>
-        <span class="visually-hidden">{footer.designrush}</span>
+      <a class="footer__profile footer__profile--text" href="https://www.designrush.com/agency/logo-branding" target="_blank" rel="noopener" aria-label={footer.designrush}>
+        DesignRush
       </a>
     </div>
   </div>
@@ -61,32 +62,44 @@ const links = [
   </div>
 </footer>
 
-<script is:inline>
-  // Clutch badge: third-party script, loaded on demand — never in <head>, never render-blocking. It loads when the footer is
-  // within 400 px of the viewport; without IntersectionObserver, after window "load" + idle. Once the widget's iframe exists the
-  // plain fallback link steps aside (same 50 px box, so no layout shift either way).
-  const box = document.querySelector('[data-clutch]');
+<script is:inline define:vars={{ tz: CONSENT_TIMEZONE_RE }}>
+  // Clutch badge: third-party script, loaded on demand — never in <head>, never render-blocking.
+  // Outside the consent region (EEA/GB/CH): when the footer is within 400 px of the viewport; without IntersectionObserver, after "load" + idle.
+  // Inside it (or when the time zone cannot be read): only once the visitor accepted the analytics/consent banner (localStorage `mer_consent`,
+  // the same choice that drives GA4 Consent Mode), either already stored or given later (ConsentBanner fires `mer:consent`). Until then — and
+  // for good if they decline — the plain "Reviewed on Clutch" link stays. The region is a client-side approximation (time zone ⊂ Europe/…):
+  // it errs on the side of asking for consent. Once the widget's iframe exists the fallback steps aside (same box → no layout shift).
+  var box = document.querySelector('[data-clutch]');
   if (box) {
-    let started = false;
-    const start = () => {
+    var started = false;
+    var start = function () {
       if (started) return;
       started = true;
-      const s = document.createElement('script');
+      var s = document.createElement('script');
       s.src = 'https://widget.clutch.co/static/js/widget.js';
       s.async = true;
       document.body.appendChild(s);
-      const widget = box.querySelector('.clutch-widget');
-      const mo = new MutationObserver(() => {
+      var widget = box.querySelector('.clutch-widget');
+      var mo = new MutationObserver(function () {
         if (widget.querySelector('iframe')) { box.setAttribute('data-ready', ''); mo.disconnect(); }
       });
       mo.observe(widget, { childList: true, subtree: true });
     };
-    const idle = () => ('requestIdleCallback' in window ? requestIdleCallback(start, { timeout: 4000 }) : setTimeout(start, 2000));
-    if ('IntersectionObserver' in window) {
-      const io = new IntersectionObserver((e) => { if (e.some(function (x) { return x.isIntersecting; })) { io.disconnect(); start(); } }, { rootMargin: '400px 0px' });
-      io.observe(box);
-    } else if (document.readyState === 'complete') idle();
-    else window.addEventListener('load', idle, { once: true });
+    var idle = function () { 'requestIdleCallback' in window ? requestIdleCallback(start, { timeout: 4000 }) : setTimeout(start, 2000); };
+    var lazy = function () {
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (e) { if (e.some(function (x) { return x.isIntersecting; })) { io.disconnect(); start(); } }, { rootMargin: '400px 0px' });
+        io.observe(box);
+      } else if (document.readyState === 'complete') idle();
+      else addEventListener('load', idle, { once: true });
+    };
+    var zone = '';
+    try { zone = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+    var gated = !zone || new RegExp(tz).test(zone);
+    var saved = null;
+    try { saved = localStorage.getItem('mer_consent'); } catch (e) {}
+    if (!gated || saved === 'granted') lazy();
+    else if (saved !== 'denied') addEventListener('mer:consent', function (e) { if (e.detail === 'granted') lazy(); }, { once: true });
   }
 </script>
 
@@ -120,14 +133,15 @@ const links = [
   /* "Find us on" — caption type, secondary colour (--text-muted, 4.9:1 on ink). One line; wraps on phones. */
   .footer__find { display: flex; align-items: center; flex-wrap: wrap; gap: var(--sp-8) var(--sp-24); font-family: var(--font-technical); font-size: var(--fs-caption); line-height: 1.4; letter-spacing: 0.02em; color: var(--text-muted); }
   .footer__find-label { margin: 0; }
-  .footer__clutch { position: relative; width: 250px; height: 50px; flex: none; }
+  .footer__clutch { --clutch-w: 250px; /* PENDING: replace with the measured width of the real widget (Mer) */ position: relative; width: var(--clutch-w); height: 50px; flex: none; }
   .footer__clutch .clutch-widget { position: absolute; inset: 0; overflow: hidden; }
   .footer__clutch-fallback { position: absolute; inset: 0; display: flex; align-items: center; text-decoration: underline; text-underline-position: from-font; }
   .footer__clutch[data-ready] .footer__clutch-fallback { visibility: hidden; }
   .footer__find a { color: var(--text-muted); transition: color var(--dur-fast) var(--ease-precise); }
   .footer__find a:hover { color: var(--accent-primary); }
   .footer__profile { display: inline-flex; align-items: center; min-height: 24px; }
-  .footer__profile svg { display: block; height: 16px; width: auto; }
+  .footer__profile--text { text-decoration: underline; text-underline-position: from-font; }
+  .footer__profile svg { display: block; height: 16px; width: 16px; }
   @media (max-width: 767px) {
     .footer__find { column-gap: var(--sp-16); }
     .site-footer__main { gap: var(--sp-40); padding: var(--sp-48) var(--page-gutter); }
