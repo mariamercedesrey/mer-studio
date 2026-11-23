@@ -4,27 +4,28 @@
 import { getCopy, localeOf, fmt } from '../../i18n';
 type Logo = {
   name: string; src: string; w: number; h: number;
+  iw: number; ih: number; // intrinsic size (raster pixels / SVG viewBox) → width/height attributes, so the browser reserves the box (CLS); CSS still draws it at w × h
   blend?: 'luminosity' | 'color-dodge';
   crop?: { w: number; h: number; left: number; top: number }; // % of box, Figma image transform
 };
 const logos: Logo[] = [
-  { name: 'DASA Digital', src: 'dasa.webp', w: 117.403, h: 37.543 },
-  { name: 'The Mile Fashion', src: 'the-mile-fashion.webp', w: 132.841, h: 30.996 },
-  { name: "L'Oréal", src: 'loreal.svg', w: 112.269, h: 30.076 },
-  { name: 'Asociación de Cooperativas Argentinas', src: 'aca.webp', w: 126.7, h: 54.014 },
-  { name: 'Black Duck', src: 'black-duck.svg', w: 66.921, h: 54.014 },
-  { name: 'American Padel Systems', src: 'american-padel-systems.webp', w: 113.2, h: 38.63 },
-  { name: 'SNI', src: 'sni.webp', w: 92.465, h: 36.62 },
-  { name: 'HiFiHUB', src: 'hifihub.webp', w: 124.37, h: 26.59 },
-  { name: 'Orchard Mile', src: 'orchard-mile.svg', w: 90.135, h: 29.748 },
-  { name: 'Quilmes', src: 'quilmes.svg', w: 92.465, h: 46.69 },
-  { name: 'Valor Ganadero', src: 'valor-ganadero.webp', w: 74.48, h: 59.248, blend: 'luminosity' },
-  { name: 'CICSA Worldwide', src: 'cicsa.webp', w: 114.988, h: 38.573, blend: 'luminosity' },
-  { name: 'UMSA', src: 'umsa.webp', w: 141.901, h: 38.451, blend: 'color-dodge', crop: { w: 113.95, h: 142.7, left: -4.22, top: -21.43 } },
-  { name: "Kuwait Concours d'Elegance", src: 'kcde.webp', w: 138.047, h: 49.179, blend: 'luminosity', crop: { w: 100, h: 280.7, left: 0, top: -11.4 } },
-  { name: 'Carbon Optimum', src: 'carbon-optimum.webp', w: 107.1, h: 33.7 },
-  { name: 'Agente Mamá AI', src: 'agente-mama-ai.webp', w: 185.45, h: 39.68 },
-  { name: 'Optimarine', src: 'optimarine.svg', w: 169.105, h: 33.873 },
+  { name: 'DASA Digital', src: 'dasa.webp', w: 117.403, h: 37.543, iw: 235, ih: 75 },
+  { name: 'The Mile Fashion', src: 'the-mile-fashion.webp', w: 132.841, h: 30.996, iw: 266, ih: 62 },
+  { name: "L'Oréal", src: 'loreal.svg', w: 112.269, h: 30.076, iw: 112, ih: 30 },
+  { name: 'Asociación de Cooperativas Argentinas', src: 'aca.webp', w: 126.7, h: 54.014, iw: 211, ih: 90 },
+  { name: 'Black Duck', src: 'black-duck.svg', w: 66.921, h: 54.014, iw: 67, ih: 54 },
+  { name: 'American Padel Systems', src: 'american-padel-systems.webp', w: 113.2, h: 38.63, iw: 226, ih: 79 },
+  { name: 'SNI', src: 'sni.webp', w: 92.465, h: 36.62, iw: 101, ih: 40 },
+  { name: 'HiFiHUB', src: 'hifihub.webp', w: 124.37, h: 26.59, iw: 249, ih: 56 },
+  { name: 'Orchard Mile', src: 'orchard-mile.svg', w: 90.135, h: 29.748, iw: 90, ih: 30 },
+  { name: 'Quilmes', src: 'quilmes.svg', w: 92.465, h: 46.69, iw: 92, ih: 47 },
+  { name: 'Valor Ganadero', src: 'valor-ganadero.webp', w: 74.48, h: 59.248, blend: 'luminosity', iw: 149, ih: 119 },
+  { name: 'CICSA Worldwide', src: 'cicsa.webp', w: 114.988, h: 38.573, blend: 'luminosity', iw: 230, ih: 77 },
+  { name: 'UMSA', src: 'umsa.webp', w: 141.901, h: 38.451, blend: 'color-dodge', crop: { w: 113.95, h: 142.7, left: -4.22, top: -21.43 }, iw: 323, ih: 110 },
+  { name: "Kuwait Concours d'Elegance", src: 'kcde.webp', w: 138.047, h: 49.179, blend: 'luminosity', crop: { w: 100, h: 280.7, left: 0, top: -11.4 }, iw: 276, ih: 276 },
+  { name: 'Carbon Optimum', src: 'carbon-optimum.webp', w: 107.1, h: 33.7, iw: 214, ih: 67 },
+  { name: 'Agente Mamá AI', src: 'agente-mama-ai.webp', w: 185.45, h: 39.68, iw: 371, ih: 82 },
+  { name: 'Optimarine', src: 'optimarine.svg', w: 169.105, h: 33.873, iw: 169, ih: 34 },
 ];
 const copies = [false, true];
 const { marquee } = getCopy(localeOf(Astro.url));
@@ -39,6 +40,8 @@ const { marquee } = getCopy(localeOf(Astro.url));
               <img
                 src={`/clients/${l.src}`}
                 alt={fmt(marquee.logoAlt, { name: l.name })}
+                width={l.iw}
+                height={l.ih}
                 decoding="async"
                 style={[
                   l.blend && `mix-blend-mode:${l.blend}`,

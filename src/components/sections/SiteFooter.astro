@@ -37,12 +37,58 @@ const links = [
         {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
       </ul>
     </nav>
+    <!-- "Find us on": third-party profiles. Clutch widget = official embed (agency 2764624) in a fixed 50 px box so nothing shifts;
+         its script loads only when the footer nears the viewport (script below). No-JS / before load: the plain "Reviewed on Clutch" link. -->
+    <div class="footer__find">
+      <p class="footer__find-label">{footer.findUs}</p>
+      <div class="footer__clutch" data-clutch>
+        <a class="footer__clutch-fallback" href="https://clutch.co/profile/mer-studio" target="_blank" rel="noopener" aria-label={footer.clutchFallback}>{footer.clutchFallback}</a>
+        <div class="clutch-widget" data-url="https://widget.clutch.co" data-widget-type="14" data-height="50" data-nofollow="false" data-expandifr="true" data-scale="100" data-clutchcompany-id="2764624"></div>
+      </div>
+      <a class="footer__profile" href="https://www.behance.net/mer_studio" target="_blank" rel="noopener" aria-label={footer.behance}>
+        <svg width="28" height="16" viewBox="0 0 28 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M1.5 1.5h5.2a2.7 2.7 0 0 1 0 5.4H1.5zM1.5 6.9h5.9a3.6 3.6 0 0 1 0 7.2H1.5zM15.5 1h8M15.2 9.2h8.6a4 4 0 1 0-1.2 3.4"/></svg>
+        <span class="visually-hidden">{footer.behance}</span>
+      </a>
+      <a class="footer__profile" href="https://www.designrush.com/agency/logo-branding" target="_blank" rel="noopener" aria-label={footer.designrush}>
+        <svg width="28" height="16" viewBox="0 0 28 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M1.5 1.5h4a6.5 6.5 0 0 1 0 13h-4zM16 14.5v-13h5a3.6 3.6 0 0 1 0 7.2h-5M21 8.7l4.5 5.8"/></svg>
+        <span class="visually-hidden">{footer.designrush}</span>
+      </a>
+    </div>
   </div>
   <div class="site-footer__band">
     <p>{footer.copyright}</p>
     <p class="site-footer__where">{footer.workingFrom} <span class="site-footer__tag">{footer.country}</span></p>
   </div>
 </footer>
+
+<script is:inline>
+  // Clutch badge: third-party script, loaded on demand — never in <head>, never render-blocking. It loads when the footer is
+  // within 400 px of the viewport; without IntersectionObserver, after window "load" + idle. Once the widget's iframe exists the
+  // plain fallback link steps aside (same 50 px box, so no layout shift either way).
+  const box = document.querySelector('[data-clutch]');
+  if (box) {
+    let started = false;
+    const start = () => {
+      if (started) return;
+      started = true;
+      const s = document.createElement('script');
+      s.src = 'https://widget.clutch.co/static/js/widget.js';
+      s.async = true;
+      document.body.appendChild(s);
+      const widget = box.querySelector('.clutch-widget');
+      const mo = new MutationObserver(() => {
+        if (widget.querySelector('iframe')) { box.setAttribute('data-ready', ''); mo.disconnect(); }
+      });
+      mo.observe(widget, { childList: true, subtree: true });
+    };
+    const idle = () => ('requestIdleCallback' in window ? requestIdleCallback(start, { timeout: 4000 }) : setTimeout(start, 2000));
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((e) => { if (e.some(function (x) { return x.isIntersecting; })) { io.disconnect(); start(); } }, { rootMargin: '400px 0px' });
+      io.observe(box);
+    } else if (document.readyState === 'complete') idle();
+    else window.addEventListener('load', idle, { once: true });
+  }
+</script>
 
 <style>
   .site-footer__main {
@@ -71,7 +117,19 @@ const links = [
   }
   .footer__channels a:hover, .footer__nav a:hover { color: var(--accent-primary); }
   .footer__nav { display: flex; flex-direction: column; gap: 14px; }
+  /* "Find us on" — caption type, secondary colour (--text-muted, 4.9:1 on ink). One line; wraps on phones. */
+  .footer__find { display: flex; align-items: center; flex-wrap: wrap; gap: var(--sp-8) var(--sp-24); font-family: var(--font-technical); font-size: var(--fs-caption); line-height: 1.4; letter-spacing: 0.02em; color: var(--text-muted); }
+  .footer__find-label { margin: 0; }
+  .footer__clutch { position: relative; width: 250px; height: 50px; flex: none; }
+  .footer__clutch .clutch-widget { position: absolute; inset: 0; overflow: hidden; }
+  .footer__clutch-fallback { position: absolute; inset: 0; display: flex; align-items: center; text-decoration: underline; text-underline-position: from-font; }
+  .footer__clutch[data-ready] .footer__clutch-fallback { visibility: hidden; }
+  .footer__find a { color: var(--text-muted); transition: color var(--dur-fast) var(--ease-precise); }
+  .footer__find a:hover { color: var(--accent-primary); }
+  .footer__profile { display: inline-flex; align-items: center; min-height: 24px; }
+  .footer__profile svg { display: block; height: 16px; width: auto; }
   @media (max-width: 767px) {
+    .footer__find { column-gap: var(--sp-16); }
     .site-footer__main { gap: var(--sp-40); padding: var(--sp-48) var(--page-gutter); }
     .footer__top { flex-direction: column; gap: var(--sp-32); }
     .footer__logo img { width: 220px; }

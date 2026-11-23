@@ -3,8 +3,8 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import { hiddenSlugs } from './src/data/projects.ts';
 import { pageOf, pathIn, LOCALES } from './src/i18n/routes.ts';
+import { LASTMOD } from './src/data/lastmod.ts';
 
-const BUILD_DATE = new Date().toISOString(); // sitemap <lastmod>: every URL carries the date of the build that generated it
 
 export default defineConfig({
   site: 'https://mer.studio',
@@ -20,8 +20,8 @@ export default defineConfig({
       return p?.key !== 'thanks' && p?.key !== 'notFound' && !(p?.key === 'work' && hiddenSlugs.includes(/** @type {any} */ (p.slug)));
     },
     serialize: (item) => {
-      item.lastmod = BUILD_DATE;
       const { pathname } = new URL(item.url);
+      item.lastmod = LASTMOD[pathname]; // real per-page content date (src/data/lastmod.ts); undefined → no <lastmod>, and check-site fails the build
       if (!pageOf(pathname)) return item;
       const href = (/** @type {'en' | 'es'} */ l) => new URL(pathIn(pathname, l), item.url).href;
       item.links = [...LOCALES.map((lang) => ({ url: href(lang), lang })), { url: href('en'), lang: 'x-default' }];

@@ -7,11 +7,15 @@
 //  5. IndexNow: plugins/indexnow/key.json is a 32-hex key and public/<key>.txt (and dist/<key>.txt) exists with exactly that content;
 //  6. every indexable page has a <meta name="description"> of 70–160 characters (Bing);
 //  7. the launch offer (src/data/offer.ts) and public/llms.txt disagree: `active` needs the "Launch offer" line, and
-//     an inactive offer must not leave it behind.
+//     an inactive offer must not leave it behind;
+//  8. every <img>, <video> and <iframe> carries numeric width and height (CLS: the browser reserves the box before the media loads);
+//  9. sitemap lastmod (src/data/lastmod.ts): every sitemap URL has an entry, no entry is a future date, the dates are not all equal;
+// 10. the Clutch widget script never loads from <head> nor as a static <script src> (only on demand from the footer script).
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { offer } from '../src/data/offer.ts';
 import { GA_ID } from '../src/data/analytics.ts';
+import { LASTMOD } from '../src/data/lastmod.ts';
 
 const dist = new URL('../dist', import.meta.url).pathname;
 const errors = [];
@@ -37,6 +41,13 @@ for (const file of walk(dist)) {
     else if (empty) decorative++;
     else if (deco) errors.push(`${rel}: data-decorative on an <img> that has alt text → ${tag.slice(0, 120)}`);
   }
+  for (const m of html.matchAll(/<(img|video|iframe)\b[^>]*>/gi)) {
+    const sized = (a) => new RegExp(`\\s${a}\\s*=\\s*["']?\\d`, 'i').test(m[0]);
+    if (!sized('width') || !sized('height')) errors.push(`${rel}: <${m[1].toLowerCase()}> without numeric width and height → ${m[0].slice(0, 120)}`);
+  }
+  const head = html.match(/<head\b[\s\S]*?<\/head>/i)?.[0] ?? '';
+  if (/widget\.clutch\.co/i.test(head)) errors.push(`${rel}: the Clutch widget appears in <head> (the widget script is injected on demand from the footer, in <body>)`);
+  if (/<script\b[^>]*\bsrc=["'][^"']*widget\.clutch\.co/i.test(html)) errors.push(`${rel}: static <script src> for the Clutch widget (must be injected on demand)`);
   const count = (needle) => html.split(needle).length - 1;
   if (count(GA_ID) !== 1) errors.push(`${rel}: GA4 ID ${GA_ID} appears ${count(GA_ID)} times (expected exactly 1)`);
   if (count('googletagmanager.com/gtag/js') !== 1) errors.push(`${rel}: ${count('googletagmanager.com/gtag/js')} gtag.js loaders (expected exactly 1)`);
@@ -65,6 +76,22 @@ if (/Not taken to production|No se llevó a producción/.test(llms)) errors.push
 const hasLine = llms.includes(offer.llms);
 if (offer.active && !hasLine) errors.push('public/llms.txt is missing the launch-offer line from src/data/offer.ts (offer.llms).');
 if (!offer.active && /^Launch offer:/m.test(llms)) errors.push('offer.active is false but public/llms.txt still has the "Launch offer" line: remove it.');
+
+// Sitemap lastmod: real per-page dates (src/data/lastmod.ts), not the build date.
+const sitemap = readFileSync(join(dist, 'sitemap-0.xml'), 'utf8');
+const today = new Date().toISOString().slice(0, 10);
+const dates = new Set();
+for (const m of sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)) {
+  const loc = m[1].match(/<loc>([^<]*)<\/loc>/)?.[1];
+  const path = loc && new URL(loc).pathname;
+  const d = LASTMOD[path];
+  if (!d) { errors.push(`src/data/lastmod.ts: no entry for sitemap URL ${path}`); continue; }
+  if (!/^\d{4}-\d\d-\d\d$/.test(d) || Number.isNaN(Date.parse(d))) errors.push(`src/data/lastmod.ts: ${path} → "${d}" is not a YYYY-MM-DD date`);
+  else if (d > today) errors.push(`src/data/lastmod.ts: ${path} → ${d} is in the future`);
+  if (!new RegExp(`<loc>[^<]*</loc>\\s*<lastmod>${d}(?:T00:00:00(?:\\.000)?Z)?</lastmod>`).test(m[1])) errors.push(`sitemap-0.xml: ${path} does not carry lastmod ${d}`);
+  dates.add(d);
+}
+if (dates.size < 2) errors.push('src/data/lastmod.ts: every sitemap URL has the same lastmod: dates must reflect each page\'s real change.');
 
 if (errors.length) {
   console.error(`\ncheck-site: ${errors.length} problem(s)\n - ${errors.join('\n - ')}\n`);

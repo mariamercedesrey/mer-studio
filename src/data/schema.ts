@@ -34,7 +34,7 @@ export function homeSchema(locale: Locale = 'en') {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'ProfessionalService',
+        '@type': ['ProfessionalService', 'Organization'],
         '@id': ORG_ID,
         name: copy.site.name,
         alternateName: 'mer.studio',
