@@ -1,6 +1,7 @@
 # MER Studio — all crawlers welcome, including AI search and assistant crawlers.
 User-agent: *
 Allow: /
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 
 User-agent: GPTBot
 Allow: /

@@ -38,10 +38,10 @@ const place = (r: (typeof rails)[number]) => {
 };
 const pct = (n: number, of: number) => `${((n / of) * 100).toFixed(3)}%`;
 const icons = [
-  { src: drive.src, x: 82, y: 423.96, w: 127 },
-  { src: chatgpt.src, x: 201, y: 152.96, w: 144 },
-  { src: ring.src, x: 1036, y: 60.96, w: 92 },
-  { src: gemini.src, x: 988.6, y: 431.3, w: 110 },
+  { src: drive.src, iw: drive.width, ih: drive.height, x: 82, y: 423.96, w: 127 },
+  { src: chatgpt.src, iw: chatgpt.width, ih: chatgpt.height, x: 201, y: 152.96, w: 144 },
+  { src: ring.src, iw: ring.width, ih: ring.height, x: 1036, y: 60.96, w: 92 },
+  { src: gemini.src, iw: gemini.width, ih: gemini.height, x: 988.6, y: 431.3, w: 110 },
 ];
 ---
 <figure class="n8n" style={style} data-n8n data-reveal="rise" role="img" aria-label={item.alt}>
@@ -63,7 +63,7 @@ const icons = [
   <!-- Logo box placed so the mark (not its transparent padding) sits centred on the pill, as in the Figma render. -->
   <img class="n8n__logo" src={n8n.src} width="1280" height="512" alt="" data-decorative decoding="async" loading="lazy" style={`left:${pct(535.9, W)};top:${pct(319.8, H)};width:${pct(176, W)}`} />
   {icons.map((i) => (
-    <img class="n8n__icon" src={i.src} alt="" data-decorative decoding="async" loading="lazy" style={`left:${pct(i.x, W)};top:${pct(i.y, H)};width:${pct(i.w, W)}`} />
+    <img class="n8n__icon" src={i.src} width={i.iw} height={i.ih} alt="" data-decorative decoding="async" loading="lazy" style={`left:${pct(i.x, W)};top:${pct(i.y, H)};width:${pct(i.w, W)}`} />
   ))}
 </figure>
 

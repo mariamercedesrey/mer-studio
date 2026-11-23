@@ -34,11 +34,11 @@ export function homeSchema(locale: Locale = 'en') {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'ProfessionalService',
+        '@type': ['ProfessionalService', 'Organization'],
         '@id': ORG_ID,
         name: copy.site.name,
         alternateName: 'mer.studio',
-        url: `${SITE}${pagePath('home', locale)}`,
+        url: `${SITE}/`, // one entity, one url: the same #studio node in EN and ES (language versions are the hreflang pages, not different entities)
         sameAs: SOCIAL,
         logo: `${SITE}/logo.svg`,
         image: `${SITE}/og.png`,
@@ -122,7 +122,7 @@ export function projectSchema(p: ProjectDetailData, url: string, locale: Locale 
     about: { '@type': 'Organization', name: p.client, ...(p.link && { url: p.link.href }) },
     ...(neoris && { sourceOrganization: { '@type': 'Organization', name: 'Neoris' } }), // credit: "delivered through NEORIS"
     creator: { '@type': 'Person', '@id': MER_ID, name: 'Mer' },
-    publisher: { '@type': 'ProfessionalService', '@id': ORG_ID, name: copy.site.name, alternateName: 'mer.studio', url: `${SITE}${pagePath('home', locale)}` },
+    publisher: { '@type': 'ProfessionalService', '@id': ORG_ID, name: copy.site.name, alternateName: 'mer.studio', url: `${SITE}/` },
     inLanguage: copy.site.lang,
   };
 }

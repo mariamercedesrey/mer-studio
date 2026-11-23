@@ -3,6 +3,7 @@
 // Home links are in-page anchors on the home and "/#…" everywhere else (same rule as the header); direct entry lands via scripts/anchor-nav.ts.
 // The band carries no links.
 import { EMAIL, WHATSAPP } from '../../data/contact';
+import { CONSENT_TIMEZONE_RE } from '../../data/analytics';
 import { getCopy, localeOf, pagePath, pageOf, anchorHash } from '../../i18n';
 const locale = localeOf(Astro.url);
 const copy = getCopy(locale);
@@ -37,12 +38,69 @@ const links = [
         {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
       </ul>
     </nav>
+    <!-- "Find us on": text links, one line. "Clutch" is the default state; on mer.studio only (never on previews), and subject to consent in
+         EEA/GB/CH, the official Clutch widget (agency 2764624) may replace it once its script loads (script below). -->
+    <p class="footer__find">
+      <span class="footer__find-label">{footer.findUs}</span>
+      <span class="footer__clutch" data-clutch><a href="https://clutch.co/profile/mer-studio" target="_blank" rel="noopener" aria-label={footer.clutchFallback}>Clutch</a><span class="clutch-widget" data-url="https://widget.clutch.co" data-widget-type="14" data-height="50" data-nofollow="false" data-expandifr="true" data-scale="100" data-clutchcompany-id="2764624" hidden></span></span>
+      <span aria-hidden="true">·</span>
+      <a href="https://www.behance.net/mer_studio" target="_blank" rel="noopener" aria-label={footer.behance}>Behance</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://www.designrush.com/agency/logo-branding" target="_blank" rel="noopener" aria-label={footer.designrush}>DesignRush</a>
+    </p>
   </div>
   <div class="site-footer__band">
     <p>{footer.copyright}</p>
     <p class="site-footer__where">{footer.workingFrom} <span class="site-footer__tag">{footer.country}</span></p>
   </div>
 </footer>
+
+<script is:inline define:vars={{ tz: CONSENT_TIMEZONE_RE }}>
+  // Clutch badge: only on the production host (never on deploy previews or localhost) and never in <head> / render-blocking.
+  // Outside the consent region (EEA/GB/CH): when the footer is within 400 px of the viewport; without IntersectionObserver, after "load" + idle.
+  // Inside it (or when the time zone cannot be read): only once the visitor accepted the banner (localStorage `mer_consent`, same choice as GA4
+  // Consent Mode), already stored or given later (ConsentBanner fires `mer:consent`). The region is a client-side approximation (time zone
+  // ⊂ Europe/…) that errs towards asking. The "Clutch" link is the default; if the widget's iframe is injected it replaces the link in the same
+  // line (max 50 px tall); if there is no iframe 10 s after the script was added, the link stays.
+  var box = document.querySelector('[data-clutch]');
+  if (box && location.hostname === 'mer.studio') {
+    var started = false;
+    var start = function () {
+      if (started) return;
+      started = true;
+      var widget = box.querySelector('.clutch-widget');
+      var link = box.querySelector('a');
+      var mo = new MutationObserver(function () {
+        if (!widget.querySelector('iframe')) return;
+        mo.disconnect();
+        clearTimeout(timer);
+        widget.hidden = false;
+        link.hidden = true;
+      });
+      mo.observe(widget, { childList: true, subtree: true });
+      var timer = setTimeout(function () { mo.disconnect(); }, 10000);
+      var s = document.createElement('script');
+      s.src = 'https://widget.clutch.co/static/js/widget.js';
+      s.async = true;
+      document.body.appendChild(s);
+    };
+    var idle = function () { 'requestIdleCallback' in window ? requestIdleCallback(start, { timeout: 4000 }) : setTimeout(start, 2000); };
+    var lazy = function () {
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (e) { if (e.some(function (x) { return x.isIntersecting; })) { io.disconnect(); start(); } }, { rootMargin: '400px 0px' });
+        io.observe(box);
+      } else if (document.readyState === 'complete') idle();
+      else addEventListener('load', idle, { once: true });
+    };
+    var zone = '';
+    try { zone = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+    var gated = !zone || new RegExp(tz).test(zone);
+    var saved = null;
+    try { saved = localStorage.getItem('mer_consent'); } catch (e) {}
+    if (!gated || saved === 'granted') lazy();
+    else if (saved !== 'denied') addEventListener('mer:consent', function (e) { if (e.detail === 'granted') lazy(); }, { once: true });
+  }
+</script>
 
 <style>
   .site-footer__main {
@@ -71,6 +129,13 @@ const links = [
   }
   .footer__channels a:hover, .footer__nav a:hover { color: var(--accent-primary); }
   .footer__nav { display: flex; flex-direction: column; gap: 14px; }
+  /* "Find us on" — one line of caption text, secondary colour (--text-muted, 4.9:1 on ink): Clutch · Behance · DesignRush. */
+  .footer__find { display: flex; align-items: center; flex-wrap: wrap; gap: var(--sp-4) var(--sp-8); margin: 0; font-family: var(--font-technical); font-size: var(--fs-caption); line-height: 1.4; letter-spacing: 0.02em; color: var(--text-muted); }
+  .footer__find-label { margin-right: var(--sp-4); }
+  .footer__find a { color: var(--text-muted); text-decoration: underline; text-underline-position: from-font; transition: color var(--dur-fast) var(--ease-precise); }
+  .footer__find a:hover { color: var(--accent-primary); }
+  .footer__clutch .clutch-widget { display: inline-block; max-height: 50px; overflow: hidden; vertical-align: middle; }
+  .footer__clutch .clutch-widget[hidden] { display: none; }
   @media (max-width: 767px) {
     .site-footer__main { gap: var(--sp-40); padding: var(--sp-48) var(--page-gutter); }
     .footer__top { flex-direction: column; gap: var(--sp-32); }

@@ -73,6 +73,10 @@ export const en = {
 
   footer: {
     ariaLabel: 'Footer',
+    findUs: 'Find us on',
+    clutchFallback: 'Reviewed on Clutch', // Clutch's own label for the profile link: same in both languages
+    behance: 'MER Studio on Behance',
+    designrush: 'Find us on DesignRush', // exact anchor text requested by DesignRush: not translated
     links: {
       work: 'Selected Works',
       services: 'Services',

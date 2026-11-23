@@ -26,6 +26,7 @@ const c = getCopy(localeOf(Astro.url)).consent;
       try { localStorage.setItem('mer_consent', value); } catch {}
       (window as any).gtag?.('consent', 'update', { analytics_storage: value });
       root.hidden = true;
+      window.dispatchEvent(new CustomEvent('mer:consent', { detail: value })); // late loaders (Clutch widget in the footer) wait for it
     });
   }
 </script>
